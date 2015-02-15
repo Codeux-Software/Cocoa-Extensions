@@ -70,6 +70,8 @@
 #define COCOA_EXTENSIONS_EXTERN							__attribute__((visibility("default")))
 #define COCOA_EXTENSIONS_DEPRECATED(reason)				__attribute__((deprecated((reason))))
 
+#define COCOA_EXTENSIONS_DEPRECATED_WARNING				LogToConsole(@"Use of the method named %s is deprecated. This method will cease to exist in a future version of this framework.", __PRETTY_FUNCTION__);
+
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 

@@ -45,3 +45,21 @@
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy;
 @end
+
+/* Maintain old class name for backwards compatibility but deprecate for later removal. */
+COCOA_EXTENSIONS_DEPRECATED("The entire TLORegularExpression class is deprecated. Use its brother, XRRegularExpression instead.")
+@interface TLORegularExpression : NSObject
++ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
++ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle;
++ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
++ (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle;
++ (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
++ (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle;
++ (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
++ (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy;
+@end
