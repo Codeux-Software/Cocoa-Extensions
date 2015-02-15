@@ -48,6 +48,10 @@
 + (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding;
 + (instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding;
 
+@property (readonly, copy) NSString *sha1;
+@property (readonly, copy) NSString *sha256;
+@property (readonly, copy) NSString *md5;
+
 + (NSString *)stringWithUUID;
 
 + (NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding;
