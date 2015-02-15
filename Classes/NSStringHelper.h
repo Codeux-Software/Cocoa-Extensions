@@ -75,6 +75,9 @@
 - (BOOL)contains:(NSString *)str;
 - (BOOL)containsIgnoringCase:(NSString *)str;
 
+- (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)validChars;
+- (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)validChars;
+
 - (BOOL)containsCharacters:(NSString *)validChars;
 - (BOOL)onlyContainsCharacters:(NSString *)validChars;
 
