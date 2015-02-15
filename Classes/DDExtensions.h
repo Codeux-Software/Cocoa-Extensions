@@ -26,16 +26,22 @@
 typedef void (^ddEmtpyBlockDataType)(void);
 
 @interface NSObject (DDExtensions)
-- (id)invokeOnMainThread;
-- (id)invokeInBackgroundThread;
+- (id)iomt COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead."); // Invoke On Main Thread
+- (id)invokeOnThread:(NSThread *)thread COCOA_EXTENSIONS_DEPRECATED("This method will throw an exception if used. Use Grand Central Dispatch (GCD) instead.");
+- (id)invokeOnMainThread COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
+- (id)invokeInBackgroundThread COCOA_EXTENSIONS_DEPRECATED("Use performBlockOnGlobalQueue: instead");
+- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 - (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
 - (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
 
 // ---
 
-+ (id)invokeOnMainThread;
-+ (id)invokeInBackgroundThread;
++ (id)iomt COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead."); // Invoke On Main Thread
++ (id)invokeOnThread:(NSThread *)thread COCOA_EXTENSIONS_DEPRECATED("This method will throw an exception if used. Use Grand Central Dispatch (GCD) instead.");
++ (id)invokeOnMainThread COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
++ (id)invokeInBackgroundThread COCOA_EXTENSIONS_DEPRECATED("Use performBlockOnGlobalQueue: instead");
++ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 + (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block;
 + (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block;
