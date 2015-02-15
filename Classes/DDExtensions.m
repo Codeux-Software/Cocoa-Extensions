@@ -72,12 +72,12 @@
 
 + (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block
 {
-	XRPerformBlockAsynchronouslyOnMainQueue(block);
+	XRPerformBlockSynchronouslyOnMainQueue(block);
 }
 
 - (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block
 {
-	XRPerformBlockAsynchronouslyOnMainQueue(block);
+	XRPerformBlockSynchronouslyOnMainQueue(block);
 }
 
 + (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block
