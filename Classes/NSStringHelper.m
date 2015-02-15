@@ -592,6 +592,7 @@
 	return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
 }
 
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
@@ -605,6 +606,7 @@
 
 	return [base pixelHeightInWidth:width forcedFont:font];
 }
+#endif
 
 - (NSString *)string
 {
@@ -1136,6 +1138,7 @@
     return lines;
 }
 
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight
 {
 	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight forcedFont:nil];
@@ -1174,6 +1177,7 @@
 	
 	return NSHeight(bounds);
 }
+#endif
 
 @end
 

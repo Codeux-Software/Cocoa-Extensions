@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
+               BlueprintIdentifier = "4CA45C6A1A91505800AF9C4B"
                BuildableName = "CocoaExtensions.framework"
-               BlueprintName = "CocoaExtensions"
+               BlueprintName = "CocoaExtensions (iOS)"
                ReferencedContainer = "container:Cocoa Extensions.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
+            BlueprintIdentifier = "4CA45C6A1A91505800AF9C4B"
             BuildableName = "CocoaExtensions.framework"
-            BlueprintName = "CocoaExtensions"
+            BlueprintName = "CocoaExtensions (iOS)"
             ReferencedContainer = "container:Cocoa Extensions.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "8DC2EF4F0486A6940098B216"
+            BlueprintIdentifier = "4CA45C6A1A91505800AF9C4B"
             BuildableName = "CocoaExtensions.framework"
-            BlueprintName = "CocoaExtensions"
+            BlueprintName = "CocoaExtensions (iOS)"
             ReferencedContainer = "container:Cocoa Extensions.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

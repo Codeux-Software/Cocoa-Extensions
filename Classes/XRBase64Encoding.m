@@ -39,7 +39,10 @@
 	if ([NSData instancesRespondToSelector:@selector(base64EncodedStringWithOptions:)]) {
 		return [input base64EncodedStringWithOptions:0];
 	} else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 		return [input base64Encoding];
+#pragma clang diagnostic pop
 	}
 }
 
@@ -48,7 +51,10 @@
 	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
 		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
 	} else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 		return [[NSData alloc] initWithBase64Encoding:input];
+#pragma clang diagnostic pop
 	}
 }
 

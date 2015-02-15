@@ -26,6 +26,43 @@
 		4C8B68001A901A0200DC5021 /* CocoaExtensions_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */; };
 		4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA45C211A9149F400AF9C4B /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */; };
+		4CA45C6C1A91505800AF9C4B /* NSArrayHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74B41A8FDE5B000B5FF5 /* NSArrayHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C6E1A91505800AF9C4B /* NSDataHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74B81A8FDE5B000B5FF5 /* NSDataHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C701A91505800AF9C4B /* XRRegularExpression.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923B81A9007FD0076F65A /* XRRegularExpression.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C711A91505800AF9C4B /* NSRectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C41A8FDE5B000B5FF5 /* NSRectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C721A91505800AF9C4B /* NSRangeHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C31A8FDE5B000B5FF5 /* NSRangeHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C751A91505800AF9C4B /* XRGlobalModels.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923A81A9002230076F65A /* XRGlobalModels.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C761A91505800AF9C4B /* NSNumberHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74BF1A8FDE5B000B5FF5 /* NSNumberHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C771A91505800AF9C4B /* NSDateHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74B91A8FDE5B000B5FF5 /* NSDateHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C781A91505800AF9C4B /* StaticDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923AA1A90024E0076F65A /* StaticDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C791A91505800AF9C4B /* XRBase64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C7A1A91505800AF9C4B /* NSByteCountFormatterHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74B61A8FDE5B000B5FF5 /* NSByteCountFormatterHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C7C1A91505800AF9C4B /* CocoaExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C7E1A91505800AF9C4B /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C801A91505800AF9C4B /* NSStringHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C71A8FDE5B000B5FF5 /* NSStringHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C811A91505800AF9C4B /* NSDictionaryHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74BA1A8FDE5B000B5FF5 /* NSDictionaryHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C831A91505800AF9C4B /* CocoaExtensions_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */; };
+		4CA45C851A91505800AF9C4B /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923901A8FE7F50076F65A /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA45C8A1A91505800AF9C4B /* DDInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923911A8FE7F50076F65A /* DDInvocation.h */; };
+		4CA45C8D1A91505800AF9C4B /* DDInvocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923951A8FE8D00076F65A /* DDInvocation.m */; };
+		4CA45C8F1A91505800AF9C4B /* NSByteCountFormatterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */; };
+		4CA45C951A91505800AF9C4B /* XRRegularExpression.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923B61A9007E50076F65A /* XRRegularExpression.m */; };
+		4CA45C961A91505800AF9C4B /* NSNumberHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF748F1A8FDE1C000B5FF5 /* NSNumberHelper.m */; };
+		4CA45C971A91505800AF9C4B /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923941A8FE8D00076F65A /* DDExtensions.m */; };
+		4CA45C981A91505800AF9C4B /* NSRectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74941A8FDE1C000B5FF5 /* NSRectHelper.m */; };
+		4CA45C9A1A91505800AF9C4B /* NSValueHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74991A8FDE1C000B5FF5 /* NSValueHelper.m */; };
+		4CA45C9B1A91505800AF9C4B /* NSRangeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74931A8FDE1C000B5FF5 /* NSRangeHelper.m */; };
+		4CA45C9C1A91505800AF9C4B /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
+		4CA45C9D1A91505800AF9C4B /* XRGlobalModels.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923AC1A9004080076F65A /* XRGlobalModels.m */; };
+		4CA45C9E1A91505800AF9C4B /* XRBase64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */; };
+		4CA45CA01A91505800AF9C4B /* NSStringHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74971A8FDE1C000B5FF5 /* NSStringHelper.m */; };
+		4CA45CA41A91505800AF9C4B /* NSDateHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74891A8FDE1C000B5FF5 /* NSDateHelper.m */; };
+		4CA45CA51A91505800AF9C4B /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74881A8FDE1C000B5FF5 /* NSDataHelper.m */; };
+		4CA45CA71A91505800AF9C4B /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF748A1A8FDE1C000B5FF5 /* NSDictionaryHelper.m */; };
+		4CA45CA91A91505800AF9C4B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1923CB1A900DBF0076F65A /* Security.framework */; };
+		4CA45CAC1A91505800AF9C4B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67FA1A9018E800DC5021 /* LICENSE */; };
+		4CA45CAD1A91505800AF9C4B /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */; };
+		4CA45CB31A91511F00AF9C4B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA45CB21A91511F00AF9C4B /* Foundation.framework */; };
 		4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
 		4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */; };
 		4CDF749E1A8FDE1C000B5FF5 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */; };
@@ -98,6 +135,8 @@
 		4C8B68011A901A1200DC5021 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Misc. Resources/Info.plist"; sourceTree = "<group>"; };
 		4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleHelper.h; sourceTree = "<group>"; };
 		4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
+		4CA45CB01A91505800AF9C4B /* CocoaExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4CA45CB21A91511F00AF9C4B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
 		4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSByteCountFormatterHelper.m; sourceTree = "<group>"; };
 		4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
@@ -145,6 +184,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4CA45CA81A91505800AF9C4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA45CB31A91511F00AF9C4B /* Foundation.framework in Frameworks */,
+				4CA45CA91A91505800AF9C4B /* Security.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF560486A6940098B216 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -161,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* CocoaExtensions.framework */,
+				4CA45CB01A91505800AF9C4B /* CocoaExtensions.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,6 +229,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CA45CB21A91511F00AF9C4B /* Foundation.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
 				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
@@ -325,6 +375,31 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4CA45C6B1A91505800AF9C4B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA45C6C1A91505800AF9C4B /* NSArrayHelper.h in Headers */,
+				4CA45C6E1A91505800AF9C4B /* NSDataHelper.h in Headers */,
+				4CA45C701A91505800AF9C4B /* XRRegularExpression.h in Headers */,
+				4CA45C711A91505800AF9C4B /* NSRectHelper.h in Headers */,
+				4CA45C721A91505800AF9C4B /* NSRangeHelper.h in Headers */,
+				4CA45C751A91505800AF9C4B /* XRGlobalModels.h in Headers */,
+				4CA45C761A91505800AF9C4B /* NSNumberHelper.h in Headers */,
+				4CA45C771A91505800AF9C4B /* NSDateHelper.h in Headers */,
+				4CA45C781A91505800AF9C4B /* StaticDefinitions.h in Headers */,
+				4CA45C791A91505800AF9C4B /* XRBase64Encoding.h in Headers */,
+				4CA45C7A1A91505800AF9C4B /* NSByteCountFormatterHelper.h in Headers */,
+				4CA45C7C1A91505800AF9C4B /* CocoaExtensions.h in Headers */,
+				4CA45C7E1A91505800AF9C4B /* NSValueHelper.h in Headers */,
+				4CA45C801A91505800AF9C4B /* NSStringHelper.h in Headers */,
+				4CA45C811A91505800AF9C4B /* NSDictionaryHelper.h in Headers */,
+				4CA45C831A91505800AF9C4B /* CocoaExtensions_Prefix.pch in Headers */,
+				4CA45C851A91505800AF9C4B /* DDExtensions.h in Headers */,
+				4CA45C8A1A91505800AF9C4B /* DDInvocation.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF500486A6940098B216 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -366,9 +441,28 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8DC2EF4F0486A6940098B216 /* CocoaExtensions */ = {
+		4CA45C6A1A91505800AF9C4B /* CocoaExtensions (iOS) */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "CocoaExtensions" */;
+			buildConfigurationList = 4CA45CAE1A91505800AF9C4B /* Build configuration list for PBXNativeTarget "CocoaExtensions (iOS)" */;
+			buildPhases = (
+				4CA45C6B1A91505800AF9C4B /* Headers */,
+				4CA45C8B1A91505800AF9C4B /* Sources */,
+				4CA45CA81A91505800AF9C4B /* Frameworks */,
+				4CA45CAB1A91505800AF9C4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "CocoaExtensions (iOS)";
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = BlowfishEncryption;
+			productReference = 4CA45CB01A91505800AF9C4B /* CocoaExtensions.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		8DC2EF4F0486A6940098B216 /* CocoaExtensions (OS X) */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "CocoaExtensions (OS X)" */;
 			buildPhases = (
 				8DC2EF500486A6940098B216 /* Headers */,
 				8DC2EF540486A6940098B216 /* Sources */,
@@ -379,7 +473,7 @@
 			);
 			dependencies = (
 			);
-			name = CocoaExtensions;
+			name = "CocoaExtensions (OS X)";
 			productInstallPath = "$(HOME)/Library/Frameworks";
 			productName = BlowfishEncryption;
 			productReference = 8DC2EF5B0486A6940098B216 /* CocoaExtensions.framework */;
@@ -408,7 +502,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DC2EF4F0486A6940098B216 /* CocoaExtensions */,
+				8DC2EF4F0486A6940098B216 /* CocoaExtensions (OS X) */,
+				4CA45C6A1A91505800AF9C4B /* CocoaExtensions (iOS) */,
 			);
 		};
 /* End PBXProject section */
@@ -423,9 +518,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4CA45CAB1A91505800AF9C4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA45CAC1A91505800AF9C4B /* LICENSE in Resources */,
+				4CA45CAD1A91505800AF9C4B /* ACKNOWLEDGEMENT in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4CA45C8B1A91505800AF9C4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CA45C8D1A91505800AF9C4B /* DDInvocation.m in Sources */,
+				4CA45C8F1A91505800AF9C4B /* NSByteCountFormatterHelper.m in Sources */,
+				4CA45C951A91505800AF9C4B /* XRRegularExpression.m in Sources */,
+				4CA45C961A91505800AF9C4B /* NSNumberHelper.m in Sources */,
+				4CA45C971A91505800AF9C4B /* DDExtensions.m in Sources */,
+				4CA45C981A91505800AF9C4B /* NSRectHelper.m in Sources */,
+				4CA45C9A1A91505800AF9C4B /* NSValueHelper.m in Sources */,
+				4CA45C9B1A91505800AF9C4B /* NSRangeHelper.m in Sources */,
+				4CA45C9C1A91505800AF9C4B /* NSArrayHelper.m in Sources */,
+				4CA45C9D1A91505800AF9C4B /* XRGlobalModels.m in Sources */,
+				4CA45C9E1A91505800AF9C4B /* XRBase64Encoding.m in Sources */,
+				4CA45CA01A91505800AF9C4B /* NSStringHelper.m in Sources */,
+				4CA45CA41A91505800AF9C4B /* NSDateHelper.m in Sources */,
+				4CA45CA51A91505800AF9C4B /* NSDataHelper.m in Sources */,
+				4CA45CA71A91505800AF9C4B /* NSDictionaryHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -483,10 +609,17 @@
 			};
 			name = Release;
 		};
+		4CA45CAF1A91505800AF9C4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "CocoaExtensions" */ = {
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "CocoaExtensions (OS X)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AF08733DA50010E9CD /* Release */,
@@ -498,6 +631,14 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4CA45CAE1A91505800AF9C4B /* Build configuration list for PBXNativeTarget "CocoaExtensions (iOS)" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4CA45CAF1A91505800AF9C4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

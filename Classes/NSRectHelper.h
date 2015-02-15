@@ -30,5 +30,5 @@
 
  *********************************************************************** */
 
-FOUNDATION_EXPORT NSPoint NSRectCenter(NSRect rect);
-FOUNDATION_EXPORT NSRect NSRectAdjustInRect(NSRect r, NSRect bounds);
+FOUNDATION_EXPORT CGPoint NSRectCenter(CGRect rect);
+FOUNDATION_EXPORT CGRect NSRectAdjustInRect(CGRect r, CGRect bounds);

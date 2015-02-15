@@ -63,20 +63,20 @@
 
 #import "CocoaExtensions.h"
 
-NSPoint NSRectCenter(NSRect rect)
+CGPoint NSRectCenter(CGRect rect)
 {
-	return NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
+	return CGPointMake((rect.origin.x + (rect.size.width / 2)),
 					   (rect.origin.y + (rect.size.height / 2)));
 }
 
-NSRect NSRectAdjustInRect(NSRect r, NSRect bounds)
+CGRect NSRectAdjustInRect(CGRect r, CGRect bounds)
 {
-	if (NSMaxX(bounds) < NSMaxX(r)) {
-		r.origin.x = (NSMaxX(bounds) - r.size.width);
+	if ((bounds.origin.x + bounds.size.width) < (r.origin.x + r.size.width)) {
+		r.origin.x = ((bounds.origin.x + bounds.size.width) - r.size.width);
 	}
 	
-	if (NSMaxY(bounds) < NSMaxY(r)) {
-		r.origin.y = (NSMaxY(bounds) - r.size.height);
+	if ((bounds.origin.y + bounds.size.height) < (r.origin.y + r.size.height)) {
+		r.origin.y = ((bounds.origin.y + bounds.size.height) - r.size.height);
 	}
 	
 	if (r.origin.x < bounds.origin.x) {

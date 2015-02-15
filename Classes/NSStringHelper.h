@@ -111,9 +111,11 @@
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
+#endif 
 
 @property (readonly, copy) NSString *string; // Returns self.
 
@@ -167,11 +169,13 @@
 
 @property (readonly, copy) NSArray *splitIntoLines;
 
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
 - (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width;
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
+#endif
 @end
 
 #pragma mark 
