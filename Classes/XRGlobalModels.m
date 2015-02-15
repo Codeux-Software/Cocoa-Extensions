@@ -32,7 +32,7 @@
 
 #import "CocoaExtensions.h"
 
-#import <objc/objc-runtime.h>
+#import <objc/message.h>
 
 #pragma mark -
 #pragma mark Validity
