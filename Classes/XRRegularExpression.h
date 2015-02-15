@@ -47,7 +47,7 @@
 @end
 
 /* Maintain old class name for backwards compatibility but deprecate for later removal. */
-COCOA_EXTENSIONS_DEPRECATED("The entire TLORegularExpression class is deprecated. Use its brother, XRRegularExpression instead.")
+COCOA_EXTENSIONS_DEPRECATED("The entire TLORegularExpression class is deprecated. Use its brother, XRRegularExpression, instead.")
 @interface TLORegularExpression : NSObject
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
