@@ -14,5 +14,7 @@
 	<string>FWRK</string>
 	<key>CFBundleVersion</key>
 	<string>1.0.1</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2010 - 2015 Codeux Software, LLC</string>
 </dict>
 </plist>
