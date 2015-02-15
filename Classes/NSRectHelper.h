@@ -30,5 +30,5 @@
 
  *********************************************************************** */
 
-FOUNDATION_EXPORT CGPoint NSRectCenter(CGRect rect);
-FOUNDATION_EXPORT CGRect NSRectAdjustInRect(CGRect r, CGRect bounds);
+COCOA_EXTENSIONS_EXTERN CGPoint NSRectCenter(CGRect rect);
+COCOA_EXTENSIONS_EXTERN CGRect NSRectAdjustInRect(CGRect r, CGRect bounds);

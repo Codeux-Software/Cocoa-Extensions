@@ -30,7 +30,7 @@
 
  *********************************************************************** */
 
-FOUNDATION_EXPORT NSRange NSEmptyRange();
+COCOA_EXTENSIONS_EXTERN NSRange NSEmptyRange();
 
-FOUNDATION_EXPORT BOOL NSRangeIsValid(NSRange r);
-FOUNDATION_EXPORT BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength);
+COCOA_EXTENSIONS_EXTERN BOOL NSRangeIsValid(NSRange r);
+COCOA_EXTENSIONS_EXTERN BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength);
