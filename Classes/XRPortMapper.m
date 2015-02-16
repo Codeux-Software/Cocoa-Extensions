@@ -60,8 +60,10 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
         const UInt8 *addrBytes = (const UInt8 *)&ipv4Addr;
 
         return [NSString stringWithFormat: @"%u.%u.%u.%u",
-                (unsigned)addrBytes[0],(unsigned)addrBytes[1],
-                (unsigned)addrBytes[2],(unsigned)addrBytes[3]];
+                (unsigned)addrBytes[0],
+				(unsigned)addrBytes[1],
+                (unsigned)addrBytes[2],
+				(unsigned)addrBytes[3]];
 	} else {
         return nil;
 	}
@@ -91,6 +93,7 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
 		[self setPort:port];
 
 		[self setMapTCP:YES];
+		[self setMapUDP:NO];
     }
 
 	return self;
@@ -204,8 +207,8 @@ static void serviceCallback(CFSocketRef s,
                                          0 /*flags*/, 
                                          0 /*interfaceIndex*/, 
                                          protocol,
-                                         htons(_port),
-                                         htons(_desiredPublicPort),
+                                         htons([self port]),
+                                         htons([self desiredPublicPort]),
                                          0 /*ttl*/,
                                          &portMapCallback, 
                                          (__bridge void *)(self));
@@ -276,7 +279,7 @@ static void serviceCallback(CFSocketRef s,
     if ([self socketSource]) {
         CFRunLoopSourceInvalidate([self socketSource]);
 
-        CFRelease([self socketSource]);
+		CFSafeRelease([self socketSource]);
 
 		[self setSocketSource:NULL];
     }
@@ -285,7 +288,7 @@ static void serviceCallback(CFSocketRef s,
     if ([self socket]) {
         CFSocketInvalidate([self socket]);
 
-        CFRelease([self socket]);
+        CFSafeRelease([self socket]);
 
 		[self setSocket:NULL];
     }
