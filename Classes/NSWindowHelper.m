@@ -76,7 +76,7 @@
 		return;
 	}
 
-	keyword = [NSString stringWithFormat:@"—> Internal (v2) —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"-> Internal (v3) -> %@", keyword];
 
 	[self saveFrameUsingName:keyword];
 }
@@ -87,7 +87,7 @@
 		return;
 	}
 
-	keyword = [NSString stringWithFormat:@"—> Internal (v2) —> %@", keyword];
+	keyword = [NSString stringWithFormat:@"-> Internal (v3) -> %@", keyword];
 
 	[self setFrameAutosaveName:keyword];
 }
