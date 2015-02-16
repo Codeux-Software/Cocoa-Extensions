@@ -38,17 +38,16 @@
 
 #import <CocoaExtensions/StaticDefinitions.h>
 
-#import <CocoaExtensions/XRGlobalModels.h>
-
 #import <CocoaExtensions/XRBase64Encoding.h>
-
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#import <CocoaExtensions/XRKeychain.h>
-#endif
-
+#import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRRegularExpression.h>
 
 #import <CocoaExtensions/DDExtensions.h>
+
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+#import <CocoaExtensions/XRKeychain.h>
+#import <CocoaExtensions/XRPortMapper.h>
+#endif
 
 #import <CocoaExtensions/NSArrayHelper.h>
 #import <CocoaExtensions/NSByteCountFormatterHelper.h>
