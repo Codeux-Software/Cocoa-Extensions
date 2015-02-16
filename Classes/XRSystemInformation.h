@@ -30,46 +30,17 @@
 
  *********************************************************************** */
 
-#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#else
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_iOS_SDK
-#endif
+@interface XRSystemInformation : NSObject
++ (NSString *)systemBuildVersion;
++ (NSString *)systemStandardVersion;
++ (NSString *)systemOperatingSystemName;
 
-#import <CocoaExtensions/StaticDefinitions.h>
++ (NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
 
-#import <CocoaExtensions/XRBase64Encoding.h>
-#import <CocoaExtensions/XRGlobalModels.h>
-#import <CocoaExtensions/XRRegularExpression.h>
++ (NSString *)retrieveSystemInformationKey:(NSString *)key;
 
-#import <CocoaExtensions/DDExtensions.h>
-
-#import <CocoaExtensions/NSArrayHelper.h>
-#import <CocoaExtensions/NSByteCountFormatterHelper.h>
-#import <CocoaExtensions/NSDataHelper.h>
-#import <CocoaExtensions/NSDateHelper.h>
-#import <CocoaExtensions/NSDictionaryHelper.h>
-#import <CocoaExtensions/NSNumberHelper.h>
-#import <CocoaExtensions/NSRangeHelper.h>
-#import <CocoaExtensions/NSRectHelper.h>
-#import <CocoaExtensions/NSStringHelper.h>
-#import <CocoaExtensions/NSValueHelper.h>
-
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#import <CocoaExtensions/XRKeychain.h>
-#import <CocoaExtensions/XRPortMapper.h>
-#import <CocoaExtensions/XRSystemInformation.h>
-
-#import <CocoaExtensions/NSBundleHelper.h>
-#import <CocoaExtensions/NSColorHelper.h>
-#import <CocoaExtensions/NSFileManagerHelper.h>
-#import <CocoaExtensions/NSFontHelper.h>
-#import <CocoaExtensions/NSImageHelper.h>
-#import <CocoaExtensions/NSMenuHelper.h>
-#import <CocoaExtensions/NSOutlineViewHelper.h>
-#import <CocoaExtensions/NSPasteboardHelper.h>
-#import <CocoaExtensions/NSScreenHelper.h>
-#import <CocoaExtensions/NSSplitViewHelper.h>
-#import <CocoaExtensions/NSTextFieldHelper.h>
-#import <CocoaExtensions/NSWindowHelper.h>
-#endif
++ (BOOL)isUsingOSXLionOrLater;
++ (BOOL)isUsingOSXMountainLionOrLater;
++ (BOOL)isUsingOSXMavericksOrLater;
++ (BOOL)isUsingOSXYosemiteOrLater;
+@end

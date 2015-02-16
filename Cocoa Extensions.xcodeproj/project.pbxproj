@@ -23,6 +23,8 @@
 		4C1923CC1A900DBF0076F65A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1923CB1A900DBF0076F65A /* Security.framework */; };
 		4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */; };
+		4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */; };
 		4C8B67FC1A90191900DC5021 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */; };
 		4C8B67FD1A90191C00DC5021 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67FA1A9018E800DC5021 /* LICENSE */; };
 		4C8B68001A901A0200DC5021 /* CocoaExtensions_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */; };
@@ -133,6 +135,8 @@
 		4C1923DB1A9014E60076F65A /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRPortMapper.h; sourceTree = "<group>"; };
 		4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRPortMapper.m; sourceTree = "<group>"; };
+		4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRSystemInformation.h; sourceTree = "<group>"; };
+		4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRSystemInformation.m; sourceTree = "<group>"; };
 		4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ACKNOWLEDGEMENT; sourceTree = "<group>"; };
 		4C8B67FA1A9018E800DC5021 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaExtensions_Prefix.pch; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 				4C1923981A8FE9610076F65A /* XRKeychain.h */,
 				4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */,
 				4C1923B81A9007FD0076F65A /* XRRegularExpression.h */,
+				4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */,
 			);
 			name = "Public Headers";
 			sourceTree = "<group>";
@@ -355,6 +360,7 @@
 				4C19239A1A8FE9800076F65A /* XRKeychain.m */,
 				4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */,
 				4C1923B61A9007E50076F65A /* XRRegularExpression.m */,
+				4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -439,6 +445,7 @@
 				4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */,
 				4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */,
 				4CDF74D81A8FDE5B000B5FF5 /* NSOutlineViewHelper.h in Headers */,
+				4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */,
 				4CDF74D91A8FDE5B000B5FF5 /* NSPasteboardHelper.h in Headers */,
 				4CDF74DC1A8FDE5B000B5FF5 /* NSScreenHelper.h in Headers */,
 				4C1923931A8FE7F50076F65A /* DDInvocation.h in Headers */,
@@ -586,6 +593,7 @@
 				4CDF74AF1A8FDE1C000B5FF5 /* NSTextFieldHelper.m in Sources */,
 				4CDF74AE1A8FDE1C000B5FF5 /* NSStringHelper.m in Sources */,
 				4CDF74A41A8FDE1C000B5FF5 /* NSImageHelper.m in Sources */,
+				4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */,
 				4CDF74A51A8FDE1C000B5FF5 /* NSMenuHelper.m in Sources */,
 				4CDF74AD1A8FDE1C000B5FF5 /* NSSplitViewHelper.m in Sources */,
 				4CDF74A01A8FDE1C000B5FF5 /* NSDateHelper.m in Sources */,
