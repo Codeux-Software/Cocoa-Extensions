@@ -21,7 +21,7 @@
 		4C1923BC1A9008E70076F65A /* XRBase64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1923BD1A9008E70076F65A /* XRBase64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */; };
 		4C1923CC1A900DBF0076F65A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1923CB1A900DBF0076F65A /* Security.framework */; };
-		4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */; };
+		4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */; };
 		4C8B67FC1A90191900DC5021 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */; };
 		4C8B67FD1A90191C00DC5021 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67FA1A9018E800DC5021 /* LICENSE */; };
@@ -434,9 +434,9 @@
 				4CDF74D11A8FDE5B000B5FF5 /* NSDictionaryHelper.h in Headers */,
 				4CDF74D21A8FDE5B000B5FF5 /* NSFileManagerHelper.h in Headers */,
 				4C8B68001A901A0200DC5021 /* CocoaExtensions_Prefix.pch in Headers */,
-				4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */,
 				4CDF74DF1A8FDE5B000B5FF5 /* NSTextFieldHelper.h in Headers */,
 				4C1923921A8FE7F50076F65A /* DDExtensions.h in Headers */,
+				4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */,
 				4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */,
 				4CDF74D81A8FDE5B000B5FF5 /* NSOutlineViewHelper.h in Headers */,
 				4CDF74D91A8FDE5B000B5FF5 /* NSPasteboardHelper.h in Headers */,
