@@ -44,7 +44,7 @@
 		return [obj boolValue];
 	}
 	
-	return 0;
+	return NO;
 }
 
 - (NSArray *)arrayAtIndex:(NSInteger)n
