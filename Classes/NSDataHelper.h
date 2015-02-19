@@ -30,10 +30,17 @@
 
  *********************************************************************** */
 
+
 @interface NSData (CSCEFDataHelper)
 @property (getter=isValidUTF8, readonly) BOOL validUTF8;
 
 @property (readonly, copy) NSString *sha1;
 @property (readonly, copy) NSString *sha256;
 @property (readonly, copy) NSString *md5;
+
++ (NSData *)lineFeed;
++ (NSData *)carriageReturn;
++ (NSData *)carriageReturnPlusLineFeed;
+
++ (NSData *)emptyObject;
 @end

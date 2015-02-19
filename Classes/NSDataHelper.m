@@ -67,6 +67,26 @@
 
 @implementation NSData (CSCEFDataHelper)
 
++ (NSData *)lineFeed
+{
+	return [NSData dataWithBytes:"\x0a" length:1];
+}
+
++ (NSData *)carriageReturn
+{
+	return [NSData dataWithBytes:"\x0d" length:1];
+}
+
++ (NSData *)carriageReturnPlusLineFeed
+{
+	return [NSData dataWithBytes:"\x0d\x0a" length:2];
+}
+
++ (NSData *)emptyObject
+{
+	return [NSData dataWithBytes:"" length:1];
+}
+
 - (BOOL)isValidUTF8
 {
 	NSInteger len = [self length];

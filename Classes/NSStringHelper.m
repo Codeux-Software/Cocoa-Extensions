@@ -67,7 +67,7 @@
 
 #include <arpa/inet.h>
 
-NSString * const NSStringEmptyPlaceholder = @"\x00";
+NSString * const NSStringEmptyPlaceholder = @"";
 NSString * const NSStringNewlinePlaceholder = @"\x0a";
 NSString * const NSStringWhitespacePlaceholder = @"\x20";
 
