@@ -67,11 +67,11 @@
 
 #include <arpa/inet.h>
 
-NSString * const NSStringEmptyPlaceholder = @"";
-NSString * const NSStringNewlinePlaceholder = @"\n";
-NSString * const NSStringWhitespacePlaceholder = @" ";
+NSString * const NSStringEmptyPlaceholder = @"\x00";
+NSString * const NSStringNewlinePlaceholder = @"\x0a";
+NSString * const NSStringWhitespacePlaceholder = @"\x20";
 
-NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a";
 
 @interface NSString (CSCEFStringHelperPrivate)
 + (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange;
