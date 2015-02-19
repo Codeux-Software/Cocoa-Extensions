@@ -35,13 +35,13 @@
 #define CSCEF_StringIsAlphabeticNumeric(c)				(CSCEF_StringIsAlphabetic(c) || CSCEF_StringIsBase10Numeric(c))
 #define CSCEF_StringIsWordLetter(c)						(CSCEF_StringIsAlphabeticNumeric(c) || (c) == '_')
 
-#define NSStringEmptyPlaceholder			@""
-#define NSStringNewlinePlaceholder			@"\n"
-#define NSStringWhitespacePlaceholder		@" "
+COCOA_EXTENSIONS_EXTERN NSString * const NSStringEmptyPlaceholder;
+COCOA_EXTENSIONS_EXTERN NSString * const NSStringNewlinePlaceholder;
+COCOA_EXTENSIONS_EXTERN NSString * const NSStringWhitespacePlaceholder;
 
-#define CSCEF_WesternAlphabetIncludingUnderscoreDashCharacterSet			@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_"
+COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet; 
 
-#pragma mark 
+#pragma mark
 #pragma mark String Helpers
 
 @interface NSString (CSCEFStringHelper)

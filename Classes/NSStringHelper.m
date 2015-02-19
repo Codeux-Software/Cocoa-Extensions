@@ -67,6 +67,12 @@
 
 #include <arpa/inet.h>
 
+NSString * const NSStringEmptyPlaceholder = @"";
+NSString * const NSStringNewlinePlaceholder = @"\n";
+NSString * const NSStringWhitespacePlaceholder = @" ";
+
+NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+
 @interface NSString (CSCEFStringHelperPrivate)
 + (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange;
 + (id)getTokenFromFirstWhitespaceGroup:(id)stringValue returnedDeletionRange:(NSRange *)whitespaceRange;

@@ -96,4 +96,4 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
 
 /** This notification is posted asynchronously when the status of a 
     port mapping (its error, publicAddress or publicPort) changes. */
-extern NSString * const XRPortMapperDidChangedNotification;
+COCOA_EXTENSIONS_EXTERN NSString * const XRPortMapperDidChangedNotification;
