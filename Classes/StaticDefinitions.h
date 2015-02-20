@@ -67,7 +67,8 @@
 #define NSObjectIsKindOfClassAssertContinue(o, c)		if ([(o) isKindOfClass:[c class]] == NO) { continue; }
 #define NSObjectIsKindOfClassAssertBreak(o,c)			if ([(o) isKindOfClass:[c class]] == NO) { break; }
 
-#define COCOA_EXTENSIONS_EXTERN							__attribute__((visibility("default")))
+#define COCOA_EXTENSIONS_EXTERN							extern
+
 #define COCOA_EXTENSIONS_DEPRECATED(reason)				__attribute__((deprecated((reason))))
 
 #define COCOA_EXTENSIONS_DEPRECATED_WARNING				LogToConsole(@"Use of the method named %s is deprecated. This method will cease to exist in a future version of this framework.", __PRETTY_FUNCTION__);
