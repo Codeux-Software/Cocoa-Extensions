@@ -84,7 +84,7 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
 
 @implementation XRPortMapper
 
-- (id)initWithPort:(UInt16)port
+- (instancetype)initWithPort:(UInt16)port
 {
 	self = [super init];
 

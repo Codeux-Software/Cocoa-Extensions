@@ -73,6 +73,18 @@
 
 - (NSColor *)invertColor
 {
+	/* The only reason this method is declared as deprecated is because 
+	 -invertedColor sounds more reasonable for a property that returns
+	 a value. If this object was mutable, and this method returned nothing
+	 then use of -invertColor would be logical. */
+
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [self invertedColor];
+}
+
+- (NSColor *)invertedColor
+{
 	NSColor *obj = [self colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
 
 	return [NSColor colorWithCalibratedRed:(1.0 - [obj redComponent])

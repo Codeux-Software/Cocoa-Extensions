@@ -31,7 +31,8 @@
  *********************************************************************** */
 
 @interface NSColor (CSCEFColorHelper)
-- (NSColor *)invertColor;
+@property (readonly, copy) NSColor *invertedColor;
+@property (readonly, copy) NSColor *invertColor COCOA_EXTENSIONS_DEPRECATED("Use -invertedColor instead");
 
 + (NSColor *)fromCSS:(NSString *)str;
 

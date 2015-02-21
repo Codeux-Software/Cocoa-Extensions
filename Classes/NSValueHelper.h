@@ -31,5 +31,5 @@
  *********************************************************************** */
 
 @interface NSValue (CSCEFValueHelper)
-+ (id)valueWithPrimitive:(void *)value withType:(const char *)valueType;
++ (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType;
 @end
