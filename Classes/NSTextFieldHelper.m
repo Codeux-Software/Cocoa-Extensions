@@ -32,7 +32,39 @@
 
 #import "CocoaExtensions.h"
 
+#include <objc/runtime.h>
+
 @implementation NSTextField (CSCEFTextFieldHelper)
+
++ (void)load
+{
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		Class class = [self class];
+
+		SEL originalSelector = @selector(setStringValue:);
+		SEL swizzledSelector = @selector(ce_priv_setStringValue:);
+
+		Method originalMethod = class_getInstanceMethod(class, originalSelector);
+		Method swizzledMethod = class_getInstanceMethod(class, swizzledSelector);
+
+		BOOL methodAdded =
+		class_addMethod(class,
+						originalSelector,
+						method_getImplementation(swizzledMethod),
+						method_getTypeEncoding(swizzledMethod));
+
+		if (methodAdded) {
+			class_replaceMethod(class,
+								swizzledSelector,
+								method_getImplementation(originalMethod),
+								method_getTypeEncoding(originalMethod));
+		} else {
+			method_exchangeImplementations(originalMethod, swizzledMethod);
+		}
+	});
+}
 
 - (NSString *)trimmedStringValue
 {
@@ -54,10 +86,12 @@
 	return value;
 }
 
-- (void)setStringValue:(NSString *)stringValue
+- (void)ce_priv_setStringValue:(NSString *)stringValue
 {
 	if (stringValue) {
-		[super setStringValue:stringValue];
+		[self ce_priv_setStringValue:stringValue];
+	} else {
+		[self ce_priv_setStringValue:NSStringEmptyPlaceholder];
 	}
 }
 
