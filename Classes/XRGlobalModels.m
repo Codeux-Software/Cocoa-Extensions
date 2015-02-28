@@ -35,6 +35,35 @@
 #import <objc/message.h>
 
 #pragma mark -
+#pragma mark Swizzling
+
+void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod)
+{
+	Class class = NSClassFromString(className);
+
+	SEL originalSelector = NSSelectorFromString(originalMethod);
+	SEL swizzledSelector = NSSelectorFromString(replacementMethod);
+
+	Method originalMethodDcl = class_getInstanceMethod(class, originalSelector);
+	Method swizzledMethodDcl = class_getInstanceMethod(class, swizzledSelector);
+
+	BOOL methodAdded =
+	class_addMethod(class,
+					originalSelector,
+					method_getImplementation(swizzledMethodDcl),
+					method_getTypeEncoding(swizzledMethodDcl));
+
+	if (methodAdded) {
+		class_replaceMethod(class,
+							swizzledSelector,
+							method_getImplementation(originalMethodDcl),
+							method_getTypeEncoding(originalMethodDcl));
+	} else {
+		method_exchangeImplementations(originalMethodDcl, swizzledMethodDcl);
+	}
+}
+
+#pragma mark -
 #pragma mark Validity
 
 BOOL NSObjectIsEmpty(id obj)

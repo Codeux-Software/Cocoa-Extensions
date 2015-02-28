@@ -64,3 +64,7 @@ COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
 
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType);
+
+#pragma mark -
+
+COCOA_EXTENSIONS_EXTERN void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod);
