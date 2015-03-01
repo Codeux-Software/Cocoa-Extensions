@@ -30,7 +30,6 @@
 
  *********************************************************************** */
 
-
 @interface NSData (CSCEFDataHelper)
 @property (getter=isValidUTF8, readonly) BOOL validUTF8;
 
