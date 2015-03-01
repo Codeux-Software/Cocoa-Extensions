@@ -76,4 +76,7 @@
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
-#define LogToConsole(fmt, ...)					NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define LogToConsole(fmt, ...)							NSLog([@"%s [Line %d]: " stringByAppendingString:fmt], __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#define LogToConsoleCurrentStackTrace					NSLog(@"Current Stack: %@", [NSThread callStackSymbols]);
+
+
