@@ -278,6 +278,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return (prefixRange.location == 0 && prefixRange.length > 0);
 }
 
+- (BOOL)hasSuffixIgnoringCase:(NSString *)aString
+{
+	NSRange suffixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch | NSBackwardsSearch)];
+
+	return ((suffixRange.length + suffixRange.location) == [self length]);
+}
+
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
 	NSString *stringA = [NSString stringWithString:self];

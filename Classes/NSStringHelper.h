@@ -73,6 +73,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
+- (BOOL)hasSuffixIgnoringCase:(NSString *)aString;
 
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 
