@@ -92,7 +92,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSRange)range
 {
-	return NSMakeRange(0, ([self length] - 1));
+	return NSMakeRange(0, [self length]);
 }
 
 + (NSString *)stringWithUUID
@@ -1076,7 +1076,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSRange)range
 {
-	return NSMakeRange(0, ([self length] - 1));
+	return NSMakeRange(0, [self length]);
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
