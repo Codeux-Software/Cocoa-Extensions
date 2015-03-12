@@ -80,6 +80,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSString (CSCEFStringHelper)
 
+- (NSRange)range
+{
+	return NSMakeRange(0, ([self length] - 1));
+}
+
 + (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];

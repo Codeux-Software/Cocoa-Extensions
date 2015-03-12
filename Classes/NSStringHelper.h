@@ -52,6 +52,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 @property (readonly, copy) NSString *sha256;
 @property (readonly, copy) NSString *md5;
 
+@property (nonatomic, assign, readonly) NSRange range;
+
 + (NSString *)stringWithUUID;
 
 + (NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding;
