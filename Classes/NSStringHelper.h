@@ -162,6 +162,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 @interface NSAttributedString (CSCEFAttributedStringHelper)
 @property (readonly, copy) NSDictionary *attributes;
 
+@property (nonatomic, assign, readonly) NSRange range;
+
 + (NSAttributedString *)emptyString;
 + (NSAttributedString *)emptyStringWithBase:(NSString *)base;
 

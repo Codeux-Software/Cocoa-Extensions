@@ -80,11 +80,6 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSString (CSCEFStringHelper)
 
-- (NSRange)range
-{
-	return NSMakeRange(0, ([self length] - 1));
-}
-
 + (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
@@ -93,6 +88,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 + (instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithData:data encoding:encoding];
+}
+
+- (NSRange)range
+{
+	return NSMakeRange(0, ([self length] - 1));
 }
 
 + (NSString *)stringWithUUID
@@ -1074,6 +1074,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
 
+- (NSRange)range
+{
+	return NSMakeRange(0, ([self length] - 1));
+}
+
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
 {
 	return [self attributedStringByTrimmingCharactersInSet:set frontChop:NULL];
@@ -1184,7 +1189,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	
 	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
 
-	if (font == nil) {
+	if ((font == nil) == NO) {
 		attributes[NSFontAttributeName] = font;
 	}
 
