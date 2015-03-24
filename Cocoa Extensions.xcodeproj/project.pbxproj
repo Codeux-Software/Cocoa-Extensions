@@ -25,9 +25,11 @@
 		4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */; };
 		4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */; };
-		4C8B67FC1A90191900DC5021 /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */; };
-		4C8B67FD1A90191C00DC5021 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67FA1A9018E800DC5021 /* LICENSE */; };
 		4C8B68001A901A0200DC5021 /* CocoaExtensions_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */; };
+		4CA41C061AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */; };
+		4CA41C071AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */; };
+		4CA41C081AC1A73600756137 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4CA41C051AC1A73600756137 /* LICENSE.txt */; };
+		4CA41C091AC1A73600756137 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4CA41C051AC1A73600756137 /* LICENSE.txt */; };
 		4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA45C211A9149F400AF9C4B /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */; };
 		4CA45C6C1A91505800AF9C4B /* NSArrayHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74B41A8FDE5B000B5FF5 /* NSArrayHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -64,8 +66,6 @@
 		4CA45CA51A91505800AF9C4B /* NSDataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74881A8FDE1C000B5FF5 /* NSDataHelper.m */; };
 		4CA45CA71A91505800AF9C4B /* NSDictionaryHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF748A1A8FDE1C000B5FF5 /* NSDictionaryHelper.m */; };
 		4CA45CA91A91505800AF9C4B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1923CB1A900DBF0076F65A /* Security.framework */; };
-		4CA45CAC1A91505800AF9C4B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67FA1A9018E800DC5021 /* LICENSE */; };
-		4CA45CAD1A91505800AF9C4B /* ACKNOWLEDGEMENT in Resources */ = {isa = PBXBuildFile; fileRef = 4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */; };
 		4CA45CB31A91511F00AF9C4B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA45CB21A91511F00AF9C4B /* Foundation.framework */; };
 		4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
 		4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */; };
@@ -131,16 +131,16 @@
 		4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRBase64Encoding.h; sourceTree = "<group>"; };
 		4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRBase64Encoding.m; sourceTree = "<group>"; };
 		4C1923CB1A900DBF0076F65A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		4C1923DA1A9014E60076F65A /* Build Configuration.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = "Build Configuration.xcconfig"; path = "Build Configuration/Build Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4C1923DB1A9014E60076F65A /* Entitlements.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRPortMapper.h; sourceTree = "<group>"; };
 		4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRPortMapper.m; sourceTree = "<group>"; };
 		4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRSystemInformation.h; sourceTree = "<group>"; };
 		4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRSystemInformation.m; sourceTree = "<group>"; };
-		4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */ = {isa = PBXFileReference; lastKnownFileType = text; path = ACKNOWLEDGEMENT; sourceTree = "<group>"; };
-		4C8B67FA1A9018E800DC5021 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaExtensions_Prefix.pch; sourceTree = "<group>"; };
-		4C8B68011A901A1200DC5021 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Misc. Resources/Info.plist"; sourceTree = "<group>"; };
+		4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
+		4CA41C051AC1A73600756137 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Build Configuration.xcconfig"; path = "Resources/Build Configuration/Build Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Resources/Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
+		4CA41C101AC1A76E00756137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSBundleHelper.h; sourceTree = "<group>"; };
 		4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSBundleHelper.m; sourceTree = "<group>"; };
 		4CA45CB01A91505800AF9C4B /* CocoaExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -250,7 +250,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8B67F81A9018DC00DC5021 /* Documents */,
-				4C8B68011A901A1200DC5021 /* Info.plist */,
+				4CA41C111AC1A77200756137 /* Property Lists */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -314,8 +314,8 @@
 		4C8B67F81A9018DC00DC5021 /* Documents */ = {
 			isa = PBXGroup;
 			children = (
-				4C8B67F91A9018E800DC5021 /* ACKNOWLEDGEMENT */,
-				4C8B67FA1A9018E800DC5021 /* LICENSE */,
+				4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */,
+				4CA41C051AC1A73600756137 /* LICENSE.txt */,
 			);
 			name = Documents;
 			sourceTree = "<group>";
@@ -326,6 +326,14 @@
 				4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */,
 			);
 			name = Project;
+			sourceTree = "<group>";
+		};
+		4CA41C111AC1A77200756137 /* Property Lists */ = {
+			isa = PBXGroup;
+			children = (
+				4CA41C101AC1A76E00756137 /* Info.plist */,
+			);
+			name = "Property Lists";
 			sourceTree = "<group>";
 		};
 		4CDF74B21A8FDE37000B5FF5 /* Source */ = {
@@ -377,8 +385,8 @@
 		4CED78DE16E323260012AFDA /* Build Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				4C1923DA1A9014E60076F65A /* Build Configuration.xcconfig */,
-				4C1923DB1A9014E60076F65A /* Entitlements.entitlements */,
+				4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */,
+				4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */,
 			);
 			name = "Build Configuration";
 			path = "../../../Resources/Build Configurations";
@@ -499,7 +507,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "Cocoa Extensions" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -527,8 +535,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C8B67FD1A90191C00DC5021 /* LICENSE in Resources */,
-				4C8B67FC1A90191900DC5021 /* ACKNOWLEDGEMENT in Resources */,
+				4CA41C081AC1A73600756137 /* LICENSE.txt in Resources */,
+				4CA41C061AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,8 +544,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CA45CAC1A91505800AF9C4B /* LICENSE in Resources */,
-				4CA45CAD1A91505800AF9C4B /* ACKNOWLEDGEMENT in Resources */,
+				4CA41C091AC1A73600756137 /* LICENSE.txt in Resources */,
+				4CA41C071AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,11 +623,11 @@
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4C1923DA1A9014E60076F65A /* Build Configuration.xcconfig */;
+			baseConfigurationReference = 4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
-				INFOPLIST_FILE = "Misc. Resources/Info.plist";
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_NAME = CocoaExtensions;
 				WRAPPER_EXTENSION = framework;
 			};
