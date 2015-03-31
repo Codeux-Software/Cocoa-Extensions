@@ -193,7 +193,7 @@ static void portMapCallback (
 
 
 	if (status == kDNSServiceErr_NoError) {
-		status = DNSServiceSetDispatchQueue(_service, dispatch_get_main_queue());
+		(void)DNSServiceSetDispatchQueue(_service, dispatch_get_main_queue());
 
 		return YES;
 	} else {
