@@ -49,7 +49,7 @@
 
 + (NSString *)systemBuildVersion
 {
-	id cachedValue = nil;
+	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
 		cachedValue = [self retrieveSystemInformationKey:@"ProductBuildVersion"];
@@ -60,7 +60,7 @@
 
 + (NSString *)systemStandardVersion
 {
-	id cachedValue = nil;
+	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
 		cachedValue = [self retrieveSystemInformationKey:@"ProductVersion"];
@@ -71,7 +71,7 @@
 
 + (NSString *)systemOperatingSystemName
 {
-	id cachedValue = nil;
+	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
 		cachedValue = [self retrieveSystemInformationKey:@"ProductName"];
@@ -82,9 +82,9 @@
 
 + (BOOL)isUsingOSXLionOrLater
 {
-	BOOL _valueCached = NO;
+	static BOOL _valueCached = NO;
 	
-	BOOL cachedValue = NO;
+	static BOOL cachedValue = NO;
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
@@ -107,9 +107,9 @@
 
 + (BOOL)isUsingOSXMountainLionOrLater
 {
-	BOOL _valueCached = NO;
+	static BOOL _valueCached = NO;
 	
-	BOOL cachedValue = NO;
+	static BOOL cachedValue = NO;
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
@@ -132,9 +132,9 @@
 
 + (BOOL)isUsingOSXMavericksOrLater
 {
-	BOOL _valueCached = NO;
+	static BOOL _valueCached = NO;
 	
-	BOOL cachedValue = NO;
+	static BOOL cachedValue = NO;
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
@@ -157,9 +157,9 @@
 
 + (BOOL)isUsingOSXYosemiteOrLater
 {
-	BOOL _valueCached = NO;
+	static BOOL _valueCached = NO;
 	
-	BOOL cachedValue = NO;
+	static BOOL cachedValue = NO;
 	
 	if (_valueCached == NO) {
 		_valueCached = YES;
@@ -185,7 +185,7 @@
 
 + (NSString *)systemModelToken
 {
-	id cachedValue = nil;
+	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
 		char modelBuffer[256];
@@ -204,7 +204,7 @@
 
 + (NSString *)systemModelName
 {
-	id cachedValue = nil;
+	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
 		/* This method is not returning very detailed information. Only
