@@ -52,7 +52,11 @@
 {
 	NSMutableDictionary *searchDictionary = [NSMutableDictionary dictionary];
 
-	searchDictionary[(id)kSecClass] = (id)kSecClassGenericPassword;
+	if ([itemKind isEqualToString:@"internet password"]) {
+		searchDictionary[(id)kSecClass] = (id)kSecClassInternetPassword;
+	} else {
+		searchDictionary[(id)kSecClass] = (id)kSecClassGenericPassword;
+	}
 
 	searchDictionary[(id)kSecAttrLabel] = itemName;
 	searchDictionary[(id)kSecAttrDescription] = itemKind;
