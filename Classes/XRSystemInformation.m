@@ -41,6 +41,7 @@
 #define NSAppKitVersionNumber10_7_4		1138.47
 #define NSAppKitVersionNumber10_8		1187
 #define NSAppKitVersionNumber10_9		1265
+#define NSAppKitVersionNumber10_10		1343
 
 @implementation XRSystemInformation
 
@@ -177,6 +178,31 @@
 		}
 	}
 	
+	return cachedValue;
+}
+
++ (BOOL)isUsingOSXElCapitanOrLater
+{
+	static BOOL _valueCached = NO;
+
+	static BOOL cachedValue = NO;
+
+	if (_valueCached == NO) {
+		_valueCached = YES;
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 11;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_10);
+		}
+	}
+
 	return cachedValue;
 }
 

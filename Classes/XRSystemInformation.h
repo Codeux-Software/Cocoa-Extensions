@@ -43,4 +43,5 @@
 + (BOOL)isUsingOSXMountainLionOrLater;
 + (BOOL)isUsingOSXMavericksOrLater;
 + (BOOL)isUsingOSXYosemiteOrLater;
++ (BOOL)isUsingOSXElCapitanOrLater;
 @end
