@@ -39,6 +39,15 @@
 	return [self ubiquityIdentityToken];
 }
 
+- (BOOL)directoryExistsAtPath:(NSString *)path
+{
+	BOOL isDirectory = NO;
+
+	BOOL existsResult = [self fileExistsAtPath:path isDirectory:&isDirectory];
+
+	return (existsResult && isDirectory);
+}
+
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error
 {
 	NSDictionary *newattrs = @{NSFileImmutable : @(YES)};

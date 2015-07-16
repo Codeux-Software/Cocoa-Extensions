@@ -33,6 +33,8 @@
 @interface NSFileManager (CSCEFFileManagerHelper)
 @property (readonly, strong) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
 
+- (BOOL)directoryExistsAtPath:(NSString *)path;
+
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error;
 @end
