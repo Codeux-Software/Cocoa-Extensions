@@ -31,6 +31,8 @@
  *********************************************************************** */
 
 @interface XRSystemInformation : NSObject
++ (NSString *)formattedEthernetMacAddress;
+
 + (NSString *)systemBuildVersion;
 + (NSString *)systemStandardVersion;
 + (NSString *)systemOperatingSystemName;

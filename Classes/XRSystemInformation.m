@@ -32,6 +32,8 @@
 
 #import "XRSystemInformation.h"
 
+#import <IOKit/IOKitLib.h>
+
 #include <sys/sysctl.h>
 
 #define NSAppKitVersionNumber10_6		1038
@@ -47,6 +49,77 @@
 
 #pragma mark -
 #pragma mark Public.
+
++ (NSString *)formattedEthernetMacAddress
+{
+	CFDataRef macAddress = nil;
+
+	/* Mach port used to initiate communication with IOKit. */
+	mach_port_t master_port;
+
+	kern_return_t machPortResult = IOMasterPort(MACH_PORT_NULL, &master_port);
+
+	if ((machPortResult == KERN_SUCCESS) == NO) {
+		return nil;
+	}
+
+	/* Create a matching dictionary */
+	CFMutableDictionaryRef matchingDict = IOBSDNameMatching(master_port, 0, "en0");
+
+	if (matchingDict == NULL) {
+		return nil;
+	}
+
+	/* Look up registered bjects that match a matching dictionary. */
+	io_iterator_t iterator;
+
+	kern_return_t getMatchResult = IOServiceGetMatchingServices(master_port, matchingDict, &iterator);
+
+	if ((getMatchResult == KERN_SUCCESS) == NO) {
+		return nil;
+	}
+
+	/* Iterate over services */
+	io_object_t service;
+
+	while((service = IOIteratorNext(iterator)) > 0) {
+		io_object_t parentService;
+
+		kern_return_t kernResult = IORegistryEntryGetParentEntry(service, kIOServicePlane, &parentService);
+
+		if (kernResult == KERN_SUCCESS) {
+			if (macAddress) {
+				CFRelease(macAddress);
+			}
+
+			macAddress = (CFDataRef)IORegistryEntryCreateCFProperty(parentService, CFSTR("IOMACAddress"), kCFAllocatorDefault, 0);
+
+			IOObjectRelease(parentService);
+		}
+
+		IOObjectRelease(service);
+	}
+
+	IOObjectRelease(iterator);
+
+	/* If we have a MAC address, convert it into a formatted string. */
+	if (macAddress) {
+		unsigned char macAddressBytes[6];
+
+		CFDataGetBytes(macAddress, CFRangeMake(0, 6), macAddressBytes);
+
+		CFRelease(macAddress);
+
+		NSString *formattedMacAddress = [NSString stringWithFormat:
+										 @"%02X:%02X:%02X:%02X:%02X:%02X",
+										 macAddressBytes[0], macAddressBytes[1], macAddressBytes[2],
+										 macAddressBytes[3], macAddressBytes[4], macAddressBytes[5]];
+
+		return formattedMacAddress;
+	} else {
+		return nil;
+	}
+}
 
 + (NSString *)systemBuildVersion
 {
