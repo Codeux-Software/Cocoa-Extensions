@@ -111,7 +111,7 @@
 		CFRelease(macAddress);
 
 		NSString *formattedMacAddress = [NSString stringWithFormat:
-										 @"%02X:%02X:%02X:%02X:%02X:%02X",
+										 @"%02x:%02x:%02x:%02x:%02x:%02x",
 										 macAddressBytes[0], macAddressBytes[1], macAddressBytes[2],
 										 macAddressBytes[3], macAddressBytes[4], macAddressBytes[5]];
 
