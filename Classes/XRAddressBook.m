@@ -36,7 +36,23 @@
 
 @implementation XRAddressBook
 
-+ (NSString *)emailAddressOfLocalUser
++ (NSString *)myName
+{
+	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
+
+	NSString *userFirstName = [aPerson valueForProperty:kABFirstNameProperty];
+	NSString *userLastName = [aPerson valueForProperty:kABLastNameProperty];
+
+	if (userFirstName && userLastName) {
+		return [NSString stringWithFormat:@"%@ %@", userFirstName, userLastName];
+	} else if (userFirstName) {
+		return userFirstName;
+	} else {
+		return nil;
+	}
+}
+
++ (NSString *)myEmailAddress
 {
 	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
 

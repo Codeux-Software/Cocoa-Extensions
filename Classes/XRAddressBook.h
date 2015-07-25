@@ -31,5 +31,6 @@
  *********************************************************************** */
 
 @interface XRAddressBook : NSObject
-+ (NSString *)emailAddressOfLocalUser;
++ (NSString *)myName;
++ (NSString *)myEmailAddress;
 @end
