@@ -197,6 +197,19 @@
 	return retval;
 }
 
+- (NSArray *)stringArryControllerObjects
+{
+	NSMutableArray *newSet = [NSMutableArray array];
+
+	for (id object in self) {
+		if ([object isKindOfClass:[NSString class]]) {
+			[newSet addObject:@{@"string" : object}];
+		}
+	}
+
+	return [newSet copy];
+}
+
 @end
 
 @implementation NSMutableArray (CSCEFMutableArrayHelper)
@@ -291,19 +304,6 @@
 	[self insertObject:obj atIndex:idx];
 	
 	return idx;
-}
-
-- (NSArray *)stringArryControllerObjects
-{
-	NSMutableArray *newSet = [NSMutableArray array];
-
-	for (id object in self) {
-		if ([object isKindOfClass:[NSString class]]) {
-			[newSet addObject:@{@"string" : object}];
-		}
-	}
-
-	return [newSet copy];
 }
 
 @end
