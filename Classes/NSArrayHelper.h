@@ -52,6 +52,10 @@
 
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
 - (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
+
+/* -stringArryControllerObjects returns an NSArray of NSDictionary with single key,
+ named "string" which contains any NSString values in original array. */
+@property (nonatomic, copy, readonly) NSArray *stringArryControllerObjects;
 @end
 
 @interface NSMutableArray (CSCEFMutableArrayHelper)

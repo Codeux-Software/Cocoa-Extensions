@@ -293,6 +293,19 @@
 	return idx;
 }
 
+- (NSArray *)stringArryControllerObjects
+{
+	NSMutableArray *newSet = [NSMutableArray array];
+
+	for (id object in self) {
+		if ([object isKindOfClass:[NSString class]]) {
+			[newSet addObject:@{@"string" : object}];
+		}
+	}
+
+	return [newSet copy];
+}
+
 @end
 
 @implementation NSIndexSet (CSCEFIndexSetHelper)
