@@ -611,18 +611,23 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 }
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {
-	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
+	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth withFont:textFont];
 	
 	return (boundHeight / lineHeight);
 }
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont
+{
+	return [self pixelHeightInWidth:width withFont:textFont lineBreakMode:NSLineBreakByWordWrapping];
+}
+
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
 	NSAttributedString *base = [NSAttributedString emptyStringWithBase:self];
 
-	return [base pixelHeightInWidth:width forcedFont:font];
+	return [base pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:textFont];
 }
 #endif
 
@@ -1164,40 +1169,45 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight
 {
-	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight forcedFont:nil];
+	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight withFont:nil];
 }
 
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {	
-	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth forcedFont:textFont];
+	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth lineBreakMode:NSLineBreakByWordWrapping withFont:textFont];
 
 	return (boundHeight / lineHeight);
 }
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width
 {
-	return [self pixelHeightInWidth:width forcedFont:nil];
+	return [self pixelHeightInWidth:width lineBreakMode:NSLineBreakByWordWrapping withFont:nil];
 }
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode
+{
+	return [self pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:nil];
+}
+
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(NSFont *)textFont
 {
 	NSMutableAttributedString *baseMutable = [self mutableCopy];
-	
+
+	NSRange baseMutableRange = NSMakeRange(0, [baseMutable length]);
+
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	
-	[paragraphStyle setLineBreakMode:NSLineBreakByCharWrapping];
-	
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithObjectsAndKeys:paragraphStyle, NSParagraphStyleAttributeName, nil];
+	[paragraphStyle setLineBreakMode:lineBreakMode];
 
-	if ((font == nil) == NO) {
-		attributes[NSFontAttributeName] = font;
+	if ((textFont == nil) == NO) {
+		[baseMutable addAttribute:NSFontAttributeName value:textFont range:baseMutableRange];
 	}
 
-	[baseMutable setAttributes:attributes range:NSMakeRange(0, [baseMutable length])];
+	[baseMutable addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:baseMutableRange];
 
 	NSRect bounds = [baseMutable boundingRectWithSize:NSMakeSize(width, 0.0)
-											  options:NSStringDrawingUsesLineFragmentOrigin];
-	
+											  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)];
+
 	return NSHeight(bounds);
 }
 #endif

@@ -115,9 +115,10 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont;
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode;
 #endif 
 
 @property (readonly, copy) NSString *string; // Returns self.
@@ -176,10 +177,11 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
-- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight forcedFont:(NSFont *)textFont;
+- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width;
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width forcedFont:(NSFont *)font;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode;
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(NSFont *)textFont;
 #endif
 @end
 
