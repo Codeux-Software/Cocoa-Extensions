@@ -42,4 +42,7 @@
 + (NSData *)carriageReturnPlusLineFeed;
 
 + (NSData *)emptyObject;
+
+- (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length;
+- (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length;
 @end
