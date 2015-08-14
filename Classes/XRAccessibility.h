@@ -32,4 +32,8 @@
 
 @interface XRAccessibility : NSObject
 + (BOOL)isVoiceOverEnabled;
+
++ (void)setAccessibilityLabel:(NSString *)accessibilityLabel forObject:(id)object;
++ (void)setAccessibilityTitle:(NSString *)accessibilityTitle forObject:(id)object;
++ (void)setAccessibilityValueDescription:(NSString *)accessibilityValueDescription forObject:(id)object;
 @end

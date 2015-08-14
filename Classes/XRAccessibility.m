@@ -39,4 +39,34 @@
 	return (CFPreferencesCopyAppValue(CFSTR("voiceOverOnOffKey"), CFSTR("com.apple.universalaccess")) == kCFBooleanTrue);
 }
 
++ (void)setAccessibilityValueDescription:(NSString *)accessibilityValueDescription forObject:(id)object
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[object setAccessibilityValueDescription:accessibilityValueDescription];
+	} else {
+		[object accessibilitySetOverrideValue:accessibilityValueDescription
+								 forAttribute:NSAccessibilityValueDescriptionAttribute];
+	}
+}
+
++ (void)setAccessibilityLabel:(NSString *)accessibilityLabel forObject:(id)object
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[object setAccessibilityLabel:accessibilityLabel];
+	} else {
+		[object accessibilitySetOverrideValue:accessibilityLabel
+								 forAttribute:NSAccessibilityDescriptionAttribute];
+	}
+}
+
++ (void)setAccessibilityTitle:(NSString *)accessibilityTitle forObject:(id)object
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		[object setAccessibilityTitle:accessibilityTitle];
+	} else {
+		[object accessibilitySetOverrideValue:accessibilityTitle
+								 forAttribute:NSAccessibilityTitleAttribute];
+	}
+}
+
 @end
