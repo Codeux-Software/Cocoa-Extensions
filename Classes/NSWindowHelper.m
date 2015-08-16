@@ -34,6 +34,26 @@
 
 @implementation NSWindow (CSCEFWindowHelper)
 
+- (BOOL)isBeneathMouse
+{
+	return (self == [NSWindow windowBeneathMouse]);
+}
+
++ (NSWindow *)windowBeneathMouse
+{
+	NSPoint cursorLocation = [NSEvent mouseLocation];
+
+	NSArray *windowList = [NSApp orderedWindows];
+
+	for (NSWindow *window in windowList) {
+		if (NSMouseInRect(cursorLocation, [window frame], NO)) {
+			return window;
+		}
+	}
+
+	return nil;
+}
+
 - (BOOL)runningInHighResolutionMode
 {
 	return [[self screen] runningInHighResolutionMode];

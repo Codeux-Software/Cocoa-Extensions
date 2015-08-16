@@ -33,6 +33,10 @@
 @interface NSWindow (CSCEFWindowHelper)
 - (void)exactlyCenterWindow;
 
++ (NSWindow *)windowBeneathMouse;
+
+@property (readonly) BOOL isBeneathMouse;
+
 @property (readonly) BOOL runningInHighResolutionMode;
 
 @property (getter=isInFullscreenMode, readonly) BOOL inFullscreenMode;
