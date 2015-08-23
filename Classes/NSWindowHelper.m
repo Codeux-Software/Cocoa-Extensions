@@ -32,6 +32,8 @@
 
 #import "CocoaExtensions.h"
 
+NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveFrameMovesToActiveDisplay";
+
 @implementation NSWindow (CSCEFWindowHelper)
 
 - (BOOL)isBeneathMouse
@@ -96,9 +98,9 @@
 		return;
 	}
 
-	keyword = [NSString stringWithFormat:@"-> Internal (v3) -> %@", keyword];
+	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
-	[self saveFrameUsingName:keyword];
+	[[NSUserDefaults standardUserDefaults] setObject:[self stringWithSavedFrame] forKey:keyword];
 }
 
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword
@@ -107,9 +109,18 @@
 		return;
 	}
 
-	keyword = [NSString stringWithFormat:@"-> Internal (v3) -> %@", keyword];
+	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
-	[self setFrameAutosaveName:keyword];
+	NSString *savedFrame = [[NSUserDefaults standardUserDefaults] stringForKey:keyword];
+
+	if (savedFrame) {
+		/* Apple introduced a private defaults key in OS X Mavericks named 
+		 NSWindowAutosaveFrameMovesToActiveDisplay which -setFrameFromString: and no other
+		 method accesses. The private key is used to determine whether the window should
+		 favor the active display when restoring the frame. */
+
+		[self setFrameFromString:savedFrame];
+	}
 }
 
 - (BOOL)isInFullscreenMode

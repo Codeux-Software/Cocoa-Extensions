@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDisplay;
+
 @interface NSWindow (CSCEFWindowHelper)
 - (void)exactlyCenterWindow;
 
