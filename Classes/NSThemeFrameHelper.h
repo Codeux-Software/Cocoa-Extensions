@@ -30,49 +30,8 @@
 
  *********************************************************************** */
 
-#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#else
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_iOS_SDK
-#endif
-
-#import <CocoaExtensions/StaticDefinitions.h>
-
-#import <CocoaExtensions/XRBase64Encoding.h>
-#import <CocoaExtensions/XRGlobalModels.h>
-#import <CocoaExtensions/XRRegularExpression.h>
-
-#import <CocoaExtensions/DDExtensions.h>
-
-#import <CocoaExtensions/NSArrayHelper.h>
-#import <CocoaExtensions/NSByteCountFormatterHelper.h>
-#import <CocoaExtensions/NSDataHelper.h>
-#import <CocoaExtensions/NSDateHelper.h>
-#import <CocoaExtensions/NSDictionaryHelper.h>
-#import <CocoaExtensions/NSNumberHelper.h>
-#import <CocoaExtensions/NSRangeHelper.h>
-#import <CocoaExtensions/NSRectHelper.h>
-#import <CocoaExtensions/NSStringHelper.h>
-#import <CocoaExtensions/NSValueHelper.h>
-
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#import <CocoaExtensions/XRAccessibility.h>
-#import <CocoaExtensions/XRAddressBook.h>
-#import <CocoaExtensions/XRKeychain.h>
-#import <CocoaExtensions/XRPortMapper.h>
-#import <CocoaExtensions/XRSystemInformation.h>
-
-#import <CocoaExtensions/NSBundleHelper.h>
-#import <CocoaExtensions/NSColorHelper.h>
-#import <CocoaExtensions/NSFileManagerHelper.h>
-#import <CocoaExtensions/NSFontHelper.h>
-#import <CocoaExtensions/NSImageHelper.h>
-#import <CocoaExtensions/NSMenuHelper.h>
-#import <CocoaExtensions/NSOutlineViewHelper.h>
-#import <CocoaExtensions/NSPasteboardHelper.h>
-#import <CocoaExtensions/NSScreenHelper.h>
-#import <CocoaExtensions/NSSplitViewHelper.h>
-#import <CocoaExtensions/NSTextFieldHelper.h>
-#import <CocoaExtensions/NSThemeFrameHelper.h>
-#import <CocoaExtensions/NSWindowHelper.h>
-#endif
+@interface NSObject (CSCEFThemeFrameHelper)
+/* This property cannot be assigned and will always return NO unless
+ invoked on an instance of NSThemeFrame which itself is private. */
+@property (nonatomic, assign) BOOL usesCustomTitlebarTitlePositioning;
+@end
