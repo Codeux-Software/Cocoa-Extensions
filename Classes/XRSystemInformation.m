@@ -48,7 +48,7 @@
 @implementation XRSystemInformation
 
 #pragma mark -
-#pragma mark Public.
+#pragma mark Public
 
 + (NSString *)formattedEthernetMacAddress
 {
@@ -146,11 +146,43 @@
 + (NSString *)systemOperatingSystemName
 {
 	static id cachedValue = nil;
-	
+
 	if (cachedValue == nil) {
-		cachedValue = [self retrieveSystemInformationKey:@"ProductName"];
+		NSString *productVersion = [XRSystemInformation systemStandardVersion];
+
+		if ([productVersion hasPrefix:@"10.11"]) {
+			cachedValue = NSLocalizedStringFromTable(@"OS X El Capitan", @"XRSystemInformation", nil);
+		} else if ([productVersion hasPrefix:@"10.10"]) {
+			cachedValue = NSLocalizedStringFromTable(@"OS X Yosemite", @"XRSystemInformation", nil);
+		} else if ([productVersion hasPrefix:@"10.9"]) {
+			cachedValue = NSLocalizedStringFromTable(@"OS X Mavericks", @"XRSystemInformation", nil);
+		} else if ([productVersion hasPrefix:@"10.8"]) {
+			cachedValue = NSLocalizedStringFromTable(@"OS X Mountain Lion", @"XRSystemInformation", nil);
+		} else if ([productVersion hasPrefix:@"10.7"]) {
+			cachedValue = NSLocalizedStringFromTable(@"OS X Lion", @"XRSystemInformation", nil);
+		} else {
+			static BOOL _performedManualLookup = NO;
+
+			if (_performedManualLookup == NO) {
+				_performedManualLookup = YES;
+
+				NSString *systemProfilerFilePath = [@"~/Library/Preferences/com.apple.SystemProfiler.plist" stringByExpandingTildeInPath];
+
+				NSDictionary *profilerData = [NSDictionary dictionaryWithContentsOfFile:systemProfilerFilePath];
+
+				id operatingSystemNames = [profilerData objectForKey:@"OS Names"];
+
+				if (operatingSystemNames && [operatingSystemNames isKindOfClass:[NSDictionary class]]) {
+					NSString *manualSearchKey = [NSString stringWithFormat:@"%@-%@", [XRSystemInformation systemBuildVersion], [[NSLocale currentLocale] localeIdentifier]];
+
+					cachedValue = operatingSystemNames[manualSearchKey];
+				}
+
+				profilerData = nil;
+			}
+		}
 	}
-	
+
 	return cachedValue;
 }
 
@@ -280,7 +312,7 @@
 }
 
 #pragma mark -
-#pragma mark Private.
+#pragma mark Private
 
 + (NSString *)systemModelToken
 {

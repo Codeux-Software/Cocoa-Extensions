@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C1338F91B8E4A860085F6A4 /* XRSystemInformation.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */; settings = {ASSET_TAGS = (); }; };
 		4C1923921A8FE7F50076F65A /* DDExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923901A8FE7F50076F65A /* DDExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1923931A8FE7F50076F65A /* DDInvocation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923911A8FE7F50076F65A /* DDInvocation.h */; };
 		4C1923961A8FE8D00076F65A /* DDExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923941A8FE8D00076F65A /* DDExtensions.m */; };
@@ -124,6 +125,7 @@
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = XRSystemInformation.strings; path = "Resources/Language Files/XRSystemInformation.strings"; sourceTree = "<group>"; };
 		4C1923901A8FE7F50076F65A /* DDExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDExtensions.h; sourceTree = "<group>"; };
 		4C1923911A8FE7F50076F65A /* DDInvocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDInvocation.h; sourceTree = "<group>"; };
 		4C1923941A8FE8D00076F65A /* DDExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDExtensions.m; sourceTree = "<group>"; };
@@ -265,10 +267,19 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4C1338FA1B8E4A8B0085F6A4 /* Language Files */,
 				4C8B67F81A9018DC00DC5021 /* Documents */,
 				4CA41C111AC1A77200756137 /* Property Lists */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		4C1338FA1B8E4A8B0085F6A4 /* Language Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */,
+			);
+			name = "Language Files";
 			sourceTree = "<group>";
 		};
 		4C1923AE1A9004B50076F65A /* Public Headers */ = {
@@ -561,6 +572,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CA41C081AC1A73600756137 /* LICENSE.txt in Resources */,
+				4C1338F91B8E4A860085F6A4 /* XRSystemInformation.strings in Resources */,
 				4CA41C061AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

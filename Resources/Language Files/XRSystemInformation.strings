@@ -30,21 +30,8 @@
 
  *********************************************************************** */
 
-@interface XRSystemInformation : NSObject
-+ (NSString *)formattedEthernetMacAddress;
-
-+ (NSString *)systemBuildVersion;
-+ (NSString *)systemStandardVersion;
-
-+ (NSString *)systemOperatingSystemName;
-
-+ (NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
-
-+ (NSString *)retrieveSystemInformationKey:(NSString *)key;
-
-+ (BOOL)isUsingOSXLionOrLater;
-+ (BOOL)isUsingOSXMountainLionOrLater;
-+ (BOOL)isUsingOSXMavericksOrLater;
-+ (BOOL)isUsingOSXYosemiteOrLater;
-+ (BOOL)isUsingOSXElCapitanOrLater;
-@end
+"OS X El Capitan" = "OS X El Capitan";
+"OS X Yosemite" = "OS X Yosemite";
+"OS X Mavericks" = "OS X Mavericks";
+"OS X Mountain Lion" = "OS X Mountain Lion";
+"OS X Lion" = "OS X Lion";
