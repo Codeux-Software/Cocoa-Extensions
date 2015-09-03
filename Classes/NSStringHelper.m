@@ -65,6 +65,8 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
+#import <WebKit/WebKit.h>
+
 #include <arpa/inet.h>
 
 NSString * const NSStringEmptyPlaceholder = @"";
@@ -923,6 +925,23 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	
 	return nil;
 }
+
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+- (NSURL *)URLUsingWebKitPasteboard
+{
+	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
+
+	[pasteboard setStringContent:self];
+
+	NSURL *u = [WebView URLFromPasteboard:pasteboard];
+
+	if (u == nil) {
+		u = [NSURL URLWithString:self];
+	}
+
+	return u;
+}
+#endif
 
 @end
 

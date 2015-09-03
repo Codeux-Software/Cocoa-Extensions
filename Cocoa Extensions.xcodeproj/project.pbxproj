@@ -118,11 +118,11 @@
 		4CDF74E01A8FDE5B000B5FF5 /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDF74E11A8FDE5B000B5FF5 /* NSWindowHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDF74E31A8FE039000B5FF5 /* CocoaExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CEEC2D51B97C7C1000F517B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEEC2D41B97C7C1000F517B /* WebKit.framework */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = XRSystemInformation.strings; path = "Resources/Language Files/XRSystemInformation.strings"; sourceTree = "<group>"; };
@@ -204,6 +204,7 @@
 		4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSValueHelper.h; sourceTree = "<group>"; };
 		4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSWindowHelper.h; sourceTree = "<group>"; };
 		4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaExtensions.h; sourceTree = "<group>"; };
+		4CEEC2D41B97C7C1000F517B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		8DC2EF5B0486A6940098B216 /* CocoaExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -224,6 +225,7 @@
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */,
 				4C1923CC1A900DBF0076F65A /* Security.framework in Frameworks */,
+				4CEEC2D51B97C7C1000F517B /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,11 +257,11 @@
 			isa = PBXGroup;
 			children = (
 				4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */,
-				4C2A71E81B629EA200CD363B /* IOKit.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
-				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+				4C2A71E81B629EA200CD363B /* IOKit.framework */,
 				4C1923CB1A900DBF0076F65A /* Security.framework */,
+				4CEEC2D41B97C7C1000F517B /* WebKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

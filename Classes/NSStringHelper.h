@@ -124,6 +124,10 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 @property (readonly, copy) NSString *string; // Returns self.
 
 @property (readonly, copy) NSString *trimAndGetFirstToken;
+
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+@property (readonly, copy) NSURL *URLUsingWebKitPasteboard;
+#endif
 @end
 
 #pragma mark
