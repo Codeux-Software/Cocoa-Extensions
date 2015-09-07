@@ -39,6 +39,7 @@
 - (NSArray *)arrayForKey:(NSString *)key;
 - (NSDictionary *)dictionaryForKey:(NSString *)key;
 - (NSInteger)integerForKey:(NSString *)key;
+- (NSUInteger)unsignedIntegerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
 - (double)doubleForKey:(NSString *)key;
 - (float)floatForKey:(NSString *)key;
@@ -50,6 +51,7 @@
 - (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue;
 - (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue;
 - (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
+- (NSUInteger)unsignedIntegerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
 - (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
 - (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
 - (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
@@ -62,6 +64,7 @@
 - (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key;
 - (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key;
 - (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key;
+- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(NSString *)key;
 - (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key;
 - (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
 - (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
@@ -73,8 +76,8 @@
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
 
-@property (readonly, strong) id sortedDictionary;
-@property (readonly, strong) id sortedReversedDictionary;
+@property (readonly, strong) id sortedDictionary COCOA_EXTENSIONS_DEPRECATED("Use -sortedDictionaryKeys instead");
+@property (readonly, strong) id sortedReversedDictionary COCOA_EXTENSIONS_DEPRECATED("Use -sortedDictionaryReversedKeys instead");
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryReversedKeys;
@@ -88,6 +91,7 @@
 
 - (void)setBool:(BOOL)value forKey:(NSString *)key;
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key;
+- (void)setUnsignedInteger:(NSUInteger)value forKey:(NSString *)key;
 - (void)setLongLong:(long long)value forKey:(NSString *)key;
 - (void)setDouble:(double)value forKey:(NSString *)key;
 - (void)setFloat:(float)value forKey:(NSString *)key;

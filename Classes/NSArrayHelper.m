@@ -36,7 +36,7 @@
 
 @implementation NSArray (CSCEFArrayHelper)
 
-- (BOOL)boolAtIndex:(NSInteger)n
+- (BOOL)boolAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -47,7 +47,7 @@
 	return NO;
 }
 
-- (NSArray *)arrayAtIndex:(NSInteger)n
+- (NSArray *)arrayAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -58,7 +58,7 @@
 	return nil;
 }
 
-- (NSString *)stringAtIndex:(NSInteger)n
+- (NSString *)stringAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -69,7 +69,7 @@
 	return nil;
 }
 
-- (NSDictionary *)dictionaryAtIndex:(NSInteger)n
+- (NSDictionary *)dictionaryAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -80,7 +80,7 @@
 	return nil;
 }
 
-- (NSInteger)integerAtIndex:(NSInteger)n
+- (NSInteger)integerAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -91,7 +91,18 @@
 	return 0;
 }
 
-- (long long)longLongAtIndex:(NSInteger)n
+- (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n
+{
+	id obj = self[n];
+
+	if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
+		return [obj unsignedIntegerValue];
+	}
+
+	return 0;
+}
+
+- (long long)longLongAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -102,7 +113,7 @@
 	return 0;
 }
 
-- (double)doubleAtIndex:(NSInteger)n
+- (double)doubleAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -113,7 +124,7 @@
 	return 0;
 }
 
-- (void *)pointerAtIndex:(NSInteger)n
+- (void *)pointerAtIndex:(NSUInteger)n
 {
 	id obj = self[n];
 	
@@ -233,6 +244,11 @@
 	[self insertObject:@(value) atIndex:index];
 }
 
+- (void)insertUnsignedInteger:(NSUInteger)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index
 {
 	[self insertObject:@(value) atIndex:index];
@@ -254,6 +270,11 @@
 }
 
 - (void)addInteger:(NSInteger)value
+{
+	[self addObject:@(value)];
+}
+
+- (void)addUnsignedInteger:(NSUInteger)value
 {
 	[self addObject:@(value)];
 }

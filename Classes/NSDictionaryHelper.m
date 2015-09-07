@@ -87,6 +87,17 @@
 	return 0;
 }
 
+- (NSUInteger)unsignedIntegerForKey:(NSString *)key
+{
+	id obj = self[key];
+
+	if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
+		return [obj unsignedIntegerValue];
+	}
+
+	return 0;
+}
+
 - (long long)longLongForKey:(NSString *)key
 {
 	id obj = self[key];
@@ -218,6 +229,15 @@
 	}
 }
 
+- (NSUInteger)unsignedIntegerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue
+{
+	if ([self containsKey:key]) {
+		return [self unsignedIntegerForKey:key];
+	} else {
+		return defaultValue;
+	}
+}
+
 - (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue
 {
 	if ([self containsKey:key]) {
@@ -298,6 +318,13 @@
 	}
 }
 
+- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(NSString *)key
+{
+	if ([self containsKey:key]) {
+		*pointer = [self unsignedIntegerForKey:key];
+	}
+}
+
 - (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key
 {
 	if ([self containsKey:key]) {
@@ -355,11 +382,15 @@
 
 - (id)sortedDictionary
 {
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
 	return [self sortedDictionary:NO];
 }
 
 - (id)sortedReversedDictionary
 {
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
 	return [self sortedDictionary:YES];
 }
 
@@ -423,6 +454,11 @@
 }
 
 - (void)setInteger:(NSInteger)value forKey:(NSString *)key
+{
+	self[key] = @(value);
+}
+
+- (void)setUnsignedInteger:(NSUInteger)value forKey:(NSString *)key
 {
 	self[key] = @(value);
 }

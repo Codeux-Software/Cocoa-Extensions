@@ -33,14 +33,15 @@
 @interface NSArray (CSCEFArrayHelper)
 @property (nonatomic, assign, readonly) NSRange range;
 
-- (BOOL)boolAtIndex:(NSInteger)n;
-- (NSArray *)arrayAtIndex:(NSInteger)n;
-- (NSString *)stringAtIndex:(NSInteger)n;
-- (NSDictionary *)dictionaryAtIndex:(NSInteger)n;
-- (NSInteger)integerAtIndex:(NSInteger)n;
-- (long long)longLongAtIndex:(NSInteger)n;
-- (double)doubleAtIndex:(NSInteger)n;
-- (void *)pointerAtIndex:(NSInteger)n NS_RETURNS_INNER_POINTER;
+- (BOOL)boolAtIndex:(NSUInteger)n;
+- (NSArray *)arrayAtIndex:(NSUInteger)n;
+- (NSString *)stringAtIndex:(NSUInteger)n;
+- (NSDictionary *)dictionaryAtIndex:(NSUInteger)n;
+- (NSInteger)integerAtIndex:(NSUInteger)n;
+- (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n;
+- (long long)longLongAtIndex:(NSUInteger)n;
+- (double)doubleAtIndex:(NSUInteger)n;
+- (void *)pointerAtIndex:(NSUInteger)n NS_RETURNS_INNER_POINTER;
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject;
 
@@ -63,12 +64,14 @@
 
 - (void)addBool:(BOOL)value;
 - (void)addInteger:(NSInteger)value;
+- (void)addUnsignedInteger:(NSUInteger)value;
 - (void)addLongLong:(long long)value;
 - (void)addDouble:(double)value;
 - (void)addPointer:(void *)value;
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index;
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index;
+- (void)insertUnsignedInteger:(NSUInteger)value atIndex:(NSUInteger)index;
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index;
 - (void)insertDouble:(double)value atIndex:(NSUInteger)index;
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index;
