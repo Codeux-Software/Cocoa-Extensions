@@ -939,6 +939,8 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		u = [NSURL URLWithString:self];
 	}
 
+	[pasteboard releaseGlobally];
+
 	return u;
 }
 #endif
