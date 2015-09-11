@@ -1093,6 +1093,27 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [[NSAttributedString alloc] initWithString:string attributes:stringAttributes];
 }
 
++ (NSAttributedString *)emptyString
+{
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [self attributedString];
+}
+
++ (NSAttributedString *)emptyStringWithBase:(NSString *)string
+{
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [self attributedStringWithString:string];
+}
+
++ (NSAttributedString *)stringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes
+{
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [self attributedStringWithString:string attributes:stringAttributes];
+}
+
 - (NSDictionary *)attributes
 {
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
@@ -1246,6 +1267,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes
 {
 	return [[NSMutableAttributedString alloc] initWithString:string attributes:stringAttributes];
+}
+
++ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes
+{
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [self mutableAttributedStringWithString:string attributes:stringAttributes];
 }
 
 - (NSString *)trimmedString

@@ -173,6 +173,11 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 + (NSAttributedString *)attributedStringWithString:(NSString *)string;
 + (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes;
 
++ (NSAttributedString *)emptyString COCOA_EXTENSIONS_DEPRECATED("Use -attributedString isntead");
++ (NSAttributedString *)emptyStringWithBase:(NSString *)string COCOA_EXTENSIONS_DEPRECATED("Use -attributedStringWithString: isntead");
+
++ (NSAttributedString *)stringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes COCOA_EXTENSIONS_DEPRECATED("Use -attributedStringWithString:attributes: isntead");
+
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
 
@@ -195,6 +200,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 
 @interface NSMutableAttributedString (CSCEFMutableAttributedStringHelper)
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes;
+
++ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes COCOA_EXTENSIONS_DEPRECATED("Use -mutableAttributedStringWithString:attributes: isntead");
 
 @property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
 @property (readonly, copy) NSString *uppercaseGetToken;
