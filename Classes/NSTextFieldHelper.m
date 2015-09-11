@@ -50,7 +50,7 @@
 	return [value trim];
 }
 
-- (NSString *)firstTokenStringValue
+- (NSString *)trimmedFirstTokenStringValue
 {
 	NSString *value = [self trimmedStringValue];
 
@@ -90,7 +90,7 @@
 	}
 }
 
-- (NSRange)fullSelectionRange
+- (NSRange)range
 {
     return NSMakeRange(0, [self stringLength]);
 }

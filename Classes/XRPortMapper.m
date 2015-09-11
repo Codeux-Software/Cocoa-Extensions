@@ -181,13 +181,13 @@ static void portMapCallback (
 	DNSServiceErrorType status = kDNSServiceErr_NoError;
 
 	status = DNSServiceNATPortMappingCreate(
-											(DNSServiceRef*)&_service,
-											0 /*flags*/,
-											0 /*interfaceIndex*/,
+											(DNSServiceRef *)&_service,
+											0 /* flags */,
+											0 /* interfaceIndex */,
 											protocol,
 											htons([self port]),
 											htons([self desiredPublicPort]),
-											0 /*ttl*/,
+											0 /* ttl */,
 											&portMapCallback,
 											(__bridge void *)(self));
 
@@ -286,8 +286,8 @@ static void portMapCallback (
 
 // Private IP address ranges. See RFC 3330.
 static const struct {UInt32 mask, value;} kPrivateRanges[] = {
-	{0xFF000000, 0x00000000},       //   0.x.x.x (hosts on "this" network)
-	{0xFF000000, 0x0A000000},       //  10.x.x.x (private address range)
+	{0xFF000000, 0x00000000},       // 0.x.x.x (hosts on "this" network)
+	{0xFF000000, 0x0A000000},       // 10.x.x.x (private address range)
 	{0xFF000000, 0x7F000000},       // 127.x.x.x (loopback)
 	{0xFFFF0000, 0xA9FE0000},       // 169.254.x.x (link-local self-configured addresses)
 	{0xFFF00000, 0xAC100000},       // 172.(16-31).x.x (private address range)

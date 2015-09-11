@@ -55,7 +55,8 @@ const CGFloat kRotationForItalicText = -14.0;
 		italicTransformData.tX = 0;       
 		italicTransformData.tY = 0;      
 		     
-		[italicTransform setTransformStruct:italicTransformData];      
+		[italicTransform setTransformStruct:italicTransformData];
+		
 		[fontTransform appendTransform:italicTransform]; 
 		
 		theFont = [NSFont fontWithDescriptor:[theFont fontDescriptor] textTransform:fontTransform];  

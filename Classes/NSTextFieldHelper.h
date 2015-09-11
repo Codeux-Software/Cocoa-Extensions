@@ -32,14 +32,14 @@
 
 @interface NSTextField (CSCEFTextFieldHelper)
 @property (readonly, copy) NSString *trimmedStringValue;
-@property (readonly, copy) NSString *firstTokenStringValue;
+@property (readonly, copy) NSString *trimmedFirstTokenStringValue;
 @end
 
 @interface NSTextView (CSCEFTextViewHelper)
 - (void)focus;
 @property (getter=isFocused, readonly) BOOL focused;
 
-@property (readonly) NSRange fullSelectionRange;
+@property (readonly) NSRange range;
 @property (readonly) NSUInteger stringLength;
 
 @property (readonly, strong) NSScrollView *scrollView;

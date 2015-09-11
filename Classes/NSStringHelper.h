@@ -121,7 +121,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode;
 #endif 
 
-@property (readonly, copy) NSString *string; // Returns self.
+@property (readonly, copy) NSString *scannerString;
 
 @property (readonly, copy) NSString *trimAndGetFirstToken;
 
@@ -169,15 +169,17 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 
 @property (nonatomic, assign, readonly) NSRange range;
 
-+ (NSAttributedString *)emptyString;
-+ (NSAttributedString *)emptyStringWithBase:(NSString *)base;
++ (NSAttributedString *)emptyAttributedString;
++ (NSAttributedString *)emptyAttributedStringWithBase:(NSString *)base;
 
-+ (NSAttributedString *)stringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
++ (NSAttributedString *)attributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
 
 @property (readonly, copy) NSArray *splitIntoLines;
+
+@property (readonly, copy) NSString *scannerString;
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
@@ -193,7 +195,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark Mutable Attributed String Helpers
 
 @interface NSMutableAttributedString (CSCEFMutableAttributedStringHelper)
-+ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
++ (NSMutableAttributedString *)mutableAttributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
 
 @property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
 @property (readonly, copy) NSString *uppercaseGetToken;

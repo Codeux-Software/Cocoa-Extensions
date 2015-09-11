@@ -627,13 +627,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
-	NSAttributedString *base = [NSAttributedString emptyStringWithBase:self];
+	NSAttributedString *base = [NSAttributedString emptyAttributedStringWithBase:self];
 
 	return [base pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:textFont];
 }
 #endif
 
-- (NSString *)string
+- (NSString *)scannerString
 {
 	return self;
 }
@@ -646,14 +646,14 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* Check the input. */
 	if (stringValue == nil || [stringValue length] < 1) {
 		if (isAttributedString) {
-			return [NSAttributedString emptyString];
+			return [NSAttributedString emptyAttributedString];
 		} else {
 			return NSStringEmptyPlaceholder;
 		}
 	}
 
 	/* Define base variables. */
-	NSScanner *scanner = [NSScanner scannerWithString:[stringValue string]];
+	NSScanner *scanner = [NSScanner scannerWithString:[stringValue scannerString]];
 
 	[scanner setCharactersToBeSkipped:nil]; // Do not skip anything.
 
@@ -670,7 +670,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		while (1 == 1) { // Infinite loops are safe! :-)
 			NSAssertReturnLoopBreak(stringForward < stringLength);
 
-			UniChar c = [[stringValue string] characterAtIndex:stringForward];
+			UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
 
 			if (c == ' ') {
 				stringForward += 1;
@@ -702,7 +702,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* Check the input. */
 	if (stringValue == nil || [stringValue length] < 1) {
 		if (isAttributedString) {
-			return [NSAttributedString emptyString];
+			return [NSAttributedString emptyAttributedString];
 		} else {
 			return NSStringEmptyPlaceholder;
 		}
@@ -711,12 +711,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* String must have an opening quote before we even use it. */
 	id originalString = [stringValue mutableCopy];
 
-	if ([[originalString string] hasPrefix:@"\""] == NO) {
+	if ([[originalString scannerString] hasPrefix:@"\""] == NO) {
 		return nil;
 	}
 
 	/* Define base variables. */
-	NSScanner *scanner = [NSScanner scannerWithString:[originalString string]];
+	NSScanner *scanner = [NSScanner scannerWithString:[originalString scannerString]];
 
 	[scanner setCharactersToBeSkipped:nil]; // Do not skip anything.
 
@@ -742,7 +742,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 		/* Find all slashes left of this quote. */
 		for (NSInteger i = (scanLocation - 1); i > 0; i--) {
-			UniChar c = [[originalString string] characterAtIndex:i];
+			UniChar c = [[originalString scannerString] characterAtIndex:i];
 
 			if (c == '\\') {
 				slashCount += 1;
@@ -760,7 +760,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 			NSUInteger charIndex = (scanLocation + 1);
 
 			if ([originalString length] > charIndex) {
-				UniChar rightChar = [[originalString string] characterAtIndex:charIndex];
+				UniChar rightChar = [[originalString scannerString] characterAtIndex:charIndex];
 
 				if (NSDissimilarObjects(rightChar, ' ')) {
 					return nil;
@@ -800,7 +800,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		NSInteger slashGroupCount = -1;
 
 		while (loopPosition > -1) {
-			UniChar c = [[originalString string] characterAtIndex:loopPosition];
+			UniChar c = [[originalString scannerString] characterAtIndex:loopPosition];
 
 			if (c == '\\' && loopPosition > 0) {
 				if (isInSlashGroup == NO) {
@@ -874,7 +874,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 						/* Insert the new group. */
 						if (isAttributedString) {
-							NSAttributedString *newGroup = [NSAttributedString emptyStringWithBase:newSlashGroup];
+							NSAttributedString *newGroup = [NSAttributedString emptyAttributedStringWithBase:newSlashGroup];
 
 							[originalString insertAttributedString:newGroup atIndex:actualStart];
 						} else {
@@ -907,7 +907,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 			while (1 == 1) { // Infinite loops are safe! :-)
 				NSAssertReturnLoopBreak(stringForward < stringLength);
 
-				UniChar c = [[stringValue string] characterAtIndex:stringForward];
+				UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
 
 				if (c == ' ') {
 					stringForward += 1;
@@ -1078,17 +1078,17 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSAttributedString (NSAttributedStringHelper)
 
-+ (NSAttributedString *)emptyString
++ (NSAttributedString *)emptyAttributedString
 {
-    return [NSAttributedString emptyStringWithBase:NSStringEmptyPlaceholder];
+	return [NSAttributedString emptyAttributedStringWithBase:NSStringEmptyPlaceholder];
 }
 
-+ (NSAttributedString *)emptyStringWithBase:(NSString *)base
++ (NSAttributedString *)emptyAttributedStringWithBase:(NSString *)base
 {
 	return [[NSAttributedString alloc] initWithString:base];
 }
 
-+ (NSAttributedString *)stringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
++ (NSAttributedString *)attributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
 {
 	return [[NSAttributedString alloc] initWithString:base attributes:baseAttributes];
 }
@@ -1101,6 +1101,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 - (NSRange)range
 {
 	return NSMakeRange(0, [self length]);
+}
+
+- (NSString *)scannerString
+{
+	return [self string];
 }
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
@@ -1238,9 +1243,14 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
 
-+ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
++ (NSMutableAttributedString *)mutableAttributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
 {
 	return [[NSMutableAttributedString alloc] initWithString:base attributes:baseAttributes];
+}
+
+- (NSString *)trimmedString
+{
+	return [[self string] trim];
 }
 
 - (NSString *)getTokenAsString
@@ -1253,11 +1263,6 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [[self getTokenAsString] uppercaseString];
 }
 
-- (NSString *)trimmedString
-{
-	return [[self string] trim];
-}
-
 - (NSAttributedString *)getToken
 {
 	NSRange deletionRange = NSEmptyRange();
@@ -1265,7 +1270,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	NSAttributedString *token = [NSString getTokenFromFirstWhitespaceGroup:self returnedDeletionRange:&deletionRange];
 
 	if (token == nil) {
-		return [NSAttributedString emptyString];
+		return [NSAttributedString emptyAttributedString];
 	} else {
 		if ((deletionRange.location == NSNotFound) == NO) {
 			[self deleteCharactersInRange:deletionRange];
