@@ -169,10 +169,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 
 @property (nonatomic, assign, readonly) NSRange range;
 
-+ (NSAttributedString *)emptyAttributedString;
-+ (NSAttributedString *)emptyAttributedStringWithBase:(NSString *)base;
-
-+ (NSAttributedString *)attributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
++ (NSAttributedString *)attributedString;
++ (NSAttributedString *)attributedStringWithString:(NSString *)string;
++ (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes;
 
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set;
 - (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front;
@@ -195,7 +194,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark Mutable Attributed String Helpers
 
 @interface NSMutableAttributedString (CSCEFMutableAttributedStringHelper)
-+ (NSMutableAttributedString *)mutableAttributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes;
++ (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes;
 
 @property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
 @property (readonly, copy) NSString *uppercaseGetToken;

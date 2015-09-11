@@ -627,7 +627,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
-	NSAttributedString *base = [NSAttributedString emptyAttributedStringWithBase:self];
+	NSAttributedString *base = [NSAttributedString attributedStringWithString:self];
 
 	return [base pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:textFont];
 }
@@ -646,7 +646,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* Check the input. */
 	if (stringValue == nil || [stringValue length] < 1) {
 		if (isAttributedString) {
-			return [NSAttributedString emptyAttributedString];
+			return [NSAttributedString attributedString];
 		} else {
 			return NSStringEmptyPlaceholder;
 		}
@@ -702,7 +702,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* Check the input. */
 	if (stringValue == nil || [stringValue length] < 1) {
 		if (isAttributedString) {
-			return [NSAttributedString emptyAttributedString];
+			return [NSAttributedString attributedString];
 		} else {
 			return NSStringEmptyPlaceholder;
 		}
@@ -874,7 +874,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 						/* Insert the new group. */
 						if (isAttributedString) {
-							NSAttributedString *newGroup = [NSAttributedString emptyAttributedStringWithBase:newSlashGroup];
+							NSAttributedString *newGroup = [NSAttributedString attributedStringWithString:newSlashGroup];
 
 							[originalString insertAttributedString:newGroup atIndex:actualStart];
 						} else {
@@ -1078,19 +1078,19 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSAttributedString (NSAttributedStringHelper)
 
-+ (NSAttributedString *)emptyAttributedString
++ (NSAttributedString *)attributedString
 {
-	return [NSAttributedString emptyAttributedStringWithBase:NSStringEmptyPlaceholder];
+	return [NSAttributedString attributedStringWithString:NSStringEmptyPlaceholder];
 }
 
-+ (NSAttributedString *)emptyAttributedStringWithBase:(NSString *)base
++ (NSAttributedString *)attributedStringWithString:(NSString *)string
 {
-	return [[NSAttributedString alloc] initWithString:base];
+	return [[NSAttributedString alloc] initWithString:string];
 }
 
-+ (NSAttributedString *)attributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
++ (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes
 {
-	return [[NSAttributedString alloc] initWithString:base attributes:baseAttributes];
+	return [[NSAttributedString alloc] initWithString:string attributes:stringAttributes];
 }
 
 - (NSDictionary *)attributes
@@ -1243,9 +1243,9 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
 
-+ (NSMutableAttributedString *)mutableAttributedStringWithBase:(NSString *)base attributes:(NSDictionary *)baseAttributes
++ (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes
 {
-	return [[NSMutableAttributedString alloc] initWithString:base attributes:baseAttributes];
+	return [[NSMutableAttributedString alloc] initWithString:string attributes:stringAttributes];
 }
 
 - (NSString *)trimmedString
@@ -1270,7 +1270,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	NSAttributedString *token = [NSString getTokenFromFirstWhitespaceGroup:self returnedDeletionRange:&deletionRange];
 
 	if (token == nil) {
-		return [NSAttributedString emptyAttributedString];
+		return [NSAttributedString attributedString];
 	} else {
 		if ((deletionRange.location == NSNotFound) == NO) {
 			[self deleteCharactersInRange:deletionRange];
