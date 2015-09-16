@@ -428,6 +428,27 @@
 	return newDict;
 }
 
+- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults
+{
+	NSMutableDictionary *ndic = [NSMutableDictionary dictionary];
+
+	@synchronized(self) {
+		for (NSString *currentObjectKey in self) {
+			id currentObject = self[currentObjectKey];
+
+			BOOL emptyObject = NSObjectIsEmpty(currentObject);
+
+			BOOL voidDefaults = (defaults && NSObjectsAreEqual(currentObject, defaults[currentObjectKey]));
+
+			if (voidDefaults == NO && emptyObject == NO) {
+				ndic[currentObjectKey] = currentObject;
+			}
+		}
+	}
+
+	return [ndic copy];
+}
+
 @end
 
 @implementation NSMutableDictionary (CSCEFMutableDictionaryHelper)

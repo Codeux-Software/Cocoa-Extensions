@@ -81,6 +81,12 @@
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryReversedKeys;
+
+/* Returns a new dictionary without values that are already defined by "defaults" 
+ or are empty (zero length, or zero count). This method is not recursive which 
+ means it only performs one pass on all top level objects. */
+/* "defaults" is allowed to be nil in which case only empty objects are removed. */
+- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults;
 @end
 
 @interface NSMutableDictionary (CSCEFMutableDictionaryHelper)
