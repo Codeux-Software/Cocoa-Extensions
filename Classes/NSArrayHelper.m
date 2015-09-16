@@ -137,12 +137,14 @@
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject
 {
-	for (id object in self) {
-		if ([object isKindOfClass:[NSString class]]) {
-			if ([object isEqualIgnoringCase:anObject]) {
-				return YES;
-			}
-		} 
+	@synchronized(self) {
+		for (id object in self) {
+			if ([object isKindOfClass:[NSString class]]) {
+				if ([object isEqualIgnoringCase:anObject]) {
+					return YES;
+				}
+			} 
+		}
 	}
 	
 	return [self containsObject:anObject];
@@ -212,9 +214,11 @@
 {
 	NSMutableArray *newSet = [NSMutableArray array];
 
-	for (id object in self) {
-		if ([object isKindOfClass:[NSString class]]) {
-			[newSet addObject:@{@"string" : object}];
+	@synchronized(self) {
+		for (id object in self) {
+			if ([object isKindOfClass:[NSString class]]) {
+				[newSet addObject:@{@"string" : object}];
+			}
 		}
 	}
 
@@ -300,7 +304,7 @@
 
 	[self removeAllObjects];
 
-	for (__strong id object in oldArray) {
+	for (id object in oldArray) {
 		if ([object respondsToSelector:performSelector]) {
 			id newObject = objc_msgSend(object, performSelector);
 			
