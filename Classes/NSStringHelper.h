@@ -110,6 +110,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 @property (readonly, copy) NSString *encodeURIFragment;
 @property (readonly, copy) NSString *decodeURIFragment;
 
+@property (readonly, copy) NSData *IPv4AddressBytes;
+@property (readonly, copy) NSData *IPv6AddressBytes;
+
 @property (getter=isIPv4Address, readonly) BOOL IPv4Address;
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;

@@ -378,20 +378,38 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (BOOL)isIPv4Address
 {
-	struct sockaddr_in sa;
-	
-    int result = inet_pton(AF_INET, [self UTF8String], &(sa.sin_addr));
-    
-	return (result == 1);
+	return ([self IPv4AddressBytes] != nil);
 }
 
 - (BOOL)isIPv6Address
 {
-	struct in6_addr sa;
-	
-    int result = inet_pton(AF_INET6, [self UTF8String], &sa);
-    
-	return (result == 1);
+	return ([self IPv6AddressBytes] != nil);
+}
+
+- (NSData *)IPv4AddressBytes
+{
+	struct sockaddr_in sa;
+
+	int result = inet_pton(AF_INET, [self UTF8String], &(sa.sin_addr));
+
+	if (result == 1) {
+		return [NSData dataWithBytes:&(sa.sin_addr.s_addr) length:4];
+	} else {
+		return nil;
+	}
+}
+
+- (NSData *)IPv6AddressBytes
+{
+	struct sockaddr_in6 sa;
+
+	int result = inet_pton(AF_INET6, [self UTF8String], &(sa.sin6_addr));
+
+	if (result == 1) {
+		return [NSData dataWithBytes:&(sa.sin6_addr) length:16];
+	} else {
+		return nil;
+	}
 }
 
 - (NSString *)trimAndGetFirstToken
