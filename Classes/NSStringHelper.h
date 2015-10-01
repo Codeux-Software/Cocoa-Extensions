@@ -88,6 +88,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (BOOL)containsCharacters:(NSString *)validChars;
 - (BOOL)onlyContainsCharacters:(NSString *)validChars;
 
+- (NSUInteger)occurrencesOfCharacter:(UniChar)character;
+
 - (NSInteger)stringPosition:(NSString *)needle;
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 

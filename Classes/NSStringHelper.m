@@ -431,6 +431,23 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return bob;
 }
 
+- (NSUInteger)occurrencesOfCharacter:(UniChar)character
+{
+	NSObjectIsEmptyAssertReturn(self, 0);
+
+	NSUInteger characterCount = 0;
+
+	for (NSUInteger i = 0; i < [self length]; ++i) {
+		UniChar c = [self characterAtIndex:i];
+
+		if (c == character) {
+			characterCount += 1;
+		}
+	}
+
+	return characterCount;
+}
+
 - (BOOL)isNumericOnly
 {
 	NSObjectIsEmptyAssertReturn(self, NO);
