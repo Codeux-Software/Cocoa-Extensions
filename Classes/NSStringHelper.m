@@ -62,6 +62,7 @@
 */
 
 #import "CocoaExtensions.h"
+#import "CGContextHelper.h"
 
 #import <CommonCrypto/CommonDigest.h>
 
@@ -1291,6 +1292,106 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 											  options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)];
 
 	return NSHeight(bounds);
+}
+
+- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor
+{
+	/* Perform basic validation on the current state of the
+	 string and the values of hte supplied paramaters. */
+	if ([self length] <= 0) {
+		return nil;
+	}
+
+	if (originalSize.width <= 0 || originalSize.height <= 0) {
+		return nil;
+	}
+
+	if (ABS(scaleFactor) <= 0) {
+		return nil;
+	}
+
+	if (backgroundColor == nil) {
+		return nil;
+	}
+
+	/* Begin by building a context for the drawing process using
+	 some very magic numbers. */
+	CGFloat cellFrameWidth = originalSize.width;
+	CGFloat cellFrameHeight = originalSize.height;
+
+	CGFloat cellFrameWidthScaled = (cellFrameWidth * scaleFactor);
+	CGFloat cellFrameHeightScaled = (cellFrameHeight * scaleFactor);
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+
+	NSUInteger bytesPerPixel = 4;
+	NSUInteger bytesPerRow = (bytesPerPixel * cellFrameWidthScaled);
+
+	NSUInteger bitsPerComponent = 8;
+
+	CGBitmapInfo bitmapInfo = (kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Host);
+
+	CGContextRef bitmapContext = CGBitmapContextCreate(NULL,
+									cellFrameWidthScaled,
+									cellFrameHeightScaled,
+									bitsPerComponent,
+									bytesPerRow,
+									colorSpace,
+									bitmapInfo);
+
+	/* Create an AppKit graphics context using the newly created
+	 core graphic's context and set it as the current context. */
+	[NSGraphicsContext saveGraphicsState];
+
+	NSGraphicsContext *bitmapContextAppKitContext =
+	[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
+
+	[NSGraphicsContext setCurrentContext:bitmapContextAppKitContext];
+
+	/* Prepare string to draw by first advertising we want font smoothing */
+	CGContextSetShouldAntialias(bitmapContext, true);
+	CGContextSetShouldSmoothFonts(bitmapContext, true);
+	CGContextSetShouldSubpixelPositionFonts(bitmapContext, true);
+	CGContextSetShouldSubpixelQuantizeFonts(bitmapContext, true);
+
+	CGContextSetFontSmoothingBackgroundColorPrivate(bitmapContext, [backgroundColor CGColor]);
+
+	/* Set the scale factor for retina displays */
+	CGContextScaleCTM(bitmapContext, scaleFactor, scaleFactor);
+
+	/* Set other values for drawing */
+	CGContextSetTextMatrix(bitmapContext, CGAffineTransformIdentity);
+
+	/* Define the path that the text will be drawn in */
+	CGRect coreTextDrawRect = CGRectMake(0, 0, cellFrameWidth, cellFrameHeight);
+
+	CGMutablePathRef graphicsPath = CGPathCreateMutable();
+
+	CGPathAddRect(graphicsPath, NULL, coreTextDrawRect);
+
+	/* Perform the text draw in context */
+	CTFramesetterRef coreTextFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+
+	CTFrameRef coreTextFrame = CTFramesetterCreateFrame(coreTextFramesetter, CFRangeMake(0, [self length]), graphicsPath, NULL);
+
+	CTFrameDraw(coreTextFrame, bitmapContext);
+
+	CFRelease(coreTextFrame);
+	CFRelease(coreTextFramesetter);
+
+	/* Create the image from the context */
+	CGImageRef bitmapImage = CGBitmapContextCreateImage(bitmapContext);
+
+	NSImage *imageCompletedDraw = [[NSImage alloc] initWithCGImage:bitmapImage size:NSZeroSize];
+
+	/* Perform cleanup and return final result */
+	CGImageRelease(bitmapImage);
+	CGContextRelease(bitmapContext);
+	CGColorSpaceRelease(colorSpace);
+
+	[NSGraphicsContext restoreGraphicsState];
+
+	return imageCompletedDraw;
 }
 #endif
 

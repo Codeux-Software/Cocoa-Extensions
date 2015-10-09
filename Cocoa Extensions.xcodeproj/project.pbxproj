@@ -27,6 +27,8 @@
 		4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A71E81B629EA200CD363B /* IOKit.framework */; };
 		4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2DD0F01BC423E30027937E /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C2DD0F31BC423E30027937E /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD0F11BC423E30027937E /* NSObjectHelper.m */; settings = {ASSET_TAGS = (); }; };
+		4C48CF411BC73D6D003FD716 /* CGContextHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */; settings = {ASSET_TAGS = (); }; };
+		4C48CF431BC73FE7003FD716 /* CGContextHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C48CF421BC73FE7003FD716 /* CGContextHelper.h */; settings = {ASSET_TAGS = (); }; };
 		4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67852A1B74F30600CCA160 /* XRAccessibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C67852D1B74F30600CCA160 /* XRAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67852B1B74F30600CCA160 /* XRAccessibility.m */; };
 		4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -147,6 +149,8 @@
 		4C2A71E81B629EA200CD363B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C2DD0F01BC423E30027937E /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSObjectHelper.h; sourceTree = "<group>"; };
 		4C2DD0F11BC423E30027937E /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectHelper.m; sourceTree = "<group>"; };
+		4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGContextHelper.m; sourceTree = "<group>"; };
+		4C48CF421BC73FE7003FD716 /* CGContextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGContextHelper.h; sourceTree = "<group>"; };
 		4C67852A1B74F30600CCA160 /* XRAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRAccessibility.h; sourceTree = "<group>"; };
 		4C67852B1B74F30600CCA160 /* XRAccessibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRAccessibility.m; sourceTree = "<group>"; };
 		4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRSystemInformation.h; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 		4C1923AF1A9004BB0076F65A /* Private Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4C48CF421BC73FE7003FD716 /* CGContextHelper.h */,
 				4C1923911A8FE7F50076F65A /* DDInvocation.h */,
 				4C8B67FE1A9019F500DC5021 /* Project */,
 			);
@@ -410,6 +415,7 @@
 				4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */,
 				4C1923B61A9007E50076F65A /* XRRegularExpression.m */,
 				4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */,
+				4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -501,6 +507,7 @@
 				4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */,
 				4CDF74D91A8FDE5B000B5FF5 /* NSPasteboardHelper.h in Headers */,
 				4CDF74DC1A8FDE5B000B5FF5 /* NSScreenHelper.h in Headers */,
+				4C48CF431BC73FE7003FD716 /* CGContextHelper.h in Headers */,
 				4C1923931A8FE7F50076F65A /* DDInvocation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -626,6 +633,7 @@
 			files = (
 				4C19239B1A8FE9800076F65A /* XRKeychain.m in Sources */,
 				4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */,
+				4C48CF411BC73D6D003FD716 /* CGContextHelper.m in Sources */,
 				4C1923971A8FE8D00076F65A /* DDInvocation.m in Sources */,
 				4CDF74A31A8FDE1C000B5FF5 /* NSFontHelper.m in Sources */,
 				4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */,
