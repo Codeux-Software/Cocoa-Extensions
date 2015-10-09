@@ -1343,8 +1343,15 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	 core graphic's context and set it as the current context. */
 	[NSGraphicsContext saveGraphicsState];
 
-	NSGraphicsContext *bitmapContextAppKitContext =
-	[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
+	NSGraphicsContext *bitmapContextAppKitContext = nil;
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		bitmapContextAppKitContext =
+		[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
+	} else {
+		bitmapContextAppKitContext =
+		[NSGraphicsContext graphicsContextWithGraphicsPort:bitmapContext flipped:NO];
+	}
 
 	[NSGraphicsContext setCurrentContext:bitmapContextAppKitContext];
 
