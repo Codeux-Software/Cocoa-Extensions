@@ -579,12 +579,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSString *)encodeURIComponent
 {
-	NSObjectIsEmptyAssertReturn(self, NSStringEmptyPlaceholder);
+	NSObjectIsEmptyAssertReturn(self, nil);
 	
 	const char *sourcedata = [self UTF8String];
 	const char *characters = "0123456789ABCDEF";
 
-	PointerIsEmptyAssertReturn(sourcedata, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(sourcedata, nil);
 	
 	NSUInteger datalength = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 	
@@ -608,12 +608,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSString *)encodeURIFragment
 {
-	NSObjectIsEmptyAssertReturn(self, NSStringEmptyPlaceholder);
+	NSObjectIsEmptyAssertReturn(self, nil);
 
 	const char *sourcedata = [self UTF8String];
 	const char *characters = "0123456789ABCDEF";
 
-	PointerIsEmptyAssertReturn(sourcedata, NSStringEmptyPlaceholder);
+	PointerIsEmptyAssertReturn(sourcedata, nil);
 
 	NSUInteger datalength = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
 
