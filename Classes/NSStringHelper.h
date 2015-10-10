@@ -79,6 +79,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
 - (BOOL)hasSuffixIgnoringCase:(NSString *)aString;
 
+- (BOOL)hasPrefixWithCharacterSet:(NSCharacterSet *)characterSet;
+- (BOOL)hasSuffixWithCharacterSet:(NSCharacterSet *)characterSet;
+
 - (BOOL)isEqualIgnoringCase:(NSString *)other;
 
 - (BOOL)contains:(NSString *)str;

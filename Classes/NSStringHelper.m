@@ -293,6 +293,20 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return ((suffixRange.length + suffixRange.location) == [self length]);
 }
 
+- (BOOL)hasPrefixWithCharacterSet:(NSCharacterSet *)characterSet
+{
+	NSRange prefixRange = [self rangeOfCharacterFromSet:characterSet options:NSAnchoredSearch];
+
+	return (prefixRange.location == 0 && prefixRange.length > 0);
+}
+
+- (BOOL)hasSuffixWithCharacterSet:(NSCharacterSet *)characterSet
+{
+	NSRange suffixRange = [self rangeOfCharacterFromSet:characterSet options:(NSAnchoredSearch | NSBackwardsSearch)];
+
+	return ((suffixRange.length + suffixRange.location) == [self length]);
+}
+
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
 	NSString *stringA = [NSString stringWithString:self];
