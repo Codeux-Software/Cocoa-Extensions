@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+#include <Availability.h>
+
 #define CSCEF_StringIsAlphabetic(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define CSCEF_StringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
 #define CSCEF_StringIsAlphabeticNumeric(c)				(CSCEF_StringIsAlphabetic(c) || CSCEF_StringIsBase10Numeric(c))
@@ -198,7 +200,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode;
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(NSFont *)textFont;
 
-- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor;
+- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor NS_AVAILABLE_MAC(10_10);
 #endif
 @end
 

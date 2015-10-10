@@ -1298,6 +1298,10 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 {
 	/* Perform basic validation on the current state of the
 	 string and the values of hte supplied paramaters. */
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+		return nil;
+	}
+
 	if ([self length] <= 0) {
 		return nil;
 	}
