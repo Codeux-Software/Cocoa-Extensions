@@ -125,6 +125,34 @@
 	return nil;
 }
 
+- (BOOL)isShadeOfGray
+{
+	NSString *colorSpaceName = [self colorSpaceName];
+
+	if ([colorSpaceName isEqual:@"NSDeviceRGBColorSpace"] ||
+		[colorSpaceName isEqual:@"NSCalibratedRGBColorSpace"])
+	{
+		CGFloat redValue = [self redComponent];
+		CGFloat greenValue = [self greenComponent];
+		CGFloat blueValue = [self blueComponent];
+
+		if (ABS(redValue) == ABS(greenValue) == ABS(blueValue)) {
+			return YES;
+		} else {
+			return NO;
+		}
+	}
+	else if ([colorSpaceName isEqual:@"NSDeviceWhiteColorSpace"] ||
+			 [colorSpaceName isEqual:@"NSDeviceBlackColorSpace"] ||
+			 [colorSpaceName isEqual:@"NSCalibratedWhiteColorSpace"] ||
+			 [colorSpaceName isEqual:@"NSCalibratedBlackColorSpace"])
+	{
+		return YES;
+	}
+
+	return NO;
+}
+
 @end
 
 #pragma mark -

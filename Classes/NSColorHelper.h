@@ -34,6 +34,8 @@
 @property (readonly, copy) NSColor *invertedColor;
 @property (readonly, copy) NSColor *invertColor COCOA_EXTENSIONS_DEPRECATED("Use -invertedColor instead");
 
+@property (readonly) BOOL isShadeOfGray;
+
 + (NSColor *)fromCSS:(NSString *)str;
 
 + (NSColor *)calibratedColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
