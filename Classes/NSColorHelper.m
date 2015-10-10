@@ -136,7 +136,10 @@
 		CGFloat greenValue = [self greenComponent];
 		CGFloat blueValue = [self blueComponent];
 
-		if (ABS(redValue) == ABS(greenValue) == ABS(blueValue)) {
+		if ([NSNumber compareCGFloat:redValue toFloat:greenValue] &&
+			[NSNumber compareCGFloat:greenValue toFloat:blueValue] &&
+			[NSNumber compareCGFloat:redValue toFloat:blueValue])
+		{
 			return YES;
 		} else {
 			return NO;
