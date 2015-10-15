@@ -74,6 +74,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 - (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars;
 - (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars;
 
+- (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement;
+
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString;

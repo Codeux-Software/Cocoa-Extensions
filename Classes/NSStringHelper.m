@@ -279,6 +279,29 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
 }
 
+- (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement
+{
+	NSObjectIsEmptyAssertReturn(self, nil);
+
+	PointerIsEmptyAssertReturn(target, nil);
+
+	NSMutableString *newString = [NSMutableString string];
+
+	for (NSUInteger i = 0; i < [self length]; i++) {
+		UniChar c = [self characterAtIndex:i];
+
+		if ([target characterIsMember:c]) {
+			if (replacement && [replacement length] > 0) {
+				[newString appendString:replacement];
+			}
+		} else {
+			[newString appendFormat:@"%C", c];
+		}
+	}
+
+	return [newString copy];
+}
+
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString
 {
 	NSRange prefixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
