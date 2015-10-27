@@ -1333,6 +1333,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor
 {
+	return [self imageRepWithSize:originalSize scaleFactor:scaleFactor backgroundColor:backgroundColor coreTextFrameOffset:NULL];
+}
+
+- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(NSInteger *)coreTextFrameOffset
+{
 	/* Perform basic validation on the current state of the
 	 string and the values of hte supplied paramaters. */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
@@ -1411,20 +1416,39 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	CGContextSetTextMatrix(bitmapContext, CGAffineTransformIdentity);
 
 	/* Define the path that the text will be drawn in */
-	CGRect coreTextDrawRect = CGRectMake(0, 0, cellFrameWidth, cellFrameHeight);
+	CTFramesetterRef coreTextFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
 
 	CGMutablePathRef graphicsPath = CGPathCreateMutable();
 
-	CGPathAddRect(graphicsPath, NULL, coreTextDrawRect);
+	/* Even though the client specifies the height, core text 
+	 still draws into the frame that it suggests to fix an edge
+	 case bug dealing with emoji characters. */
+	CGRect coreTextFrame = CGRectMake(0, 0, cellFrameWidth, cellFrameHeight);
 
-	/* Perform the text draw in context */
-	CTFramesetterRef coreTextFramesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)self);
+	CGSize coreTextFrameSuggested = CTFramesetterSuggestFrameSizeWithConstraints(coreTextFramesetter, CFRangeMake(0, 0), NULL, CGSizeMake(cellFrameWidth, CGFLOAT_MAX), NULL);
 
-	CTFrameRef coreTextFrame = CTFramesetterCreateFrame(coreTextFramesetter, CFRangeMake(0, [self length]), graphicsPath, NULL);
+	NSInteger coreTextFrameHeightDifference = (coreTextFrameSuggested.height - coreTextFrame.size.height);
 
-	CTFrameDraw(coreTextFrame, bitmapContext);
+	if (coreTextFrameHeightDifference > 0) {
+		coreTextFrame.size.height += coreTextFrameHeightDifference;
 
-	CFRelease(coreTextFrame);
+		if ( coreTextFrameOffset) {
+			*coreTextFrameOffset = coreTextFrameHeightDifference;
+		}
+	} else {
+		if ( coreTextFrameOffset) {
+			*coreTextFrameOffset = 0;
+		}
+	}
+
+	CGPathAddRect(graphicsPath, NULL, coreTextFrame);
+
+	/* Perform core text draw */
+	CTFrameRef coreTextFrameRef = CTFramesetterCreateFrame(coreTextFramesetter, CFRangeMake(0, [self length]), graphicsPath, NULL);
+
+	CTFrameDraw(coreTextFrameRef, bitmapContext);
+
+	CFRelease(coreTextFrameRef);
 	CFRelease(coreTextFramesetter);
 
 	/* Create the image from the context */
