@@ -430,13 +430,18 @@
 
 - (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults
 {
+	return [self dictionaryByRemovingDefaults:defaults allowEmptyValues:NO];
+}
+
+- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues
+{
 	NSMutableDictionary *ndic = [NSMutableDictionary dictionary];
 
 	@synchronized(self) {
 		for (NSString *currentObjectKey in self) {
 			id currentObject = self[currentObjectKey];
 
-			BOOL emptyObject = NSObjectIsEmpty(currentObject);
+			BOOL emptyObject = (NSObjectIsEmpty(currentObject) && allowEmptyValues);
 
 			BOOL voidDefaults = (defaults && NSObjectsAreEqual(currentObject, defaults[currentObjectKey]));
 

@@ -87,6 +87,7 @@
  means it only performs one pass on all top level objects. */
 /* "defaults" is allowed to be nil in which case only empty objects are removed. */
 - (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults;
+- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
 @end
 
 @interface NSMutableDictionary (CSCEFMutableDictionaryHelper)
