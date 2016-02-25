@@ -36,7 +36,10 @@
 
 @property (readonly) BOOL isShadeOfGray;
 
-+ (NSColor *)fromCSS:(NSString *)str;
+@property (readonly, copy) NSString *hexadecimalValue;
+
++ (NSColor *)colorWithHexadecimalValue:(NSString *)str;
++ (NSColor *)fromCSS:(NSString *)str COCOA_EXTENSIONS_DEPRECATED("Use -colorWithHexadecimalValue: instead");
 
 + (NSColor *)calibratedColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 + (NSColor *)calibratedDeviceColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;

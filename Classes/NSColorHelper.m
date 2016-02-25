@@ -93,30 +93,74 @@
 									 alpha:[obj alphaComponent]];
 }
 
+- (BOOL)isInRGBColorSpace
+{
+	NSString *colorSpaceName = [self colorSpaceName];
+
+	return ([colorSpaceName isEqual:@"NSDeviceRGBColorSpace"] ||
+			[colorSpaceName isEqual:@"NSCalibratedRGBColorSpace"]);
+}
+
+- (BOOL)isInGrayColorSpace
+{
+	NSString *colorSpaceName = [self colorSpaceName];
+
+	return ([colorSpaceName isEqual:@"NSDeviceWhiteColorSpace"] ||
+			[colorSpaceName isEqual:@"NSDeviceBlackColorSpace"] ||
+			[colorSpaceName isEqual:@"NSCalibratedWhiteColorSpace"] ||
+			[colorSpaceName isEqual:@"NSCalibratedBlackColorSpace"]);
+}
+
 #pragma mark -
 #pragma mark Hexadeciam Conversion
 
-+ (NSColor *)fromCSS:(NSString *)s
+- (NSString *)hexadecimalValue
 {
-	if ([s hasPrefix:@"#"]) {
-		s = [s substringFromIndex:1];
+	if ([self isInRGBColorSpace]) {
+		CGFloat redValue = [self redComponent];
+		CGFloat greenValue = [self greenComponent];
+		CGFloat blueValue = [self blueComponent];
 
-		NSInteger len = [s length];
+		return [NSString stringWithFormat:@"%02x%02x%02x",
+				(NSInteger)(redValue * 255.99999f),
+				(NSInteger)(greenValue * 255.99999f),
+				(NSInteger)(blueValue  * 255.99999f)];
+	}
 
-		if (len == 6) {
-			long n = strtol([s UTF8String], NULL, 16);
+	return nil;
+}
+
++ (NSColor *)fromCSS:(NSString *)str
+{
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	return [NSColor colorWithHexadecimalValue:str];
+}
+
++ (NSColor *)colorWithHexadecimalValue:(NSString *)str
+{
+	if ([str hasPrefix:@"#"]) {
+		 str = [str substringFromIndex:1];
+
+		NSInteger stringLength = [str length];
+
+		if (stringLength == 6)
+		{
+			long n = strtol([str UTF8String], NULL, 16);
 
 			NSInteger r = ((n >> 16) & 0xff);
 			NSInteger g = ((n >> 8) & 0xff);
-			NSInteger b = (n & 0xff);
+			NSInteger b =  (n & 0xff);
 
 			return [NSColor calibratedDeviceColorWithRed:r green:b blue:g alpha:1.0];
-		} else if (len == 3) {
-			long n = strtol([s UTF8String], NULL, 16);
+		}
+		else if (stringLength == 3)
+		{
+			long n = strtol([str UTF8String], NULL, 16);
 
 			NSInteger r = ((n >> 8) & 0xf);
 			NSInteger g = ((n >> 4) & 0xf);
-			NSInteger b = (n & 0xf);
+			NSInteger b =  (n & 0xf);
 
 			return [NSColor calibratedDeviceColorWithRed:(r / 15.0) green:(g / 15.0) blue:(b / 15.0) alpha:1.0];
 		}
@@ -127,11 +171,7 @@
 
 - (BOOL)isShadeOfGray
 {
-	NSString *colorSpaceName = [self colorSpaceName];
-
-	if ([colorSpaceName isEqual:@"NSDeviceRGBColorSpace"] ||
-		[colorSpaceName isEqual:@"NSCalibratedRGBColorSpace"])
-	{
+	if ([self isInRGBColorSpace]) {
 		CGFloat redValue = [self redComponent];
 		CGFloat greenValue = [self greenComponent];
 		CGFloat blueValue = [self blueComponent];
@@ -144,12 +184,7 @@
 		} else {
 			return NO;
 		}
-	}
-	else if ([colorSpaceName isEqual:@"NSDeviceWhiteColorSpace"] ||
-			 [colorSpaceName isEqual:@"NSDeviceBlackColorSpace"] ||
-			 [colorSpaceName isEqual:@"NSCalibratedWhiteColorSpace"] ||
-			 [colorSpaceName isEqual:@"NSCalibratedBlackColorSpace"])
-	{
+	} else if ([self isInGrayColorSpace]) {
 		return YES;
 	}
 
