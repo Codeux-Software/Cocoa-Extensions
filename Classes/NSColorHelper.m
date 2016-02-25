@@ -116,18 +116,24 @@
 
 - (NSString *)hexadecimalValue
 {
-	if ([self isInRGBColorSpace]) {
-		CGFloat redValue = [self redComponent];
-		CGFloat greenValue = [self greenComponent];
-		CGFloat blueValue = [self blueComponent];
+	CGFloat redValue = 0.0f;
+	CGFloat greenValue = 0.0f;
+	CGFloat blueValue = 0.0f;
 
-		return [NSString stringWithFormat:@"%02x%02x%02x",
-				(NSInteger)(redValue * 255.99999f),
-				(NSInteger)(greenValue * 255.99999f),
-				(NSInteger)(blueValue  * 255.99999f)];
+	if ([self isInRGBColorSpace]) {
+		redValue = [self redComponent];
+		greenValue = [self greenComponent];
+		blueValue = [self blueComponent];
+	} else if ([self isInGrayColorSpace]) {
+		redValue = [self whiteComponent];
+		greenValue = [self whiteComponent];
+		blueValue = [self whiteComponent];
 	}
 
-	return nil;
+	return [NSString stringWithFormat:@"%02x%02x%02x",
+			(NSInteger)(redValue * 255.99999f),
+			(NSInteger)(greenValue * 255.99999f),
+			(NSInteger)(blueValue  * 255.99999f)];
 }
 
 + (NSColor *)fromCSS:(NSString *)str
