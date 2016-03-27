@@ -338,14 +338,10 @@
 - (NSArray *)arrayFromIndexSet
 {
 	NSMutableArray *ary = [NSMutableArray array];
-	
-	NSUInteger current_index = [self lastIndex];
-	
-	while ((current_index == NSNotFound) == NO) {
-		[ary addObject:@(current_index)];
-		
-		current_index = [self indexLessThanIndex:current_index];
-	}
+
+	[self enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		[ary addObject:@(index)];
+	}];
 	
 	return ary;
 }
