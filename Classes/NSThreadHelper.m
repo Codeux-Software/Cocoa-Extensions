@@ -1,6 +1,6 @@
 /* *********************************************************************
 
-        Copyright (c) 2010 - 2015 Codeux Software, LLC
+        Copyright (c) 2010 - 2016 Codeux Software, LLC
      Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,44 @@
 
  *********************************************************************** */
 
-@interface NSThemeFrame (CSCEFThemeFrameHelper)
-/* This property cannot be assigned and will always return NO unless
- invoked on an instance of NSThemeFrame which itself is private. */
-@property (nonatomic, assign) BOOL usesCustomTitlebarTitlePositioning;
+#import "CocoaExtensions.h"
+
+#include <execinfo.h>
+
+@implementation NSThread (CSCEFThreadHelper)
+
++ (NSString *)callerStackSymbol
+{
+	/*
+	 * frame 0: = -callerStackSymbol
+	 * frame 1: = caller of -callerStackSymbol
+	 * frame 2: = caller of caller (what we want)
+	 */
+
+	return [NSThread callStackItemAtDepth:2];
+}
+
++ (NSString *)callStackItemAtDepth:(int)stackDepth
+{
+#define _maxStackSize		64
+
+	void *callstack[_maxStackSize];
+
+	int frames = backtrace(callstack, sizeof(callstack));
+
+	if (frames < (stackDepth + 1)) {
+		return nil;
+	}
+
+	char **symbols = backtrace_symbols(callstack, frames);
+
+	NSString *symbolString = [NSString stringWithUTF8String:symbols[stackDepth]];
+
+	free(symbols);
+
+	return symbolString;
+
+#undef _maxStackSize
+}
+
 @end

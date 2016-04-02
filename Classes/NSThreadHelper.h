@@ -1,6 +1,6 @@
 /* *********************************************************************
 
-        Copyright (c) 2010 - 2015 Codeux Software, LLC
+        Copyright (c) 2010 - 2016 Codeux Software, LLC
      Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,8 +30,8 @@
 
  *********************************************************************** */
 
-@interface NSThemeFrame (CSCEFThemeFrameHelper)
-/* This property cannot be assigned and will always return NO unless
- invoked on an instance of NSThemeFrame which itself is private. */
-@property (nonatomic, assign) BOOL usesCustomTitlebarTitlePositioning;
+@interface NSThread (CSCEFThreadHelper)
++ (NSString *)callerStackSymbol;
+
++ (NSString *)callStackItemAtDepth:(int)stackDepth;
 @end

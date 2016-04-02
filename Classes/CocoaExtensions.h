@@ -56,6 +56,8 @@
 #import <CocoaExtensions/NSValueHelper.h>
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+#import <CocoaExtensions/ApplePrivateMac.h>
+
 #import <CocoaExtensions/XRAccessibility.h>
 #import <CocoaExtensions/XRAddressBook.h>
 #import <CocoaExtensions/XRKeychain.h>
@@ -75,5 +77,6 @@
 #import <CocoaExtensions/NSSplitViewHelper.h>
 #import <CocoaExtensions/NSTextFieldHelper.h>
 #import <CocoaExtensions/NSThemeFrameHelper.h>
+#import <CocoaExtensions/NSThreadHelper.h>
 #import <CocoaExtensions/NSWindowHelper.h>
 #endif

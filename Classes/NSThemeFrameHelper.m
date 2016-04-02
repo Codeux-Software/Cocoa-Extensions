@@ -35,7 +35,7 @@
 #import <objc/message.h>
 #import <objc/runtime.h>
 
-@implementation NSObject (CSCEFThemeFrameHelper)
+@implementation NSThemeFrame (CSCEFThemeFrameHelper)
 
 static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 
@@ -44,7 +44,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		XRExchangeImplementation(@"NSThemeFrame", @"_defaultTitlebarTitleRect", @"ce_priv_defaultTitlebarTitleRect");
+		XRExchangeInstanceMethod(@"NSThemeFrame", @"_defaultTitlebarTitleRect", @"ce_priv_defaultTitlebarTitleRect");
 	});
 }
 
@@ -53,11 +53,6 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
  or a document icon so do not use this method unless you know its purpose. */
 - (NSRect)ce_priv_defaultTitlebarTitleRect
 {
-	/* This method can only be used within an NSThemeFrame instance. */
-	if (NSObjectsAreEqual([self className], @"NSThemeFrame") == NO) {
-		return NSZeroRect;
-	}
-
 	/* Return default value depending on configuration. */
 	NSRect defaultTitlebarTitleRect = [self ce_priv_defaultTitlebarTitleRect];
 
@@ -101,11 +96,6 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 
 - (BOOL)usesCustomTitlebarTitlePositioning
 {
-	/* This object is only assignable in an NSThemeFrame instance. */
-	if (NSObjectsAreEqual([self className], @"NSThemeFrame") == NO) {
-		return NO;
-	}
-
 	/* This fix is not necessary prior to OS X Yosemite. */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
@@ -148,16 +138,11 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 
 - (void)setUsesCustomTitlebarTitlePositioning:(BOOL)usesCustomTitlebarTitlePositioning
 {
-	/* This object is only assignable in an NSThemeFrame instance. */
-	if (NSObjectsAreEqual([self className], @"NSThemeFrame") == NO) {
-		return;
-	}
-
 	/* Assigned as an NSNumber that is copied. */
 	objc_setAssociatedObject(self,
-							 _internalUsesCustomTitlebarTitlePositioning,
-							 [NSNumber numberWithBool:usesCustomTitlebarTitlePositioning],
-							 OBJC_ASSOCIATION_COPY);
+		_internalUsesCustomTitlebarTitlePositioning,
+		[NSNumber numberWithBool:usesCustomTitlebarTitlePositioning],
+		OBJC_ASSOCIATION_COPY);
 }
 
 @end

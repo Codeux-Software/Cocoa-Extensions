@@ -39,7 +39,7 @@
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		XRExchangeImplementation(@"NSTextField", @"setStringValue:", @"ce_priv_setStringValue:");
+		XRExchangeInstanceMethod(@"NSTextField", @"setStringValue:", @"ce_priv_setStringValue:");
 	});
 }
 

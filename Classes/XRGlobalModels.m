@@ -37,7 +37,13 @@
 #pragma mark -
 #pragma mark Swizzling
 
+/* Swizzle functions take strings to make it difficult for Apple to find private APIs */
 void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod)
+{
+	XRExchangeInstanceMethod(className, originalMethod, replacementMethod);
+}
+
+void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
 	Class class = NSClassFromString(className);
 
@@ -46,6 +52,34 @@ void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSS
 
 	Method originalMethodDcl = class_getInstanceMethod(class, originalSelector);
 	Method swizzledMethodDcl = class_getInstanceMethod(class, swizzledSelector);
+
+	BOOL methodAdded =
+	class_addMethod(class,
+					originalSelector,
+					method_getImplementation(swizzledMethodDcl),
+					method_getTypeEncoding(swizzledMethodDcl));
+
+	if (methodAdded) {
+		class_replaceMethod(class,
+							swizzledSelector,
+							method_getImplementation(originalMethodDcl),
+							method_getTypeEncoding(originalMethodDcl));
+	} else {
+		method_exchangeImplementations(originalMethodDcl, swizzledMethodDcl);
+	}
+}
+
+void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
+{
+	Class classClass = NSClassFromString(className);
+
+	Class class = object_getClass(classClass);
+
+	SEL originalSelector = NSSelectorFromString(originalMethod);
+	SEL swizzledSelector = NSSelectorFromString(replacementMethod);
+
+	Method originalMethodDcl = class_getClassMethod(class, originalSelector);
+	Method swizzledMethodDcl = class_getClassMethod(class, swizzledSelector);
 
 	BOOL methodAdded =
 	class_addMethod(class,
