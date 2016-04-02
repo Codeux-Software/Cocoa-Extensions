@@ -1461,6 +1461,8 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	CGContextRelease(bitmapContext);
 	CGColorSpaceRelease(colorSpace);
 
+	CFRelease(graphicsPath);
+
 	[NSGraphicsContext restoreGraphicsState];
 
 	return imageCompletedDraw;
