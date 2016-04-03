@@ -34,10 +34,10 @@
 @property (readonly, copy) NSArray *groupItems;
 - (BOOL)isGroupItem:(id)item;
 
-- (NSArray *)rowsInGroup:(id)group;
-- (NSArray *)rowsFromParentGroup:(id)child;
+- (NSArray *)itemsInGroup:(id)groupItem;
+- (NSArray *)itemsFromParentGroup:(id)item;
 
-- (NSInteger)rowForGroupItem:(id)item;
+- (NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
 @property (readonly) NSInteger countSelectedRows;
 

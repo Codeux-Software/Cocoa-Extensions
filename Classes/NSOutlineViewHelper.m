@@ -51,35 +51,14 @@
 	return ([self levelForItem:item] == 0);
 }
 
-- (NSInteger)rowForGroupItem:(id)item
-{
-	if ([self isGroupItem:item]) {
-		NSInteger rowCount = -1;
-		
-		for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-			id curRow = [self itemAtRow:i];
-			
-			if ([self isGroupItem:curRow]) {
-				rowCount += 1;
-				
-				if (item == curRow) {
-					return rowCount;
-				}
-			}
-		}
-	}
-	
-	return -1;
-}
-
 - (NSArray *)groupItems
 {
 	NSMutableArray *groups = [NSMutableArray array];
 	
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		id curRow = [self itemAtRow:i];
-		
-		if ([self isGroupItem:curRow]) {
+		if ([self levelForRow:i] == 0) {
+			id curRow = [self itemAtRow:i];
+
 			[groups addObject:curRow];
 		}
 	}
@@ -87,29 +66,58 @@
 	return groups;
 }
 
-- (NSArray *)rowsFromParentGroup:(id)child
+- (NSArray *)itemsFromParentGroup:(id)item
 {
-	if ([self isGroupItem:child] == NO) {
-		child = [self parentForItem:child];
+	/* If the item supplied is not a group item,
+	 then try to find its parent. */
+	if ([self isGroupItem:item] == NO) {
+		item = [self parentForItem:item];
 	}
 	
-	return [self rowsInGroup:child];
+	return [self itemsInGroup:item];
 }
 
-- (NSArray *)rowsInGroup:(id)group
+- (NSArray *)itemsInGroup:(id)groupItem
 {
+	if ([self isGroupItem:groupItem] == NO) {
+		return nil;
+	}
+
 	NSMutableArray *allRows = [NSMutableArray array];
 	
 	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
-		id curent = [self itemAtRow:i];
-		id parent = [self parentForItem:curent];
+		id itemAtRow = [self itemAtRow:i];
 
-		if ([parent isEqual:group]) {
-			[allRows addObject:curent];
+		id parentItem = [self parentForItem:itemAtRow];
+
+		if (parentItem == groupItem) {
+			[allRows addObject:itemAtRow];
 		}
 	}
 	
 	return allRows;
+}
+
+- (NSIndexSet *)indexesOfItemsInGroup:(id)groupItem
+{
+	NSArray *itemsInGroup = [self itemsInGroup:groupItem];
+
+	if (itemsInGroup == nil) {
+		return nil;
+	}
+
+	id itemFirst = [itemsInGroup firstObject];
+	id itemLast = [itemsInGroup lastObject];
+
+	if (itemFirst == nil) {
+		return nil;
+	}
+
+	NSInteger itemFirstIndex = [self rowForItem:itemFirst];
+	NSInteger itemLastIndex = [self rowForItem:itemLast];
+
+	return [NSIndexSet indexSetWithIndexesInRange:
+			NSMakeRange(itemFirstIndex, (itemLastIndex - itemFirstIndex + 1))];
 }
 
 @end
