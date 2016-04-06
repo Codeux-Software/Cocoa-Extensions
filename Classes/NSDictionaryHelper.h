@@ -69,15 +69,12 @@
 - (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
 - (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
 
-- (NSString *)firstKeyForObject:(id)object;
+- (id)firstKeyForObject:(id)anObject;
 
 - (BOOL)containsKey:(NSString *)baseKey;
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey;
-
-@property (readonly, strong) id sortedDictionary COCOA_EXTENSIONS_DEPRECATED("Use -sortedDictionaryKeys instead");
-@property (readonly, strong) id sortedReversedDictionary COCOA_EXTENSIONS_DEPRECATED("Use -sortedDictionaryReversedKeys instead");
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryReversedKeys;

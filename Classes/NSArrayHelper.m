@@ -137,17 +137,25 @@
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject
 {
-	@synchronized(self) {
-		for (id object in self) {
-			if ([object isKindOfClass:[NSString class]]) {
-				if ([object isEqualIgnoringCase:anObject]) {
-					return YES;
-				}
-			} 
-		}
+	if ([anObject isKindOfClass:[NSString class]] == NO) {
+		return NO;
 	}
-	
-	return [self containsObject:anObject];
+
+	NSInteger objectIndex = [self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
+		if ([object isKindOfClass:[NSString class]]) {
+			return NO;
+		}
+
+		if ([object isEqualIgnoringCase:anObject]) {
+			*stop = YES;
+
+			return YES;
+		} else {
+			return NO;
+		}
+	}];
+
+	return (objectIndex != NSNotFound);
 }
 
 - (NSRange)range

@@ -358,40 +358,38 @@
 	return ([caslessKey length] > 0);
 }
 
-- (NSString *)firstKeyForObject:(id)object
+- (id)firstKeyForObject:(id)anObject
 {
-	for (NSString *key in [self allKeys]) {
-		if ([self[key] isEqual:object]) {
-			return key;
+	NSSet *keys = [self keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
+		if (NSObjectsAreEqual(object, anObject)) {
+			*stop = YES;
+
+			return YES;
+		} else {
+			return NO;
 		}
+	}];
+
+	if ([keys count] == 0) {
+		return nil;
 	}
 
-	return nil;
+	return [keys allObjects][0];
 }
 
 - (NSString *)keyIgnoringCase:(NSString *)baseKey
 {
-	for (NSString *key in [self allKeys]) {
+	for (id key in [self allKeys]) {
+		if ([key isKindOfClass:[NSString class]] == NO) {
+			continue;
+		}
+
 		if ([key isEqualIgnoringCase:baseKey]) {
 			return key;
 		} 
 	}
 	
 	return nil;
-}
-
-- (id)sortedDictionary
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self sortedDictionary:NO];
-}
-
-- (id)sortedReversedDictionary
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self sortedDictionary:YES];
 }
 
 - (NSArray *)sortedDictionaryKeys
@@ -415,19 +413,6 @@
 	return keys;
 }
 
-- (id)sortedDictionary:(BOOL)reversed
-{
-	NSArray *sortedKeys = [self sortedDictionaryKeys:reversed];
-
-	NSMutableDictionary *newDict = [NSMutableDictionary dictionary];
-
-	for (NSString *key in sortedKeys) {
-		newDict[key] = self[key];
-	}
-
-	return newDict;
-}
-
 - (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults
 {
 	return [self dictionaryByRemovingDefaults:defaults allowEmptyValues:NO];
@@ -441,7 +426,7 @@
 		for (NSString *currentObjectKey in self) {
 			id currentObject = self[currentObjectKey];
 
-			BOOL emptyObject = (NSObjectIsEmpty(currentObject) && allowEmptyValues);
+			BOOL emptyObject = (allowEmptyValues && NSObjectIsEmpty(currentObject));
 
 			BOOL voidDefaults = (defaults && NSObjectsAreEqual(currentObject, defaults[currentObjectKey]));
 
