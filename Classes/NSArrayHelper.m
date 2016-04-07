@@ -142,7 +142,7 @@
 	}
 
 	NSInteger objectIndex = [self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-		if ([object isKindOfClass:[NSString class]]) {
+		if ([object isKindOfClass:[NSString class]] == NO) {
 			return NO;
 		}
 
