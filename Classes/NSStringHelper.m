@@ -782,11 +782,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	}
 
 	/* String must have an opening quote before we even use it. */
-	id originalString = [stringValue mutableCopy];
-
-	if ([[originalString scannerString] hasPrefix:@"\""] == NO) {
+	if ([[stringValue scannerString] hasPrefix:@"\""] == NO) {
 		return nil;
 	}
+
+	id originalString = [stringValue mutableCopy];
 
 	/* Define base variables. */
 	NSScanner *scanner = [NSScanner scannerWithString:[originalString scannerString]];
