@@ -37,4 +37,33 @@
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error;
+
+- (NSArray *)buildPathArray:(NSString *)path, ...;
+
+- (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path;
+
+// The following methods default to moving destination to trash + copying source
+- (BOOL)replaceItemAtPath:(NSString *)destinationPath
+		   withItemAtPath:(NSString *)sourcePath;
+
+- (BOOL)replaceItemAtPath:(NSString *)destinationPath
+		   withItemAtPath:(NSString *)sourcePath
+   moveDestinationToTrash:(BOOL)moveDestinationToTrash;
+
+- (BOOL)replaceItemAtPath:(NSString *)destinationPath
+		   withItemAtPath:(NSString *)sourcePath
+		moveToDestination:(BOOL)moveToDestination
+   moveDestinationToTrash:(BOOL)moveDestinationToTrash;
+
+- (BOOL)replaceItemAtURL:(NSURL *)destinationURL
+		   withItemAtURL:(NSURL *)sourceURL;
+
+- (BOOL)replaceItemAtURL:(NSURL *)destinationURL
+		   withItemAtURL:(NSURL *)sourceURL
+  moveDestinationToTrash:(BOOL)moveDestinationToTrash;
+
+- (BOOL)replaceItemAtURL:(NSURL *)destinationURL
+		   withItemAtURL:(NSURL *)sourceURL
+	   moveToDestination:(BOOL)moveToDestination
+  moveDestinationToTrash:(BOOL)moveDestinationToTrash;
 @end
