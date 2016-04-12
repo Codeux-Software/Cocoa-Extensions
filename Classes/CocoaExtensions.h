@@ -80,4 +80,5 @@
 #import <CocoaExtensions/NSThreadHelper.h>
 #import <CocoaExtensions/NSURLHelper.h>
 #import <CocoaExtensions/NSWindowHelper.h>
+#import <CocoaExtensions/NSWorkspaceHelper.h>
 #endif

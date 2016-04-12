@@ -39,4 +39,15 @@
 	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 }
 
+- (NSString *)displayName
+{
+	NSString *bundleDisplayName = [self objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+
+	if (bundleDisplayName == nil) {
+		bundleDisplayName = [self objectForInfoDictionaryKey:@"CFBundleName"];
+	}
+
+	return bundleDisplayName;
+}
+
 @end

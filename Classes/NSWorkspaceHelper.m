@@ -1,6 +1,6 @@
 /* *********************************************************************
 
-        Copyright (c) 2010 - 2015 Codeux Software, LLC
+        Copyright (c) 2010 - 2016 Codeux Software, LLC
      Please see ACKNOWLEDGEMENT for additional information.
 
  Redistribution and use in source and binary forms, with or without
@@ -30,9 +30,25 @@
 
  *********************************************************************** */
 
-@interface NSBundle (CSCEFBundleHelper)
-@property (readonly, copy) NSString *displayName;
+#import "CocoaExtensions.h"
 
-- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects COCOA_EXTENSIONS_DEPRECATED("This method exists solely for backwards compatibility. Use -loadNibNamed:owner:topLevelObjects: instead.");
+@implementation NSWorkspace (CSCEFWorkspaceHelper)
+
+- (NSString *)nameOfApplicationToOpenURL:(NSURL *)url
+{
+	NSURL *applicationURL = [self URLForApplicationToOpenURL:url];
+
+	if (applicationURL == nil) {
+		return nil;
+	}
+
+	NSBundle *applicationBundle = [NSBundle bundleWithURL:applicationURL];
+
+	if (applicationBundle == nil) {
+		return nil;
+	}
+
+	return [applicationBundle displayName];
+}
+
 @end
-
