@@ -34,16 +34,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define CSCEF_StringIsAlphabetic(c)						('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
-#define CSCEF_StringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
-#define CSCEF_StringIsAlphabeticNumeric(c)				(CSCEF_StringIsAlphabetic(c) || CSCEF_StringIsBase10Numeric(c))
-#define CSCEF_StringIsWordLetter(c)						(CSCEF_StringIsAlphabeticNumeric(c) || (c) == '_')
+#define CS_StringIsAlphabetic(c)					('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
+#define CS_StringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
+#define CS_StringIsAlphabeticNumeric(c)				(CSC_StringIsAlphabetic(c) || CS_StringIsBase10Numeric(c))
+#define CS_StringIsWordLetter(c)					(CS_StringIsAlphabeticNumeric(c) || (c) == '_')
 
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringEmptyPlaceholder;
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringNewlinePlaceholder;
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringWhitespacePlaceholder;
 
-COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet; 
+COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet;
 
 #pragma mark
 #pragma mark String Helpers
@@ -148,7 +148,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark
 #pragma mark String Number Formatter Helper
 
-@interface NSString (CSCEFStringNumberHelper)
+@interface NSString (CSStringNumberHelper)
 + (NSString *)stringWithChar:(char)value;
 + (NSString *)stringWithUniChar:(UniChar)value;
 + (NSString *)stringWithUnsignedChar:(unsigned char)value;
@@ -169,7 +169,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark 
 #pragma mark Mutable String Helpers
 
-@interface NSMutableString (CSCEFMutableStringHelper)
+@interface NSMutableString (CSMutableStringHelper)
 @property (getter=getToken, readonly, copy) NSString *token;
 @property (getter=getTokenIncludingQuotes, readonly, copy) NSString *tokenIncludingQuotes;
 
@@ -180,7 +180,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark 
 #pragma mark Attributed String Helpers
 
-@interface NSAttributedString (CSCEFAttributedStringHelper)
+@interface NSAttributedString (CSAttributedStringHelper)
 @property (readonly, copy) NSDictionary<NSString *, id> *attributes;
 
 @property (nonatomic, assign, readonly) NSRange range;
@@ -209,7 +209,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CSCEF_LatinAlphabetIncludingUnderscoreD
 #pragma mark 
 #pragma mark Mutable Attributed String Helpers
 
-@interface NSMutableAttributedString (CSCEFMutableAttributedStringHelper)
+@interface NSMutableAttributedString (CSMutableAttributedStringHelper)
 + (NSMutableAttributedString *)mutableAttributedString;
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string;
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;

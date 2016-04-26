@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
 @end
 
-@interface NSMutableArray (CSCEFMutableArrayHelper)
+@interface NSMutableArray (CSMutableArrayHelper)
 - (void)addObjectWithoutDuplication:(id)anObject;
 
 - (void)addBool:(BOOL)value;
@@ -78,7 +78,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator;
 @end
 
-@interface NSIndexSet (CSCEFIndexSetHelper)
+@interface NSIndexSet (CSIndexSetHelper)
 - (NSArray<NSNumber *> *)arrayFromIndexSet;
 @end
 

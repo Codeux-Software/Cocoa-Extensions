@@ -223,7 +223,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation NSMutableArray (CSCEFMutableArrayHelper)
+@implementation NSMutableArray (CSMutableArrayHelper)
 
 - (void)addObjectWithoutDuplication:(id)anObject
 {
@@ -347,7 +347,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation NSIndexSet (CSCEFIndexSetHelper)
+@implementation NSIndexSet (CSIndexSetHelper)
 
 - (NSArray<NSNumber *> *)arrayFromIndexSet
 {
