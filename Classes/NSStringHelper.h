@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define CS_StringIsAlphabetic(c)					('a' <= (c) && (c) <= 'z' || 'A' <= (c) && (c) <= 'Z')
 #define CS_StringIsBase10Numeric(c)					('0' <= (c) && (c) <= '9')
-#define CS_StringIsAlphabeticNumeric(c)				(CSC_StringIsAlphabetic(c) || CS_StringIsBase10Numeric(c))
+#define CS_StringIsAlphabeticNumeric(c)				(CS_StringIsAlphabetic(c) || CS_StringIsBase10Numeric(c))
 #define CS_StringIsWordLetter(c)					(CS_StringIsAlphabeticNumeric(c) || (c) == '_')
 
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringEmptyPlaceholder;
@@ -117,11 +117,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start;
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-@property (readonly, copy, nullable) NSString *percentEncodedString;
-@property (readonly, copy, nullable) NSString *percentDecodedString;
-#endif
-
 @property (readonly, copy, nullable) NSData *IPv4AddressBytes;
 @property (readonly, copy, nullable) NSData *IPv6AddressBytes;
 
@@ -144,6 +139,23 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 @property (readonly, copy, nullable) NSURL *URLUsingWebKitPasteboard;
 #endif
 @end
+
+#pragma mark -
+#pragma mark String Percent Encoding Helper
+
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+@interface NSString (CSStringPercentEncodingHelper)
+@property (readonly, copy, nullable) NSString *percentEncodedString;
+@property (readonly, copy, nullable) NSString *percentDecodedString;
+
+@property (readonly, copy, nullable) NSString *percentEncodedURLUser;
+@property (readonly, copy, nullable) NSString *percentEncodedURLPassword;
+@property (readonly, copy, nullable) NSString *percentEncodedURLHost;
+@property (readonly, copy, nullable) NSString *percentEncodedURLPath;
+@property (readonly, copy, nullable) NSString *percentEncodedURLQuery;
+@property (readonly, copy, nullable) NSString *percentEncodedURLFragment;
+@end
+#endif
 
 #pragma mark
 #pragma mark String Number Formatter Helper

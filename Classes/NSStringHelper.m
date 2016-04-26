@@ -628,41 +628,6 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 }
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-- (nullable NSString *)percentEncodedString
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater])
-	{
-		NSCharacterSet *characterSet =
-		[NSCharacterSet characterSetWithCharactersInString:@"._-~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"];
-
-		return [self stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
-	}
-	else
-	{
-		CFStringRef encodedRef =
-		CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-												(CFStringRef)self,
-												NULL,
-												(CFStringRef)@"!*'();:@&=+$,/?%#[]",
-												kCFStringEncodingUTF8);
-
-		if (encodedRef) {
-			return (__bridge NSString *)encodedRef;
-		} else {
-			return nil;
-		}
-	}
-}
-
-- (nullable NSString *)percentDecodedString
-{
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
-		return [self stringByRemovingPercentEncoding];
-	} else {
-		return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
-	}
-}
-
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth withFont:textFont];
@@ -986,6 +951,96 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 #endif
 
 @end
+
+#pragma mark -
+#pragma mark String Percent Encoding Helper
+
+#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+@implementation NSString (CSStringPercentEncodingHelper)
+
+- (nullable NSString *)percentEncodedStringWithAllowedCharacters:(NSString *)allowedCharacters
+{
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		NSCharacterSet *characterSet =
+		[NSCharacterSet characterSetWithCharactersInString:allowedCharacters];
+
+		return [self stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
+	} else {
+		CFStringRef encodedRef =
+		CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+												(CFStringRef)self,
+												(CFStringRef)allowedCharacters,
+												(CFStringRef)@"!#$%&'()*+,/:;=?@[]",
+												kCFStringEncodingUTF8);
+
+		if (encodedRef) {
+			return (__bridge_transfer NSString *)encodedRef;
+		} else {
+			return nil;
+		}
+	}
+}
+
+- (nullable NSString *)percentDecodedString
+{
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		return [self stringByRemovingPercentEncoding];
+	} else {
+		return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	}
+}
+
+- (nullable NSString *)percentEncodedString
+{
+	static NSString *allowedCharacters = @"-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLUser
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789;=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLPassword
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789;=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLHost
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789:;=ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLPath
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLQuery
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+- (nullable NSString *)percentEncodedURLFragment
+{
+	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
+
+	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+}
+
+@end
+#endif
 
 #pragma mark -
 #pragma mark String Number Formatter Helper
