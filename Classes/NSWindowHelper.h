@@ -30,12 +30,14 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDisplay;
 
-@interface NSWindow (CSCEFWindowHelper)
+@interface NSWindow (CSWindowHelper)
 - (void)exactlyCenterWindow;
 
-+ (NSWindow *)windowBeneathMouse;
++ (nullable NSWindow *)windowBeneathMouse;
 
 @property (readonly) BOOL isBeneathMouse;
 
@@ -49,3 +51,5 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDispl
 - (void)saveWindowStateForClass:(Class)owner;
 - (void)restoreWindowStateForClass:(Class)owner;
 @end
+
+NS_ASSUME_NONNULL_END

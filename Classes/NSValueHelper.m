@@ -34,7 +34,9 @@
 
 #import <objc/runtime.h>
 
-@implementation NSValue (CSCEFValueHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSValue (CSValueHelper)
 
 + (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType
 {
@@ -105,3 +107,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

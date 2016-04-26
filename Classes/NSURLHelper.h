@@ -30,7 +30,11 @@
 
  *********************************************************************** */
 
-@interface NSURL (CSCEFURLHelper)
-- (id)resourceValueForKey:(NSString *)key;
-- (id)resourceValueForKey:(NSString *)key error:(NSError **)error;
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSURL (CSURLHelper)
+- (nullable id)resourceValueForKey:(NSString *)key;
+- (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error;
 @end
+
+NS_ASSUME_NONNULL_END

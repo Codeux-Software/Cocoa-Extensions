@@ -32,11 +32,13 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSFont (CSCEFFontHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSFont (CSFontHelper)
 
 const CGFloat kRotationForItalicText = -14.0;   
 
-- (NSFont *)convertToItalics
+- (nullable NSFont *)convertToItalics
 { 
 	NSFont *theFont = [[NSFontManager sharedFontManager] convertFont:self toHaveTrait:NSItalicFontMask];
 	
@@ -50,7 +52,7 @@ const CGFloat kRotationForItalicText = -14.0;
 		
 		italicTransformData.m11 = 1;       
 		italicTransformData.m12 = 0;       
-		italicTransformData.m21 = (-tanf(kRotationForItalicText * (acosf(0) / 90)));        
+		italicTransformData.m21 = (-tan(kRotationForItalicText * (acos(0) / 90)));
 		italicTransformData.m22 = 1;         
 		italicTransformData.tX = 0;       
 		italicTransformData.tY = 0;      
@@ -78,6 +80,8 @@ const CGFloat kRotationForItalicText = -14.0;
 
 + (BOOL)fontIsAvailable:(NSString *)fontName
 {
+	PointerIsEmptyAssertReturn(fontName, NO)
+
 	if ([NSFont fontWithName:fontName size:9.0]) {
 		return YES;
 	}
@@ -93,3 +97,5 @@ const CGFloat kRotationForItalicText = -14.0;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

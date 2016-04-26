@@ -27,13 +27,17 @@
 
 #import "DDInvocation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark -
 #pragma mark Public Helper Methods
 
 @implementation NSObject (DDExtensions)
 
-- (id)invokeOnThread:(NSThread *)thread
+- (nullable id)invokeOnThread:(NSThread *)thread
 {
+	PointerIsEmptyAssertReturn(thread, nil)
+
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
 	[grabber setParentThread:thread];
@@ -42,8 +46,10 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeOnThread:(NSThread *)thread
++ (nullable id)invokeOnThread:(NSThread *)thread
 {
+	PointerIsEmptyAssertReturn(thread, nil)
+
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
 	[grabber setParentThread:thread];
@@ -52,7 +58,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)iomt
+- (nullable id)iomt
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -61,7 +67,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)iomt
++ (nullable id)iomt
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -70,7 +76,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)invokeOnMainThread
+- (nullable id)invokeOnMainThread
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -79,7 +85,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeOnMainThread
++ (nullable id)invokeOnMainThread
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -88,7 +94,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)invokeInBackgroundThread
+- (nullable id)invokeInBackgroundThread
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -97,7 +103,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeInBackgroundThread
++ (nullable id)invokeInBackgroundThread
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -106,7 +112,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-- (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
+- (nullable id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -116,7 +122,7 @@
 	return [grabber prepareWithInvocationTarget:self];
 }
 
-+ (id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
++ (nullable id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone
 {
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -149,3 +155,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

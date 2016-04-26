@@ -30,17 +30,21 @@
 
  *********************************************************************** */
 
-@interface NSTextField (CSCEFTextFieldHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSTextField (CSTextFieldHelper)
 @property (readonly, copy) NSString *trimmedStringValue;
 @property (readonly, copy) NSString *trimmedFirstTokenStringValue;
 @end
 
-@interface NSTextView (CSCEFTextViewHelper)
+@interface NSTextView (CSTextViewHelper)
 - (void)focus;
 @property (getter=isFocused, readonly) BOOL focused;
 
 @property (readonly) NSRange range;
 @property (readonly) NSUInteger stringLength;
 
-@property (readonly, strong) NSScrollView *scrollView;
+@property (readonly, strong, nullable) NSScrollView *scrollView;
 @end
+
+NS_ASSUME_NONNULL_END

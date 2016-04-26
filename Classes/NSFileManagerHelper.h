@@ -30,15 +30,17 @@
 
  *********************************************************************** */
 
-@interface NSFileManager (CSCEFFileManagerHelper)
-@property (readonly, strong) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSFileManager (CSFileManagerHelper)
+@property (readonly, strong, nullable) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
 
 - (BOOL)directoryExistsAtPath:(NSString *)path;
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error;
 
-- (NSArray *)buildPathArray:(NSString *)path, ...;
+- (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...;
 
 - (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path;
 
@@ -67,3 +69,5 @@
 	   moveToDestination:(BOOL)moveToDestination
   moveDestinationToTrash:(BOOL)moveDestinationToTrash;
 @end
+
+NS_ASSUME_NONNULL_END

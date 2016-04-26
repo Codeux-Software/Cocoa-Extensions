@@ -30,6 +30,10 @@
 
  *********************************************************************** */
 
-@interface NSSplitView (CSCEFSplitViewHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSSplitView (CSSplitViewHelper)
 @property (readonly) BOOL hasHiddenView;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,7 +30,11 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRBase64Encoding : NSObject
-+ (NSString *)encodeData:(NSData *)input;
-+ (NSData *)decodeData:(NSString *)input;
++ (nullable NSString *)encodeData:(NSData *)input;
++ (nullable NSData *)decodeData:(NSString *)input;
 @end
+
+NS_ASSUME_NONNULL_END

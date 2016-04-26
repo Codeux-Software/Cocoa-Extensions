@@ -70,6 +70,8 @@
 
 #include <arpa/inet.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const NSStringEmptyPlaceholder = @"";
 NSString * const NSStringNewlinePlaceholder = @"\x0a";
 NSString * const NSStringWhitespacePlaceholder = @"\x20";
@@ -77,18 +79,18 @@ NSString * const NSStringWhitespacePlaceholder = @"\x20";
 NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a";
 
 @interface NSString (CSCEFStringHelperPrivate)
-+ (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange;
-+ (id)getTokenFromFirstWhitespaceGroup:(id)stringValue returnedDeletionRange:(NSRange *)whitespaceRange;
++ (nullable id)getTokenFromFirstQuoteGroup:(nullable id)stringValue returnedDeletionRange:(NSRange * _Nullable)quoteRange;
++ (nullable id)getTokenFromFirstWhitespaceGroup:(nullable id)stringValue returnedDeletionRange:(NSRange * _Nullable)whitespaceRange;
 @end
 
-@implementation NSString (CSCEFStringHelper)
+@implementation NSString (CStringHelper)
 
-+ (instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
++ (nullable instancetype)stringWithBytes:(const void *)bytes length:(NSUInteger)length encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithBytes:bytes length:length encoding:encoding];
 }
 
-+ (instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
++ (nullable instancetype)stringWithData:(NSData *)data encoding:(NSStringEncoding)encoding
 {
 	return [[NSString alloc] initWithData:data encoding:encoding];
 }
@@ -109,22 +111,26 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return uuidString;
 }
 
-+ (NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding
++ (nullable NSString *)charsetRepFromStringEncoding:(NSStringEncoding)encoding
 {
-	CFStringEncoding cfencoding = CFStringConvertNSStringEncodingToEncoding(encoding);
+	CFStringEncoding foundationEncoding = CFStringConvertNSStringEncodingToEncoding(encoding);
 
-	CFStringRef charsetStr = CFStringConvertEncodingToIANACharSetName(cfencoding);
+	CFStringRef charsetString = CFStringConvertEncodingToIANACharSetName(foundationEncoding);
 
-	return (__bridge NSString *)(charsetStr);
+	if (charsetString) {
+		return (__bridge NSString *)(charsetString);
+	} else {
+		return nil;
+	}
 }
 
-+ (NSDictionary *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8
++ (NSDictionary<NSString *, NSNumber *> *)supportedStringEncodingsWithTitle:(BOOL)favorUTF8
 {
-    NSMutableDictionary *encodingList = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSString *, NSNumber *> *encodingList = [NSMutableDictionary dictionary];
 
     NSArray *supportedEncodings = [NSString supportedStringEncodings:favorUTF8];
 
-    for (id encoding in supportedEncodings) {
+    for (NSNumber *encoding in supportedEncodings) {
         NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding integerValue]];
 
 		if (encodingTitle) {
@@ -135,7 +141,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
     return encodingList;
 }
 
-+ (NSArray *)supportedStringEncodings:(BOOL)favorUTF8
++ (NSArray<NSNumber *> *)supportedStringEncodings:(BOOL)favorUTF8
 {
     NSMutableArray *encodingList = [NSMutableArray array];
 
@@ -164,10 +170,6 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex
 {
-	if (anIndex > [self length]) {
-		return nil;
-	}
-	
 	UniChar strChar = [self characterAtIndex:anIndex];
 
 	return [NSString stringWithUniChar:strChar];
@@ -193,20 +195,22 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return ([self caseInsensitiveCompare:other] == NSOrderedSame);
 }
 
-- (BOOL)contains:(NSString *)str
+- (BOOL)contains:(NSString *)string
 {
-	return ([self stringPosition:str] >= 0);
+	return ([self stringPosition:string] >= 0);
 }
 
-- (BOOL)containsIgnoringCase:(NSString *)str
+- (BOOL)containsIgnoringCase:(NSString *)string
 {
-	return ([self stringPositionIgnoringCase:str] >= 0);
+	return ([self stringPositionIgnoringCase:string] >= 0);
 }
 
-- (NSString *)sha1
+- (nullable NSString *)sha1
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-	
+
+	PointerIsEmptyAssertReturn(data, nil)
+
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 	
     CC_SHA1([data bytes], (CC_LONG)[data length], digest);
@@ -220,9 +224,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
     return output;
 }
 
-- (NSString *)sha256
+- (nullable NSString *)sha256
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+
+	PointerIsEmptyAssertReturn(data, nil)
 
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
 
@@ -237,7 +243,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
     return output;
 }
 
-- (NSString *)md5
+- (nullable NSString *)md5
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
 
@@ -254,7 +260,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
     return output;
 }
 
-- (NSArray *)split:(NSString *)delimiter
+- (NSArray<NSString *> *)split:(NSString *)delimiter
 {
 	return [self componentsSeparatedByString:delimiter];
 }
@@ -269,21 +275,21 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
 }
 
-- (NSString *)trimCharacters:(NSString *)charset
+- (NSString *)trimCharacters:(NSString *)characters
 {
-	return [self stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:charset]];
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
+
+	return [self stringByTrimmingCharactersInSet:characterSet];
 }
 
 - (NSString *)removeAllNewlines
 {
-	return [self stringByReplacingOccurrencesOfString:NSStringNewlinePlaceholder withString:NSStringEmptyPlaceholder];
+	return [self stringByReplacingOccurrencesOfCharacterSet:[NSCharacterSet newlineCharacterSet] withString:NSStringEmptyPlaceholder];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement
 {
-	NSObjectIsEmptyAssertReturn(self, nil);
-
-	PointerIsEmptyAssertReturn(target, nil);
+	PointerIsEmptyAssertReturn(target, self);
 
 	NSMutableString *newString = [NSMutableString string];
 
@@ -299,7 +305,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		}
 	}
 
-	return [newString copy];
+	return newString;
 }
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString
@@ -332,38 +338,44 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
-	NSString *stringA = [NSString stringWithString:self];
+	if (stringB == nil || [stringB length] == 0) {
+		return 0.0;
+	}
 
-	NSAssertReturnR(([stringB length] > 0), 0.0);
-	NSAssertReturnR(([stringB length] <= [stringA length]), 0.0);
+	if ([stringB length] > [self length]) {
+		return 0.0;
+	}
 
-	stringA = [stringA lowercaseString];
-	stringB = [stringB lowercaseString];
+	NSString *_stringA = [self lowercaseString];
+
+	NSString *_stringB = [stringB lowercaseString];
 
 	NSInteger commonCharacterCount = 0;
 	NSInteger startPosition = 0;
 
 	CGFloat distancePenalty = 0;
 
-	for (NSInteger i = 0; i < [stringB length]; i++) {
+	for (NSInteger i = 0; i < [_stringB length]; i++) {
 		BOOL matchFound = NO;
 
-		for (NSInteger j = startPosition; j < [stringA length]; j++) {
-			if ([stringB characterAtIndex:i] == [stringA characterAtIndex:j]) {
-				NSInteger distance = (j - startPosition);
-
-				if (distance > 0) {
-					distancePenalty += ((distance - 1.0) / distance);
-				}
-
-				commonCharacterCount++;
-
-				startPosition = (j + 1);
-
-				matchFound = YES;
-
-				break;
+		for (NSInteger j = startPosition; j < [_stringA length]; j++) {
+			if ([_stringA characterAtIndex:i] != [_stringB characterAtIndex:j]) {
+				continue;
 			}
+
+			NSInteger distance = (j - startPosition);
+
+			if (distance > 0) {
+				distancePenalty += ((distance - 1.0) / distance);
+			}
+
+			commonCharacterCount++;
+
+			startPosition = (j + 1);
+
+			matchFound = YES;
+
+			break;
 		}
 
 		if (matchFound == NO) {
@@ -371,7 +383,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		}
 	}
 
-	CGFloat lengthPenalty = (1.0 - (CGFloat)[stringB length] / [stringA length]);
+	CGFloat lengthPenalty = (1.0 - (CGFloat)[_stringB length] / [_stringA length]);
 
 	return (commonCharacterCount - distancePenalty - weight*lengthPenalty);
 }
@@ -381,7 +393,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	NSRange searchResult = [self rangeOfString:needle];
 	
 	if (searchResult.location == NSNotFound) {
-		return -1;
+		return (-1);
 	}
 	
 	return searchResult.location;
@@ -392,7 +404,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	NSRange searchResult = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
 
 	if (searchResult.location == NSNotFound) {
-		return -1;
+		return (-1);
 	}
 
 	return searchResult.location;
@@ -400,10 +412,8 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
-	if ([prefix length] > 0 && [self length] >= [prefix length]) {
-		if ([self hasPrefix:prefix]) {
-			return [self substringFromIndex:[prefix length]];
-		}
+	if ([self hasPrefix:prefix]) {
+		return [self substringFromIndex:[prefix length]];
 	}
 	
 	return self;
@@ -424,7 +434,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return ([self IPv6AddressBytes] != nil);
 }
 
-- (NSData *)IPv4AddressBytes
+- (nullable NSData *)IPv4AddressBytes
 {
 	struct sockaddr_in sa;
 
@@ -437,7 +447,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	}
 }
 
-- (NSData *)IPv6AddressBytes
+- (nullable NSData *)IPv6AddressBytes
 {
 	struct sockaddr_in6 sa;
 
@@ -452,9 +462,9 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSString *)trimAndGetFirstToken
 {
-	NSObjectIsEmptyAssertReturn(self, self);
+	NSString *bob = [self trim];
 
-	NSString *firstToken = [NSString getTokenFromFirstWhitespaceGroup:[self trim] returnedDeletionRange:NULL];
+	NSString *firstToken = [NSString getTokenFromFirstWhitespaceGroup:bob returnedDeletionRange:NULL];
 
 	return firstToken;
 }
@@ -471,8 +481,6 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (NSUInteger)occurrencesOfCharacter:(UniChar)character
 {
-	NSObjectIsEmptyAssertReturn(self, 0);
-
 	NSUInteger characterCount = 0;
 
 	for (NSUInteger i = 0; i < [self length]; ++i) {
@@ -488,8 +496,10 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (BOOL)isNumericOnly
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
-	
+	if ([self length] == 0) {
+		return NO;
+	}
+
 	for (NSUInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
@@ -503,7 +513,9 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 - (BOOL)isAlphabeticNumericOnly
 {
-	NSObjectIsEmptyAssertReturn(self, NO);
+	if ([self length] == 0) {
+		return NO;
+	}
 
 	for (NSUInteger i = 0; i < [self length]; ++i) {
 		UniChar c = [self characterAtIndex:i];
@@ -516,50 +528,45 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return YES;
 }
 
-- (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)validChars
+- (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)characterSet
 {
-	PointerIsEmptyAssertReturn(validChars, NO);
+	PointerIsEmptyAssertReturn(characterSet, NO);
 
-	NSObjectIsEmptyAssertReturn(self, NO);
+	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet];
 
-	NSRange searchRange = [self rangeOfCharacterFromSet:validChars];
-
-	return NSDissimilarObjects(searchRange.location, NSNotFound);
+	return (searchRange.location != NSNotFound);
 }
 
-- (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)validChars
+- (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)characterSet
 {
-	PointerIsEmptyAssertReturn(validChars, NO);
+	PointerIsEmptyAssertReturn(characterSet, NO);
 
-	NSObjectIsEmptyAssertReturn(self, NO);
-
-	NSRange searchRange = [self rangeOfCharacterFromSet:validChars];
+	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet];
 
 	return (searchRange.location == NSNotFound);
 }
 
-- (BOOL)containsCharacters:(NSString *)validChars
+- (BOOL)containsCharacters:(NSString *)characters
 {
-	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
 
-	return [self containsCharactersFromCharacterSet:chars];
+	return [self containsCharactersFromCharacterSet:characterSet];
 }
 
-- (BOOL)onlyContainsCharacters:(NSString *)validChars
+- (BOOL)onlyContainsCharacters:(NSString *)characters
 {
-	NSCharacterSet *chars = [[NSCharacterSet characterSetWithCharactersInString:validChars] invertedSet];
+	NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:characters] invertedSet];
 
-	return [self onlyContainsCharactersFromCharacterSet:chars];
+	return [self onlyContainsCharactersFromCharacterSet:characterSet];
 }
 
-- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
+- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
 {
-	NSObjectIsEmptyAssertReturn(self, nil);
-	NSObjectIsEmptyAssertReturn(validChars, nil);
+	PointerIsEmptyAssertReturn(characters, self)
 	
 	NSMutableString *result = [NSMutableString string];
 
-	NSCharacterSet *chars = [NSCharacterSet characterSetWithCharactersInString:validChars];
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
 	
 	NSScanner *scanner = [NSScanner scannerWithString:self];
 	
@@ -567,13 +574,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		NSString *buffer;
 		
 		if (onlyDeleteThoseNotInSet) {
-			if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
+			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
 				[result appendString:buffer];
 			} else {
 				[scanner setScanLocation:([scanner scanLocation] + 1)];
 			}
 		} else {
-			if ([scanner scanCharactersFromSet:chars intoString:&buffer]) {
+			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
 				[scanner setScanLocation:([scanner scanLocation] + 1)];
 			} else {
 				[result appendString:buffer];
@@ -584,108 +591,78 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return result;
 }
 
-- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)validChars
+- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters
 {
-	return [self stringByDeletingAllCharactersInSet:validChars deleteThoseNotInSet:NO];
+	return [self stringByDeletingAllCharactersInSet:characters deleteThoseNotInSet:NO];
 }
 
-- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)validChars
+- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)characters
 {
-	return [self stringByDeletingAllCharactersInSet:validChars deleteThoseNotInSet:YES];
+	return [self stringByDeletingAllCharactersInSet:characters deleteThoseNotInSet:YES];
 }
 
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start
 {
+	NSRange emptyRange = NSEmptyRange();
+
+	PointerIsEmptyAssertReturn(regex, emptyRange)
+
 	NSUInteger stringLength = [self length];
-	
-	NSAssertReturnR((stringLength > start), NSEmptyRange());
+
+	if (stringLength > start) {
+		return emptyRange;
+	}
 	
 	NSString *searchString = [self substringFromIndex:start];
 	
 	NSRange searchRange = [XRRegularExpression string:searchString rangeOfRegex:regex];
 
 	if (searchRange.location == NSNotFound) {
-		return NSEmptyRange();
+		return emptyRange;
 	}
 
-	NSRange r = NSMakeRange((start + searchRange.location),
-									 searchRange.length);
-	
-	return r;
-}
+	emptyRange.location = (start + searchRange.location);
+	emptyRange.length =  searchRange.length;
 
-- (NSString *)encodeURIComponent
-{
-	NSObjectIsEmptyAssertReturn(self, nil);
-	
-	const char *sourcedata = [self UTF8String];
-	const char *characters = "0123456789ABCDEF";
-
-	PointerIsEmptyAssertReturn(sourcedata, nil);
-	
-	NSUInteger datalength = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-	
-	char  buf[(datalength * 4)];
-	char *dest = buf;
-	
-	for (NSInteger i = (datalength - 1); i >= 0; --i) {
-		unsigned char c = *sourcedata++;
-		
-		if (CSCEF_StringIsWordLetter(c) || c == '-' || c == '.' || c == '~') {
-			*dest++ = c;
-		} else {
-			*dest++ = '%';
-			*dest++ = characters[(c / 16)];
-			*dest++ = characters[(c % 16)];
-		}
-	}
-	
-	return [NSString stringWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding];
-}
-
-- (NSString *)encodeURIFragment
-{
-	NSObjectIsEmptyAssertReturn(self, nil);
-
-	const char *sourcedata = [self UTF8String];
-	const char *characters = "0123456789ABCDEF";
-
-	PointerIsEmptyAssertReturn(sourcedata, nil);
-
-	NSUInteger datalength = [self lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
-
-	char  buf[(datalength * 4)];
-	char *dest = buf;
-
-	for (NSInteger i = (datalength - 1); i >= 0; --i) {
-		unsigned char c = *sourcedata++;
-		
-		if (CSCEF_StringIsWordLetter(c)
-			|| c == '#' || c == '%'
-			|| c == '&' || c == '+'
-			|| c == ',' || c == '-'
-			|| c == '.' || c == '/'
-			|| c == ':' || c == ';'
-			|| c == '=' || c == '?'
-			|| c == '@' || c == '~')
-		{
-			*dest++ = c;
-		} else {
-			*dest++ = '%';
-			*dest++ = characters[(c / 16)];
-			*dest++ = characters[(c % 16)];
-		}
-	}
-	
-	return [NSString stringWithBytes:buf length:(dest - buf) encoding:NSASCIIStringEncoding];
-}
-
-- (NSString *)decodeURIFragment
-{
-	return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	return emptyRange;
 }
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
+- (nullable NSString *)percentEncodedString
+{
+	if ([XRSystemInformation isUsingOSXMavericksOrLater])
+	{
+		NSCharacterSet *characterSet =
+		[NSCharacterSet characterSetWithCharactersInString:@"._-~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"];
+
+		return [self stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
+	}
+	else
+	{
+		CFStringRef encodedRef =
+		CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+												(CFStringRef)self,
+												NULL,
+												(CFStringRef)@"!*'();:@&=+$,/?%#[]",
+												kCFStringEncodingUTF8);
+
+		if (encodedRef) {
+			return (__bridge NSString *)encodedRef;
+		} else {
+			return nil;
+		}
+	}
+}
+
+- (nullable NSString *)percentDecodedString
+{
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		return [self stringByRemovingPercentEncoding];
+	} else {
+		return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+	}
+}
+
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth withFont:textFont];
@@ -693,12 +670,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return (boundHeight / lineHeight);
 }
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont
 {
 	return [self pixelHeightInWidth:width withFont:textFont lineBreakMode:NSLineBreakByWordWrapping];
 }
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
 	NSAttributedString *base = [NSAttributedString attributedStringWithString:self];
 
@@ -711,19 +688,15 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return self;
 }
 
-+ (id)getTokenFromFirstWhitespaceGroup:(id)stringValue returnedDeletionRange:(NSRange *)whitespaceRange
++ (nullable id)getTokenFromFirstWhitespaceGroup:(nullable id)stringValue returnedDeletionRange:(NSRange * _Nullable)whitespaceRange
 {
+	/* Check the input. */
+	if (stringValue == nil || [stringValue length] == 0) {
+		return nil;
+	}
+
 	/* What type of string are we processing? */
 	BOOL isAttributedString = ([stringValue isKindOfClass:[NSAttributedString class]]);
-
-	/* Check the input. */
-	if (stringValue == nil || [stringValue length] < 1) {
-		if (isAttributedString) {
-			return [NSAttributedString attributedString];
-		} else {
-			return NSStringEmptyPlaceholder;
-		}
-	}
 
 	/* Define base variables. */
 	NSScanner *scanner = [NSScanner scannerWithString:[stringValue scannerString]];
@@ -738,11 +711,10 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	/* We now scan from the scan location to the end of whitespaces. */
 	if (whitespaceRange) {
 		NSInteger stringLength = [stringValue length];
+
 		NSInteger stringForward = scanLocation;
 
-		while (1 == 1) { // Infinite loops are safe! :-)
-			NSAssertReturnLoopBreak(stringForward < stringLength);
-
+		while (stringForward < stringLength) {
 			UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
 
 			if (c == ' ') {
@@ -756,7 +728,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	}
 
 	/* Build and return final tokenized string from range. */
-	id resultString;
+	id resultString = nil;
 
 	if (isAttributedString) {
 		resultString = [stringValue attributedSubstringFromRange:NSMakeRange(0, scanLocation)];
@@ -767,19 +739,15 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return resultString;
 }
 
-+ (id)getTokenFromFirstQuoteGroup:(id)stringValue returnedDeletionRange:(NSRange *)quoteRange
++ (nullable id)getTokenFromFirstQuoteGroup:(nullable id)stringValue returnedDeletionRange:(NSRange * _Nullable)quoteRange
 {
+	/* Check the input. */
+	if (stringValue == nil || [stringValue length] == 0) {
+		return nil;
+	}
+
 	/* What type of string are we processing? */
 	BOOL isAttributedString = ([stringValue isKindOfClass:[NSAttributedString class]]);
-
-	/* Check the input. */
-	if (stringValue == nil || [stringValue length] < 1) {
-		if (isAttributedString) {
-			return [NSAttributedString attributedString];
-		} else {
-			return NSStringEmptyPlaceholder;
-		}
-	}
 
 	/* String must have an opening quote before we even use it. */
 	if ([[stringValue scannerString] hasPrefix:@"\""] == NO) {
@@ -835,7 +803,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 			if ([originalString length] > charIndex) {
 				UniChar rightChar = [[originalString scannerString] characterAtIndex:charIndex];
 
-				if (NSDissimilarObjects(rightChar, ' ')) {
+				if (rightChar != ' ') {
 					return nil;
 				}
 			}
@@ -885,7 +853,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 					slashGroupCount += 1;
 				}
 			}
-			else if (NSDissimilarObjects(c, '\\') || (c == '\\' && loopPosition == 0))
+			else if (c != '\\' || (c == '\\' && loopPosition == 0))
 			{
 				/* Increase by one if we end at a \ */
 				if (loopPosition == 0 && c == '\\') {
@@ -975,11 +943,10 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 		 a simple for loop and compare characters. */
 		if (quoteRange) {
 			NSInteger stringLength = [stringValue length];
+
 			NSInteger stringForward = ([scanner scanLocation] + 1);
 
-			while (1 == 1) { // Infinite loops are safe! :-)
-				NSAssertReturnLoopBreak(stringForward < stringLength);
-
+			while (stringForward < stringLength) {
 				UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
 
 				if (c == ' ') {
@@ -1000,7 +967,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 }
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-- (NSURL *)URLUsingWebKitPasteboard
+- (nullable NSURL *)URLUsingWebKitPasteboard
 {
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
 
@@ -1115,13 +1082,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 	if (quotedGroup == nil) {
 		return [self getToken];
-	} else {
-		if ((deletionRange.location == NSNotFound) == NO) {
-			[self deleteCharactersInRange:deletionRange];
-		}
-
-		return quotedGroup;
 	}
+
+	if (deletionRange.location != NSNotFound) {
+		[self deleteCharactersInRange:deletionRange];
+	}
+
+	return quotedGroup;
 }
 
 - (NSString *)getToken
@@ -1132,13 +1099,18 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 	if (token == nil) {
 		return NSStringEmptyPlaceholder;
-	} else {
-		if ((deletionRange.location == NSNotFound) == NO) {
-			[self deleteCharactersInRange:deletionRange];
-		}
-
-		return token;
 	}
+
+	if (deletionRange.location != NSNotFound) {
+		[self deleteCharactersInRange:deletionRange];
+	}
+
+	return token;
+}
+
+- (NSString *)lowercaseGetToken
+{
+	return [[self getToken] lowercaseString];
 }
 
 - (NSString *)uppercaseGetToken
@@ -1163,33 +1135,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [[NSAttributedString alloc] initWithString:string];
 }
 
-+ (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes
++ (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes
 {
 	return [[NSAttributedString alloc] initWithString:string attributes:stringAttributes];
 }
 
-+ (NSAttributedString *)emptyString
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self attributedString];
-}
-
-+ (NSAttributedString *)emptyStringWithBase:(NSString *)string
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self attributedStringWithString:string];
-}
-
-+ (NSAttributedString *)stringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self attributedStringWithString:string attributes:stringAttributes];
-}
-
-- (NSDictionary *)attributes
+- (NSDictionary<NSString *, id> *)attributes
 {
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
@@ -1204,82 +1155,45 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self string];
 }
 
-- (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set
+- (NSArray<NSAttributedString *> *)splitIntoLines
 {
-	return [self attributedStringByTrimmingCharactersInSet:set frontChop:NULL];
-}
-
-- (NSAttributedString *)attributedStringByTrimmingCharactersInSet:(NSCharacterSet *)set frontChop:(NSRangePointer)front
-{
-	NSString *baseString = [self string];
-	
-	NSRange range;
-	
-	NSUInteger locati = 0;
-	NSUInteger length = 0;
-	
-	NSCharacterSet *invertedSet = [set invertedSet];
-	
-	range = [baseString rangeOfCharacterFromSet:invertedSet];
-
-	if (range.length >= 1) {
-		locati = range.location;
-	} else {
-		locati = 0;
-	}
-	
-	if ((front == nil) == NO) {
-		*front = range;
-	}
-	
-	range = [baseString rangeOfCharacterFromSet:invertedSet options:NSBackwardsSearch];
-
-	if (range.length >= 1) {
-		length = (NSMaxRange(range) - locati);
-	} else {
-		length = ([baseString length] - locati);
-	}
-	
-	return [self attributedSubstringFromRange:NSMakeRange(locati, length)];
-}
-
-- (NSArray *)splitIntoLines
-{
-    NSMutableArray *lines = [NSMutableArray array];
+    NSMutableArray<NSAttributedString *> *lines = [NSMutableArray array];
     
     NSInteger stringLength = [self length];
+
     NSInteger rangeStartIn = 0;
     
-    NSMutableAttributedString *copyd = [self mutableCopy];
+    NSMutableAttributedString *mutableSelf = [self mutableCopy];
     
     while (rangeStartIn < stringLength) {
-		NSRange srb = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
+		NSRange searchRange = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
      
-		NSRange srr = [[self string] rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:srb];
+		NSRange lineRange = [[self string] rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:searchRange];
         
-        if (srr.location == NSNotFound) {
+        if (lineRange.location == NSNotFound) {
             break;
         }
         
-        NSRange delRange = NSMakeRange(0, ((srr.location - rangeStartIn) + 1));
-        NSRange cutRange = NSMakeRange(rangeStartIn, (srr.location - rangeStartIn));
+        NSRange rangeToDelete = NSMakeRange(0, ((lineRange.location - rangeStartIn) + 1));
+
+		NSRange rangeToSubstring = NSMakeRange(rangeStartIn, (lineRange.location - rangeStartIn));
         
-        NSAttributedString *line = [self attributedSubstringFromRange:cutRange];
+        NSAttributedString *line = [self attributedSubstringFromRange:rangeToSubstring];
         
 		if (line) {
 			[lines addObject:line];
 		}
 		
-        [copyd deleteCharactersInRange:delRange];
+        [mutableSelf deleteCharactersInRange:rangeToDelete];
         
-        rangeStartIn = NSMaxRange(srr);
+        rangeStartIn = NSMaxRange(lineRange);
     }
     
 	if ([lines count] == 0) {
         [lines addObject:self];
     } else {
-        if ([copyd length] > 0) {
-			[lines addObject:copyd];
+        if ([mutableSelf length] > 0) {
+			[lines addObject:mutableSelf];
         }
     }
     
@@ -1292,7 +1206,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight withFont:nil];
 }
 
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont
 {	
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth lineBreakMode:NSLineBreakByWordWrapping withFont:textFont];
 
@@ -1309,7 +1223,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return [self pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:nil];
 }
 
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(NSFont *)textFont
+- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(nullable NSFont *)textFont
 {
 	NSMutableAttributedString *baseMutable = [self mutableCopy];
 
@@ -1319,7 +1233,7 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	
 	[paragraphStyle setLineBreakMode:lineBreakMode];
 
-	if ((textFont == nil) == NO) {
+	if (textFont) {
 		[baseMutable addAttribute:NSFontAttributeName value:textFont range:baseMutableRange];
 	}
 
@@ -1331,12 +1245,12 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 	return NSHeight(bounds);
 }
 
-- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor
 {
 	return [self imageRepWithSize:originalSize scaleFactor:scaleFactor backgroundColor:backgroundColor coreTextFrameOffset:NULL];
 }
 
-- (NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(NSInteger *)coreTextFrameOffset
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(NSInteger *)coreTextFrameOffset
 {
 	/* Perform basic validation on the current state of the
 	 string and the values of hte supplied paramaters. */
@@ -1476,16 +1390,19 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 @implementation NSMutableAttributedString (NSMutableAttributedStringHelper)
 
-+ (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary *)stringAttributes
++ (NSMutableAttributedString *)mutableAttributedString
 {
-	return [[NSMutableAttributedString alloc] initWithString:string attributes:stringAttributes];
+	return [NSMutableAttributedString mutableAttributedStringWithString:NSStringEmptyPlaceholder];
 }
 
-+ (NSMutableAttributedString *)mutableStringWithBase:(NSString *)string attributes:(NSDictionary *)stringAttributes
++ (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string
 {
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
+	return [[NSMutableAttributedString alloc] initWithString:string attributes:nil];
+}
 
-	return [self mutableAttributedStringWithString:string attributes:stringAttributes];
++ (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes
+{
+	return [[NSMutableAttributedString alloc] initWithString:string attributes:stringAttributes];
 }
 
 - (NSString *)trimmedString
@@ -1496,6 +1413,11 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 - (NSString *)getTokenAsString
 {
 	return [[self getToken] string];
+}
+
+- (NSString *)lowercaseGetToken
+{
+	return [[self getTokenAsString] lowercaseString];
 }
 
 - (NSString *)uppercaseGetToken
@@ -1511,13 +1433,13 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 	if (token == nil) {
 		return [NSAttributedString attributedString];
-	} else {
-		if ((deletionRange.location == NSNotFound) == NO) {
-			[self deleteCharactersInRange:deletionRange];
-		}
-
-		return token;
 	}
+
+	if (deletionRange.location != NSNotFound) {
+		[self deleteCharactersInRange:deletionRange];
+	}
+
+	return token;
 }
 
 - (NSAttributedString *)getTokenIncludingQuotes
@@ -1528,13 +1450,15 @@ NSString * const CSCEF_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d
 
 	if (quotedGroup == nil) {
 		return [self getToken];
-	} else {
-		if ((deletionRange.location == NSNotFound) == NO) {
-			[self deleteCharactersInRange:deletionRange];
-		}
-
-		return quotedGroup;
 	}
+
+	if (deletionRange.location != NSNotFound) {
+		[self deleteCharactersInRange:deletionRange];
+	}
+
+	return quotedGroup;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

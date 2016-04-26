@@ -32,15 +32,21 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSURL (CSCEFURLHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-- (id)resourceValueForKey:(NSString *)key
+@implementation NSURL (CSURLHelper)
+
+- (nullable id)resourceValueForKey:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, nil)
+
 	return [self resourceValueForKey:key error:nil];
 }
 
-- (id)resourceValueForKey:(NSString *)key error:(NSError **)error
+- (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error
 {
+	PointerIsEmptyAssertReturn(key, nil)
+
 	id resourceValue = nil;
 
 	if ([self getResourceValue:&resourceValue forKey:key error:error] == NO) {
@@ -51,3 +57,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

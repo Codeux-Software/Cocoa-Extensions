@@ -34,24 +34,26 @@
 
 #import <objc/runtime.h>
 
-@implementation NSMenu (CSCEFMenuHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSMenu (CSMenuHelper)
 @end
 
-@implementation NSMenuItem (CSCEFMenuItemHelper)
+@implementation NSMenuItem (CSMenuItemHelper)
 
 static void *_internalUserInfo = nil;
 
-- (NSString *)userInfo
+- (nullable NSString *)userInfo
 {
 	return objc_getAssociatedObject(self, _internalUserInfo);
 }
 
-- (void)setUserInfo:(NSString *)userInfo
+- (void)setUserInfo:(nullable NSString *)userInfo
 {
 	objc_setAssociatedObject(self, _internalUserInfo, userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
-- (void)setUserInfo:(NSString *)userInfo recursively:(BOOL)recursively
+- (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively
 {
 	if (recursively) {
 		if ([self hasSubmenu]) {
@@ -82,3 +84,5 @@ static void *_internalUserInfo = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

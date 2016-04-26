@@ -30,9 +30,12 @@
 
  *********************************************************************** */
 
-@interface NSBundle (CSCEFBundleHelper)
-@property (readonly, copy) NSString *displayName;
+NS_ASSUME_NONNULL_BEGIN
 
-- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects COCOA_EXTENSIONS_DEPRECATED("This method exists solely for backwards compatibility. Use -loadNibNamed:owner:topLevelObjects: instead.");
+@interface NSBundle (CSBundleHelper)
+@property (readonly, copy, nullable) NSString *displayName;
+
+- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(nullable id)owner topLevelObjects:(NSArray * _Nullable * _Nullable)topLevelObjects COCOA_EXTENSIONS_DEPRECATED("This method exists solely for backwards compatibility. Use -loadNibNamed:owner:topLevelObjects: instead.");
 @end
 
+NS_ASSUME_NONNULL_END

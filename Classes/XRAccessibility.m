@@ -32,6 +32,8 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation XRAccessibility
 
 + (BOOL)isVoiceOverEnabled
@@ -39,8 +41,10 @@
 	return (CFPreferencesCopyAppValue(CFSTR("voiceOverOnOffKey"), CFSTR("com.apple.universalaccess")) == kCFBooleanTrue);
 }
 
-+ (void)setAccessibilityValueDescription:(NSString *)accessibilityValueDescription forObject:(id)object
++ (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object
 {
+	PointerIsEmptyAssert(object)
+
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityValueDescription:accessibilityValueDescription];
 	} else {
@@ -49,8 +53,10 @@
 	}
 }
 
-+ (void)setAccessibilityLabel:(NSString *)accessibilityLabel forObject:(id)object
++ (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object
 {
+	PointerIsEmptyAssert(object)
+
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityLabel:accessibilityLabel];
 	} else {
@@ -59,8 +65,10 @@
 	}
 }
 
-+ (void)setAccessibilityTitle:(NSString *)accessibilityTitle forObject:(id)object
++ (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object
 {
+	PointerIsEmptyAssert(object)
+
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityTitle:accessibilityTitle];
 	} else {
@@ -70,3 +78,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,10 +30,12 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsEmpty(id obj);
 COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsNotEmpty(id obj);
 
-COCOA_EXTENSIONS_EXTERN BOOL NSObjectsAreEqual(id obj1, id obj2);
+COCOA_EXTENSIONS_EXTERN BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2);
 
 #pragma mark -
 
@@ -72,3 +74,4 @@ COCOA_EXTENSIONS_EXTERN void XRExchangeImplementation(NSString *className, NSStr
 COCOA_EXTENSIONS_EXTERN void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod);
 COCOA_EXTENSIONS_EXTERN void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod);
 
+NS_ASSUME_NONNULL_END

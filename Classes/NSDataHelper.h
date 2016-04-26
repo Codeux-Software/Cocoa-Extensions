@@ -30,7 +30,9 @@
 
  *********************************************************************** */
 
-@interface NSData (CSCEFDataHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSData (CSDataHelper)
 @property (getter=isValidUTF8, readonly) BOOL validUTF8;
 
 @property (readonly, copy) NSString *sha1;
@@ -46,3 +48,5 @@
 - (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length;
 - (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,5 +30,9 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 COCOA_EXTENSIONS_EXTERN CGPoint NSRectCenter(CGRect rect);
 COCOA_EXTENSIONS_EXTERN CGRect NSRectAdjustInRect(CGRect r, CGRect bounds);
+
+NS_ASSUME_NONNULL_END

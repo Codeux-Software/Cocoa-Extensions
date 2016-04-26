@@ -23,6 +23,8 @@
  * SOFTWARE.
  */
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef enum DDInvocationThreadType : NSInteger {
 	DDInvocationMainThread,
 	DDInvocationParentThread,
@@ -44,3 +46,5 @@ typedef enum DDInvocationThreadType : NSInteger {
 @interface NSInvocation (DDInvocationWrapper)
 - (void)performInvocation:(NSInvocation *)anInvocation;
 @end
+
+NS_ASSUME_NONNULL_END

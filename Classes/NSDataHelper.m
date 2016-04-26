@@ -65,7 +65,9 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation NSData (CSCEFDataHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSData (CSDataHelper)
 
 + (NSData *)lineFeed
 {
@@ -89,7 +91,7 @@
 
 - (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length
 {
-	if (!prefix || length <= 0 || [self length] < length) {
+	if (prefix == NULL || length <= 0 || [self length] < length) {
 		return NO;
 	}
 
@@ -98,11 +100,11 @@
 
 - (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length
 {
-	if (!suffix || length <= 0 || [self length] < length) {
+	if (suffix == NULL || length <= 0 || [self length] < length) {
 		return NO;
 	}
 
-	return (memcmp( ((const char *)[self bytes] + ([self length] - length)), suffix, length) == 0);
+	return (memcmp( ((const char *)[self bytes] + ([self length] - length) ), suffix, length) == 0);
 }
 
 - (BOOL)isValidUTF8
@@ -199,3 +201,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

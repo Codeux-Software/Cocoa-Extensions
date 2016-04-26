@@ -30,15 +30,17 @@
 
  *********************************************************************** */
 
-@interface NSMenu (CSCEFMenuHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSMenu (CSMenuHelper)
 @end
 
 @interface NSMenuItem ()
-@property (nonatomic, copy) NSString *userInfo;
+@property (nonatomic, copy, nullable) NSString *userInfo;
 @end
 
-@interface NSMenuItem (CSCEFMenuItemHelper)
-- (void)setUserInfo:(NSString *)userInfo recursively:(BOOL)recursively; // Setting recursively to YES will apply userInfo to this menu item as well as all items within its submenu if it has one
+@interface NSMenuItem (CSMenuItemHelper)
+- (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively; // Setting recursively to YES will apply userInfo to this menu item as well as all items within its submenu if it has one
 
 + (instancetype)menuItemWithTitle:(NSString *)aString
 				 target:(id)aTarget
@@ -50,3 +52,5 @@
 		  keyEquivalent:(NSString *)charCode
 	  keyEquivalentMask:(NSUInteger)mask;
 @end
+
+NS_ASSUME_NONNULL_END

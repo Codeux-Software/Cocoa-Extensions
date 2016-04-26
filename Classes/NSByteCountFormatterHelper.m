@@ -32,9 +32,11 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSByteCountFormatter (CSCEFByteCountFormatterHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSString *)stringFromByteCountWithPaddedDigits:(long long)byteCount
+@implementation NSByteCountFormatter (CSByteCountFormatterHelper)
+
++ (nullable NSString *)stringFromByteCountWithPaddedDigits:(long long)byteCount
 {
 	NSByteCountFormatter *formatter = [NSByteCountFormatter new];
 
@@ -44,3 +46,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

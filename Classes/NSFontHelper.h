@@ -30,12 +30,16 @@
 
  *********************************************************************** */
 
-@interface NSFont (CSCEFFontHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSFont (CSFontHelper)
 + (BOOL)fontIsAvailable:(NSString *)fontName;
 
-@property (readonly, copy) NSFont *convertToItalics;
+@property (readonly, copy, nullable) NSFont *convertToItalics;
 
 - (BOOL)fontMatchesName:(NSString *)fontName;
 
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait;
 @end
+
+NS_ASSUME_NONNULL_END

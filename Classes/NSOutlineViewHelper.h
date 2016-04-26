@@ -30,16 +30,20 @@
 
  *********************************************************************** */
 
-@interface NSOutlineView (CSCEFOutlineViewHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSOutlineView (CSOutlineViewHelper)
 @property (readonly, copy) NSArray *groupItems;
 - (BOOL)isGroupItem:(id)item;
 
-- (NSArray *)itemsInGroup:(id)groupItem;
-- (NSArray *)itemsFromParentGroup:(id)item;
+- (nullable NSArray *)itemsInGroup:(id)groupItem;
+- (nullable NSArray *)itemsFromParentGroup:(id)item;
 
-- (NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
+- (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
 @property (readonly) NSInteger countSelectedRows;
 
 - (void)selectItemAtIndex:(NSInteger)index;
 @end
+
+NS_ASSUME_NONNULL_END

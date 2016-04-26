@@ -30,8 +30,12 @@
 
  *********************************************************************** */
 
-@interface NSThread (CSCEFThreadHelper)
-+ (NSString *)callerStackSymbol;
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSString *)callStackItemAtDepth:(int)stackDepth;
+@interface NSThread (CShreadHelper)
++ (nullable NSString *)callerStackSymbol;
+
++ (nullable NSString *)callStackItemAtDepth:(int)stackDepth;
 @end
+
+NS_ASSUME_NONNULL_END

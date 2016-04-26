@@ -32,16 +32,25 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSObject (CSCEFObjectHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSObject (CSObjectHelper)
 
 - (void)cancelPerformRequests
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
-- (void)cancelPerformRequestsWithSelector:(SEL)aSelector object:(id)anArgument
+- (void)cancelPerformRequestsWithSelector:(SEL)aSelector
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:aSelector object:nil];
+}
+
+- (void)cancelPerformRequestsWithSelector:(SEL)aSelector object:(nullable id)anArgument
 {
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:aSelector object:anArgument];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

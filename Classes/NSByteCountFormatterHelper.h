@@ -30,7 +30,11 @@
 
  *********************************************************************** */
 
-@interface NSByteCountFormatter (CSCEFByteCountFormatterHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSByteCountFormatter (CSByteCountFormatterHelper)
 /* Return formatted string with zeroPadsFractionDigits set to YES. See NSByteCountFormatter.h */
-+ (NSString *)stringFromByteCountWithPaddedDigits:(long long)byteCount;
++ (nullable NSString *)stringFromByteCountWithPaddedDigits:(long long)byteCount;
 @end
+
+NS_ASSUME_NONNULL_END

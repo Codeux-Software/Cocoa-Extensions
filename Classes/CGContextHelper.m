@@ -34,6 +34,8 @@
 
 #include <dlfcn.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef void (*CGContextSetFontSmoothingBackgroundColorFunc) (CGContextRef c, CGColorRef color);
 
 void CGContextSetFontSmoothingBackgroundColorPrivate(CGContextRef c, CGColorRef color)
@@ -52,3 +54,5 @@ void CGContextSetFontSmoothingBackgroundColorPrivate(CGContextRef c, CGColorRef 
 		_functionAddress(c, color);
 	}
 }
+
+NS_ASSUME_NONNULL_END

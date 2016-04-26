@@ -41,6 +41,8 @@ POSSIBILITY OF SUCH DAMAGE.
 Copyright © 2007 Apple Inc. All Rights Reserved.
 */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRPortMapper : NSObject
 /** Initializes a copy of XRPortMapper that will map the given local (private) port.
     By default it will map TCP and not UDP, and will not suggest a desired public port,
@@ -73,8 +75,7 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
     They are all KV-observable, or you can listen for a XRPortMapperDidChangedNotification.
     If error is non-zero, none of the other properties are valid (they'll all be zero/nil.) */
 @property (readonly) SInt32 error;                  // Really DNSServiceErrorType
-@property (readonly) UInt32 rawPublicAddress;       // IPv4 address in network byte order (big-endian)
-@property (readonly, copy) NSString *publicAddress;  // IPv4 dotted-quad string
+@property (readonly, copy, nullable) NSString *publicAddress;  // IPv4 dotted-quad string
 @property (readonly) unsigned short publicPort;
 
 /** Returns YES if a non-null port mapping is in effect: 
@@ -84,11 +85,10 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
 #pragma mark -
 
 /** Determine the main interface's public IP address, without mapping any ports. */
-+ (NSString *)findPublicAddress;
++ (nullable NSString *)findPublicAddress;
 
 /** Returns this computer's local IPv4 address. */
-+ (NSString *)localAddress;
-+ (UInt32)rawLocalAddress;
++ (nullable NSString *)localAddress;
 
 /** Is +localAddress in a private address range (like 10.0.1.X)? */
 + (BOOL)localAddressIsPrivate;
@@ -97,3 +97,5 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
 /** This notification is posted asynchronously when the status of a 
     port mapping (its error, publicAddress or publicPort) changes. */
 COCOA_EXTENSIONS_EXTERN NSString * const XRPortMapperDidChangedNotification;
+
+NS_ASSUME_NONNULL_END

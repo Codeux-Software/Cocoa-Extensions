@@ -63,6 +63,8 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 CGPoint NSRectCenter(CGRect rect)
 {
 	return CGPointMake((rect.origin.x + (rect.size.width / 2)),
@@ -89,3 +91,5 @@ CGRect NSRectAdjustInRect(CGRect r, CGRect bounds)
 	
 	return r;
 }
+
+NS_ASSUME_NONNULL_END

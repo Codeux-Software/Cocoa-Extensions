@@ -32,7 +32,9 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSOutlineView (CSCEFOutlineViewHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSOutlineView (CSOutlineViewHelper)
 
 - (NSInteger)countSelectedRows
 {
@@ -48,6 +50,8 @@
 
 - (BOOL)isGroupItem:(id)item
 {
+	PointerIsEmptyAssertReturn(item, NO)
+
 	return ([self levelForItem:item] == 0);
 }
 
@@ -66,21 +70,23 @@
 	return groups;
 }
 
-- (NSArray *)itemsFromParentGroup:(id)item
+- (nullable NSArray *)itemsFromParentGroup:(id)item
 {
-	/* If the item supplied is not a group item,
-	 then try to find its parent. */
-	if ([self isGroupItem:item] == NO) {
-		item = [self parentForItem:item];
-	}
-	
 	return [self itemsInGroup:item];
 }
 
-- (NSArray *)itemsInGroup:(id)groupItem
+- (nullable NSArray *)itemsInGroup:(id)groupItem
 {
+	PointerIsEmptyAssertReturn(groupItem, nil)
+
 	if ([self isGroupItem:groupItem] == NO) {
-		return nil;
+		NSArray *parentItem = [self parentForItem:groupItem];
+
+		if (parentItem) {
+			groupItem = parentItem;
+		} else {
+			return nil;
+		}
 	}
 
 	NSMutableArray *allRows = [NSMutableArray array];
@@ -98,7 +104,7 @@
 	return allRows;
 }
 
-- (NSIndexSet *)indexesOfItemsInGroup:(id)groupItem
+- (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem
 {
 	NSArray *itemsInGroup = [self itemsInGroup:groupItem];
 
@@ -121,3 +127,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

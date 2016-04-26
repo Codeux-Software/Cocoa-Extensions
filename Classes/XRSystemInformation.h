@@ -30,17 +30,19 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRSystemInformation : NSObject
-+ (NSString *)formattedEthernetMacAddress;
++ (nullable NSString *)formattedEthernetMacAddress;
 
-+ (NSString *)systemBuildVersion;
-+ (NSString *)systemStandardVersion;
++ (nullable NSString *)systemBuildVersion;
++ (nullable NSString *)systemStandardVersion;
 
-+ (NSString *)systemOperatingSystemName;
++ (nullable NSString *)systemOperatingSystemName;
 
-+ (NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
++ (nullable NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
 
-+ (NSString *)retrieveSystemInformationKey:(NSString *)key;
++ (nullable NSString *)retrieveSystemInformationKey:(NSString *)key;
 
 + (BOOL)isUsingOSXLionOrLater;
 + (BOOL)isUsingOSXMountainLionOrLater;
@@ -48,3 +50,5 @@
 + (BOOL)isUsingOSXYosemiteOrLater;
 + (BOOL)isUsingOSXElCapitanOrLater;
 @end
+
+NS_ASSUME_NONNULL_END

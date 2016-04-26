@@ -30,8 +30,12 @@
 
  *********************************************************************** */
 
-@interface NSThemeFrame (CSCEFThemeFrameHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSThemeFrame (CSThemeFrameHelper)
 /* This property cannot be assigned and will always return NO unless
  invoked on an instance of NSThemeFrame which itself is private. */
 @property (nonatomic, assign) BOOL usesCustomTitlebarTitlePositioning;
 @end
+
+NS_ASSUME_NONNULL_END

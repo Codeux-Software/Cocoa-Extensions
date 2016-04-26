@@ -27,6 +27,8 @@
 
 #import "DDInvocation.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation DDInvocation
 
 + (instancetype)invocationGrabber
@@ -36,9 +38,6 @@
 
 - (instancetype)init
 {
-	self.target = nil;
-	self.invocation = nil;
-	self.parentThread = nil;
 	self.waitUntilDone = NO;
 	self.threadType = DDInvocationBackgroundThread;
 	
@@ -52,7 +51,7 @@
 	return self;
 }
 
-- (NSMethodSignature *)methodSignatureForSelector:(SEL)selector
+- (nullable NSMethodSignature *)methodSignatureForSelector:(SEL)selector
 {
 	return [self.target methodSignatureForSelector:selector];
 }
@@ -100,3 +99,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

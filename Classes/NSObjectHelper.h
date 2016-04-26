@@ -30,7 +30,12 @@
 
  *********************************************************************** */
 
-@interface NSObject (CSCEFObjectHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSObject (CSbjectHelper)
 - (void)cancelPerformRequests;
-- (void)cancelPerformRequestsWithSelector:(SEL)aSelector object:(id)anArgument;
+- (void)cancelPerformRequestsWithSelector:(SEL)aSelector;
+- (void)cancelPerformRequestsWithSelector:(SEL)aSelector object:(nullable id)anArgument;
 @end
+
+NS_ASSUME_NONNULL_END

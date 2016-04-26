@@ -30,11 +30,13 @@
 
  *********************************************************************** */
 
-#import "XRSystemInformation.h"
+#import "CocoaExtensions.h"
 
 #import <IOKit/IOKitLib.h>
 
 #include <sys/sysctl.h>
+
+NS_ASSUME_NONNULL_BEGIN
 
 #define NSAppKitVersionNumber10_6		1038
 #define NSAppKitVersionNumber10_7		1138
@@ -50,7 +52,7 @@
 #pragma mark -
 #pragma mark Public
 
-+ (NSString *)formattedEthernetMacAddress
++ (nullable NSString *)formattedEthernetMacAddress
 {
 	CFDataRef macAddress = nil;
 
@@ -121,7 +123,7 @@
 	}
 }
 
-+ (NSString *)systemBuildVersion
++ (nullable NSString *)systemBuildVersion
 {
 	static id cachedValue = nil;
 	
@@ -132,7 +134,7 @@
 	return cachedValue;
 }
 
-+ (NSString *)systemStandardVersion
++ (nullable NSString *)systemStandardVersion
 {
 	static id cachedValue = nil;
 	
@@ -143,7 +145,7 @@
 	return cachedValue;
 }
 
-+ (NSString *)systemOperatingSystemName
++ (nullable NSString *)systemOperatingSystemName
 {
 	static id cachedValue = nil;
 
@@ -314,7 +316,7 @@
 #pragma mark -
 #pragma mark Private
 
-+ (NSString *)systemModelToken
++ (nullable NSString *)systemModelToken
 {
 	static id cachedValue = nil;
 	
@@ -333,7 +335,7 @@
 	return cachedValue;
 }
 
-+ (NSString *)systemModelName
++ (nullable NSString *)systemModelName
 {
 	static id cachedValue = nil;
 	
@@ -366,15 +368,15 @@
 				cachedValue = modelPrefixes[modelPrefix];
 			}
 		}
-		
-		cachedValue = nil;
 	}
 	
 	return cachedValue;
 }
 
-+ (NSString *)retrieveSystemInformationKey:(NSString *)key
++ (nullable NSString *)retrieveSystemInformationKey:(NSString *)key
 {
+	PointerIsEmptyAssertReturn(key, nil)
+
 	NSDictionary *sysinfo = [self systemInformationDictionary];
 
 	NSString *infos = sysinfo[key];
@@ -386,8 +388,10 @@
 	return infos;
 }
 
-+ (NSDictionary *)createDictionaryFromFileAtPath:(NSString *)path
++ (nullable NSDictionary<NSString *, id> *)createDictionaryFromFileAtPath:(NSString *)path
 {
+	PointerIsEmptyAssertReturn(path, nil)
+
 	NSFileManager *fileManger = [NSFileManager defaultManager];
 
 	if ([fileManger fileExistsAtPath:path]) {
@@ -397,7 +401,7 @@
 	}
 }
 
-+ (NSDictionary *)systemInformationDictionary
++ (nullable NSDictionary *)systemInformationDictionary
 {
 	NSDictionary *systemInfo = [XRSystemInformation createDictionaryFromFileAtPath:@"/System/Library/CoreServices/SystemVersion.plist"];
 
@@ -409,3 +413,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

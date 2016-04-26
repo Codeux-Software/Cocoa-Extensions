@@ -32,11 +32,13 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSDate (CSCEFDateHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSDate (CSDateHelper)
  
-+ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)stamp
++ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)seconds
 {
-	return ([self unixTime] - stamp);
+	return ([self unixTime] - seconds);
 }
 
 + (NSTimeInterval)unixTime
@@ -45,3 +47,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

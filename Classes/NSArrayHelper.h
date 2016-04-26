@@ -30,33 +30,30 @@
 
  *********************************************************************** */
 
-@interface NSArray (CSCEFArrayHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSArray (CSArrayHelper)
 @property (nonatomic, assign, readonly) NSRange range;
 
 - (BOOL)boolAtIndex:(NSUInteger)n;
-- (NSArray *)arrayAtIndex:(NSUInteger)n;
-- (NSString *)stringAtIndex:(NSUInteger)n;
-- (NSDictionary *)dictionaryAtIndex:(NSUInteger)n;
+- (nullable NSArray *)arrayAtIndex:(NSUInteger)n;
+- (nullable NSString *)stringAtIndex:(NSUInteger)n;
+- (nullable NSDictionary *)dictionaryAtIndex:(NSUInteger)n;
 - (NSInteger)integerAtIndex:(NSUInteger)n;
 - (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n;
 - (long long)longLongAtIndex:(NSUInteger)n;
 - (double)doubleAtIndex:(NSUInteger)n;
-- (void *)pointerAtIndex:(NSUInteger)n NS_RETURNS_INNER_POINTER;
+- (nullable void *)pointerAtIndex:(NSUInteger)n NS_RETURNS_INNER_POINTER;
 
-- (BOOL)containsObjectIgnoringCase:(id)anObject;
+- (BOOL)containsObjectIgnoringCase:(id)anObject; // Performs comparison using -isEqualIgnoringCase: - ignores objects that don't respond to this.
 
-- (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator;
-
-- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx;
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index;
 
 - (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range;
 
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath;
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison;
-
-/* -stringArryControllerObjects returns an NSArray of NSDictionary with single key,
+/* -stringArrayControllerObjects returns an NSArray of NSDictionary with single key,
  named "string" which contains any NSString values in original array. */
-@property (nonatomic, copy, readonly) NSArray *stringArryControllerObjects;
+@property (nonatomic, copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
 @end
 
 @interface NSMutableArray (CSCEFMutableArrayHelper)
@@ -78,9 +75,11 @@
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 
-- (NSUInteger)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator;
+- (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator;
 @end
 
 @interface NSIndexSet (CSCEFIndexSetHelper)
-- (NSArray *)arrayFromIndexSet;
+- (NSArray<NSNumber *> *)arrayFromIndexSet;
 @end
+
+NS_ASSUME_NONNULL_END

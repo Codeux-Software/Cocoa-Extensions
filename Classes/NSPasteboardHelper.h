@@ -30,6 +30,10 @@
 
  *********************************************************************** */
 
-@interface NSPasteboard (CSCEFPasteboardHelper)
-@property (copy) NSString *stringContent;
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSPasteboard (CSPasteboardHelper)
+@property (copy, nullable) NSString *stringContent;
 @end
+
+NS_ASSUME_NONNULL_END

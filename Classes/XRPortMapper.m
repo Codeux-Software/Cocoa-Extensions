@@ -42,8 +42,6 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
 
 #import "CocoaExtensions.h"
 
-#import "XRPortMapper.h"
-
 #import <dns_sd.h>
 #import <sys/types.h>
 #import <sys/socket.h>
@@ -51,12 +49,14 @@ Copyright © 2007 Apple Inc. All Rights Reserved.
 #import <netinet/in.h>
 #import <ifaddrs.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const XRPortMapperDidChangedNotification = @"XRPortMapperDidChangedNotification";
 
 /** Converts a raw IPv4 address to an NSString in dotted-quad notation */
-static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
+static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 {
-	if ((ipv4Addr == 0) == NO) {
+	if (ipv4Addr != 0) {
 		const UInt8 *addrBytes = (const UInt8 *)&ipv4Addr;
 
 		return [NSString stringWithFormat: @"%u.%u.%u.%u",
@@ -74,9 +74,9 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
 @property (assign) BOOL serviceIsRunning;
 @property (assign) UInt16 port;
 @property (assign, readwrite) SInt32 error;
-@property (assign, readwrite) UInt32 rawPublicAddress;
 @property (assign, readwrite) unsigned short publicPort;
-@property (copy) NSString *publicAddress;
+@property (assign) UInt32 rawPublicAddress;
+@property (copy, readwrite, nullable) NSString *publicAddress;
 @property (readonly) void *service;
 @end
 
@@ -86,52 +86,52 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
 
 - (instancetype)initWithPort:(UInt16)port
 {
-	self = [super init];
+	if ((self = [super init])) {
+		self.port = port;
 
-	if ((self == nil) == NO) {
-		[self setPort:port];
+		self.mapTCP = YES;
+		self.mapUDP = NO;
 
-		[self setMapTCP:YES];
-		[self setMapUDP:NO];
+		return self;
 	}
 
-	return self;
+	return nil;
 }
 
 - (void)dealloc
 {
-	if ([self serviceIsRunning]) {
-		[self priv_disconnect];
+	if (self.serviceIsRunning) {
+		[self _disconnect];
 	}
 }
 
 - (BOOL)isMapped
 {
-	return (  [self rawPublicAddress] &&
-			(([self rawPublicAddress] == [XRPortMapper rawLocalAddress]) == NO));
+	return ( self.rawPublicAddress != 0 &&
+			 self.rawPublicAddress != [XRPortMapper rawLocalAddress]);
 }
 
 /** Called whenever the port mapping changes (see comment for callback, below.) */
-- (void)priv_portMapStatus:(DNSServiceErrorType)errorCode
-			 publicAddress:(UInt32)rawPublicAddress
-				publicPort:(UInt16)publicPort
+- (void)_portMapStatus:(DNSServiceErrorType)errorCode
+		 publicAddress:(UInt32)rawPublicAddress
+			publicPort:(UInt16)publicPort
 {
 	/* Maybe define our own error if there is none set. */
 	if (errorCode) {
-		// LogToConsole(@"Port-mapping callback got error %i", errorCode);
+		LogToConsole(@"Port-mapping resulted in error: %d", errorCode);
 	} else {
-		if (publicPort == 0 && [self desiredPublicPort] > 0) {
+		if (publicPort == 0 && self.desiredPublicPort > 0) {
 			errorCode = kDNSServiceErr_NATPortMappingUnsupported;
 		}
 	}
 
 	/* Populate properties with relevant information. */
-	[self setError:errorCode];
+	self.error = errorCode;
 
-	[self setRawPublicAddress:rawPublicAddress];
+	self.rawPublicAddress = rawPublicAddress;
 
-	[self setPublicAddress:StringFromIPv4Addr(rawPublicAddress)];
-	[self setPublicPort:publicPort];
+	self.publicAddress = StringFromIPv4Addr(rawPublicAddress);
+	self.publicPort = publicPort;
 
 	/* Post notice of change. */
 	[[NSNotificationCenter defaultCenter] postNotificationName:XRPortMapperDidChangedNotification
@@ -141,55 +141,54 @@ static NSString *StringFromIPv4Addr(UInt32 ipv4Addr)
 /** Asynchronous callback from DNSServiceNATPortMappingCreate.
  This is invoked whenever the status of the port mapping changes. */
 static void portMapCallback (
-							 DNSServiceRef                    sdRef,
-							 DNSServiceFlags                  flags,
-							 uint32_t                         interfaceIndex,
-							 DNSServiceErrorType              errorCode,
-							 uint32_t                         publicAddress,    /* four byte IPv4 address in network byte order */
-							 DNSServiceProtocol               protocol,
-							 uint16_t                         privatePort,
-							 uint16_t                         publicPort,       /* may be different than the requested port */
-							 uint32_t                         ttl,              /* may be different than the requested ttl */
-							 void                             *context
-							 )
+		DNSServiceRef                    sdRef,
+		DNSServiceFlags                  flags,
+		uint32_t                         interfaceIndex,
+		DNSServiceErrorType              errorCode,
+		uint32_t                         publicAddress,    /* four byte IPv4 address in network byte order */
+		DNSServiceProtocol               protocol,
+		uint16_t                         privatePort,
+		uint16_t                         publicPort,       /* may be different than the requested port */
+		uint32_t                         ttl,              /* may be different than the requested ttl */
+		void                             *context)
 {
-	[(__bridge XRPortMapper *)context priv_portMapStatus:errorCode
-										   publicAddress:publicAddress
-											  publicPort:ntohs(publicPort)];  // port #s in network byte order!
+	[(__bridge XRPortMapper *)context _portMapStatus:errorCode
+									   publicAddress:publicAddress
+										  publicPort:ntohs(publicPort)];  // port #s in network byte order!
 }
 
 - (BOOL)open
 {
 	/* Do not continue if we are already doing something. */
-	if ([self serviceIsRunning]) {
-		NSAssert(NO, @"Port mapping already in progress.");
+	if (self.serviceIsRunning == NO) {
+		self.serviceIsRunning = YES;
 	} else {
-		[self setServiceIsRunning:YES];
+		NSAssert(NO, @"Port mapping already in progress.");
 	}
 
 	/* Create the DNS service. */
 	DNSServiceProtocol protocol = 0;
 
-	if ([self mapTCP]) {
+	if (self.mapTCP) {
 		protocol |= kDNSServiceProtocol_TCP;
 	}
 
-	if ([self mapUDP]) {
+	if (self.mapUDP) {
 		protocol |= kDNSServiceProtocol_UDP;
 	}
 
 	DNSServiceErrorType status = kDNSServiceErr_NoError;
 
 	status = DNSServiceNATPortMappingCreate(
-											(DNSServiceRef *)&_service,
-											0 /* flags */,
-											0 /* interfaceIndex */,
-											protocol,
-											htons([self port]),
-											htons([self desiredPublicPort]),
-											0 /* ttl */,
-											&portMapCallback,
-											(__bridge void *)(self));
+				(DNSServiceRef *)&_service,
+				0 /* flags */,
+				0 /* interfaceIndex */,
+				protocol,
+				htons([self port]),
+				htons([self desiredPublicPort]),
+				0 /* ttl */,
+				&portMapCallback,
+				(__bridge void *)(self));
 
 
 	if (status == kDNSServiceErr_NoError) {
@@ -199,7 +198,7 @@ static void portMapCallback (
 	} else {
 		[self close];
 
-		[self setError:kDNSServiceErr_Unknown];
+		self.error = kDNSServiceErr_Unknown;
 
 		return NO;
 	}
@@ -207,23 +206,23 @@ static void portMapCallback (
 
 - (BOOL)waitUntilOpened
 {
-	if ([self serviceIsRunning] == NO) {
+	if (self.serviceIsRunning == NO) {
 		if ([self open] == NO) {
 			return NO;
 		}
 	}
 
-	while ([self error] == 0 && [self publicAddress] == nil) {
+	while (self.error == 0 && self.publicAddress == nil) {
 		if ([[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]] == NO) {
 			break;
 		}
 	}
 
-	return ([self error] == 0);
+	return (self.error == 0);
 }
 
 // Close down, but _without_ clearing the 'error' property
-- (void)priv_disconnect
+- (void)_disconnect
 {
 	/* Close the service. */
 	if (_service) {
@@ -231,20 +230,20 @@ static void portMapCallback (
 
 		_service = NULL;
 
-		[self setRawPublicAddress:0];
+		self.rawPublicAddress = 0;
 
-		[self setPublicAddress:nil];
-		[self setPublicPort:0];
+		self.publicAddress = nil;
+		self.publicPort = 0;
 	}
 
-	[self setServiceIsRunning:NO];
+	self.serviceIsRunning = NO;
 }
 
 - (void)close
 {
-	[self priv_disconnect];
+	[self _disconnect];
 
-	[self setError:0];
+	self.error = 0;
 }
 
 #pragma mark -
@@ -253,7 +252,6 @@ static void portMapCallback (
 {
 	// getifaddrs returns a linked list of interface entries;
 	// find the first active non-loopback interface with IPv4:
-
 	UInt32 address = 0;
 
 	struct ifaddrs *interfaces;
@@ -263,10 +261,10 @@ static void portMapCallback (
 
 		for (interface = interfaces; interface; interface = interface->ifa_next) {
 			if ((interface->ifa_flags & IFF_UP) && (interface->ifa_flags & IFF_LOOPBACK) == NO) {
-				const struct sockaddr_in *addr = (const struct sockaddr_in *)interface->ifa_addr;
+				const struct sockaddr_in *_address = (const struct sockaddr_in *)interface->ifa_addr;
 
-				if (addr && addr->sin_family == AF_INET ) {
-					address = addr->sin_addr.s_addr;
+				if (_address && _address->sin_family == AF_INET ) {
+					address = _address->sin_addr.s_addr;
 
 					break;
 				}
@@ -279,7 +277,7 @@ static void portMapCallback (
 	return address;
 }
 
-+ (NSString *)localAddress
++ (nullable NSString *)localAddress
 {
 	return StringFromIPv4Addr([self rawLocalAddress]);
 }
@@ -308,14 +306,13 @@ static const struct {UInt32 mask, value;} kPrivateRanges[] = {
 	return NO;
 }
 
-+ (NSString *)findPublicAddress
++ (nullable NSString *)findPublicAddress
 {
 	// To find our public IP address, open a port mapper with no port or protocols.
 	// This will cause the DNSService to look up our public address without creating a mapping.
-
 	NSString *address = nil;
 
-	XRPortMapper *mapper = [[self alloc] initWithPort:0];
+	XRPortMapper *mapper = [[XRPortMapper alloc] initWithPort:0];
 
 	[mapper setMapTCP:NO];
 	[mapper setMapUDP:NO];
@@ -330,3 +327,5 @@ static const struct {UInt32 mask, value;} kPrivateRanges[] = {
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

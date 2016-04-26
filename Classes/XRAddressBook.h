@@ -30,7 +30,11 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRAddressBook : NSObject
-+ (NSString *)myName;
-+ (NSString *)myEmailAddress;
++ (nullable NSString *)myName;
++ (nullable NSString *)myEmailAddress;
 @end
+
+NS_ASSUME_NONNULL_END

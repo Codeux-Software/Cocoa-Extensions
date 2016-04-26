@@ -30,6 +30,10 @@
 
  *********************************************************************** */
 
-@interface NSWorkspace (CSCEFWorkspaceHelper)
-- (NSString *)nameOfApplicationToOpenURL:(NSURL *)url;
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSWorkspace (CSWorkspaceHelper)
+- (nullable NSString *)nameOfApplicationToOpenURL:(NSURL *)url;
 @end
+
+NS_ASSUME_NONNULL_END

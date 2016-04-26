@@ -32,6 +32,8 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSRange NSEmptyRange()
 {
 	return NSMakeRange(NSNotFound, 0);
@@ -49,3 +51,5 @@ BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength)
 	
 	return (NSRangeIsValid(r) && (r.location + r.length) <= maxLength);
 }
+
+NS_ASSUME_NONNULL_END

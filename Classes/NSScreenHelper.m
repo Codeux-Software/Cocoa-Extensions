@@ -32,11 +32,15 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSScreen (CSCEFScreenHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSScreen (CSScreenHelper)
 
 - (BOOL)runningInHighResolutionMode
 {
-	return ([self backingScaleFactor] == 2.0f);
+	return ([self backingScaleFactor] == 2.0);
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

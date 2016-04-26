@@ -34,9 +34,11 @@
 
 #include <execinfo.h>
 
-@implementation NSThread (CSCEFThreadHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-+ (NSString *)callerStackSymbol
+@implementation NSThread (CSThreadHelper)
+
++ (nullable NSString *)callerStackSymbol
 {
 	/*
 	 * frame 0: = -callerStackSymbol
@@ -47,7 +49,7 @@
 	return [NSThread callStackItemAtDepth:2];
 }
 
-+ (NSString *)callStackItemAtDepth:(int)stackDepth
++ (nullable NSString *)callStackItemAtDepth:(int)stackDepth
 {
 #define _maxStackSize		64
 
@@ -71,3 +73,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

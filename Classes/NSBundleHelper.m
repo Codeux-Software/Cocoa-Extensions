@@ -32,14 +32,18 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSBundle (CSCEFBundleHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(id)owner topLevelObjects:(NSArray *__autoreleasing *)topLevelObjects
+@implementation NSBundle (CSBundleHelper)
+
+- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(nullable id)owner topLevelObjects:(NSArray * _Nullable *)topLevelObjects
 {
+	PointerIsEmptyAssertReturn(nibName, NO)
+
 	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 }
 
-- (NSString *)displayName
+- (nullable NSString *)displayName
 {
 	NSString *bundleDisplayName = [self objectForInfoDictionaryKey:@"CFBundleDisplayName"];
 
@@ -51,3 +55,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -32,7 +32,9 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSColor (CSCEFColorHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSColor (CSColorHelper)
 
 #pragma mark -
 #pragma mark Custom Methods
@@ -40,15 +42,15 @@
 + (NSColor *)calibratedColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
 	if (red   > 1.0) {
-		red /= 255.99999f;
+		red /= 255.99999;
 	}
 	
 	if (green > 1.0) {
-		green /= 255.99999f;
+		green /= 255.99999;
 	}
 	
 	if (blue  > 1.0) {
-		blue  /= 255.99999f;
+		blue  /= 255.99999;
 	}
 
 	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
@@ -56,31 +58,19 @@
 
 + (NSColor *)calibratedDeviceColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha
 {
-	if (red   > 1.0f) {
-		red /= 255.99999f;
+	if (red   > 1.0) {
+		red /= 255.99999;
 	}
 	
-	if (green > 1.0f) {
-		green /= 255.99999f;
+	if (green > 1.0) {
+		green /= 255.99999;
 	}
 	
-	if (blue  > 1.0f) {
-		blue  /= 255.99999f;
+	if (blue  > 1.0) {
+		blue  /= 255.99999;
 	}
 	
 	return [NSColor colorWithDeviceRed:red green:green blue:blue alpha:alpha];
-}
-
-- (NSColor *)invertColor
-{
-	/* The only reason this method is declared as deprecated is because 
-	 -invertedColor sounds more reasonable for a property that returns
-	 a value. If this object was mutable, and this method returned nothing
-	 then use of -invertColor would be logical. */
-
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self invertedColor];
 }
 
 - (NSColor *)invertedColor
@@ -116,9 +106,9 @@
 
 - (NSString *)hexadecimalValue
 {
-	CGFloat redValue = 0.0f;
-	CGFloat greenValue = 0.0f;
-	CGFloat blueValue = 0.0f;
+	CGFloat redValue = 0.0;
+	CGFloat greenValue = 0.0;
+	CGFloat blueValue = 0.0;
 
 	if ([self isInRGBColorSpace]) {
 		redValue = [self redComponent];
@@ -131,28 +121,21 @@
 	}
 
 	return [NSString stringWithFormat:@"%02x%02x%02x",
-			(NSInteger)(redValue * 255.99999f),
-			(NSInteger)(greenValue * 255.99999f),
-			(NSInteger)(blueValue  * 255.99999f)];
+			(NSInteger)(redValue * 255.99999),
+			(NSInteger)(greenValue * 255.99999),
+			(NSInteger)(blueValue  * 255.99999)];
 }
 
-+ (NSColor *)fromCSS:(NSString *)str
++ (nullable NSColor *)colorWithHexadecimalValue:(NSString *)string
 {
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
+	if ([string hasPrefix:@"#"]) {
+		 string = [string substringFromIndex:1];
 
-	return [NSColor colorWithHexadecimalValue:str];
-}
-
-+ (NSColor *)colorWithHexadecimalValue:(NSString *)str
-{
-	if ([str hasPrefix:@"#"]) {
-		 str = [str substringFromIndex:1];
-
-		NSInteger stringLength = [str length];
+		NSInteger stringLength = [string length];
 
 		if (stringLength == 6)
 		{
-			long n = strtol([str UTF8String], NULL, 16);
+			long n = strtol([string UTF8String], NULL, 16);
 
 			NSInteger r = ((n >> 16) & 0xff);
 			NSInteger g = ((n >> 8) & 0xff);
@@ -162,7 +145,7 @@
 		}
 		else if (stringLength == 3)
 		{
-			long n = strtol([str UTF8String], NULL, 16);
+			long n = strtol([string UTF8String], NULL, 16);
 
 			NSInteger r = ((n >> 8) & 0xf);
 			NSInteger g = ((n >> 4) & 0xf);
@@ -201,11 +184,13 @@
 
 #pragma mark -
 
-@implementation NSGradient (CSCEFGradientHelper)
+@implementation NSGradient (CSGradientHelper)
 
-+ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
++ (nullable NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor
 {
 	return [[self alloc] initWithStartingColor:startingColor endingColor:endingColor];
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

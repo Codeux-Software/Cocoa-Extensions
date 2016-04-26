@@ -32,7 +32,7 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSTextField (CSCEFTextFieldHelper)
+@implementation NSTextField (CSTextFieldHelper)
 
 + (void)load
 {
@@ -76,7 +76,7 @@
 
 #pragma mark -
 
-@implementation NSTextView (CSCEFTextViewHelper)
+@implementation NSTextView (CSTextViewHelper)
 
 - (BOOL)isFocused
 {
@@ -100,7 +100,7 @@
     return [[self string] length];
 }
 
-- (NSScrollView *)scrollView
+- (nullable NSScrollView *)scrollView
 {
 	return [self enclosingScrollView];
 }

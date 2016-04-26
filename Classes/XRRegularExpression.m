@@ -32,6 +32,8 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation XRRegularExpression
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle
@@ -41,6 +43,9 @@
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	PointerIsEmptyAssertReturn(haystack, NO)
+	PointerIsEmptyAssertReturn(needle, NO)
+
     NSRange strRange = NSMakeRange(0, [haystack length]);
 
 	NSRegularExpression *regex;
@@ -63,6 +68,9 @@
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	PointerIsEmptyAssertReturn(haystack, NSEmptyRange())
+	PointerIsEmptyAssertReturn(needle, NSEmptyRange())
+
     NSRange strRange = NSMakeRange(0, [haystack length]);
 
 	NSRegularExpression *regex;
@@ -80,6 +88,10 @@
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
+	PointerIsEmptyAssertReturn(haystack, nil)
+	PointerIsEmptyAssertReturn(needle, nil)
+	PointerIsEmptyAssertReturn(puppy, nil)
+
 	NSRange strRange = NSMakeRange(0, [haystack length]);
 
 	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
@@ -96,6 +108,9 @@
 
 + (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	PointerIsEmptyAssertReturn(haystack, 0)
+	PointerIsEmptyAssertReturn(needle, 0)
+
     NSRange strRange = NSMakeRange(0, [haystack length]);
 	
 	NSRegularExpression *regex;
@@ -111,13 +126,16 @@
 	return [matches count];
 }
 
-+ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
++ (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
 	return [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:NO];
 }
 
-+ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
++ (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
+	PointerIsEmptyAssertReturn(haystack, nil)
+	PointerIsEmptyAssertReturn(needle, nil)
+
     NSRange strRange = NSMakeRange(0, [haystack length]);
 
 	NSRegularExpression *regex;
@@ -128,12 +146,12 @@
 		regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
 	}
 
-	NSMutableArray *realMatches = [NSMutableArray array];
+	NSMutableArray<NSString *> *realMatches = [NSMutableArray array];
 
 	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
 
 	for (NSTextCheckingResult *result in matches) {
-		NSString *newStr = [haystack substringWithRange:result.range];
+		NSString *newStr = [haystack substringWithRange:[result range]];
 
 		[realMatches addObject:newStr];
 	}
@@ -142,3 +160,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

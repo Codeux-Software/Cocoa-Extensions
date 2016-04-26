@@ -32,7 +32,9 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSNumber (CSCEFNumberHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSNumber (CSNumberHelper)
 
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2
 {
@@ -41,10 +43,12 @@
 
 - (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth
 {
-	NSInteger trlzp = (forcedWidth - [[self stringValue] length]);
+	NSString *stringValue = [self stringValue];
+
+	NSInteger trlzp = (forcedWidth - [stringValue length]);
 
 	if (trlzp <= 0) {
-		return [self stringValue];
+		return stringValue;
 	} else {
 		NSMutableString *ints = [NSMutableString string];
 
@@ -52,7 +56,7 @@
 			[ints appendString:@"0"];
 		}
 
-		[ints appendString:[self stringValue]];
+		[ints appendString:stringValue];
 
 		return ints;
 	}
@@ -70,3 +74,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

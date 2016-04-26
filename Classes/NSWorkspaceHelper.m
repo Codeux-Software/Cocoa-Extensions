@@ -32,10 +32,14 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSWorkspace (CSCEFWorkspaceHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-- (NSString *)nameOfApplicationToOpenURL:(NSURL *)url
+@implementation NSWorkspace (CSWorkspaceHelper)
+
+- (nullable NSString *)nameOfApplicationToOpenURL:(NSURL *)url
 {
+	PointerIsEmptyAssertReturn(url, nil)
+
 	NSURL *applicationURL = [self URLForApplicationToOpenURL:url];
 
 	if (applicationURL == nil) {
@@ -52,3 +56,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

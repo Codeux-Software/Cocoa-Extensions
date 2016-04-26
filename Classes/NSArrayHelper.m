@@ -34,128 +34,149 @@
 
 #include <objc/message.h>
 
-@implementation NSArray (CSCEFArrayHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSArray (CSArrayHelper)
 
 - (BOOL)boolAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj respondsToSelector:@selector(boolValue)]) {
-		return [obj boolValue];
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj respondsToSelector:@selector(boolValue)]) {
+			return [obj boolValue];
+		}
+
+		return NO;
 	}
-	
-	return NO;
 }
 
-- (NSArray *)arrayAtIndex:(NSUInteger)n
+- (nullable NSArray *)arrayAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj isKindOfClass:[NSArray class]]) {
-		return obj;
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj isKindOfClass:[NSArray class]]) {
+			return obj;
+		}
+
+		return nil;
 	}
-	
-	return nil;
 }
 
-- (NSString *)stringAtIndex:(NSUInteger)n
+- (nullable NSString *)stringAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj isKindOfClass:[NSString class]]) {
-		return obj;
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj isKindOfClass:[NSString class]]) {
+			return obj;
+		}
+
+		return nil;
 	}
-	
-	return nil;
 }
 
-- (NSDictionary *)dictionaryAtIndex:(NSUInteger)n
+- (nullable NSDictionary *)dictionaryAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj isKindOfClass:[NSDictionary class]]) {
-		return obj;
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj isKindOfClass:[NSDictionary class]]) {
+			return obj;
+		}
+
+		return nil;
 	}
-	
-	return nil;
 }
 
 - (NSInteger)integerAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj respondsToSelector:@selector(integerValue)]) {
-		return [obj integerValue];
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj respondsToSelector:@selector(integerValue)]) {
+			return [obj integerValue];
+		}
+
+		return 0;
 	}
-	
-	return 0;
 }
 
 - (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
+	@synchronized(self) {
+		id obj = self[n];
 
-	if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
-		return [obj unsignedIntegerValue];
+		if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
+			return [obj unsignedIntegerValue];
+		}
+
+		return 0;
 	}
-
-	return 0;
 }
 
 - (long long)longLongAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj respondsToSelector:@selector(longLongValue)]) {
-		return [obj longLongValue];
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj respondsToSelector:@selector(longLongValue)]) {
+			return [obj longLongValue];
+		}
+
+		return 0;
 	}
-	
-	return 0;
 }
 
 - (double)doubleAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj respondsToSelector:@selector(doubleValue)]) {
-		return [obj doubleValue];
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj respondsToSelector:@selector(doubleValue)]) {
+			return [obj doubleValue];
+		}
+
+		return 0;
 	}
-	
-	return 0;
 }
 
-- (void *)pointerAtIndex:(NSUInteger)n
+- (nullable void *)pointerAtIndex:(NSUInteger)n
 {
-	id obj = self[n];
-	
-	if ([obj isKindOfClass:[NSValue class]]) {
-		return [obj pointerValue];
+	@synchronized(self) {
+		id obj = self[n];
+
+		if ([obj isKindOfClass:[NSValue class]]) {
+			return [obj pointerValue];
+		}
+
+		return NULL;
 	}
-	
-	return nil;
 }
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject
 {
-	if ([anObject isKindOfClass:[NSString class]] == NO) {
-		return NO;
+	PointerIsEmptyAssertReturn(anObject, NO)
+
+	@synchronized(self) {
+		NSInteger objectIndex =
+		[self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
+			if ([object respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
+				return NO;
+			}
+
+			if ([object isEqualIgnoringCase:anObject]) {
+				*stop = YES;
+
+				return YES;
+			} else {
+				return NO;
+			}
+		}];
+
+		return (objectIndex != NSNotFound);
 	}
-
-	NSInteger objectIndex = [self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-		if ([object isKindOfClass:[NSString class]] == NO) {
-			return NO;
-		}
-
-		if ([object isEqualIgnoringCase:anObject]) {
-			*stop = YES;
-
-			return YES;
-		} else {
-			return NO;
-		}
-	}];
-
-	return (objectIndex != NSNotFound);
 }
 
 - (NSRange)range
@@ -163,71 +184,38 @@
 	return NSMakeRange(0, [self count]);
 }
 
-- (NSArray *)arrayByInsertingSortedObject:(id)obj usingComparator:(NSComparator)comparator
+- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index
 {
-	NSMutableArray *arry = [self mutableCopy];
+	@synchronized(self) {
+		NSMutableArray *array = [self mutableCopy];
 
-	[arry insertSortedObject:obj usingComparator:comparator];
+		[array removeObjectAtIndex:index];
 
-	return [arry copy];
-}
-
-- (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)idx
-{
-	NSMutableArray *arry = [self mutableCopy];
-
-	[arry removeObjectAtIndex:idx];
-
-	return [arry copy];
+		return [array copy];
+	}
 }
 
 - (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range
 {
-	NSArray *subray = [self subarrayWithRange:range];
-	
-	return [subray mutableCopy];
+	@synchronized(self) {
+		NSArray *subarray = [self subarrayWithRange:range];
+
+		return [subarray mutableCopy];
+	}
 }
 
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath
-{
-	return [self indexOfObjectMatchingValue:value withKeyPath:keyPath usingSelector:@selector(isEqual:)];
-}
-
-- (NSUInteger)indexOfObjectMatchingValue:(id)value withKeyPath:(NSString *)keyPath usingSelector:(SEL)comparison
-{
-	__block NSUInteger retval = NSNotFound;
-
-	[self enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-		id objval = [obj valueForKeyPath:keyPath];
-		
-		if ([objval respondsToSelector:comparison] == NO) {
-			return;
-		}
-		
-		IMP imp = [objval methodForSelector:comparison];
-		
-		BOOL (*comparisonResut)(id, SEL, id) = (void *)imp;
-		
-		if (comparisonResut(objval, comparison, value)) {
-			retval = idx;
-			
-			*stop = YES;
-		}
-	}];
-
-	return retval;
-}
-
-- (NSArray *)stringArryControllerObjects
+- (NSArray *)stringArrayControllerObjects
 {
 	NSMutableArray *newSet = [NSMutableArray array];
 
 	@synchronized(self) {
-		for (id object in self) {
-			if ([object isKindOfClass:[NSString class]]) {
-				[newSet addObject:@{@"string" : object}];
+		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			if ([object isKindOfClass:[NSString class]] == NO) {
+				return;
 			}
-		}
+
+			[newSet addObject:@{@"string" : object}];
+		}];
 	}
 
 	return [newSet copy];
@@ -239,10 +227,10 @@
 
 - (void)addObjectWithoutDuplication:(id)anObject
 {
-	if ((anObject == nil) == NO) {
-		if ([self containsObject:anObject] == NO) {
-			[self addObject:anObject];
-		}
+	PointerIsEmptyAssert(anObject)
+
+	if ([self containsObject:anObject] == NO) {
+		[self addObject:anObject];
 	}
 }
 
@@ -295,7 +283,7 @@
 {
 	[self addObject:@(value)];
 }
-	 
+
 - (void)addDouble:(double)value
 {
 	[self addObject:@(value)];
@@ -308,42 +296,60 @@
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
 {
-	NSArray *oldArray = [self copy];
+	PointerIsEmptyAssert(performSelector)
 
-	[self removeAllObjects];
+	@synchronized(self) {
+		NSArray *oldArray = [self copy];
 
-	for (id object in oldArray) {
-		if ([object respondsToSelector:performSelector]) {
-			id newObject = objc_msgSend(object, performSelector);
-			
-			if (newObject) {
-				[self addObject:newObject];
+		[oldArray enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
+
+			if (*([methodSignature methodReturnType]) != '@') { // Return object
+				LogToConsole(@"Selector '%@' does not return object value.",
+							 [object description], NSStringFromSelector(performSelector))
+				LogToConsoleCurrentStackTrace
+
+				return;
 			}
-		}
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
+			id newObject = [object performSelector:performSelector];
+#pragma GCC diagnostic pop
+
+			if (newObject) {
+				[self replaceObjectAtIndex:index withObject:newObject];
+			} else {
+				LogToConsole(@"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
+						[object description], NSStringFromSelector(performSelector))
+				LogToConsoleCurrentStackTrace
+			}
+		}];
 	}
 }
 
-- (NSUInteger)insertSortedObject:(id)obj usingComparator:(NSComparator)comparator
+- (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator
 {
-	if (obj == nil) {
-		return NSNotFound;
+	PointerIsEmptyAssertReturn(object, NSNotFound)
+	PointerIsEmptyAssertReturn(comparator, NSNotFound)
+
+	@synchronized(self) {
+		NSUInteger index = [self indexOfObject:object
+								 inSortedRange:[self range]
+									   options:NSBinarySearchingInsertionIndex
+							   usingComparator:comparator];
+
+		[self insertObject:object atIndex:index];
+
+		return index;
 	}
-
-	NSUInteger idx = [self indexOfObject:obj
-						   inSortedRange:[self range]
-								 options:NSBinarySearchingInsertionIndex
-						 usingComparator:comparator];
-
-	[self insertObject:obj atIndex:idx];
-	
-	return idx;
 }
 
 @end
 
 @implementation NSIndexSet (CSCEFIndexSetHelper)
 
-- (NSArray *)arrayFromIndexSet
+- (NSArray<NSNumber *> *)arrayFromIndexSet
 {
 	NSMutableArray *ary = [NSMutableArray array];
 
@@ -355,3 +361,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

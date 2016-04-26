@@ -30,10 +30,14 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRAccessibility : NSObject
 + (BOOL)isVoiceOverEnabled;
 
-+ (void)setAccessibilityLabel:(NSString *)accessibilityLabel forObject:(id)object;
-+ (void)setAccessibilityTitle:(NSString *)accessibilityTitle forObject:(id)object;
-+ (void)setAccessibilityValueDescription:(NSString *)accessibilityValueDescription forObject:(id)object;
++ (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object;
++ (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object;
++ (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object;
 @end
+
+NS_ASSUME_NONNULL_END

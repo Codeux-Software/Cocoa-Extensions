@@ -30,21 +30,23 @@
 
  *********************************************************************** */
 
-@interface NSColor (CSCEFColorHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSColor (CSColorHelper)
 @property (readonly, copy) NSColor *invertedColor;
-@property (readonly, copy) NSColor *invertColor COCOA_EXTENSIONS_DEPRECATED("Use -invertedColor instead");
 
 @property (readonly) BOOL isShadeOfGray;
 
 @property (readonly, copy) NSString *hexadecimalValue;
 
-+ (NSColor *)colorWithHexadecimalValue:(NSString *)str;
-+ (NSColor *)fromCSS:(NSString *)str COCOA_EXTENSIONS_DEPRECATED("Use -colorWithHexadecimalValue: instead");
++ (nullable NSColor *)colorWithHexadecimalValue:(NSString *)string;
 
 + (NSColor *)calibratedColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 + (NSColor *)calibratedDeviceColorWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha;
 @end
 
-@interface NSGradient (CSCEFGradientHelper)
-+ (NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor;
+@interface NSGradient (CSGradientHelper)
++ (nullable NSGradient *)gradientWithStartingColor:(NSColor *)startingColor endingColor:(NSColor *)endingColor;
 @end
+
+NS_ASSUME_NONNULL_END

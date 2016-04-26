@@ -34,6 +34,8 @@
 
 #import <objc/message.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark -
 #pragma mark Swizzling
 
@@ -45,6 +47,10 @@ void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSS
 
 void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
+	PointerIsEmptyAssert(className)
+	PointerIsEmptyAssert(originalMethod)
+	PointerIsEmptyAssert(replacementMethod)
+
 	Class class = NSClassFromString(className);
 
 	SEL originalSelector = NSSelectorFromString(originalMethod);
@@ -71,6 +77,10 @@ void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSS
 
 void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
+	PointerIsEmptyAssert(className)
+	PointerIsEmptyAssert(originalMethod)
+	PointerIsEmptyAssert(replacementMethod)
+
 	Class classClass = NSClassFromString(className);
 
 	Class class = object_getClass(classClass);
@@ -102,23 +112,17 @@ void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSStri
 
 BOOL NSObjectIsEmpty(id obj)
 {
-	/* Check for common string length. */
-	if ([obj respondsToSelector:@selector(length)]) {
-		return ((NSInteger)objc_msgSend(obj, @selector(length)) < 1);
-	}
-	
-	/* Check for common array types. */
-	if ([obj respondsToSelector:@selector(count)]) {
-		return ((NSInteger)objc_msgSend(obj, @selector(count)) < 1);
-	}
-	
-	/* Check for singleton. */
-	if ([obj isKindOfClass:[NSNull class]]) {
+	if (obj == nil || obj == NULL) {
+		return YES;
+	} else if ([obj respondsToSelector:@selector(length)]) {
+		return ([obj length] < 1);
+	} else if ([obj respondsToSelector:@selector(count)]) {
+		return ([obj count] < 1);
+	} else	if ([obj isKindOfClass:[NSNull class]]) {
 		return YES;
 	}
-	
-	/* Check everything else. */
-	return (obj == nil || obj == NULL);
+
+	return NO;
 }
 
 BOOL NSObjectIsNotEmpty(id obj)
@@ -126,7 +130,7 @@ BOOL NSObjectIsNotEmpty(id obj)
 	return (NSObjectIsEmpty(obj) == NO);
 }
 
-BOOL NSObjectsAreEqual(id obj1, id obj2)
+BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
 {
 	return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
 }
@@ -169,7 +173,7 @@ void XRPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
 	/* Check thread we are on. */
 	/* If we are already on the main thread and performing a synchronous action,
 	 then all we have to do is invoke the block supplied to us. */
-	if ([[NSThread currentThread] isEqual:[NSThread mainThread]]) {
+	if ([NSThread isMainThread]) {
 		block(); // Perform block.
 	} else {
 		XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, XRPerformBlockOnDispatchQueueSyncOperationType);
@@ -239,3 +243,5 @@ void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block
 
 	dispatch_after(popTime, queue, block);
 }
+
+NS_ASSUME_NONNULL_END

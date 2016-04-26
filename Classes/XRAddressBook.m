@@ -34,9 +34,11 @@
 
 #import <AddressBook/AddressBook.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation XRAddressBook
 
-+ (NSString *)myName
++ (nullable NSString *)myName
 {
 	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
 
@@ -52,7 +54,7 @@
 	}
 }
 
-+ (NSString *)myEmailAddress
++ (nullable NSString *)myEmailAddress
 {
 	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
 
@@ -66,3 +68,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

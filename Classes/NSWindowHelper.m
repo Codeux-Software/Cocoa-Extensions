@@ -32,16 +32,18 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveFrameMovesToActiveDisplay";
 
-@implementation NSWindow (CSCEFWindowHelper)
+@implementation NSWindow (CSWindowHelper)
 
 - (BOOL)isBeneathMouse
 {
 	return (self == [NSWindow windowBeneathMouse]);
 }
 
-+ (NSWindow *)windowBeneathMouse
++ (nullable NSWindow *)windowBeneathMouse
 {
 	NSPoint cursorLocation = [NSEvent mouseLocation];
 
@@ -94,9 +96,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword
 {
-	if (keyword == nil || [keyword length] == 0) {
-		return;
-	}
+	NSObjectIsEmptyAssert(keyword)
 
 	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
@@ -105,9 +105,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword
 {
-	if (keyword == nil || [keyword length] == 0) {
-		return;
-	}
+	NSObjectIsEmptyAssert(keyword)
 
 	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
@@ -129,3 +127,5 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

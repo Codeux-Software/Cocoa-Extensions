@@ -63,18 +63,26 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSPasteboard (CSCEFPasteboardHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-- (NSString *)stringContent
+@implementation NSPasteboard (CSPasteboardHelper)
+
+- (nullable NSString *)stringContent
 {
 	return [self stringForType:NSStringPboardType];
 }
 
-- (void)setStringContent:(NSString *)s
+- (void)setStringContent:(nullable NSString *)s
 {
 	[self declareTypes:@[NSStringPboardType] owner:nil];
-	
-	[self setString:s forType:NSStringPboardType];
+
+	if (s) {
+		[self setString:s forType:NSStringPboardType];
+	} else {
+		[self setData:nil forType:NSStringPboardType];
+	}
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

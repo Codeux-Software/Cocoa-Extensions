@@ -30,53 +30,57 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRKeychain : NSObject
 + (BOOL)deleteKeychainItem:(NSString *)keychainItemName 
 			  withItemKind:(NSString *)keychainItemKind 
-			   forUsername:(NSString *)username
+			   forUsername:(nullable NSString *)username
 			   serviceName:(NSString *)service;
 
 + (BOOL)deleteKeychainItem:(NSString *)keychainItemName
 			  withItemKind:(NSString *)keychainItemKind
-			   forUsername:(NSString *)username
+			   forUsername:(nullable NSString *)username
 			   serviceName:(NSString *)service
 				 fromCloud:(BOOL)deleteFromCloud;
 
 + (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName 
 				   withItemKind:(NSString *)keychainItemKind 
-					forUsername:(NSString *)username 
-				withNewPassword:(NSString *)newPassword
+					forUsername:(nullable NSString *)username
+				withNewPassword:(nullable NSString *)newPassword
 					serviceName:(NSString *)service;
 
 + (BOOL)modifyOrAddKeychainItem:(NSString *)keychainItemName
 				   withItemKind:(NSString *)keychainItemKind
-					forUsername:(NSString *)username
-				withNewPassword:(NSString *)newPassword
+					forUsername:(nullable NSString *)username
+				withNewPassword:(nullable NSString *)newPassword
 					serviceName:(NSString *)service
 					   forCloud:(BOOL)modifyForCloud;
 
 + (BOOL)addKeychainItem:(NSString *)keychainItemName 
 		   withItemKind:(NSString *)keychainItemKind 
-			forUsername:(NSString *)username 
+			forUsername:(nullable NSString *)username 
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service;
 
 + (BOOL)addKeychainItem:(NSString *)keychainItemName
 		   withItemKind:(NSString *)keychainItemKind
-			forUsername:(NSString *)username
+			forUsername:(nullable NSString *)username
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
 			  ontoCloud:(BOOL)addToCloud;
 
-+ (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName 
-							 withItemKind:(NSString *)keychainItemKind 
-							  forUsername:(NSString *)username
-							  serviceName:(NSString *)service;
++ (nullable NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName
+									  withItemKind:(NSString *)keychainItemKind
+									   forUsername:(nullable NSString *)username
+									   serviceName:(NSString *)service;
 
-+ (NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName
-							 withItemKind:(NSString *)keychainItemKind
-							  forUsername:(NSString *)username
-							  serviceName:(NSString *)service
-								fromCloud:(BOOL)searchForOnCloud
-					   returnedStatusCode:(OSStatus *)statusCode;
++ (nullable NSString *)getPasswordFromKeychainItem:(NSString *)keychainItemName
+									  withItemKind:(NSString *)keychainItemKind
+									   forUsername:(nullable NSString *)username
+									   serviceName:(NSString *)service
+										 fromCloud:(BOOL)searchForOnCloud
+								returnedStatusCode:(OSStatus * _Nullable)statusCode;
 @end
+
+NS_ASSUME_NONNULL_END

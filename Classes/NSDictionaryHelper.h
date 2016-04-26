@@ -30,51 +30,52 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define NSDictionaryNilValue(s)							(((s) == nil) ? [NSNull null] : (s))
 #define NSDictionaryNilValueSubstitue(s, r)				(((s) == nil) ? (r) : (s))
 
-@interface NSDictionary (CSCEFDictionaryHelper)
-- (NSString *)stringForKey:(NSString *)key;
+@interface NSDictionary (CSDictionaryHelper)
+- (nullable NSString *)stringForKey:(NSString *)key;
 - (BOOL)boolForKey:(NSString *)key;
-- (NSArray *)arrayForKey:(NSString *)key;
-- (NSDictionary *)dictionaryForKey:(NSString *)key;
+- (nullable NSArray *)arrayForKey:(NSString *)key;
+- (nullable NSDictionary *)dictionaryForKey:(NSString *)key;
 - (NSInteger)integerForKey:(NSString *)key;
 - (NSUInteger)unsignedIntegerForKey:(NSString *)key;
 - (long long)longLongForKey:(NSString *)key;
 - (double)doubleForKey:(NSString *)key;
 - (float)floatForKey:(NSString *)key;
-- (void *)pointerForKey:(NSString *)key NS_RETURNS_INNER_POINTER;
+- (nullable void *)pointerForKey:(NSString *)key NS_RETURNS_INNER_POINTER;
 
-- (id)objectForKey:(id)key orUseDefault:(id)defaultValue;
-- (NSString *)stringForKey:(id)key orUseDefault:(NSString *)defaultValue;
+- (nullable id)objectForKey:(id)key orUseDefault:(nullable id)defaultValue;
+- (nullable NSString *)stringForKey:(id)key orUseDefault:(nullable NSString *)defaultValue;
 - (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue;
-- (NSArray *)arrayForKey:(NSString *)key orUseDefault:(NSArray *)defaultValue;
-- (NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(NSDictionary *)defaultValue;
+- (nullable NSArray *)arrayForKey:(NSString *)key orUseDefault:(nullable NSArray *)defaultValue;
+- (nullable NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(nullable NSDictionary *)defaultValue;
 - (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
 - (NSUInteger)unsignedIntegerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
 - (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
 - (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
 - (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
 
-/* When returning a string, dictionary, or array; the value is copied to pointer. */
-- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key;
-- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key performCopy:(BOOL)copyValue;
-- (void)assignStringTo:(__strong NSString **)pointer forKey:(NSString *)key;
+/* Objects are copied to the pointer using -copy */
+- (void)assignObjectTo:(__strong _Nonnull id * _Nonnull)pointer forKey:(NSString *)key;
+- (void)assignStringTo:(__strong NSString * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
 - (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key;
-- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key;
-- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key;
+- (void)assignArrayTo:(__strong NSArray * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
+- (void)assignDictionaryTo:(__strong NSDictionary * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
 - (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key;
 - (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(NSString *)key;
 - (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key;
 - (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
 - (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
 
-- (id)firstKeyForObject:(id)anObject;
+- (nullable id)firstKeyForObject:(id)anObject;
 
 - (BOOL)containsKey:(NSString *)baseKey;
 - (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
 
-- (NSString *)keyIgnoringCase:(NSString *)baseKey;
+- (nullable id)keyIgnoringCase:(id)baseKey;
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryReversedKeys;
@@ -83,13 +84,13 @@
  or are empty (zero length, or zero count). This method is not recursive which 
  means it only performs one pass on all top level objects. */
 /* "defaults" is allowed to be nil in which case only empty objects are removed. */
-- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults;
-- (NSDictionary *)dictionaryByRemovingDefaults:(NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
+- (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults;
+- (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
 @end
 
-@interface NSMutableDictionary (CSCEFMutableDictionaryHelper)
+@interface NSMutableDictionary (CSMutableDictionaryHelper)
 /* maybeSetObject provides nil checks for inserted objects. */
-- (void)maybeSetObject:(id)value forKey:(NSString *)key;
+- (void)maybeSetObject:(nullable id)value forKey:(NSString *)key;
 
 - (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;
 
@@ -101,3 +102,5 @@
 - (void)setFloat:(float)value forKey:(NSString *)key;
 - (void)setPointer:(void *)value forKey:(NSString *)key;
 @end
+
+NS_ASSUME_NONNULL_END

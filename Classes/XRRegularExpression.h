@@ -30,9 +30,11 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface XRRegularExpression : NSObject
-+ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
-+ (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
++ (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
++ (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
 
 + (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
@@ -45,3 +47,5 @@
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy;
 @end
+
+NS_ASSUME_NONNULL_END

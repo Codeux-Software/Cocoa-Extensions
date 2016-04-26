@@ -30,6 +30,10 @@
 
  *********************************************************************** */
 
-@interface NSScreen (CSCEFScreenHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@interface NSScreen (CSScreenHelper)
 @property (readonly) BOOL runningInHighResolutionMode;
 @end
+
+NS_ASSUME_NONNULL_END

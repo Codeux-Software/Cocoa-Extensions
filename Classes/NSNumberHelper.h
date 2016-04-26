@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 #define NSNumberWithBOOL(b)					[NSNumber numberWithBool:b]
 #define NSNumberWithLong(l)					[NSNumber numberWithLong:l]
 #define NSNumberWithInteger(i)				[NSNumber numberWithInteger:i]
@@ -37,9 +39,11 @@
 #define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
 #define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
-@interface NSNumber (CSCEFNumberHelper)
+@interface NSNumber (CSNumberHelper)
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
 @property (readonly, copy) NSString *integerWithLeadingZero;
 - (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth;
 @end
+
+NS_ASSUME_NONNULL_END

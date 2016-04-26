@@ -35,7 +35,9 @@
 #import <objc/message.h>
 #import <objc/runtime.h>
 
-@implementation NSThemeFrame (CSCEFThemeFrameHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSThemeFrame (CSThemeFrameHelper)
 
 static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 
@@ -146,3 +148,5 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

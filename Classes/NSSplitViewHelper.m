@@ -32,7 +32,9 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSSplitView (CSCEFSplitViewHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSSplitView (CSSplitViewHelper)
 
 - (BOOL)hasHiddenView
 {
@@ -46,3 +48,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

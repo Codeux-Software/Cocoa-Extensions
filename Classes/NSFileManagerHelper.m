@@ -32,15 +32,19 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSFileManager (CSCEFFileManagerHelper)
+NS_ASSUME_NONNULL_BEGIN
 
-- (id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
+@implementation NSFileManager (CSFileManagerHelper)
+
+- (nullable id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
 {
 	return [self ubiquityIdentityToken];
 }
 
 - (BOOL)directoryExistsAtPath:(NSString *)path
 {
+	PointerIsEmptyAssertReturn(path, NO)
+
 	BOOL isDirectory = NO;
 
 	BOOL existsResult = [self fileExistsAtPath:path isDirectory:&isDirectory];
@@ -50,6 +54,8 @@
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error
 {
+	PointerIsEmptyAssertReturn(path, NO)
+
 	NSDictionary *newattrs = @{NSFileImmutable : @(YES)};
 	
 	return [self setAttributes:newattrs	ofItemAtPath:path error:error];
@@ -57,14 +63,18 @@
 
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error
 {
+	PointerIsEmptyAssertReturn(path, NO)
+
 	NSDictionary *newattrs = @{NSFileImmutable : @(NO)};
 	
 	return [self setAttributes:newattrs	ofItemAtPath:path error:error];
 }
 
-- (NSArray *)buildPathArrayWithPaths:(NSArray *)paths
+- (NSArray<NSString *> *)buildPathArrayWithPaths:(NSArray<NSString *> *)paths
 {
-	NSMutableArray *pathData = [NSMutableArray array];
+	PointerIsEmptyAssertReturn(paths, nil)
+
+	NSMutableArray<NSString *> *pathData = [NSMutableArray array];
 
 	for (id pathObject in paths) {
 		if ([pathObject isKindOfClass:[NSString class]] == NO) {
@@ -87,9 +97,11 @@
 	return [pathData copy];
 }
 
-- (NSArray *)buildPathArray:(NSString *)path, ...
+- (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...
 {
-	NSMutableArray *pathObjects = [NSMutableArray array];
+	PointerIsEmptyAssertReturn(path, nil)
+
+	NSMutableArray<NSString *> *pathObjects = [NSMutableArray array];
 
 	if ( path) {
 		[pathObjects addObject:path];
@@ -111,6 +123,8 @@
 
 - (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path
 {
+	PointerIsEmptyAssertReturn(path, NO)
+
 	NSURL *fileURL = [NSURL fileURLWithPath:path];
 
 	/* Check whether the given path is ubiquitous */
@@ -314,3 +328,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

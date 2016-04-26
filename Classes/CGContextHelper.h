@@ -30,4 +30,8 @@
 
  *********************************************************************** */
 
+NS_ASSUME_NONNULL_BEGIN
+
 void CGContextSetFontSmoothingBackgroundColorPrivate(CGContextRef c, CGColorRef color);
+
+NS_ASSUME_NONNULL_END

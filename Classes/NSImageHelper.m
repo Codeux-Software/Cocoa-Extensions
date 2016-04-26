@@ -32,7 +32,9 @@
 
 #import "CocoaExtensions.h"
 
-@implementation NSImage (CSCEFImageHelper)
+NS_ASSUME_NONNULL_BEGIN
+
+@implementation NSImage (CSImageHelper)
 
 + (NSImage *)newImageWithSize:(NSSize)size
 {
@@ -40,3 +42,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

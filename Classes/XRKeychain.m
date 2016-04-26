@@ -34,6 +34,8 @@
 
 #import <Security/Security.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation XRKeychain
 
 + (BOOL)canWriteToCloud
@@ -47,7 +49,7 @@
 
 + (NSMutableDictionary *)searchDictionary:(NSString *)itemName
 							 withItemKind:(NSString *)itemKind
-							 forUsearname:(NSString *)username
+							 forUsearname:(nullable NSString *)username
 							  serviceName:(NSString *)service
 {
 	NSMutableDictionary *searchDictionary = [NSMutableDictionary dictionary];
@@ -74,7 +76,7 @@
 
 + (BOOL)deleteKeychainItem:(NSString *)itemName
 			  withItemKind:(NSString *)itemKind
-			   forUsername:(NSString *)username
+			   forUsername:(nullable NSString *)username
 			   serviceName:(NSString *)service
 {
 	return [self deleteKeychainItem:itemName
@@ -86,10 +88,14 @@
 
 + (BOOL)deleteKeychainItem:(NSString *)itemName
 			  withItemKind:(NSString *)itemKind
-			   forUsername:(NSString *)username
+			   forUsername:(nullable NSString *)username
 			   serviceName:(NSString *)service
 				 fromCloud:(BOOL)deleteFromCloud
 {
+	PointerIsEmptyAssertReturn(itemName, NO)
+	PointerIsEmptyAssertReturn(itemKind, NO)
+	PointerIsEmptyAssertReturn(service, NO)
+
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind
 													  forUsearname:username
@@ -106,8 +112,8 @@
 
 + (BOOL)modifyOrAddKeychainItem:(NSString *)itemName
 				   withItemKind:(NSString *)itemKind
-					forUsername:(NSString *)username
-				withNewPassword:(NSString *)newPassword
+					forUsername:(nullable NSString *)username
+				withNewPassword:(nullable NSString *)newPassword
 					serviceName:(NSString *)service
 {
 	return [self modifyOrAddKeychainItem:itemName
@@ -120,11 +126,15 @@
 
 + (BOOL)modifyOrAddKeychainItem:(NSString *)itemName
 				   withItemKind:(NSString *)itemKind
-					forUsername:(NSString *)username
-				withNewPassword:(NSString *)newPassword
+					forUsername:(nullable NSString *)username
+				withNewPassword:(nullable NSString *)newPassword
 					serviceName:(NSString *)service
 					   forCloud:(BOOL)modifyForCloud
 {
+	PointerIsEmptyAssertReturn(itemName, NO)
+	PointerIsEmptyAssertReturn(itemKind, NO)
+	PointerIsEmptyAssertReturn(service, NO)
+
 	NSMutableDictionary *oldDictionary = [XRKeychain searchDictionary:itemName
 														 withItemKind:itemKind
 														 forUsearname:username
@@ -150,7 +160,7 @@
 									(__bridge CFDictionaryRef)newDictionary);
 
 	if (status == errSecItemNotFound) {
-		if ([newPassword length] > 0) {
+		if (newPassword && [newPassword length] > 0) {
 			return [XRKeychain addKeychainItem:itemName
 								  withItemKind:itemKind
 								   forUsername:username
@@ -164,7 +174,7 @@
 
 + (BOOL)addKeychainItem:(NSString *)itemName
 		   withItemKind:(NSString *)itemKind
-			forUsername:(NSString *)username
+			forUsername:(nullable NSString *)username
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
 {
@@ -178,11 +188,16 @@
 
 + (BOOL)addKeychainItem:(NSString *)itemName
 		   withItemKind:(NSString *)itemKind
-			forUsername:(NSString *)username
+			forUsername:(nullable NSString *)username
 		   withPassword:(NSString *)password
 			serviceName:(NSString *)service
 			  ontoCloud:(BOOL)addToCloud
 {
+	PointerIsEmptyAssertReturn(itemName, NO)
+	PointerIsEmptyAssertReturn(itemKind, NO)
+	PointerIsEmptyAssertReturn(password, NO)
+	PointerIsEmptyAssertReturn(service, NO)
+
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind
 													  forUsearname:username
@@ -201,10 +216,10 @@
 	return (status == errSecSuccess);
 }
 
-+ (NSString *)getPasswordFromKeychainItem:(NSString *)itemName
-							 withItemKind:(NSString *)itemKind
-							  forUsername:(NSString *)username
-							  serviceName:(NSString *)service
++ (nullable NSString *)getPasswordFromKeychainItem:(NSString *)itemName
+									  withItemKind:(NSString *)itemKind
+									   forUsername:(nullable NSString *)username
+									   serviceName:(NSString *)service
 {
 	return [XRKeychain getPasswordFromKeychainItem:itemName
 									  withItemKind:itemKind
@@ -214,13 +229,17 @@
 								returnedStatusCode:NULL];
 }
 
-+ (NSString *)getPasswordFromKeychainItem:(NSString *)itemName
-							 withItemKind:(NSString *)itemKind
-							  forUsername:(NSString *)username
-							  serviceName:(NSString *)service
-								fromCloud:(BOOL)searchForOnCloud
-					   returnedStatusCode:(OSStatus *)statusCode
++ (nullable NSString *)getPasswordFromKeychainItem:(NSString *)itemName
+									  withItemKind:(NSString *)itemKind
+									   forUsername:(nullable NSString *)username
+									   serviceName:(NSString *)service
+										 fromCloud:(BOOL)searchForOnCloud
+								returnedStatusCode:(OSStatus * _Nullable)statusCode
 {
+	PointerIsEmptyAssertReturn(itemName, NO)
+	PointerIsEmptyAssertReturn(itemKind, NO)
+	PointerIsEmptyAssertReturn(service, NO)
+
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind
 													  forUsearname:username
@@ -251,3 +270,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END

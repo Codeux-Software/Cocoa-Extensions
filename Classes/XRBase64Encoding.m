@@ -32,9 +32,11 @@
 
 #import "CocoaExtensions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @implementation XRBase64Encoding
 
-+ (NSString *)encodeData:(NSData *)input
++ (nullable NSString *)encodeData:(NSData *)input
 {
 	if ([NSData instancesRespondToSelector:@selector(base64EncodedStringWithOptions:)]) {
 		return [input base64EncodedStringWithOptions:0];
@@ -46,7 +48,7 @@
 	}
 }
 
-+ (NSData *)decodeData:(NSString *)input
++ (nullable NSData *)decodeData:(NSString *)input
 {
 	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
 		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -59,3 +61,5 @@
 }
 
 @end
+
+NS_ASSUME_NONNULL_END
