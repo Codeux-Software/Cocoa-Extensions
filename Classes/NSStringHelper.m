@@ -981,7 +981,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 		return [self stringByRemovingPercentEncoding];
 	} else {
-		return [self stringByReplacingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+		return [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	}
 }
 
