@@ -42,8 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* See runtime.h header in Objective-C for return types. */
 	switch (*valueType) {
-		case _C_ID: // purposely ignore these return types
-		case _C_CLASS:
+		case _C_ID:
 		{
 			return (__bridge id)(value);
 		}
