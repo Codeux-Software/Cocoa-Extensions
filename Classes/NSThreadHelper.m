@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	char **symbols = backtrace_symbols(callstack, frames);
 
-	NSString *symbolString = [NSString stringWithUTF8String:symbols[stackDepth]];
+	NSString *symbolString = @(symbols[stackDepth]);
 
 	free(symbols);
 

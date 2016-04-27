@@ -143,7 +143,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	/* Assigned as an NSNumber that is copied. */
 	objc_setAssociatedObject(self,
 		_internalUsesCustomTitlebarTitlePositioning,
-		[NSNumber numberWithBool:usesCustomTitlebarTitlePositioning],
+		@(usesCustomTitlebarTitlePositioning),
 		OBJC_ASSOCIATION_COPY);
 }
 

@@ -172,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 				NSDictionary *profilerData = [NSDictionary dictionaryWithContentsOfFile:systemProfilerFilePath];
 
-				id operatingSystemNames = [profilerData objectForKey:@"OS Names"];
+				id operatingSystemNames = profilerData[@"OS Names"];
 
 				if (operatingSystemNames && [operatingSystemNames isKindOfClass:[NSDictionary class]]) {
 					NSString *manualSearchKey = [NSString stringWithFormat:@"%@-%@", [XRSystemInformation systemBuildVersion], [[NSLocale currentLocale] localeIdentifier]];

@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
     By default it will map TCP and not UDP, and will not suggest a desired public port,
     but this can be configured by setting properties before opening the port mapper.
  */
-- (instancetype)initWithPort:(UInt16)port;
+- (instancetype)initWithPort:(UInt16)port NS_DESIGNATED_INITIALIZER;
 
 /** Should the TCP or UDP port, or both, be mapped? By default, TCP only.
     These properties have no effect if changed while the port mapper is open. */

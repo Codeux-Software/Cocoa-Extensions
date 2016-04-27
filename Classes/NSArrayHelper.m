@@ -318,7 +318,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma GCC diagnostic pop
 
 			if (newObject) {
-				[self replaceObjectAtIndex:index withObject:newObject];
+				self[index] = newObject;
 			} else {
 				LogToConsole(@"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
 						[object description], NSStringFromSelector(performSelector))
