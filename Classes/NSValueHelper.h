@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSValue (CSValueHelper)
-+ (instancetype)valueWithPrimitive:(void *)value withType:(const char *)valueType;
++ (id)valueWithPrimitive:(void *)value withType:(const char *)valueType;
 @end
 
 NS_ASSUME_NONNULL_END
