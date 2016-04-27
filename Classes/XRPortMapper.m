@@ -84,6 +84,11 @@ static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 
 @implementation XRPortMapper
 
+- (instancetype)init
+{
+	return [self initWithPort:0];
+}
+
 - (instancetype)initWithPort:(UInt16)port
 {
 	if ((self = [super init])) {
