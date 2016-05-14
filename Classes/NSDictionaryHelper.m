@@ -67,60 +67,85 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSDictionary (CSDictionaryHelper)
 
-- (BOOL)boolForKey:(NSString *)key
+- (BOOL)boolForKey:(id)key
 {
 	return [self boolForKey:key orUseDefault:NO];
 }
 
-- (NSInteger)integerForKey:(NSString *)key
+- (NSInteger)integerForKey:(id)key
 {
 	return [self integerForKey:key orUseDefault:0];
 }
 
-- (NSUInteger)unsignedIntegerForKey:(NSString *)key
+- (NSUInteger)unsignedIntegerForKey:(id)key
 {
 	return [self unsignedIntegerForKey:key orUseDefault:0];
 }
 
-- (long long)longLongForKey:(NSString *)key
+- (short)shortForKey:(id)key
+{
+	return [self shortForKey:key orUseDefault:0];
+}
+
+- (unsigned short)unsignedShortForKey:(id)key
+{
+	return [self unsignedShortForKey:key orUseDefault:0];
+}
+
+- (long)longForKey:(id)key
+{
+	return [self longForKey:key orUseDefault:0];
+}
+
+- (unsigned long)unsignedLongForKey:(id)key
+{
+	return [self unsignedLongForKey:key orUseDefault:0];
+}
+
+- (long long)longLongForKey:(id)key
 {
 	return [self longLongForKey:key orUseDefault:0];
 }
 
-- (double)doubleForKey:(NSString *)key
+- (unsigned long long)unsignedLongLongForKey:(id)key
+{
+	return [self unsignedLongLongForKey:key orUseDefault:0];
+}
+
+- (double)doubleForKey:(id)key
 {
 	return [self doubleForKey:key orUseDefault:0];
 }
 
-- (float)floatForKey:(NSString *)key
+- (float)floatForKey:(id)key
 {
 	return [self floatForKey:key orUseDefault:0];
 }
 
-- (nullable NSString *)stringForKey:(NSString *)key
+- (nullable NSString *)stringForKey:(id)key
 {
 	return [self stringForKey:key orUseDefault:nil];
 }
 
-- (nullable NSDictionary *)dictionaryForKey:(NSString *)key
+- (nullable NSDictionary *)dictionaryForKey:(id)key
 {
 	return [self dictionaryForKey:key orUseDefault:nil];
 }
 
-- (nullable NSArray *)arrayForKey:(NSString *)key
+- (nullable NSArray *)arrayForKey:(id)key
 {
 	return [self arrayForKey:key orUseDefault:nil];
 }
 
-- (nullable void *)pointerForKey:(NSString *)key
+- (nullable void *)pointerForKey:(id)key
 {
 	PointerIsEmptyAssertReturn(key, NULL)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj isKindOfClass:[NSValue class]]) {
-			return [obj pointerValue];
+		if ([object isKindOfClass:[NSValue class]]) {
+			return [object pointerValue];
 		}
 
 		return nil;
@@ -132,10 +157,10 @@ NS_ASSUME_NONNULL_BEGIN
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if (obj) {
-			return obj;
+		if (object) {
+			return object;
 		}
 
 		return defaultValue;
@@ -147,150 +172,234 @@ NS_ASSUME_NONNULL_BEGIN
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj isKindOfClass:[NSString class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSString class]]) {
+			return object;
 		}
 
 		return defaultValue;
 	}
 }
 
-- (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue
+- (BOOL)boolForKey:(id)key orUseDefault:(BOOL)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(boolValue)]) {
-			return [obj boolValue];
+		if ([object respondsToSelector:@selector(boolValue)]) {
+			return [object boolValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (nullable NSArray *)arrayForKey:(NSString *)key orUseDefault:(nullable NSArray *)defaultValue
+- (nullable NSArray *)arrayForKey:(id)key orUseDefault:(nullable NSArray *)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj isKindOfClass:[NSArray class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSArray class]]) {
+			return object;
 		}
 
 		return defaultValue;
 	}
 }
 
-- (nullable NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(nullable NSDictionary *)defaultValue
+- (nullable NSDictionary *)dictionaryForKey:(id)key orUseDefault:(nullable NSDictionary *)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj isKindOfClass:[NSDictionary class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSDictionary class]]) {
+			return object;
 		}
 
 		return defaultValue;
 	}
 }
 
-- (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue
+- (NSInteger)integerForKey:(id)key orUseDefault:(NSInteger)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(integerValue)]) {
-			return [obj integerValue];
+		if ([object respondsToSelector:@selector(integerValue)]) {
+			return [object integerValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (NSUInteger)unsignedIntegerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue
+- (NSUInteger)unsignedIntegerForKey:(id)key orUseDefault:(NSUInteger)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
-			return [obj unsignedIntegerValue];
+		if ([object respondsToSelector:@selector(unsignedIntegerValue)]) {
+			return [object unsignedIntegerValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue
+- (short)shortForKey:(id)key orUseDefault:(short)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(longLongValue)]) {
-			return [obj longLongValue];
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object shortValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue
+- (unsigned short)unsignedShortForKey:(id)key orUseDefault:(unsigned short)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(doubleValue)]) {
-			return [obj doubleValue];
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object unsignedShortValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue
+- (long)longForKey:(id)key orUseDefault:(long)defaultValue
 {
 	PointerIsEmptyAssertReturn(key, defaultValue)
 
 	@synchronized(self) {
-		id obj = self[key];
+		id object = self[key];
 
-		if ([obj respondsToSelector:@selector(floatValue)]) {
-			return [obj floatValue];
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object longValue];
 		}
 
 		return defaultValue;
 	}
 }
 
-- (void)assignObjectTo:(__strong id *)pointer forKey:(NSString *)key
+- (unsigned long)unsignedLongForKey:(id)key orUseDefault:(unsigned long)defaultValue
+{
+	PointerIsEmptyAssertReturn(key, defaultValue)
+
+	@synchronized(self) {
+		id object = self[key];
+
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object unsignedLongValue];
+		}
+
+		return defaultValue;
+	}
+}
+
+- (long long)longLongForKey:(id)key orUseDefault:(long long)defaultValue
+{
+	PointerIsEmptyAssertReturn(key, defaultValue)
+
+	@synchronized(self) {
+		id object = self[key];
+
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object longLongValue];
+		}
+
+		return defaultValue;
+	}
+}
+
+- (unsigned long long)unsignedLongLongForKey:(id)key orUseDefault:(unsigned long long)defaultValue
+{
+	PointerIsEmptyAssertReturn(key, defaultValue)
+
+	@synchronized(self) {
+		id object = self[key];
+
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object unsignedLongLongValue];
+		}
+
+		return defaultValue;
+	}
+}
+
+- (double)doubleForKey:(id)key orUseDefault:(double)defaultValue
+{
+	PointerIsEmptyAssertReturn(key, defaultValue)
+
+	@synchronized(self) {
+		id object = self[key];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object doubleValue];
+		}
+
+		return defaultValue;
+	}
+}
+
+- (float)floatForKey:(id)key orUseDefault:(float)defaultValue
+{
+	PointerIsEmptyAssertReturn(key, defaultValue)
+
+	@synchronized(self) {
+		id object = self[key];
+
+		if ([object respondsToSelector:@selector(floatValue)]) {
+			return [object floatValue];
+		}
+
+		return defaultValue;
+	}
+}
+
+- (void)assignObjectTo:(__strong id *)pointer forKey:(id)key
+{
+	[self assignObjectTo:pointer forKey:key performCopy:YES];
+}
+
+- (void)assignObjectTo:(__strong id *)pointer forKey:(id)key performCopy:(BOOL)copyValue
 {
 	PointerIsEmptyAssert(key)
 
 	@synchronized(self) {
 		id object = self[key];
 
-		if ([object respondsToSelector:@selector(copy)]) {
-			*pointer = [object copy];
+		if (copyValue == NO) {
+			*pointer = object;
+		} else {
+			if ([object conformsToProtocol:@protocol(NSCopying)]) {
+				*pointer = [object copy];
+			}
 		}
 	}
 }
 
-- (void)assignStringTo:(__strong NSString **)pointer forKey:(NSString *)key
+- (void)assignStringTo:(__strong NSString **)pointer forKey:(id)key
 {
 	PointerIsEmptyAssert(pointer)
 
@@ -301,14 +410,20 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key
+- (void)assignBoolTo:(BOOL *)pointer forKey:(id)key
 {
 	PointerIsEmptyAssert(pointer)
 
-	*pointer = [self boolForKey:key orUseDefault:*pointer];
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object boolValue];
+		}
+	}
 }
 
-- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(NSString *)key
+- (void)assignArrayTo:(__strong NSArray **)pointer forKey:(id)key
 {
 	PointerIsEmptyAssert(pointer)
 
@@ -319,7 +434,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(NSString *)key
+- (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(id)key
 {
 	PointerIsEmptyAssert(pointer)
 
@@ -330,55 +445,150 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key
+- (void)assignIntegerTo:(NSInteger *)pointer forKey:(id)key
 {
 	PointerIsEmptyAssert(pointer)
-
-	*pointer = [self integerForKey:key orUseDefault:*pointer];
-}
-
-- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(NSString *)key
-{
-	PointerIsEmptyAssert(pointer)
-
-	*pointer = [self unsignedIntegerForKey:key orUseDefault:*pointer];
-}
-
-- (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key
-{
-	PointerIsEmptyAssert(pointer)
-
-	*pointer = [self longLongForKey:key orUseDefault:*pointer];
-}
-
-- (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key
-{
-	PointerIsEmptyAssert(pointer)
-
-	*pointer = [self doubleForKey:key orUseDefault:*pointer];
-}
-
-- (void)assignFloatTo:(float *)pointer forKey:(NSString *)key
-{
-	PointerIsEmptyAssert(pointer)
-
-	*pointer = [self floatForKey:key orUseDefault:*pointer];
-}
-
-- (BOOL)containsKey:(NSString *)baseKey
-{
-	PointerIsEmptyAssertReturn(baseKey, NO)
 
 	@synchronized (self) {
-		return (self[baseKey] != nil);
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object integerValue];
+		}
+	}
+}
+
+- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object unsignedIntegerValue];
+		}
+	}
+}
+
+- (void)assignShortTo:(short *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object shortValue];
+		}
+	}
+}
+
+- (void)assignUnsignedShortTo:(unsigned short *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object unsignedShortValue];
+		}
+	}
+}
+
+- (void)assignLongTo:(long *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object longValue];
+		}
+	}
+}
+
+- (void)assignUnsignedLongTo:(unsigned long *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object unsignedLongValue];
+		}
+	}
+}
+
+- (void)assignLongLongTo:(long long *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object longLongValue];
+		}
+	}
+}
+
+- (void)assignUnsignedLongLongTo:(unsigned long long *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object unsignedLongLongValue];
+		}
+	}
+}
+
+- (void)assignDoubleTo:(double *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object doubleValue];
+		}
+	}
+}
+
+- (void)assignFloatTo:(float *)pointer forKey:(id)key
+{
+	PointerIsEmptyAssert(pointer)
+
+	@synchronized (self) {
+		id object = self[key];
+
+		if ([object isKindOfClass:[NSNumber class]]) {
+			*pointer = [object floatValue];
+		}
+	}
+}
+
+- (BOOL)containsKey:(id)key
+{
+	PointerIsEmptyAssertReturn(key, NO)
+
+	@synchronized (self) {
+		return (self[key] != nil);
 	}
 }
 	
-- (BOOL)containsKeyIgnoringCase:(NSString *)baseKey
+- (BOOL)containsKeyIgnoringCase:(id)key
 {
-	NSString *caslessKey = [self keyIgnoringCase:baseKey];
+	id caselessKey = [self keyIgnoringCase:key];
 	
-	return ([caslessKey length] > 0);
+	return (caselessKey != nil);
 }
 
 - (nullable id)firstKeyForObject:(id)anObject
@@ -403,15 +613,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return [keys anyObject];
 }
 
-- (nullable id)keyIgnoringCase:(id)baseKey
+- (nullable id)keyIgnoringCase:(id)key
 {
 	NSSet *keys =
-	[self keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
-		if ([key respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
+	[self keysOfEntriesPassingTest:^BOOL(id objectKey, id object, BOOL *stop) {
+		if ([objectKey respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
 			return NO;
 		}
 
-		if ([key isEqualIgnoringCase:baseKey]) {
+		if ([objectKey isEqualIgnoringCase:key]) {
 			*stop = YES;
 
 			return YES;
@@ -476,11 +686,67 @@ NS_ASSUME_NONNULL_BEGIN
 	return [newDictionary copy];
 }
 
+- (NSDictionary *)dictionaryByAddingEntries:(NSDictionary *)entries
+{
+	PointerIsEmptyAssertReturn(entries, nil)
+
+	@synchronized (self) {
+		NSMutableDictionary *dictionary = [self mutableCopy];
+
+		[dictionary addEntriesFromDictionary:entries];
+
+		return [dictionary copy];
+	}
+}
+
+- (NSDictionary *)copyDeepAsMutable:(BOOL)mutableCopy
+{
+	@synchronized(self) {
+		NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithCapacity:[self count]];
+
+		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+			id objectCopy = nil;
+
+			if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSDictionary class]])
+			{
+				objectCopy = [object copyDeepAsMutable:mutableCopy];
+			}
+			else if (mutableCopy == NO && [object conformsToProtocol:@protocol(NSCopying)])
+			{
+				objectCopy = [object copy];
+			}
+			else if (mutableCopy && [object conformsToProtocol:@protocol(NSMutableCopying)])
+			{
+				objectCopy = [object mutableCopy];
+			}
+
+			if (objectCopy) {
+				newDictionary[key] = objectCopy;
+			} else {
+				LogToConsole(@"Object '%@' does not respond to -copy or returned nil value", [object description]);
+				LogToConsoleCurrentStackTrace
+			}
+		}];
+
+		return [newDictionary copy];
+	}
+}
+
+- (NSDictionary *)copyDeep
+{
+	return [self copyDeepAsMutable:NO];
+}
+
+- (NSDictionary *)copyDeepMutable
+{
+	return [self copyDeepAsMutable:YES];
+}
+
 @end
 
 @implementation NSMutableDictionary (CSMutableDictionaryHelper)
 
-- (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key
+- (void)setObjectWithoutOverride:(id)value forKey:(id)key
 {
 	PointerIsEmptyAssert(value)
 	PointerIsEmptyAssert(key)
@@ -490,7 +756,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (void)maybeSetObject:(nullable id)value forKey:(NSString *)key
+- (void)maybeSetObject:(nullable id)value forKey:(id)key
 {
 	PointerIsEmptyAssert(value)
 	PointerIsEmptyAssert(key)
@@ -498,49 +764,84 @@ NS_ASSUME_NONNULL_BEGIN
 	self[key] = value;
 }
 
-- (void)setBool:(BOOL)value forKey:(NSString *)key
+- (void)setBool:(BOOL)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setInteger:(NSInteger)value forKey:(NSString *)key
+- (void)setInteger:(NSInteger)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setUnsignedInteger:(NSUInteger)value forKey:(NSString *)key
+- (void)setUnsignedInteger:(NSUInteger)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setLongLong:(long long)value forKey:(NSString *)key
+- (void)setShort:(short)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setDouble:(double)value forKey:(NSString *)key
+- (void)setUnsignedShort:(unsigned short)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setFloat:(float)value forKey:(NSString *)key
+- (void)setLong:(long)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 
 	self[key] = @(value);
 }
 
-- (void)setPointer:(void *)value forKey:(NSString *)key
+- (void)setUnsignedLong:(unsigned long)value forKey:(id)key
+{
+	PointerIsEmptyAssert(key)
+
+	self[key] = @(value);
+}
+
+- (void)setLongLong:(long long)value forKey:(id)key
+{
+	PointerIsEmptyAssert(key)
+
+	self[key] = @(value);
+}
+
+- (void)setUnsignedLongLong:(unsigned long long)value forKey:(id)key
+{
+	PointerIsEmptyAssert(key)
+
+	self[key] = @(value);
+}
+
+- (void)setDouble:(double)value forKey:(id)key
+{
+	PointerIsEmptyAssert(key)
+
+	self[key] = @(value);
+}
+
+- (void)setFloat:(float)value forKey:(id)key
+{
+	PointerIsEmptyAssert(key)
+
+	self[key] = @(value);
+}
+
+- (void)setPointer:(void *)value forKey:(id)key
 {
 	PointerIsEmptyAssert(key)
 

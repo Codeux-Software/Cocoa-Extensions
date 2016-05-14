@@ -131,7 +131,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
     NSArray *supportedEncodings = [NSString supportedStringEncodings:favorUTF8];
 
     for (NSNumber *encoding in supportedEncodings) {
-        NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding integerValue]];
+        NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding unsignedIntegerValue]];
 
 		if (encodingTitle) {
 			encodingList[encodingTitle] = encoding;
@@ -666,13 +666,13 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 	/* Scan up to first space. */
 	[scanner scanUpToString:@" " intoString:NULL];
 
-	NSInteger scanLocation = [scanner scanLocation];
+	NSUInteger scanLocation = [scanner scanLocation];
 
 	/* We now scan from the scan location to the end of whitespaces. */
 	if (whitespaceRange) {
-		NSInteger stringLength = [stringValue length];
+		NSUInteger stringLength = [stringValue length];
 
-		NSInteger stringForward = scanLocation;
+		NSUInteger stringForward = scanLocation;
 
 		while (stringForward < stringLength) {
 			UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
@@ -742,7 +742,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 		NSInteger slashCount = 0;
 
 		/* Find all slashes left of this quote. */
-		for (NSInteger i = (scanLocation - 1); i > 0; i--) {
+		for (NSUInteger i = (scanLocation - 1); i > 0; i--) {
 			UniChar c = [[originalString scannerString] characterAtIndex:i];
 
 			if (c == '\\') {
@@ -902,9 +902,9 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 		 to scan forward from the starting location. For that, we will use
 		 a simple for loop and compare characters. */
 		if (quoteRange) {
-			NSInteger stringLength = [stringValue length];
+			NSUInteger stringLength = [stringValue length];
 
-			NSInteger stringForward = ([scanner scanLocation] + 1);
+			NSUInteger stringForward = ([scanner scanLocation] + 1);
 
 			while (stringForward < stringLength) {
 				UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
@@ -1209,9 +1209,9 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 {
     NSMutableArray<NSAttributedString *> *lines = [NSMutableArray array];
     
-    NSInteger stringLength = [self length];
+    NSUInteger stringLength = [self length];
 
-    NSInteger rangeStartIn = 0;
+    NSUInteger rangeStartIn = 0;
     
     NSMutableAttributedString *mutableSelf = [self mutableCopy];
     
@@ -1300,7 +1300,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 	return [self imageRepWithSize:originalSize scaleFactor:scaleFactor backgroundColor:backgroundColor coreTextFrameOffset:NULL];
 }
 
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(NSInteger *)coreTextFrameOffset
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset
 {
 	/* Perform basic validation on the current state of the
 	 string and the values of hte supplied paramaters. */
@@ -1391,7 +1391,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 	CGSize coreTextFrameSuggested = CTFramesetterSuggestFrameSizeWithConstraints(coreTextFramesetter, CFRangeMake(0, 0), NULL, CGSizeMake(cellFrameWidth, CGFLOAT_MAX), NULL);
 
-	NSInteger coreTextFrameHeightDifference = (coreTextFrameSuggested.height - coreTextFrame.size.height);
+	CGFloat coreTextFrameHeightDifference = (coreTextFrameSuggested.height - coreTextFrame.size.height);
 
 	if (coreTextFrameHeightDifference > 0) {
 		coreTextFrame.size.height += coreTextFrameHeightDifference;

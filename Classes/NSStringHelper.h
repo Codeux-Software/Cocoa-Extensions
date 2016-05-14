@@ -56,7 +56,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 @property (readonly, copy, nullable) NSString *sha256;
 @property (readonly, copy, nullable) NSString *md5;
 
-@property (nonatomic, assign, readonly) NSRange range;
+@property (readonly) NSRange range;
 
 + (NSString *)stringWithUUID;
 
@@ -195,7 +195,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 @interface NSAttributedString (CSAttributedStringHelper)
 @property (readonly, copy) NSDictionary<NSString *, id> *attributes;
 
-@property (nonatomic, assign, readonly) NSRange range;
+@property (readonly) NSRange range;
 
 + (NSAttributedString *)attributedString;
 + (NSAttributedString *)attributedStringWithString:(NSString *)string;
@@ -206,15 +206,15 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 @property (readonly, copy) NSString *scannerString;
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
-- (NSUInteger)wrappedLineCount:(NSInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont;
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
+- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width;
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode;
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(nullable NSFont *)textFont;
 
 - (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor NS_AVAILABLE_MAC(10_10);
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(NSInteger *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
 #endif
 @end
 

@@ -101,12 +101,12 @@ NS_ASSUME_NONNULL_BEGIN
 	return newString;
 }
 
-+ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle
++ (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
 	return [XRRegularExpression totalNumberOfMatchesInString:haystack withRegex:needle withoutCase:NO];
 }
 
-+ (NSInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
++ (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
 	PointerIsEmptyAssertReturn(haystack, 0)
 	PointerIsEmptyAssertReturn(needle, 0)

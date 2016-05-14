@@ -41,9 +41,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
-@property (readonly) NSInteger countSelectedRows;
+@property (readonly) NSUInteger countSelectedRows;
 
-- (void)selectItemAtIndex:(NSInteger)index;
+- (void)selectItemAtIndex:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

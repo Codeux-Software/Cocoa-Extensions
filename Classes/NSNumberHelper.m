@@ -41,18 +41,18 @@ NS_ASSUME_NONNULL_BEGIN
 	return (fabs(num1 - num2) <= __DBL_EPSILON__);
 }
 
-- (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth
+- (NSString *)integerWithLeadingZero:(NSUInteger)forcedWidth
 {
 	NSString *stringValue = [self stringValue];
 
-	NSInteger trlzp = (forcedWidth - [stringValue length]);
+	NSUInteger trlzp = (forcedWidth - [stringValue length]);
 
 	if (trlzp <= 0) {
 		return stringValue;
 	} else {
 		NSMutableString *ints = [NSMutableString string];
 
-		for (NSInteger i = 0; i < trlzp; i++) {
+		for (NSUInteger i = 0; i < trlzp; i++) {
 			[ints appendString:@"0"];
 		}
 

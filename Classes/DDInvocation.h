@@ -25,7 +25,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef enum DDInvocationThreadType : NSInteger {
+typedef enum DDInvocationThreadType : NSUInteger {
 	DDInvocationMainThread,
 	DDInvocationParentThread,
 	DDInvocationBackgroundThread,

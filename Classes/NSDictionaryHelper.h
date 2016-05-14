@@ -36,46 +36,64 @@ NS_ASSUME_NONNULL_BEGIN
 #define NSDictionaryNilValueSubstitue(s, r)				(((s) == nil) ? (r) : (s))
 
 @interface NSDictionary (CSDictionaryHelper)
-- (nullable NSString *)stringForKey:(NSString *)key;
-- (BOOL)boolForKey:(NSString *)key;
-- (nullable NSArray *)arrayForKey:(NSString *)key;
-- (nullable NSDictionary *)dictionaryForKey:(NSString *)key;
-- (NSInteger)integerForKey:(NSString *)key;
-- (NSUInteger)unsignedIntegerForKey:(NSString *)key;
-- (long long)longLongForKey:(NSString *)key;
-- (double)doubleForKey:(NSString *)key;
-- (float)floatForKey:(NSString *)key;
-- (nullable void *)pointerForKey:(NSString *)key NS_RETURNS_INNER_POINTER;
+- (NSDictionary *)dictionaryByAddingEntries:(NSDictionary *)entries;
+
+- (BOOL)boolForKey:(id)key;
+- (nullable NSArray *)arrayForKey:(id)key;
+- (nullable NSDictionary *)dictionaryForKey:(id)key;
+- (nullable NSString *)stringForKey:(id)key;
+- (NSInteger)integerForKey:(id)key;
+- (NSUInteger)unsignedIntegerForKey:(id)key;
+- (short)shortForKey:(id)key;
+- (unsigned short)unsignedShortForKey:(id)key;
+- (long)longForKey:(id)key;
+- (unsigned long)unsignedLongForKey:(id)key;
+- (long long)longLongForKey:(id)key;
+- (unsigned long long)unsignedLongLongForKey:(id)key;
+- (double)doubleForKey:(id)key;
+- (float)floatForKey:(id)key;
+- (nullable void *)pointerForKey:(id)key NS_RETURNS_INNER_POINTER;
 
 - (nullable id)objectForKey:(id)key orUseDefault:(nullable id)defaultValue;
+- (BOOL)boolForKey:(id)key orUseDefault:(BOOL)defaultValue;
+- (nullable NSArray *)arrayForKey:(id)key orUseDefault:(nullable NSArray *)defaultValue;
+- (nullable NSDictionary *)dictionaryForKey:(id)key orUseDefault:(nullable NSDictionary *)defaultValue;
 - (nullable NSString *)stringForKey:(id)key orUseDefault:(nullable NSString *)defaultValue;
-- (BOOL)boolForKey:(NSString *)key orUseDefault:(BOOL)defaultValue;
-- (nullable NSArray *)arrayForKey:(NSString *)key orUseDefault:(nullable NSArray *)defaultValue;
-- (nullable NSDictionary *)dictionaryForKey:(NSString *)key orUseDefault:(nullable NSDictionary *)defaultValue;
-- (NSInteger)integerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
-- (NSUInteger)unsignedIntegerForKey:(NSString *)key orUseDefault:(NSInteger)defaultValue;
-- (long long)longLongForKey:(NSString *)key orUseDefault:(long long)defaultValue;
-- (double)doubleForKey:(NSString *)key orUseDefault:(double)defaultValue;
-- (float)floatForKey:(NSString *)key orUseDefault:(float)defaultValue;
+- (NSInteger)integerForKey:(id)key orUseDefault:(NSInteger)defaultValue;
+- (NSUInteger)unsignedIntegerForKey:(id)key orUseDefault:(NSUInteger)defaultValue;
+- (short)shortForKey:(id)key orUseDefault:(short)defaultValue;
+- (unsigned short)unsignedShortForKey:(id)key orUseDefault:(unsigned short)defaultValue;
+- (long)longForKey:(id)key orUseDefault:(long)defaultValue;
+- (unsigned long)unsignedLongForKey:(id)key orUseDefault:(unsigned long)defaultValue;
+- (long long)longLongForKey:(id)key orUseDefault:(long long)defaultValue;
+- (unsigned long long)unsignedLongLongForKey:(id)key orUseDefault:(unsigned long long)defaultValue;
+- (double)doubleForKey:(id)key orUseDefault:(double)defaultValue;
+- (float)floatForKey:(id)key orUseDefault:(float)defaultValue;
 
 /* Objects are copied to the pointer using -copy */
-- (void)assignObjectTo:(__strong _Nonnull id * _Nonnull)pointer forKey:(NSString *)key;
-- (void)assignStringTo:(__strong NSString * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
-- (void)assignBoolTo:(BOOL *)pointer forKey:(NSString *)key;
-- (void)assignArrayTo:(__strong NSArray * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
-- (void)assignDictionaryTo:(__strong NSDictionary * _Nonnull * _Nonnull)pointer forKey:(NSString *)key;
-- (void)assignIntegerTo:(NSInteger *)pointer forKey:(NSString *)key;
-- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(NSString *)key;
-- (void)assignLongLongTo:(long long *)pointer forKey:(NSString *)key;
-- (void)assignDoubleTo:(double *)pointer forKey:(NSString *)key;
-- (void)assignFloatTo:(float *)pointer forKey:(NSString *)key;
+- (void)assignObjectTo:(__strong _Nonnull id * _Nonnull)pointer forKey:(id)key;
+- (void)assignObjectTo:(__strong _Nonnull id * _Nonnull)pointer forKey:(id)key performCopy:(BOOL)copyValue;
+- (void)assignBoolTo:(BOOL *)pointer forKey:(id)key;
+- (void)assignArrayTo:(__strong NSArray * _Nonnull * _Nonnull)pointer forKey:(id)key;
+- (void)assignDictionaryTo:(__strong NSDictionary * _Nonnull * _Nonnull)pointer forKey:(id)key;
+- (void)assignStringTo:(__strong NSString * _Nonnull * _Nonnull)pointer forKey:(id)key;
+- (void)assignIntegerTo:(NSInteger *)pointer forKey:(id)key;
+- (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(id)key;
+- (void)assignShortTo:(short *)pointer forKey:(id)key;
+- (void)assignUnsignedShortTo:(unsigned short *)pointer forKey:(id)key;
+- (void)assignLongTo:(long *)pointer forKey:(id)key;
+- (void)assignUnsignedLongTo:(unsigned long *)pointer forKey:(id)key;
+- (void)assignLongLongTo:(long long *)pointer forKey:(id)key;
+- (void)assignUnsignedLongLongTo:(unsigned long long *)pointer forKey:(id)key;
+- (void)assignDoubleTo:(double *)pointer forKey:(id)key;
+- (void)assignFloatTo:(float *)pointer forKey:(id)key;
 
 - (nullable id)firstKeyForObject:(id)anObject;
 
-- (BOOL)containsKey:(NSString *)baseKey;
-- (BOOL)containsKeyIgnoringCase:(NSString *)baseKey;
+- (BOOL)containsKey:(id)key;
+- (BOOL)containsKeyIgnoringCase:(id)key;
 
-- (nullable id)keyIgnoringCase:(id)baseKey;
+- (nullable id)keyIgnoringCase:(id)key;
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryReversedKeys;
@@ -86,21 +104,34 @@ NS_ASSUME_NONNULL_BEGIN
 /* "defaults" is allowed to be nil in which case only empty objects are removed. */
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults;
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
+
+/* Returns self with each value a copy or mutable copy of its original */
+/* Objects that do not respond to -copy or -mutableCopy are discarded and
+ a warning is shown in Console */
+/* Collections that respond to -copyDeep (NSArray) have it called on them 
+ as well instead of only calling -copy */
+@property (readonly, copy) NSDictionary *copyDeep;
+@property (readonly, copy) NSDictionary *copyDeepMutable;
 @end
 
 @interface NSMutableDictionary (CSMutableDictionaryHelper)
 /* maybeSetObject provides nil checks for inserted objects. */
-- (void)maybeSetObject:(nullable id)value forKey:(NSString *)key;
+- (void)maybeSetObject:(nullable id)value forKey:(id)key;
 
-- (void)setObjectWithoutOverride:(id)value forKey:(NSString *)key;
+- (void)setObjectWithoutOverride:(id)value forKey:(id)key;
 
-- (void)setBool:(BOOL)value forKey:(NSString *)key;
-- (void)setInteger:(NSInteger)value forKey:(NSString *)key;
-- (void)setUnsignedInteger:(NSUInteger)value forKey:(NSString *)key;
-- (void)setLongLong:(long long)value forKey:(NSString *)key;
-- (void)setDouble:(double)value forKey:(NSString *)key;
-- (void)setFloat:(float)value forKey:(NSString *)key;
-- (void)setPointer:(void *)value forKey:(NSString *)key;
+- (void)setBool:(BOOL)value forKey:(id)key;
+- (void)setInteger:(NSInteger)value forKey:(id)key;
+- (void)setUnsignedInteger:(NSUInteger)value forKey:(id)key;
+- (void)setShort:(short)value forKey:(id)key;
+- (void)setUnsignedShort:(unsigned short)value forKey:(id)key;
+- (void)setLong:(long)value forKey:(id)key;
+- (void)setUnsignedLong:(unsigned long)value forKey:(id)key;
+- (void)setLongLong:(long long)value forKey:(id)key;
+- (void)setUnsignedLongLong:(unsigned long long)value forKey:(id)key;
+- (void)setDouble:(double)value forKey:(id)key;
+- (void)setFloat:(float)value forKey:(id)key;
+- (void)setPointer:(void *)value forKey:(id)key;
 @end
 
 NS_ASSUME_NONNULL_END

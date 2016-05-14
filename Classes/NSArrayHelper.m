@@ -41,10 +41,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)boolAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj respondsToSelector:@selector(boolValue)]) {
-			return [obj boolValue];
+		if ([object respondsToSelector:@selector(boolValue)]) {
+			return [object boolValue];
 		}
 
 		return NO;
@@ -54,10 +54,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSArray *)arrayAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj isKindOfClass:[NSArray class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSArray class]]) {
+			return object;
 		}
 
 		return nil;
@@ -67,10 +67,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSString *)stringAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj isKindOfClass:[NSString class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSString class]]) {
+			return object;
 		}
 
 		return nil;
@@ -80,10 +80,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSDictionary *)dictionaryAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj isKindOfClass:[NSDictionary class]]) {
-			return obj;
+		if ([object isKindOfClass:[NSDictionary class]]) {
+			return object;
 		}
 
 		return nil;
@@ -93,10 +93,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSInteger)integerAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj respondsToSelector:@selector(integerValue)]) {
-			return [obj integerValue];
+		if ([object respondsToSelector:@selector(integerValue)]) {
+			return [object integerValue];
 		}
 
 		return 0;
@@ -106,10 +106,62 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj respondsToSelector:@selector(unsignedIntegerValue)]) {
-			return [obj unsignedIntegerValue];
+		if ([object respondsToSelector:@selector(unsignedIntegerValue)]) {
+			return [object unsignedIntegerValue];
+		}
+
+		return 0;
+	}
+}
+
+- (short)shortAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object shortValue];
+		}
+
+		return 0;
+	}
+}
+
+- (unsigned short)unsignedShortAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object unsignedShortValue];
+		}
+
+		return 0;
+	}
+}
+
+- (long)longAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object longValue];
+		}
+
+		return 0;
+	}
+}
+
+- (unsigned long)unsignedLongAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object unsignedLongValue];
 		}
 
 		return 0;
@@ -119,10 +171,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (long long)longLongAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj respondsToSelector:@selector(longLongValue)]) {
-			return [obj longLongValue];
+		if ([object respondsToSelector:@selector(longLongValue)]) {
+			return [object longLongValue];
+		}
+
+		return 0;
+	}
+}
+
+- (unsigned long long)unsignedLongLongAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object unsignedLongLongValue];
 		}
 
 		return 0;
@@ -132,10 +197,23 @@ NS_ASSUME_NONNULL_BEGIN
 - (double)doubleAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj respondsToSelector:@selector(doubleValue)]) {
-			return [obj doubleValue];
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object doubleValue];
+		}
+
+		return 0;
+	}
+}
+
+- (float)floatAtIndex:(NSUInteger)n
+{
+	@synchronized(self) {
+		id object = self[n];
+
+		if ([object respondsToSelector:@selector(doubleValue)]) {
+			return [object floatValue];
 		}
 
 		return 0;
@@ -145,10 +223,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable void *)pointerAtIndex:(NSUInteger)n
 {
 	@synchronized(self) {
-		id obj = self[n];
+		id object = self[n];
 
-		if ([obj isKindOfClass:[NSValue class]]) {
-			return [obj pointerValue];
+		if ([object isKindOfClass:[NSValue class]]) {
+			return [object pointerValue];
 		}
 
 		return NULL;
@@ -160,7 +238,7 @@ NS_ASSUME_NONNULL_BEGIN
 	PointerIsEmptyAssertReturn(anObject, NO)
 
 	@synchronized(self) {
-		NSInteger objectIndex =
+		NSUInteger objectIndex =
 		[self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
 			if ([object respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
 				return NO;
@@ -221,6 +299,49 @@ NS_ASSUME_NONNULL_BEGIN
 	return [newSet copy];
 }
 
+- (NSArray *)copyDeepAsMutable:(BOOL)mutableCopy
+{
+	@synchronized(self) {
+		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
+
+		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			id objectCopy = nil;
+
+			if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSDictionary class]])
+			{
+				objectCopy = [object copyDeepAsMutable:mutableCopy];
+			}
+			else if (mutableCopy == NO && [object conformsToProtocol:@protocol(NSCopying)])
+			{
+				objectCopy = [object copy];
+			}
+			else if (mutableCopy && [object conformsToProtocol:@protocol(NSMutableCopying)])
+			{
+				objectCopy = [object mutableCopy];
+			}
+
+			if (objectCopy) {
+				[newArray addObject:objectCopy];
+			} else {
+				LogToConsole(@"Object '%@' does not respond to -copy or returned nil value", [object description]);
+				LogToConsoleCurrentStackTrace
+			}
+		}];
+
+		return [newArray copy];
+	}
+}
+
+- (NSArray *)copyDeep
+{
+	return [self copyDeepAsMutable:NO];
+}
+
+- (NSArray *)copyDeepMutable
+{
+	return [self copyDeepAsMutable:YES];
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
@@ -249,12 +370,42 @@ NS_ASSUME_NONNULL_BEGIN
 	[self insertObject:@(value) atIndex:index];
 }
 
+- (void)insertShort:(short)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
+- (void)insertUnsignedShort:(unsigned short)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
+- (void)insertLong:(long)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
+- (void)insertUnsignedLong:(unsigned long)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index
 {
 	[self insertObject:@(value) atIndex:index];
 }
 
+- (void)insertUnsignedLongLong:(unsigned long long)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
 - (void)insertDouble:(double)value atIndex:(NSUInteger)index
+{
+	[self insertObject:@(value) atIndex:index];
+}
+
+- (void)insertFloat:(float)value atIndex:(NSUInteger)index
 {
 	[self insertObject:@(value) atIndex:index];
 }
@@ -279,12 +430,42 @@ NS_ASSUME_NONNULL_BEGIN
 	[self addObject:@(value)];
 }
 
+- (void)addShort:(short)value
+{
+	[self addObject:@(value)];
+}
+
+- (void)addUnsignedShort:(unsigned short)value
+{
+	[self addObject:@(value)];
+}
+
+- (void)addLong:(long)value
+{
+	[self addObject:@(value)];
+}
+
+- (void)addUnsignedLong:(unsigned long)value
+{
+	[self addObject:@(value)];
+}
+
 - (void)addLongLong:(long long)value
 {
 	[self addObject:@(value)];
 }
 
+- (void)addUnsignedLongLong:(unsigned long long)value
+{
+	[self addObject:@(value)];
+}
+
 - (void)addDouble:(double)value
+{
+	[self addObject:@(value)];
+}
+
+- (void)addFloat:(float)value
 {
 	[self addObject:@(value)];
 }
@@ -306,7 +487,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (*([methodSignature methodReturnType]) != '@') { // Return object
 				LogToConsole(@"Selector '%@' does not return object value.",
-							 [object description], NSStringFromSelector(performSelector))
+					 [object description], NSStringFromSelector(performSelector))
 				LogToConsoleCurrentStackTrace
 
 				return;
@@ -321,7 +502,7 @@ NS_ASSUME_NONNULL_BEGIN
 				self[index] = newObject;
 			} else {
 				LogToConsole(@"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
-						[object description], NSStringFromSelector(performSelector))
+					[object description], NSStringFromSelector(performSelector))
 				LogToConsoleCurrentStackTrace
 			}
 		}];
@@ -351,13 +532,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<NSNumber *> *)arrayFromIndexSet
 {
-	NSMutableArray *ary = [NSMutableArray array];
+	NSMutableArray *array = [NSMutableArray array];
 
 	[self enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-		[ary addObject:@(index)];
+		[array addObject:@(index)];
 	}];
 	
-	return ary;
+	return array;
 }
 
 @end

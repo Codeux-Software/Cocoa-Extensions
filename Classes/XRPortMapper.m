@@ -302,7 +302,7 @@ static const struct {UInt32 mask, value;} kPrivateRanges[] = {
 {
 	UInt32 address = ntohl([self rawLocalAddress]);
 
-	for (NSInteger i = 0; kPrivateRanges[i].mask; i++) {
+	for (NSUInteger i = 0; kPrivateRanges[i].mask; i++) {
 		if ((address & kPrivateRanges[i].mask) == kPrivateRanges[i].value) {
 			return YES;
 		}

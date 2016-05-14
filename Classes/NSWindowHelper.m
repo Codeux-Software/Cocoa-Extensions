@@ -75,8 +75,8 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 		NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
 								(rect.origin.y + (rect.size.height / 2)));
 		
-		NSInteger w = size.size.width;
-		NSInteger h = size.size.height;
+		CGFloat w = size.size.width;
+		CGFloat h = size.size.height;
 		
 		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
 		

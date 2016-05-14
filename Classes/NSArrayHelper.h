@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSArray (CSArrayHelper)
-@property (nonatomic, assign, readonly) NSRange range;
+@property (readonly) NSRange range;
 
 - (BOOL)boolAtIndex:(NSUInteger)n;
 - (nullable NSArray *)arrayAtIndex:(NSUInteger)n;
@@ -41,8 +41,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSDictionary *)dictionaryAtIndex:(NSUInteger)n;
 - (NSInteger)integerAtIndex:(NSUInteger)n;
 - (NSUInteger)unsignedIntegerAtIndex:(NSUInteger)n;
+- (short)shortAtIndex:(NSUInteger)n;
+- (unsigned short)unsignedShortAtIndex:(NSUInteger)n;
+- (long)longAtIndex:(NSUInteger)n;
+- (unsigned long)unsignedLongAtIndex:(NSUInteger)n;
 - (long long)longLongAtIndex:(NSUInteger)n;
+- (unsigned long long)unsignedLongLongAtIndex:(NSUInteger)n;
 - (double)doubleAtIndex:(NSUInteger)n;
+- (float)floatAtIndex:(NSUInteger)n;
 - (nullable void *)pointerAtIndex:(NSUInteger)n NS_RETURNS_INNER_POINTER;
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject; // Performs comparison using -isEqualIgnoringCase: - ignores objects that don't respond to this.
@@ -53,7 +59,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* -stringArrayControllerObjects returns an NSArray of NSDictionary with single key,
  named "string" which contains any NSString values in original array. */
-@property (nonatomic, copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
+@property (copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
+
+@property (copy, readonly) NSArray *copyDeep;
+@property (copy, readonly) NSArray *copyDeepMutable;
 @end
 
 @interface NSMutableArray (CSMutableArrayHelper)
@@ -62,15 +71,27 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addBool:(BOOL)value;
 - (void)addInteger:(NSInteger)value;
 - (void)addUnsignedInteger:(NSUInteger)value;
+- (void)addShort:(short)value;
+- (void)addUnsignedShort:(unsigned short)value;
+- (void)addLong:(long)value;
+- (void)addUnsignedLong:(unsigned long)value;
 - (void)addLongLong:(long long)value;
+- (void)addUnsignedLongLong:(unsigned long long)value;
 - (void)addDouble:(double)value;
+- (void)addFloat:(float)value;
 - (void)addPointer:(void *)value;
 
 - (void)insertBool:(BOOL)value atIndex:(NSUInteger)index;
 - (void)insertInteger:(NSInteger)value atIndex:(NSUInteger)index;
 - (void)insertUnsignedInteger:(NSUInteger)value atIndex:(NSUInteger)index;
+- (void)insertShort:(short)value atIndex:(NSUInteger)index;
+- (void)insertUnsignedShort:(unsigned short)value atIndex:(NSUInteger)index;
+- (void)insertLong:(long)value atIndex:(NSUInteger)index;
+- (void)insertUnsignedLong:(unsigned long)value atIndex:(NSUInteger)index;
 - (void)insertLongLong:(long long)value atIndex:(NSUInteger)index;
+- (void)insertUnsignedLongLong:(unsigned long long)value atIndex:(NSUInteger)index;
 - (void)insertDouble:(double)value atIndex:(NSUInteger)index;
+- (void)insertFloat:(float)value atIndex:(NSUInteger)index;
 - (void)insertPointer:(void *)value atIndex:(NSUInteger)index;
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;

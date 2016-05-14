@@ -195,14 +195,14 @@ void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_
 	XRPerformBlockOnDispatchQueue(queue, block, XRPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
-void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSInteger seconds)
+void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSUInteger seconds)
 {
 	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 	
 	XRPerformDelayedBlockOnQueue(workerQueue, block, seconds);
 }
 
-void XRPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSInteger seconds)
+void XRPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSUInteger seconds)
 {
 	XRPerformDelayedBlockOnQueue(dispatch_get_main_queue(), block, seconds);
 }
@@ -237,7 +237,7 @@ void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t bloc
 	}
 }
 
-void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSInteger seconds)
+void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSUInteger seconds)
 {
 	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
 

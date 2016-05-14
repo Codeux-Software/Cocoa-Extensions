@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
 @property (readonly, copy) NSString *integerWithLeadingZero;
-- (NSString *)integerWithLeadingZero:(NSInteger)forcedWidth;
+- (NSString *)integerWithLeadingZero:(NSUInteger)forcedWidth;
 @end
 
 NS_ASSUME_NONNULL_END

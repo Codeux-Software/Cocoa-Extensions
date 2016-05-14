@@ -109,16 +109,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isValidUTF8
 {
-	NSInteger len = [self length];
+	NSUInteger length = [self length];
 	
 	const unsigned char *bytes = [self bytes];
 	
-	NSInteger rest = 0;
-	NSInteger code = 0;
+	NSUInteger rest = 0;
+	NSUInteger code = 0;
 	
 	NSRange range;
 	
-	for (NSInteger i = 0; i < len; i++) {
+	for (NSUInteger i = 0; i < length; i++) {
 		unsigned char c = bytes[i];
 		
 		if (rest <= 0) {

@@ -36,12 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSOutlineView (CSOutlineViewHelper)
 
-- (NSInteger)countSelectedRows
+- (NSUInteger)countSelectedRows
 {
 	return [[self selectedRowIndexes] count];
 }
 
-- (void)selectItemAtIndex:(NSInteger)index
+- (void)selectItemAtIndex:(NSUInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 	
@@ -59,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSMutableArray *groups = [NSMutableArray array];
 	
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < [self numberOfRows]; i++) {
 		if ([self levelForRow:i] == 0) {
 			id curRow = [self itemAtRow:i];
 
@@ -91,7 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableArray *allRows = [NSMutableArray array];
 	
-	for (NSInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < [self numberOfRows]; i++) {
 		id itemAtRow = [self itemAtRow:i];
 
 		id parentItem = [self parentForItem:itemAtRow];

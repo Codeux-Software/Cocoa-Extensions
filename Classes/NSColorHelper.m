@@ -131,7 +131,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([string hasPrefix:@"#"]) {
 		 string = [string substringFromIndex:1];
 
-		NSInteger stringLength = [string length];
+		NSUInteger stringLength = [string length];
 
 		if (stringLength == 6)
 		{
