@@ -79,6 +79,7 @@
 #import <CocoaExtensions/NSThemeFrameHelper.h>
 #import <CocoaExtensions/NSThreadHelper.h>
 #import <CocoaExtensions/NSURLHelper.h>
+#import <CocoaExtensions/NSUserDefaultsHelper.h>
 #import <CocoaExtensions/NSWindowHelper.h>
 #import <CocoaExtensions/NSWorkspaceHelper.h>
 #endif
