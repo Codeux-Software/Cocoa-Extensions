@@ -103,6 +103,7 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
 - (NSArray<NSString *> *)split:(NSString *)delimiter;
+- (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength;
 
 @property (readonly, copy) NSString *trim;
 @property (readonly, copy) NSString *trimNewlines;

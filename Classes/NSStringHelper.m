@@ -260,6 +260,37 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 	return [self componentsSeparatedByString:delimiter];
 }
 
+- (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength
+{
+	NSParameterAssert(maximumLength > 0);
+
+	NSUInteger stringLength = [self length];
+
+	if (stringLength <= maximumLength) {
+		return @[self];
+	}
+
+	NSMutableArray<NSString *> *splitStrings = [NSMutableArray array];
+
+	NSUInteger processedLength = 0;
+
+	while (processedLength < stringLength) {
+		NSUInteger remainingLength = (stringLength - processedLength);
+
+		if (remainingLength > maximumLength) {
+			remainingLength = maximumLength;
+		}
+
+		NSString *line = [self substringWithRange:NSMakeRange(processedLength, remainingLength)];
+
+		[splitStrings addObject:line];
+
+		processedLength += remainingLength;
+	}
+
+	return [splitStrings copy];
+}
+
 - (NSString *)trim
 {
 	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
