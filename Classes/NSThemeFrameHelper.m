@@ -37,6 +37,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface NSThemeFrame ()
+@property NSRect _maxTitlebarTitleRect;
+@property (copy) NSArray<__kindof NSTitlebarAccessoryViewController *> *titlebarAccessoryViewControllers;
+@end
+
 @implementation NSThemeFrame (CSThemeFrameHelper)
 
 static void *_internalUsesCustomTitlebarTitlePositioning = nil;
@@ -55,7 +60,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
  or a document icon so do not use this method unless you know its purpose. */
 - (NSRect)ce_priv_defaultTitlebarTitleRect
 {
-	/* Return default value depending on configuration. */
+	/* Return default value depending on configuration */
 	NSRect defaultTitlebarTitleRect = [self ce_priv_defaultTitlebarTitleRect];
 
 	if ([self usesCustomTitlebarTitlePositioning] == NO) {
@@ -66,19 +71,8 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 		return defaultTitlebarTitleRect;
 	}
 
-	/* Use private method to calculate the maximum possible size for rect. */
-	/* NSSelectorFromString() is used to try to hide the fact we are calling out
-	 to private APIs when using this within the Mac App Store. */
-	SEL maximumTitlebarTitleRectSelector = NSSelectorFromString(@"_maxTitlebarTitleRect");
-
-	if ([self respondsToSelector:maximumTitlebarTitleRectSelector] == NO) {
-		return defaultTitlebarTitleRect;
-	}
-
-	NSRect (*retrieveRectFunction)(id receiver, SEL operation);
-	retrieveRectFunction = (NSRect(*)(id, SEL))objc_msgSend_stret;
-
-	NSRect maximumTitleRect = retrieveRectFunction(self, maximumTitlebarTitleRectSelector);
+	/* Use private method to calculate the maximum possible size for rect */
+	NSRect maximumTitleRect = [self _maxTitlebarTitleRect];
 
 	if (NSIsEmptyRect(maximumTitleRect)) {
 		return defaultTitlebarTitleRect;
@@ -98,34 +92,28 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 
 - (BOOL)usesCustomTitlebarTitlePositioning
 {
-	/* This fix is not necessary prior to OS X Yosemite. */
+	/* This fix is not necessary prior to OS X Yosemite */
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
 		return NO;
 	}
 
-	/* This fix is not necessary unless we have custom views. */
-	SEL titlebarAccessoryViewControllersSelector = NSSelectorFromString(@"titlebarAccessoryViewControllers");
+	/* This fix is not necessary unless we have custom views */
+	NSArray *viewControllers = [self titlebarAccessoryViewControllers];
 
-	if ([self respondsToSelector:titlebarAccessoryViewControllersSelector]) {
-		id viewControllers = objc_msgSend(self, titlebarAccessoryViewControllersSelector);
+	if (viewControllers && [viewControllers isKindOfClass:[NSArray class]]) {
+		BOOL allViewControllersHidden = YES;
 
-		if (viewControllers && [viewControllers isKindOfClass:[NSArray class]]) {
-			BOOL allViewControllersHidden = YES;
+		for (NSViewController *viewController in viewControllers) {
+			if ([[viewController view] isHidden] == NO) {
+				allViewControllersHidden = NO;
 
-			for (NSViewController *viewController in viewControllers) {
-				if ([[viewController view] isHidden] == NO) {
-					allViewControllersHidden = NO;
-
-					break;
-				}
-			}
-
-			if (allViewControllersHidden) {
-				return NO;
+				break;
 			}
 		}
-	} else {
-		return NO;
+
+		if (allViewControllersHidden) {
+			return NO;
+		}
 	}
 
 	/* Assigned object is an NSNumber which means we have to translate to BOOL */
