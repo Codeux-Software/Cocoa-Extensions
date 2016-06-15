@@ -142,19 +142,17 @@ NS_ASSUME_NONNULL_BEGIN
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
-		NSString *productVersion = [XRSystemInformation systemStandardVersion];
-
-		if ([productVersion hasPrefix:@"10.12."]) {
+		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Sierra", @"XRSystemInformation", nil);
-		} else if ([productVersion hasPrefix:@"10.11."]) {
+		} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X El Capitan", @"XRSystemInformation", nil);
-		} else if ([productVersion hasPrefix:@"10.10."]) {
+		} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Yosemite", @"XRSystemInformation", nil);
-		} else if ([productVersion hasPrefix:@"10.9."]) {
+		} else if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Mavericks", @"XRSystemInformation", nil);
-		} else if ([productVersion hasPrefix:@"10.8."]) {
+		} else if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Mountain Lion", @"XRSystemInformation", nil);
-		} else if ([productVersion hasPrefix:@"10.7."]) {
+		} else if ([XRSystemInformation isUsingOSXLionOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Lion", @"XRSystemInformation", nil);
 		} else {
 			static BOOL _performedManualLookup = NO;
