@@ -110,7 +110,7 @@ void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSStri
 #pragma mark -
 #pragma mark Validity
 
-BOOL NSObjectIsEmpty(id obj)
+BOOL NSObjectIsEmpty(id _Nullable obj)
 {
 	if (obj == nil || obj == NULL) {
 		return YES;
@@ -125,7 +125,7 @@ BOOL NSObjectIsEmpty(id obj)
 	return NO;
 }
 
-BOOL NSObjectIsNotEmpty(id obj)
+BOOL NSObjectIsNotEmpty(id _Nullable obj)
 {
 	return (NSObjectIsEmpty(obj) == NO);
 }
