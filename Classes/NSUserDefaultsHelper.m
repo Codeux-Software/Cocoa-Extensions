@@ -86,7 +86,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSColor *)colorForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, nil)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)unsignedIntegerForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -112,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (short)shortForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -125,7 +125,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned short)unsignedShortForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -138,7 +138,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (long)longForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -151,7 +151,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned long)unsignedLongForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (long long)longLongForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 
@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned long long)unsignedLongLongForKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssertReturn(defaultName, 0)
+	NSParameterAssert(defaultName != nil);
 
 	id object = [self objectForKey:defaultName];
 

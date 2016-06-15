@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isGroupItem:(id)item
 {
-	PointerIsEmptyAssertReturn(item, NO)
+	NSParameterAssert(item != nil);
 
 	return ([self levelForItem:item] == 0);
 }
@@ -77,7 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSArray *)itemsInGroup:(id)groupItem
 {
-	PointerIsEmptyAssertReturn(groupItem, nil)
+	NSParameterAssert(groupItem != nil);
 
 	if ([self isGroupItem:groupItem] == NO) {
 		NSArray *parentItem = [self parentForItem:groupItem];

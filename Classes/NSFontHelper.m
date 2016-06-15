@@ -80,7 +80,7 @@ const CGFloat kRotationForItalicText = -14.0;
 
 + (BOOL)fontIsAvailable:(NSString *)fontName
 {
-	PointerIsEmptyAssertReturn(fontName, NO)
+	NSParameterAssert(fontName != nil);
 
 	if ([NSFont fontWithName:fontName size:9.0]) {
 		return YES;

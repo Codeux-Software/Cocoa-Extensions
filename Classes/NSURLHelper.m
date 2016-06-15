@@ -38,14 +38,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)resourceValueForKey:(NSString *)key
 {
-	PointerIsEmptyAssertReturn(key, nil)
+	NSParameterAssert(key != nil);
 
 	return [self resourceValueForKey:key error:nil];
 }
 
 - (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error
 {
-	PointerIsEmptyAssertReturn(key, nil)
+	NSParameterAssert(key != nil);
 
 	id resourceValue = nil;
 

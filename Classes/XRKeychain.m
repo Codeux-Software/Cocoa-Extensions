@@ -92,9 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
 			   serviceName:(NSString *)service
 				 fromCloud:(BOOL)deleteFromCloud
 {
-	PointerIsEmptyAssertReturn(itemName, NO)
-	PointerIsEmptyAssertReturn(itemKind, NO)
-	PointerIsEmptyAssertReturn(service, NO)
+	NSParameterAssert(itemName != nil);
+	NSParameterAssert(itemKind != nil);
+	NSParameterAssert(service != nil);
 
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind
@@ -131,9 +131,9 @@ NS_ASSUME_NONNULL_BEGIN
 					serviceName:(NSString *)service
 					   forCloud:(BOOL)modifyForCloud
 {
-	PointerIsEmptyAssertReturn(itemName, NO)
-	PointerIsEmptyAssertReturn(itemKind, NO)
-	PointerIsEmptyAssertReturn(service, NO)
+	NSParameterAssert(itemName != nil);
+	NSParameterAssert(itemKind != nil);
+	NSParameterAssert(service != nil);
 
 	NSMutableDictionary *oldDictionary = [XRKeychain searchDictionary:itemName
 														 withItemKind:itemKind
@@ -193,10 +193,10 @@ NS_ASSUME_NONNULL_BEGIN
 			serviceName:(NSString *)service
 			  ontoCloud:(BOOL)addToCloud
 {
-	PointerIsEmptyAssertReturn(itemName, NO)
-	PointerIsEmptyAssertReturn(itemKind, NO)
-	PointerIsEmptyAssertReturn(password, NO)
-	PointerIsEmptyAssertReturn(service, NO)
+	NSParameterAssert(itemName != nil);
+	NSParameterAssert(itemKind != nil);
+	NSParameterAssert(password != nil);
+	NSParameterAssert(service != nil);
 
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind
@@ -236,9 +236,9 @@ NS_ASSUME_NONNULL_BEGIN
 										 fromCloud:(BOOL)searchForOnCloud
 								returnedStatusCode:(OSStatus * _Nullable)statusCode
 {
-	PointerIsEmptyAssertReturn(itemName, NO)
-	PointerIsEmptyAssertReturn(itemKind, NO)
-	PointerIsEmptyAssertReturn(service, NO)
+	NSParameterAssert(itemName != nil);
+	NSParameterAssert(itemKind != nil);
+	NSParameterAssert(service != nil);
 
 	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
 													  withItemKind:itemKind

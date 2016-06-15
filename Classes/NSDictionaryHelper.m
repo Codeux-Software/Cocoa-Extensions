@@ -139,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable void *)pointerForKey:(id)key
 {
-	PointerIsEmptyAssertReturn(key, NULL)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)objectForKey:(id)key orUseDefault:(nullable id)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -169,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)stringForKey:(id)key orUseDefault:(nullable NSString *)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -184,7 +184,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)boolForKey:(id)key orUseDefault:(BOOL)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -199,7 +199,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSArray *)arrayForKey:(id)key orUseDefault:(nullable NSArray *)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSDictionary *)dictionaryForKey:(id)key orUseDefault:(nullable NSDictionary *)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -229,7 +229,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSInteger)integerForKey:(id)key orUseDefault:(NSInteger)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -244,7 +244,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)unsignedIntegerForKey:(id)key orUseDefault:(NSUInteger)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -259,7 +259,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (short)shortForKey:(id)key orUseDefault:(short)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -274,7 +274,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned short)unsignedShortForKey:(id)key orUseDefault:(unsigned short)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -289,7 +289,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (long)longForKey:(id)key orUseDefault:(long)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -304,7 +304,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned long)unsignedLongForKey:(id)key orUseDefault:(unsigned long)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -319,7 +319,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (long long)longLongForKey:(id)key orUseDefault:(long long)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -334,7 +334,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (unsigned long long)unsignedLongLongForKey:(id)key orUseDefault:(unsigned long long)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -349,7 +349,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (double)doubleForKey:(id)key orUseDefault:(double)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -364,7 +364,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (float)floatForKey:(id)key orUseDefault:(float)defaultValue
 {
-	PointerIsEmptyAssertReturn(key, defaultValue)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -384,7 +384,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignObjectTo:(__strong id *)pointer forKey:(id)key performCopy:(BOOL)copyValue
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	@synchronized(self) {
 		id object = self[key];
@@ -401,7 +401,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignStringTo:(__strong NSString **)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	NSString *object = [self stringForKey:key];
 
@@ -412,7 +412,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignBoolTo:(BOOL *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -425,7 +425,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignArrayTo:(__strong NSArray **)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	NSArray *object = [self arrayForKey:key];
 
@@ -436,7 +436,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignDictionaryTo:(__strong NSDictionary **)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	NSDictionary *object = [self dictionaryForKey:key];
 
@@ -447,7 +447,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignIntegerTo:(NSInteger *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -460,7 +460,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignUnsignedIntegerTo:(NSUInteger *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -473,7 +473,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignShortTo:(short *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -486,7 +486,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignUnsignedShortTo:(unsigned short *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -499,7 +499,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignLongTo:(long *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -512,7 +512,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignUnsignedLongTo:(unsigned long *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -525,7 +525,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignLongLongTo:(long long *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -538,7 +538,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignUnsignedLongLongTo:(unsigned long long *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -551,7 +551,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignDoubleTo:(double *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -564,7 +564,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)assignFloatTo:(float *)pointer forKey:(id)key
 {
-	PointerIsEmptyAssert(pointer)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		id object = self[key];
@@ -577,7 +577,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsKey:(id)key
 {
-	PointerIsEmptyAssertReturn(key, NO)
+	NSParameterAssert(key != nil);
 
 	@synchronized (self) {
 		return (self[key] != nil);
@@ -593,7 +593,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)firstKeyForObject:(id)anObject
 {
-	PointerIsEmptyAssertReturn(anObject, nil)
+	NSParameterAssert(anObject != nil);
 
 	NSSet *keys =
 	[self keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
@@ -688,7 +688,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDictionary *)dictionaryByAddingEntries:(NSDictionary *)entries
 {
-	PointerIsEmptyAssertReturn(entries, nil)
+	NSParameterAssert(entries != nil);
 
 	@synchronized (self) {
 		NSMutableDictionary *dictionary = [self mutableCopy];
@@ -748,8 +748,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setObjectWithoutOverride:(id)value forKey:(id)key
 {
-	PointerIsEmptyAssert(value)
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
+
+	if (value == nil) {
+		return;
+	}
 
 	if (self[key] == nil) {
 		self[key] = value;
@@ -758,92 +761,95 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)maybeSetObject:(nullable id)value forKey:(id)key
 {
-	PointerIsEmptyAssert(value)
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
+
+	if (value == nil) {
+		return;
+	}
 
 	self[key] = value;
 }
 
 - (void)setBool:(BOOL)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setInteger:(NSInteger)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setUnsignedInteger:(NSUInteger)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setShort:(short)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setUnsignedShort:(unsigned short)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setLong:(long)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setUnsignedLong:(unsigned long)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setLongLong:(long long)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setUnsignedLongLong:(unsigned long long)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setDouble:(double)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setFloat:(float)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = @(value);
 }
 
 - (void)setPointer:(void *)value forKey:(id)key
 {
-	PointerIsEmptyAssert(key)
+	NSParameterAssert(key != nil);
 
 	self[key] = [NSValue valueWithPointer:value];
 }

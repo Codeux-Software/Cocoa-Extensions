@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(nullable id)owner topLevelObjects:(NSArray * _Nullable *)topLevelObjects
 {
-	PointerIsEmptyAssertReturn(nibName, NO)
+	NSParameterAssert(nibName != nil);
 
 	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
 }

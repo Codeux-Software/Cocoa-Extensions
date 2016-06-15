@@ -43,8 +43,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	PointerIsEmptyAssertReturn(haystack, NO)
-	PointerIsEmptyAssertReturn(needle, NO)
+	NSParameterAssert(haystack != nil);
+	NSParameterAssert(needle != nil);
 
     NSRange strRange = NSMakeRange(0, [haystack length]);
 
@@ -68,8 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	PointerIsEmptyAssertReturn(haystack, NSEmptyRange())
-	PointerIsEmptyAssertReturn(needle, NSEmptyRange())
+	NSParameterAssert(haystack != nil);
+	NSParameterAssert(needle != nil);
 
     NSRange strRange = NSMakeRange(0, [haystack length]);
 
@@ -88,9 +88,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSString *)string:(NSString *)haystack replacedByRegex:(NSString *)needle withString:(NSString *)puppy
 {
-	PointerIsEmptyAssertReturn(haystack, nil)
-	PointerIsEmptyAssertReturn(needle, nil)
-	PointerIsEmptyAssertReturn(puppy, nil)
+	NSParameterAssert(haystack != nil);
+	NSParameterAssert(needle != nil);
+	NSParameterAssert(puppy != nil);
 
 	NSRange strRange = NSMakeRange(0, [haystack length]);
 
@@ -108,8 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	PointerIsEmptyAssertReturn(haystack, 0)
-	PointerIsEmptyAssertReturn(needle, 0)
+	NSParameterAssert(haystack != nil);
+	NSParameterAssert(needle != nil);
 
     NSRange strRange = NSMakeRange(0, [haystack length]);
 	
@@ -133,8 +133,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	PointerIsEmptyAssertReturn(haystack, nil)
-	PointerIsEmptyAssertReturn(needle, nil)
+	NSParameterAssert(haystack != nil);
+	NSParameterAssert(needle != nil);
 
     NSRange strRange = NSMakeRange(0, [haystack length]);
 

@@ -235,7 +235,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)containsObjectIgnoringCase:(id)anObject
 {
-	PointerIsEmptyAssertReturn(anObject, NO)
+	NSParameterAssert(anObject != nil);
 
 	@synchronized(self) {
 		NSUInteger objectIndex =
@@ -348,7 +348,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)addObjectWithoutDuplication:(id)anObject
 {
-	PointerIsEmptyAssert(anObject)
+	NSParameterAssert(anObject != nil);
 
 	if ([self containsObject:anObject] == NO) {
 		[self addObject:anObject];
@@ -477,7 +477,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
 {
-	PointerIsEmptyAssert(performSelector)
+	NSParameterAssert(performSelector != NULL);
 
 	@synchronized(self) {
 		NSArray *oldArray = [self copy];
@@ -511,8 +511,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator
 {
-	PointerIsEmptyAssertReturn(object, NSNotFound)
-	PointerIsEmptyAssertReturn(comparator, NSNotFound)
+	NSParameterAssert(object != nil);
+	NSParameterAssert(comparator != NULL);
 
 	@synchronized(self) {
 		NSUInteger index = [self indexOfObject:object

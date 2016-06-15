@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)nameOfApplicationToOpenURL:(NSURL *)url
 {
-	PointerIsEmptyAssertReturn(url, nil)
+	NSParameterAssert(url != nil);
 
 	NSURL *applicationURL = [self URLForApplicationToOpenURL:url];
 

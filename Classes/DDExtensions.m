@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)invokeOnThread:(NSThread *)thread
 {
-	PointerIsEmptyAssertReturn(thread, nil)
+	NSParameterAssert(thread != nil);
 
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable id)invokeOnThread:(NSThread *)thread
 {
-	PointerIsEmptyAssertReturn(thread, nil)
+	NSParameterAssert(thread != nil);
 
 	DDInvocation *grabber = [DDInvocation invocationGrabber];
 

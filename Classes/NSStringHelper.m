@@ -204,7 +204,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
 
-	PointerIsEmptyAssertReturn(data, nil)
+	NSParameterAssert(data != nil);
 
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 	
@@ -223,7 +223,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
 
-	PointerIsEmptyAssertReturn(data, nil)
+	NSParameterAssert(data != nil);
 
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
 
@@ -315,7 +315,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 - (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement
 {
-	PointerIsEmptyAssertReturn(target, self);
+	NSParameterAssert(target != nil);
 
 	NSMutableString *newString = [NSMutableString string];
 
@@ -556,7 +556,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 - (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)characterSet
 {
-	PointerIsEmptyAssertReturn(characterSet, NO);
+	NSParameterAssert(characterSet != nil);
 
 	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet];
 
@@ -565,7 +565,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 - (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)characterSet
 {
-	PointerIsEmptyAssertReturn(characterSet, NO);
+	NSParameterAssert(characterSet != nil);
 
 	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet];
 
@@ -588,7 +588,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 - (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
 {
-	PointerIsEmptyAssertReturn(characters, self)
+	NSParameterAssert(characters != nil);
 	
 	NSMutableString *result = [NSMutableString string];
 
@@ -631,7 +631,7 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 {
 	NSRange emptyRange = NSEmptyRange();
 
-	PointerIsEmptyAssertReturn(regex, emptyRange)
+	NSParameterAssert(regex != nil);
 
 	NSUInteger stringLength = [self length];
 

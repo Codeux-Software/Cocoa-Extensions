@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)directoryExistsAtPath:(NSString *)path
 {
-	PointerIsEmptyAssertReturn(path, NO)
+	NSParameterAssert(path != nil);
 
 	BOOL isDirectory = NO;
 
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error
 {
-	PointerIsEmptyAssertReturn(path, NO)
+	NSParameterAssert(path != nil);
 
 	NSDictionary *newattrs = @{NSFileImmutable : @(YES)};
 	
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)unlockItemAtPath:(NSString *)path error:(NSError **)error
 {
-	PointerIsEmptyAssertReturn(path, NO)
+	NSParameterAssert(path != nil);
 
 	NSDictionary *newattrs = @{NSFileImmutable : @(NO)};
 	
@@ -72,7 +72,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<NSString *> *)buildPathArrayWithPaths:(NSArray<NSString *> *)paths
 {
-	PointerIsEmptyAssertReturn(paths, nil)
+	NSParameterAssert(paths != nil);
 
 	NSMutableArray<NSString *> *pathData = [NSMutableArray array];
 
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...
 {
-	PointerIsEmptyAssertReturn(path, nil)
+	NSParameterAssert(path != nil);
 
 	NSMutableArray<NSString *> *pathObjects = [NSMutableArray array];
 
@@ -123,7 +123,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path
 {
-	PointerIsEmptyAssertReturn(path, NO)
+	NSParameterAssert(path != nil);
 
 	NSURL *fileURL = [NSURL fileURLWithPath:path];
 
