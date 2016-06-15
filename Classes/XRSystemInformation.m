@@ -388,7 +388,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)retrieveSystemInformationKey:(NSString *)key
 {
-	PointerIsEmptyAssertReturn(key, nil)
+	NSParameterAssert(key != nil);
 
 	NSDictionary *sysinfo = [self systemInformationDictionary];
 
@@ -403,7 +403,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSDictionary<NSString *, id> *)createDictionaryFromFileAtPath:(NSString *)path
 {
-	PointerIsEmptyAssertReturn(path, nil)
+	NSParameterAssert(path != nil);
 
 	NSFileManager *fileManger = [NSFileManager defaultManager];
 

@@ -49,6 +49,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (BOOL)isUsingOSXMavericksOrLater;
 + (BOOL)isUsingOSXYosemiteOrLater;
 + (BOOL)isUsingOSXElCapitanOrLater;
++ (BOOL)isUsingOSXSierraOrLater;
 @end
 
 NS_ASSUME_NONNULL_END
