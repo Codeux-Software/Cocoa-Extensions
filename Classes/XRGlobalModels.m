@@ -47,9 +47,9 @@ void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSS
 
 void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
-	PointerIsEmptyAssert(className)
-	PointerIsEmptyAssert(originalMethod)
-	PointerIsEmptyAssert(replacementMethod)
+	NSCParameterAssert(className != nil);
+	NSCParameterAssert(originalMethod != nil);
+	NSCParameterAssert(replacementMethod != nil);
 
 	Class class = NSClassFromString(className);
 
@@ -77,9 +77,9 @@ void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSS
 
 void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
-	PointerIsEmptyAssert(className)
-	PointerIsEmptyAssert(originalMethod)
-	PointerIsEmptyAssert(replacementMethod)
+	NSCParameterAssert(className != nil);
+	NSCParameterAssert(originalMethod != nil);
+	NSCParameterAssert(replacementMethod != nil);
 
 	Class classClass = NSClassFromString(className);
 

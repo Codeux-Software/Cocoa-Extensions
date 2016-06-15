@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setColor:(nullable NSColor *)value forKey:(NSString *)defaultName
 {
-	PointerIsEmptyAssert(defaultName)
+	NSParameterAssert(defaultName != nil);
 
 	if (value == nil) {
 		[self setObject:nil forKey:defaultName];

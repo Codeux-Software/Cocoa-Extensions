@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object
 {
-	PointerIsEmptyAssert(object)
+	NSParameterAssert(object != nil);
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityValueDescription:accessibilityValueDescription];
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object
 {
-	PointerIsEmptyAssert(object)
+	NSParameterAssert(object != nil);
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityLabel:accessibilityLabel];
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object
 {
-	PointerIsEmptyAssert(object)
+	NSParameterAssert(object != nil);
 
 	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
 		[object setAccessibilityTitle:accessibilityTitle];
