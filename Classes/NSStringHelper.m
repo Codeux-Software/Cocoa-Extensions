@@ -665,13 +665,13 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start
 {
-	NSRange emptyRange = NSEmptyRange();
-
 	NSParameterAssert(regex != nil);
+
+	NSRange emptyRange = NSEmptyRange();
 
 	NSUInteger stringLength = [self length];
 
-	if (stringLength > start) {
+	if (stringLength <= start) {
 		return emptyRange;
 	}
 	
