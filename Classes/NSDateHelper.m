@@ -36,12 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSDate (CSDateHelper)
  
-+ (NSTimeInterval)secondsSinceUnixTimestamp:(NSTimeInterval)seconds
++ (NSTimeInterval)timeIntervalSinceNow:(NSTimeInterval)intervalSince1970
 {
-	return ([self unixTime] - seconds);
+	return ([self timeIntervalSince1970] - intervalSince1970);
 }
 
-+ (NSTimeInterval)unixTime
++ (NSTimeInterval)timeIntervalSince1970
 {
 	return [[NSDate date] timeIntervalSince1970];
 }
