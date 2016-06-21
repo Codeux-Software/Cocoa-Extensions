@@ -138,6 +138,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_LatinAlphabetIncludingUnderscoreDash
 
 #ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 @property (readonly, copy, nullable) NSURL *URLUsingWebKitPasteboard;
+
+@property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
 #endif
 @end
 

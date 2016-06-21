@@ -974,6 +974,32 @@ NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5
 
 	return u;
 }
+
+- (NSDictionary<NSString *, NSString *> *)URLQueryItems
+{
+	NSMutableDictionary<NSString *, NSString *> *queryItems = [NSMutableDictionary dictionary];
+
+	NSArray *components = [self componentsSeparatedByString:@"&"];
+
+	for (NSString *component in components) {
+		if (component.length == 0) {
+			continue;
+		}
+
+		NSInteger equalSignPosition = [component stringPosition:@"="];
+
+		if (equalSignPosition < 0) { // not found
+			queryItems[component] = NSStringEmptyPlaceholder;
+		} else {
+			NSString *name = [component substringToIndex:equalSignPosition];
+			NSString *value = [component substringAfterIndex:equalSignPosition];
+
+			queryItems[name] = value.percentDecodedString;
+		}
+	}
+
+	return [queryItems copy];
+}
 #endif
 
 @end
