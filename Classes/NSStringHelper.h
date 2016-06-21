@@ -103,6 +103,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 - (NSInteger)stringPosition:(NSString *)needle;
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
 
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock;
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;
+
 - (NSArray<NSString *> *)split:(NSString *)delimiter;
 - (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength;
 

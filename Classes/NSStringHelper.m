@@ -437,6 +437,41 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return searchResult.location;
 }
 
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+{
+	[self enumerateMatchesOfString:string withBlock:enumerationBlock options:0];
+}
+
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
+{
+	NSParameterAssert(string != nil);
+	NSParameterAssert(enumerationBlock != nil);
+
+	NSUInteger selfLength = self.length;
+
+	NSUInteger currentPosition = 0;
+
+	while (currentPosition < selfLength) {
+		NSRange r = [self rangeOfString:string
+								options:options
+								  range:NSMakeRange(currentPosition, (selfLength - currentPosition))];
+
+		if (r.location == NSNotFound) {
+			break;
+		}
+
+		BOOL stop = NO;
+
+		enumerationBlock(r, &stop);
+
+		if (stop) {
+			break;
+		}
+
+		currentPosition = (NSMaxRange(r) + 1);
+	}
+}
+
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
 	if ([self hasPrefix:prefix]) {
