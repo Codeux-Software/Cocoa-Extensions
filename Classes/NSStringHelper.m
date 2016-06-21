@@ -76,7 +76,8 @@ NSString * const NSStringEmptyPlaceholder = @"";
 NSString * const NSStringNewlinePlaceholder = @"\x0a";
 NSString * const NSStringWhitespacePlaceholder = @"\x20";
 
-NSString * const CS_LatinAlphabetIncludingUnderscoreDashCharacterSet = @"\x2d\x5f\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a";
+NSString * const CS_AtoZUnderscoreDashCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
+NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 @interface NSString (CSStringHelperPrivate)
 + (nullable id)getTokenFromFirstQuoteGroup:(nullable id)stringValue returnedDeletionRange:(NSRange * _Nullable)quoteRange;
