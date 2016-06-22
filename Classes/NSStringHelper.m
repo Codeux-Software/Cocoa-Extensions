@@ -447,28 +447,36 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSParameterAssert(string != nil);
 	NSParameterAssert(enumerationBlock != nil);
 
-	NSUInteger selfLength = self.length;
+	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
+
+	NSUInteger searchLength = self.length;
 
 	NSUInteger currentPosition = 0;
 
-	while (currentPosition < selfLength) {
-		NSRange r = [self rangeOfString:string
-								options:options
-								  range:NSMakeRange(currentPosition, (selfLength - currentPosition))];
+	while ((searchBackwards == NO && currentPosition < searchLength) ||
+		   (searchBackwards && searchLength > 0))
+	{
+		NSRange range = [self rangeOfString:string
+									options:options
+									  range:NSMakeRange(currentPosition, (searchLength - currentPosition))];
 
-		if (r.location == NSNotFound) {
+		if (range.location == NSNotFound) {
 			break;
 		}
 
 		BOOL stop = NO;
 
-		enumerationBlock(r, &stop);
+		enumerationBlock(range, &stop);
 
 		if (stop) {
 			break;
 		}
 
-		currentPosition = (NSMaxRange(r) + 1);
+		if (searchBackwards) {
+			searchLength = range.location;
+		} else {
+			currentPosition = (NSMaxRange(range) + 1);
+		}
 	}
 }
 
@@ -684,7 +692,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 
 	emptyRange.location = (start + searchRange.location);
-	emptyRange.length =  searchRange.length;
+	emptyRange.length = searchRange.length;
 
 	return emptyRange;
 }

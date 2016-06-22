@@ -215,28 +215,36 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(data != nil);
 	NSParameterAssert(enumerationBlock != nil);
 
-	NSUInteger selfLength = self.length;
+	BOOL searchBackwards = ((options & NSDataSearchBackwards) == NSDataSearchBackwards);
+
+	NSUInteger searchLength = self.length;
 
 	NSUInteger currentPosition = 0;
 
-	while (currentPosition < selfLength) {
-		NSRange r = [self rangeOfData:data
-							  options:options
-								range:NSMakeRange(currentPosition, (selfLength - currentPosition))];
+	while ((searchBackwards == NO && currentPosition < searchLength) ||
+		   (searchBackwards && searchLength > 0))
+	{
+		NSRange range = [self rangeOfData:data
+								  options:options
+									range:NSMakeRange(currentPosition, (searchLength - currentPosition))];
 
-		if (r.location == NSNotFound) {
+		if (range.location == NSNotFound) {
 			break;
 		}
 
 		BOOL stop = NO;
 
-		enumerationBlock(r, &stop);
+		enumerationBlock(range, &stop);
 
 		if (stop) {
 			break;
 		}
 
-		currentPosition = (NSMaxRange(r) + 1);
+		if (searchBackwards) {
+			searchLength = range.location;
+		} else {
+			currentPosition = (NSMaxRange(range) + 1);
+		}
 	}
 }
 
