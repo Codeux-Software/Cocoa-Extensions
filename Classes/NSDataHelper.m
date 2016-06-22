@@ -200,6 +200,41 @@ NS_ASSUME_NONNULL_BEGIN
     return output;
 }
 
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+{
+	[self enumerateMatchesOfData:data withBlock:enumerationBlock options:0];
+}
+
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSDataSearchOptions)options
+{
+	NSParameterAssert(data != nil);
+	NSParameterAssert(enumerationBlock != nil);
+
+	NSUInteger selfLength = self.length;
+
+	NSUInteger currentPosition = 0;
+
+	while (currentPosition < selfLength) {
+		NSRange r = [self rangeOfData:data
+							  options:options
+								range:NSMakeRange(currentPosition, (selfLength - currentPosition))];
+
+		if (r.location == NSNotFound) {
+			break;
+		}
+
+		BOOL stop = NO;
+
+		enumerationBlock(r, &stop);
+
+		if (stop) {
+			break;
+		}
+
+		currentPosition = (NSMaxRange(r) + 1);
+	}
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
