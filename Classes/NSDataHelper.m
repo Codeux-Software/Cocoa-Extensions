@@ -69,6 +69,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSData (CSDataHelper)
 
+- (NSRange)range
+{
+	return NSMakeRange(0, [self length]);
+}
+
 + (NSData *)lineFeed
 {
 	return [NSData dataWithBytes:"\x0a" length:1];

@@ -33,6 +33,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSData (CSDataHelper)
+@property (readonly) NSRange range;
+
 @property (getter=isValidUTF8, readonly) BOOL validUTF8;
 
 @property (readonly, copy) NSString *sha1;
