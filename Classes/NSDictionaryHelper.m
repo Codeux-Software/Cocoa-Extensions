@@ -723,7 +723,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (objectCopy) {
 				newDictionary[key] = objectCopy;
 			} else {
-				LogToConsole(@"Object '%@' does not respond to -copy or returned nil value", [object description]);
+				LogToConsoleError("Object '%{public}@' does not respond to -copy or returned nil value", [object description]);
 				LogToConsoleCurrentStackTrace
 			}
 		}];

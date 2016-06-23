@@ -323,7 +323,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (objectCopy) {
 				[newArray addObject:objectCopy];
 			} else {
-				LogToConsole(@"Object '%@' does not respond to -copy or returned nil value", [object description]);
+				LogToConsoleError("Object '%{public}@' does not respond to -copy or returned nil value", [object description]);
 				LogToConsoleCurrentStackTrace
 			}
 		}];
@@ -486,8 +486,8 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
 
 			if (*([methodSignature methodReturnType]) != '@') { // Return object
-				LogToConsole(@"Selector '%@' does not return object value.",
-					 [object description], NSStringFromSelector(performSelector))
+				LogToConsoleError("Selector '%{public}@' does not return object value.",
+					 NSStringFromSelector(performSelector))
 				LogToConsoleCurrentStackTrace
 
 				return;
@@ -501,7 +501,7 @@ NS_ASSUME_NONNULL_BEGIN
 			if (newObject) {
 				self[index] = newObject;
 			} else {
-				LogToConsole(@"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
+				LogToConsoleError("Object %{public}@ returned a nil value when performing selector '%{public}@' - it will not be replaced.",
 					[object description], NSStringFromSelector(performSelector))
 				LogToConsoleCurrentStackTrace
 			}

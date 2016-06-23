@@ -123,7 +123,7 @@ static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 {
 	/* Maybe define our own error if there is none set. */
 	if (errorCode) {
-		LogToConsole(@"Port-mapping resulted in error: %d", errorCode);
+		LogToConsoleError("Port-mapping resulted in error: %{public}d", errorCode);
 	} else {
 		if (publicPort == 0 && self.desiredPublicPort > 0) {
 			errorCode = kDNSServiceErr_NATPortMappingUnsupported;

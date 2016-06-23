@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (isUbiquitous == nil || [isUbiquitous boolValue] == NO) {
 		if (isUbiquitousError) {
-			LogToConsole(@"isUbiquitous lookup failed: '%@': %@", path, [isUbiquitousError localizedDescription]);
+			LogToConsoleError("isUbiquitous lookup failed: '%{public}@': %{public}@", path, [isUbiquitousError localizedDescription]);
 			LogToConsoleCurrentStackTrace
 
 			return NO;
@@ -143,7 +143,7 @@ NS_ASSUME_NONNULL_BEGIN
 			 the path is not ubiquitous, then we return YES anyways. */
 			/* YES will indicate the file is downloaded and since the file 
 			 is not ubiquitous, it is in fact downloaded. */
-			LogToConsole(@"Returning YES for path that is not ubiquitous: '%@'", path);
+			LogToConsoleDebug("Returning YES for path that is not ubiquitous: '%{public}@'", path);
 
 			return YES;
 		}
@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isDirectory == nil)
 	{
 		if (isDirectoryError) {
-			LogToConsole(@"isDirectory lookup failed: '%@': %@", path, [isDirectoryError localizedDescription])
+			LogToConsoleError("isDirectory lookup failed: '%{public}@': %{public}@", path, [isDirectoryError localizedDescription])
 			LogToConsoleCurrentStackTrace
 
 			return NO;
@@ -175,7 +175,7 @@ NS_ASSUME_NONNULL_BEGIN
 		NSArray *directoryContents = [self contentsOfDirectoryAtPath:path error:&directoryContentsError];
 
 		if (directoryContents == nil) {
-			LogToConsole(@"directoryContents returned nil: '%@': %@", path, [directoryContentsError localizedDescription])
+			LogToConsoleError("directoryContents returned nil: '%{public}@': %{public}@", path, [directoryContentsError localizedDescription])
 			LogToConsoleCurrentStackTrace
 
 			return NO;
@@ -214,7 +214,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (isDownloadedError) {
-		LogToConsole(@"isDownloaded lookup failed: '%@': %@", path, [isDownloadedError localizedDescription])
+		LogToConsoleError("isDownloaded lookup failed: '%{public}@': %{public}@", path, [isDownloadedError localizedDescription])
 		LogToConsoleCurrentStackTrace
 	}
 
@@ -297,7 +297,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		if (removeResult == NO) {
-			LogToConsole(@"Failed to remove file at destination: '%@': %@",
+			LogToConsoleError("Failed to remove file at destination: '%{public}@': %{public}@",
 						 [destinationURL path], [removeFileError localizedDescription]);
 			LogToConsoleCurrentStackTrace
 
@@ -317,7 +317,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (copyResult == NO) {
-		LogToConsole(@"Failed to copy file to destination: '%@' -> '%@': %@",
+		LogToConsoleError("Failed to copy file to destination: '%{public}@' -> '%{public}@': %{public}@",
 					 [sourceURL path], [destinationURL path], [copyFileError localizedDescription]);
 		LogToConsoleCurrentStackTrace
 
