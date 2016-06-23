@@ -44,7 +44,7 @@ static BOOL LogToConsoleInfoLoggingEnabled = YES;
 	LogToConsoleWithType(_format_, 0, ##__VA_ARGS__)
 
 #define LogToConsoleDebug(_format_, ...)	\
-	if (LogToConsoleDebugModeEnabled) {		\
+	if (LogToConsoleDebugLoggingEnabled) {		\
 		LogToConsoleWithType(_format_, 0, ##__VA_ARGS__)	\
 	}
 
