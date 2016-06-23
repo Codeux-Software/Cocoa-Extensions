@@ -38,6 +38,8 @@
 
 #import <CocoaExtensions/StaticDefinitions.h>
 
+#import <CocoaExtensions/XRLogging.h>
+
 #import <CocoaExtensions/XRBase64Encoding.h>
 #import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRRegularExpression.h>
