@@ -66,7 +66,7 @@
 
 #import <CommonCrypto/CommonDigest.h>
 
-#import <WebKit/WebKit.h>
+@import WebKit;
 
 #include <arpa/inet.h>
 

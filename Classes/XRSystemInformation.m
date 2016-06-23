@@ -32,7 +32,7 @@
 
 #import "CocoaExtensions.h"
 
-#import <IOKit/IOKitLib.h>
+@import IOKit;
 
 #include <sys/sysctl.h>
 
