@@ -72,6 +72,7 @@
 #import <CocoaExtensions/NSFontHelper.h>
 #import <CocoaExtensions/NSImageHelper.h>
 #import <CocoaExtensions/NSMenuHelper.h>
+#import <CocoaExtensions/NSMethodSignatureHelper.h>
 #import <CocoaExtensions/NSObjectHelper.h>
 #import <CocoaExtensions/NSOutlineViewHelper.h>
 #import <CocoaExtensions/NSPasteboardHelper.h>
