@@ -97,6 +97,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 
 - (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator;
+
+- (void)moveObjectAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
 @end
 
 @interface NSIndexSet (CSIndexSetHelper)

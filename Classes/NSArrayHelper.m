@@ -526,6 +526,19 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)moveObjectAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
+{
+	id object = [self objectAtIndex:fromIndex];
+
+	[self removeObjectAtIndex:fromIndex];
+
+	if (fromIndex < toIndex) {
+		[self insertObject:object atIndex:(toIndex - 1)];
+	} else {
+		[self insertObject:object atIndex:toIndex];
+	}
+}
+
 @end
 
 @implementation NSIndexSet (CSIndexSetHelper)
