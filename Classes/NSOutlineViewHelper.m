@@ -34,18 +34,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation NSOutlineView (CSOutlineViewHelper)
-
-- (NSUInteger)countSelectedRows
-{
-	return [[self selectedRowIndexes] count];
-}
+@implementation NSTableView (CSTableViewHelper)
 
 - (void)selectItemAtIndex:(NSUInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 	
 	[self scrollRowToVisible:index];
+}
+
+@end
+
+#pragma mark -
+
+@implementation NSOutlineView (CSOutlineViewHelper)
+
+- (NSArray *)selectedObjects
+{
+	NSIndexSet *selectedRows = [self selectedRowIndexes];
+
+	NSMutableArray *objects = [NSMutableArray arrayWithCapacity:selectedRows.count];
+
+	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		id object = [self itemAtRow:index];
+
+		[objects addObject:object];
+	}];
+
+	return [objects copy];
 }
 
 - (BOOL)isGroupItem:(id)item

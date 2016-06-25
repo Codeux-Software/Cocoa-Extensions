@@ -33,6 +33,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSOutlineView (CSOutlineViewHelper)
+@property (readonly) NSArray *selectedObjects;
+
 @property (readonly, copy) NSArray *groupItems;
 - (BOOL)isGroupItem:(id)item;
 
@@ -40,9 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSArray *)itemsFromParentGroup:(id)item;
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
+@end
 
-@property (readonly) NSUInteger countSelectedRows;
-
+@interface NSTableView (CSTableViewHelper)
 - (void)selectItemAtIndex:(NSUInteger)index;
 @end
 
