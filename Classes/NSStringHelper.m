@@ -378,6 +378,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSString *_stringB = [stringB lowercaseString];
 
 	NSInteger commonCharacterCount = 0;
+
 	NSInteger startPosition = 0;
 
 	CGFloat distancePenalty = 0;
@@ -386,7 +387,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		BOOL matchFound = NO;
 
 		for (NSInteger j = startPosition; j < [_stringA length]; j++) {
-			if ([_stringA characterAtIndex:i] != [_stringB characterAtIndex:j]) {
+			if ([_stringB characterAtIndex:i] != [_stringA characterAtIndex:j]) {
 				continue;
 			}
 
