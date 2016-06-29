@@ -145,6 +145,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
 #endif
+
+@property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
 @end
 
 #pragma mark -

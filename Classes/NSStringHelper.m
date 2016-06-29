@@ -201,6 +201,19 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return ([self stringPositionIgnoringCase:string] >= 0);
 }
 
+- (NSArray<NSString *> *)characterStringBuffer
+{
+	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[self length]];
+
+	for (NSUInteger i = 0; i < [self length]; i++) {
+		NSString *character = [self stringCharacterAtIndex:i];
+
+		[buffer addObject:character];
+	}
+
+	return [buffer copy];
+}
+
 - (nullable NSString *)sha1
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
