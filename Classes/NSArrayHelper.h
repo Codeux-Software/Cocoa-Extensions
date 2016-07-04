@@ -67,6 +67,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)arrayByRemovingEmptyValues;
 - (NSArray *)arrayByUniquing;
 - (NSArray *)arrayByRemovingEmptyValuesAndUniquing;
+
+- (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues trimming:(BOOL)trimValues uniquing:(BOOL)uniqueValues;
 @end
 
 @interface NSMutableArray (CSMutableArrayHelper)

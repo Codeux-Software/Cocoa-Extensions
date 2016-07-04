@@ -344,32 +344,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)arrayByRemovingEmptyValues
 {
-	return [self arrayByRemovingEmptyValues:YES uniquing:NO];
+	return [self arrayByRemovingEmptyValues:YES trimming:NO uniquing:NO];
 }
 
 - (NSArray *)arrayByUniquing
 {
-	return [self arrayByRemovingEmptyValues:NO uniquing:YES];
+	return [self arrayByRemovingEmptyValues:NO trimming:NO uniquing:YES];
 }
 
 - (NSArray *)arrayByRemovingEmptyValuesAndUniquing
 {
-	return [self arrayByRemovingEmptyValues:YES uniquing:YES];
+	return [self arrayByRemovingEmptyValues:YES trimming:NO uniquing:YES];
 }
 
-- (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues uniquing:(BOOL)uniqueValues
+- (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues trimming:(BOOL)trimValues uniquing:(BOOL)uniqueValues
 {
 	@synchronized(self) {
 		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
 
 		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-			if (removeEmptyValues && NSObjectIsEmpty(object)) {
+			id objectValue = object;
+
+			if (trimValues && [objectValue respondsToSelector:@selector(trim)]) {
+				objectValue = [objectValue trim];
+			}
+
+			if (removeEmptyValues && NSObjectIsEmpty(objectValue)) {
 				return;
-			} else if (uniqueValues && [newArray containsObject:object]) {
+			} else if (uniqueValues && [newArray containsObject:objectValue]) {
 				return;
 			}
 
-			[newArray addObject:object];
+			[newArray addObject:objectValue];
 		}];
 
 		return [newArray copy];
