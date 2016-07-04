@@ -45,6 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface NSTableView (CSTableViewHelper)
+@property (readonly) NSInteger rowBeneathMouse;
+@property (readonly) NSInteger rowUnderMouse COCOA_EXTENSIONS_DEPRECATED("Use -rowBeneathMouse instead");
+
 - (void)selectItemAtIndex:(NSUInteger)index;
 @end
 

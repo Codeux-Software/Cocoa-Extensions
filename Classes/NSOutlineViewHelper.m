@@ -43,6 +43,20 @@ NS_ASSUME_NONNULL_BEGIN
 	[self scrollRowToVisible:index];
 }
 
+- (NSInteger)rowBeneathMouse
+{
+	NSPoint ml = self.window.mouseLocationOutsideOfEventStream;
+
+	NSPoint pt = [self convertPoint:ml fromView:nil];
+
+	return [self rowAtPoint:pt];
+}
+
+- (NSInteger)rowUnderMouse
+{
+	return [self rowBeneathMouse];
+}
+
 @end
 
 #pragma mark -
