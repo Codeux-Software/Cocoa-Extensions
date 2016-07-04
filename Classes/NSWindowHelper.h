@@ -45,6 +45,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDispl
 
 @property (getter=isInFullscreenMode, readonly) BOOL inFullscreenMode;
 
+@property (readonly) NSWindow *deepestWindow;
+
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword;
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword;
 

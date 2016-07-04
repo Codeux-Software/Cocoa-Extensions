@@ -126,6 +126,24 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	return (([self styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask);
 }
 
+- (NSWindow *)deepestWindow
+{
+	return [NSWindow deepestWindowInWindow:self];
+}
+
++ (NSWindow *)deepestWindowInWindow:(NSWindow *)window
+{
+	NSParameterAssert(window != nil);
+
+	NSWindow *attachedSheet = [window attachedSheet];
+
+	if (attachedSheet) {
+		return [NSWindow deepestWindowInWindow:attachedSheet];
+	}
+
+	return window;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
