@@ -342,6 +342,23 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self copyDeepAsMutable:YES];
 }
 
+- (NSArray *)arrayByRemovingEmptyValuesAndUniquing
+{
+	@synchronized(self) {
+		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
+
+		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			if (NSObjectIsEmpty(object) || [newArray containsObject:object]) {
+				return;
+			}
+
+			[newArray addObject:object];
+		}];
+
+		return [newArray copy];
+	}
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
