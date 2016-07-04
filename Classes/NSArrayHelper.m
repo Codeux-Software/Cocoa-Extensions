@@ -342,13 +342,30 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self copyDeepAsMutable:YES];
 }
 
+- (NSArray *)arrayByRemovingEmptyValues
+{
+	return [self arrayByRemovingEmptyValues:YES uniquing:NO];
+}
+
+- (NSArray *)arrayByUniquing
+{
+	return [self arrayByRemovingEmptyValues:NO uniquing:YES];
+}
+
 - (NSArray *)arrayByRemovingEmptyValuesAndUniquing
+{
+	return [self arrayByRemovingEmptyValues:YES uniquing:YES];
+}
+
+- (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues uniquing:(BOOL)uniqueValues
 {
 	@synchronized(self) {
 		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
 
 		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-			if (NSObjectIsEmpty(object) || [newArray containsObject:object]) {
+			if (removeEmptyValues && NSObjectIsEmpty(object)) {
+				return;
+			} else if (uniqueValues && [newArray containsObject:object]) {
 				return;
 			}
 
