@@ -299,7 +299,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [newSet copy];
 }
 
-- (NSArray *)copyDeepAsMutable:(BOOL)mutableCopy
+- (__kindof NSArray *)copyDeepAsMutable:(BOOL)mutableCopy
 {
 	@synchronized(self) {
 		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
@@ -328,7 +328,11 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}];
 
-		return [newArray copy];
+		if (mutableCopy) {
+			return newArray;
+		} else {
+			return [newArray copy];
+		}
 	}
 }
 
@@ -337,7 +341,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self copyDeepAsMutable:NO];
 }
 
-- (NSArray *)copyDeepMutable
+- (NSMutableArray *)copyDeepMutable
 {
 	return [self copyDeepAsMutable:YES];
 }

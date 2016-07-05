@@ -699,7 +699,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (NSDictionary *)copyDeepAsMutable:(BOOL)mutableCopy
+- (__kindof NSDictionary *)copyDeepAsMutable:(BOOL)mutableCopy
 {
 	@synchronized(self) {
 		NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithCapacity:[self count]];
@@ -728,7 +728,11 @@ NS_ASSUME_NONNULL_BEGIN
 			}
 		}];
 
-		return [newDictionary copy];
+		if (mutableCopy) {
+			return newDictionary;
+		} else {
+			return [newDictionary copy];
+		}
 	}
 }
 
@@ -737,7 +741,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self copyDeepAsMutable:NO];
 }
 
-- (NSDictionary *)copyDeepMutable
+- (NSMutableDictionary *)copyDeepMutable
 {
 	return [self copyDeepAsMutable:YES];
 }
