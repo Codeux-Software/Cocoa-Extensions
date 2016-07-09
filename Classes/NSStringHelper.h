@@ -210,6 +210,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 + (NSAttributedString *)attributedStringWithString:(NSString *)string;
 + (NSAttributedString *)attributedStringWithString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;
 
+- (NSAttributedString *)attributedSubstringFromIndex:(NSUInteger)from;
+- (NSAttributedString *)attributedSubstringToIndex:(NSUInteger)to;
+
 @property (readonly, copy) NSArray<NSAttributedString *> *splitIntoLines;
 
 @property (readonly, copy) NSString *scannerString;

@@ -1310,6 +1310,20 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
 }
 
+- (NSAttributedString *)attributedSubstringFromIndex:(NSUInteger)from
+{
+	NSRange range = NSMakeRange(from, ([self length] - from));
+
+	return [self attributedSubstringFromRange:range];
+}
+
+- (NSAttributedString *)attributedSubstringToIndex:(NSUInteger)to
+{
+	NSRange range = NSMakeRange(0, ([self length] - to));
+
+	return [self attributedSubstringFromRange:range];
+}
+
 - (NSRange)range
 {
 	return NSMakeRange(0, [self length]);
