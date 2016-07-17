@@ -66,6 +66,7 @@
 #import <CocoaExtensions/XRPortMapper.h>
 #import <CocoaExtensions/XRSystemInformation.h>
 
+#import <CocoaExtensions/NSArrayControllerHelper.h>
 #import <CocoaExtensions/NSBundleHelper.h>
 #import <CocoaExtensions/NSColorHelper.h>
 #import <CocoaExtensions/NSFileManagerHelper.h>
