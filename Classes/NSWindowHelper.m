@@ -58,6 +58,21 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	return nil;
 }
 
+- (NSRect)titlebarFrame
+{
+	NSView *contentView = [self contentView];
+
+	NSRect contentViewFrame = [contentView frame];
+
+	NSRect selfFrame = [self frame];
+
+	selfFrame.origin.y += contentViewFrame.size.height;
+
+	selfFrame.size.height -= contentViewFrame.size.height;
+
+	return selfFrame;
+}
+
 - (BOOL)runningInHighResolutionMode
 {
 	return [[self screen] runningInHighResolutionMode];

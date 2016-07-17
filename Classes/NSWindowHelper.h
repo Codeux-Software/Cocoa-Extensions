@@ -47,6 +47,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDispl
 
 @property (readonly) NSWindow *deepestWindow;
 
+@property (readonly) NSRect titlebarFrame;
+
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword;
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword;
 
