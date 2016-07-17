@@ -83,19 +83,13 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	NSScreen *screen = [NSScreen mainScreen];
 	
 	if (screen) {
-		NSRect rect = [screen visibleFrame];
+		NSRect remoteFrame = [screen visibleFrame];
 		
-		NSRect size = [self frame];
-		
-		NSPoint p = NSMakePoint((rect.origin.x + (rect.size.width / 2)), 
-								(rect.origin.y + (rect.size.height / 2)));
-		
-		CGFloat w = size.size.width;
-		CGFloat h = size.size.height;
-		
-		rect = NSMakeRect((p.x - (w / 2)), (p.y - (h / 2)), w, h);
-		
-		[self setFrame:rect display:YES animate:YES];
+		NSRect localFrame = [self frame];
+
+		localFrame = NSRectCenteredInRect(localFrame, remoteFrame);
+
+		[self setFrame:localFrame display:YES animate:YES];
 	}	
 }
 
