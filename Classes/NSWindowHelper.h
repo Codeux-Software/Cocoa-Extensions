@@ -35,6 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDisplay;
 
 @interface NSWindow (CSWindowHelper)
+@property (getter=isOccluded, readonly) BOOL occluded;
+@property (getter=isInactive, readonly) BOOL inactive;
+@property (getter=isActiveForDrawing, readonly) BOOL activeForDrawing;
+
 - (void)exactlyCenterWindow;
 
 + (nullable NSWindow *)windowBeneathMouse;
