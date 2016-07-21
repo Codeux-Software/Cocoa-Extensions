@@ -386,6 +386,22 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate
+{
+	return [self objectPassingTest:predicate withOptions:0];
+}
+
+- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options
+{
+	NSUInteger objectIndex = [self indexOfObjectWithOptions:options passingTest:predicate];
+
+	if (objectIndex == NSNotFound) {
+		return nil;
+	}
+
+	return self[objectIndex];
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
