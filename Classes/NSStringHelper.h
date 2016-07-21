@@ -106,6 +106,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 - (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock;
 - (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;
 
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock;
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;
+
 - (NSArray<NSString *> *)split:(NSString *)delimiter;
 - (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength;
 
@@ -246,6 +249,9 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 @property (getter=getToken, readonly, copy) NSAttributedString *token;
 @property (getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes;
+
+- (void)appendString:(NSString *)string;
+- (void)appendString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;
 @end
 
 NS_ASSUME_NONNULL_END

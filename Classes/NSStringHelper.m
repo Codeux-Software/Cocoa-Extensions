@@ -489,7 +489,50 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		if (searchBackwards) {
 			searchLength = range.location;
 		} else {
-			currentPosition = (NSMaxRange(range) + 1);
+			currentPosition = NSMaxRange(range);
+		}
+	}
+}
+
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+{
+	[self enumerateFirstOccurrenceOfCharactersInString:string withBlock:enumerationBlock options:0];
+}
+
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
+{
+	NSParameterAssert(string != nil);
+	NSParameterAssert(enumerationBlock != nil);
+
+	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
+
+	NSUInteger searchLength = self.length;
+
+	NSUInteger currentPosition = 0;
+
+	NSArray *stringCharacters = [string characterStringBuffer];
+
+	for (NSString *stringCharacter in stringCharacters) {
+		NSRange range = [self rangeOfString:stringCharacter
+									options:options
+									  range:NSMakeRange(currentPosition, (searchLength - currentPosition))];
+
+		if (range.location == NSNotFound) {
+			break;
+		}
+
+		BOOL stop = NO;
+
+		enumerationBlock(range, &stop);
+
+		if (stop) {
+			break;
+		}
+
+		if (searchBackwards) {
+			searchLength = range.location;
+		} else {
+			currentPosition = NSMaxRange(range);
 		}
 	}
 }
@@ -1364,7 +1407,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		}
 		
         [mutableSelf deleteCharactersInRange:rangeToDelete];
-        
+
         rangeStartIn = NSMaxRange(lineRange);
     }
     
@@ -1636,6 +1679,18 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 
 	return quotedGroup;
+}
+
+- (void)appendString:(NSString *)string
+{
+	[self appendAttributedString:
+	 [NSAttributedString attributedStringWithString:string]];
+}
+
+- (void)appendString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes
+{
+	[self appendAttributedString:
+	 [NSAttributedString attributedStringWithString:string attributes:stringAttributes]];
 }
 
 @end
