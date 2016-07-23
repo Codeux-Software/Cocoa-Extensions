@@ -32,12 +32,11 @@
 
 #import "CocoaExtensions.h"
 
-@import IOKit;
+#import <IOKit/IOKitLib.h>
 
 #include <sys/sysctl.h>
 
 NS_ASSUME_NONNULL_BEGIN
-
 
 @implementation XRSystemInformation
 

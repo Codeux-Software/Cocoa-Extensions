@@ -1,14 +1,14 @@
 
 #ifdef __OBJC__
 
-@import Foundation;
+#import <Foundation/Foundation.h>
 
-@import CoreGraphics;
+#import <CoreGraphics/CoreGraphics.h>
 
 #ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-@import AppKit;
+#import <AppKit/AppKit.h>
 #else
-@import UIKit;
+#import <UIKit/UIKit.h>
 #endif
 
 #endif
