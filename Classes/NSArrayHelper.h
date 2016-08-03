@@ -62,7 +62,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
 
 @property (copy, readonly) NSArray *copyDeep;
-@property (copy, readonly) NSMutableArray *copyDeepMutable;
+@property (strong, readonly) NSMutableArray *copyDeepMutable;
 
 - (NSArray *)arrayByRemovingEmptyValues;
 - (NSArray *)arrayByUniquing;

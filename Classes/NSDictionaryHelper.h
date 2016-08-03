@@ -111,7 +111,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Collections that respond to -copyDeep (NSArray) have it called on them 
  as well instead of only calling -copy */
 @property (readonly, copy) NSDictionary *copyDeep;
-@property (readonly, copy) NSMutableDictionary *copyDeepMutable;
+@property (readonly, strong) NSMutableDictionary *copyDeepMutable;
 @end
 
 @interface NSMutableDictionary (CSMutableDictionaryHelper)
