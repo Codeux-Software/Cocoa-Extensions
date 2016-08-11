@@ -195,18 +195,6 @@ void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_
 	XRPerformBlockOnDispatchQueue(queue, block, XRPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
-void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSUInteger seconds)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	XRPerformDelayedBlockOnQueue(workerQueue, block, seconds);
-}
-
-void XRPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSUInteger seconds)
-{
-	XRPerformDelayedBlockOnQueue(dispatch_get_main_queue(), block, seconds);
-}
-
 void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType)
 {
 	switch (operationType) {
@@ -237,11 +225,40 @@ void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t bloc
 	}
 }
 
-void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSUInteger seconds)
+dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue(dispatch_block_t block, NSUInteger seconds)
 {
-	dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-	dispatch_after(popTime, queue, block);
+	return XRScheduleBlockOnQueue(workerQueue, block, seconds);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, NSUInteger seconds)
+{
+	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, seconds);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSUInteger seconds)
+{
+	dispatch_source_t timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+
+	if (timerSource == NULL) {
+		return NULL;
+	}
+
+	dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
+
+	dispatch_source_set_timer(timerSource, timer, DISPATCH_TIME_FOREVER, 0);
+
+	dispatch_source_set_event_handler(timerSource, block);
+	  
+	dispatch_resume(timerSource);
+
+	return timerSource;
+}
+
+void XRCancelScheduledBlock(dispatch_source_t blockSource)
+{
+	dispatch_source_cancel(blockSource);
 }
 
 NS_ASSUME_NONNULL_END
