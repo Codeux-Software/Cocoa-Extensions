@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL isShadeOfGray;
 
 @property (readonly, copy) NSString *hexadecimalValue;
+@property (readonly, copy) NSString *hexadecimalValueWithAlpha;
 
 + (nullable NSColor *)colorWithHexadecimalValue:(NSString *)string;
 

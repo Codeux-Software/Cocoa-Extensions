@@ -114,11 +114,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)hexadecimalValue
 {
+	return [self hexadecimalValueWithAlpha:NO];
+}
+
+- (NSString *)hexadecimalValueWithAlpha
+{
+	return [self hexadecimalValueWithAlpha:YES];
+}
+
+- (NSString *)hexadecimalValueWithAlpha:(BOOL)withAlpha
+{
 	CGFloat redValue = 0.0;
 	CGFloat greenValue = 0.0;
 	CGFloat blueValue = 0.0;
-
-	CGFloat alphaValue = [self alphaComponent];
 
 	if ([self isInGrayColorSpace]) {
 		redValue = [self whiteComponent];
@@ -130,11 +138,20 @@ NS_ASSUME_NONNULL_BEGIN
 		blueValue = [self blueComponent];
 	}
 
-	return [NSString stringWithFormat:@"#%02X%02X%02X%02X",
-			(NSInteger)(redValue * 0xff),
-			(NSInteger)(greenValue * 0xff),
-			(NSInteger)(blueValue * 0xff),
-			(NSInteger)(alphaValue * 0xff)];
+	if (withAlpha) {
+		CGFloat alphaValue = [self alphaComponent];
+
+		return [NSString stringWithFormat:@"#%02X%02X%02X%02X",
+				(NSInteger)(redValue * 0xff),
+				(NSInteger)(greenValue * 0xff),
+				(NSInteger)(blueValue * 0xff),
+				(NSInteger)(alphaValue * 0xff)];
+	} else {
+		return [NSString stringWithFormat:@"#%02X%02X%02X",
+				(NSInteger)(redValue * 0xff),
+				(NSInteger)(greenValue * 0xff),
+				(NSInteger)(blueValue * 0xff)];
+	}
 }
 
 + (nullable NSColor *)colorWithHexadecimalValue:(NSString *)string
