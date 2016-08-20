@@ -154,6 +154,31 @@ NS_ASSUME_NONNULL_BEGIN
 	XRPerformBlockAsynchronouslyOnGlobalQueue(block);
 }
 
+- (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay
+{
+	XRPerformDelayedBlockOnMainQueue(block, delay);
+}
+
+- (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay
+{
+	XRPerformDelayedBlockOnGlobalQueue(block, delay);
+}
+
++ (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay
+{
+	XRPerformDelayedBlockOnMainQueue(block, delay);
+}
+
++ (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay
+{
+	XRPerformDelayedBlockOnGlobalQueue(block, delay);
+}
+
+- (void)performSelectorInCommonModes:(SEL)aSelector withObject:(nullable id)anArgument afterDelay:(NSTimeInterval)delay
+{
+	[self performSelector:aSelector withObject:anArgument afterDelay:delay inModes:@[NSRunLoopCommonModes]];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

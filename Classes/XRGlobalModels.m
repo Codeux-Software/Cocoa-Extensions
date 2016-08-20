@@ -225,27 +225,50 @@ void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t bloc
 	}
 }
 
-dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue(dispatch_block_t block, NSUInteger seconds)
+void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay)
 {
 	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
 
-	return XRScheduleBlockOnQueue(workerQueue, block, seconds);
+	XRPerformDelayedBlockOnQueue(workerQueue, block, delay);
 }
 
-dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, NSUInteger seconds)
+void XRPerformDelayedBlockOnMainQueue(dispatch_block_t block, NSTimeInterval delay)
 {
-	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, seconds);
+	XRPerformDelayedBlockOnQueue(dispatch_get_main_queue(), block, delay);
 }
 
-dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSUInteger seconds)
+void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay)
 {
+	NSCParameterAssert(delay >= 0);
+
+	dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (delay * NSEC_PER_SEC));
+
+	dispatch_after(timer, queue, block);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+
+	return XRScheduleBlockOnQueue(workerQueue, block, delay);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, NSTimeInterval delay)
+{
+	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, delay);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay)
+{
+	NSCParameterAssert(delay >= 0);
+
 	dispatch_source_t timerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
 
 	if (timerSource == NULL) {
 		return NULL;
 	}
 
-	dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (seconds * NSEC_PER_SEC));
+	dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (delay * NSEC_PER_SEC));
 
 	dispatch_source_set_timer(timerSource, timer, DISPATCH_TIME_FOREVER, 0);
 

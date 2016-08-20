@@ -35,7 +35,12 @@ typedef void (^ddEmtpyBlockDataType)(void);
 - (nullable id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 - (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block; // Performs a block synchronously (blocks) on the main thread
+- (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay;
+
 - (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
+- (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay;
+
+- (void)performSelectorInCommonModes:(SEL)aSelector withObject:(nullable id)anArgument afterDelay:(NSTimeInterval)delay;
 
 // ---
 
@@ -46,7 +51,10 @@ typedef void (^ddEmtpyBlockDataType)(void);
 + (nullable id)invokeOnMainThreadAndWaitUntilDone:(BOOL)waitUntilDone COCOA_EXTENSIONS_DEPRECATED("Use -performBlockOnMainThread: instead");
 
 + (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block;
++ (void)performBlockOnMainThread:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay;
+
 + (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block;
++ (void)performBlockOnGlobalQueue:(ddEmtpyBlockDataType)block afterDelay:(NSTimeInterval)delay;
 @end
 
 NS_ASSUME_NONNULL_END
