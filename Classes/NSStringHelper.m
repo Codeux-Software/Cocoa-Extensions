@@ -173,7 +173,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	UniChar strChar = [self characterAtIndex:anIndex];
 
-	return [NSString stringWithUniChar:strChar];
+	return [[NSString alloc] initWithCharacters:&strChar length:1];
 }
 
 - (NSString *)substringAfterIndex:(NSUInteger)anIndex
