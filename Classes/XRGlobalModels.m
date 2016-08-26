@@ -32,6 +32,8 @@
 
 #import "CocoaExtensions.h"
 
+#import "XRSystemInformation.h"
+
 #import <objc/message.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -138,25 +140,55 @@ BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
 #pragma mark -
 #pragma mark Grand Central Dispatch
 
+dispatch_queue_t XRCreateDispatchQueueWithPriority(const char *label, dispatch_queue_attr_t attributes, dispatch_qos_class_t priority)
+{
+	dispatch_queue_attr_t queueAttributes = 0;
+
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		queueAttributes =
+		dispatch_queue_attr_make_with_qos_class(attributes, priority, 0);
+	} else {
+		queueAttributes = attributes;
+	}
+
+	return dispatch_queue_create(label, queueAttributes);
+}
+
+dispatch_queue_t XRCreateDispatchQueue(const char *label, dispatch_queue_attr_t attributes)
+{
+	return XRCreateDispatchQueueWithPriority(label, attributes, QOS_CLASS_UNSPECIFIED);
+}
+
 void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
 {
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
+	XRPerformBlockOnGlobalDispatchQueueWithPriority(operationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(priority, 0);
+
 	XRPerformBlockOnDispatchQueue(workerQueue, block, operationType);
 }
 
 void XRPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block)
 {
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	XRPerformBlockOnDispatchQueue(workerQueue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
+	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority)
+{
+	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, priority);
 }
 
 void XRPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
 {
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-	
-	XRPerformBlockOnDispatchQueue(workerQueue, block, XRPerformBlockOnDispatchQueueAsyncOperationType);
+	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueAsyncOperationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+void XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority)
+{
+	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueAsyncOperationType, block, priority);
 }
 
 void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
@@ -227,7 +259,12 @@ void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t bloc
 
 void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay)
 {
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	XRPerformDelayedBlockOnGlobalQueueWithPriority(block, delay, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+void XRPerformDelayedBlockOnGlobalQueueWithPriority(dispatch_block_t block, NSTimeInterval delay, dispatch_queue_priority_t priority)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(priority, 0);
 
 	XRPerformDelayedBlockOnQueue(workerQueue, block, delay);
 }
@@ -248,7 +285,12 @@ void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block
 
 dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay)
 {
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+	return XRScheduleBlockOnGlobalQueueWithPriority(block, delay, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueueWithPriority(dispatch_block_t block, NSTimeInterval delay, dispatch_queue_priority_t priority)
+{
+	dispatch_queue_t workerQueue = dispatch_get_global_queue(priority, 0);
 
 	return XRScheduleBlockOnQueue(workerQueue, block, delay);
 }
