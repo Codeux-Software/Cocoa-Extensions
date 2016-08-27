@@ -673,13 +673,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 	@synchronized(self) {
 		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-			BOOL emptyObject = (allowEmptyValues && NSObjectIsEmpty(object));
-
-			BOOL voidDefaults = (defaults && NSObjectsAreEqual(object, defaults[key]));
-
-			if (voidDefaults == NO && emptyObject == NO) {
-				newDictionary[key] = object;
+			if (NSObjectIsEmpty(object)) {
+				if (allowEmptyValues == NO) {
+					return;
+				}
+			} else if (defaults && NSObjectsAreEqual(object, defaults[key])) {
+				return;
 			}
+
+			newDictionary[key] = object;
 		}];
 	}
 
