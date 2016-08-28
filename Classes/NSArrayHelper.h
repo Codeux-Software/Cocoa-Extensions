@@ -108,6 +108,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator;
 
 - (void)moveObjectAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex;
+
+- (void)shuffle;
 @end
 
 @interface NSIndexSet (CSIndexSetHelper)

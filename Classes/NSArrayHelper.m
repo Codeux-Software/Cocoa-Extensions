@@ -569,6 +569,19 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (void)shuffle
+{
+	@synchronized (self) {
+		NSUInteger selfCount = [self count];
+
+		for (NSUInteger i = (selfCount - 1); i > 0; i--) {
+			NSUInteger n = arc4random_uniform((uint32_t)i + 1);
+
+			[self exchangeObjectAtIndex:i withObjectAtIndex:n];
+		}
+	}
+}
+
 - (NSUInteger)insertSortedObject:(id)object usingComparator:(NSComparator)comparator
 {
 	NSParameterAssert(object != nil);
