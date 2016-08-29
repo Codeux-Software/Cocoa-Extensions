@@ -38,13 +38,13 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	if (strcmp([self methodReturnType], @encode(void)) != 0) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-			"Method '%{public}@' should not return a value",
+			"Method '%@' should not return a value",
 			[self description])
 
 		return NO;
 	} else if ([self numberOfArguments] != 3) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-			"Method '%{public}@' should take only one argument",
+			"Method '%@' should take only one argument",
 			[self description])
 
 		return NO;
@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (strcmp(argumentType, @encode(id)) != 0) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-			"First argument of '%{public}@' should be an object",
+			"First argument of '%@' should be an object",
 			[self description])
 
 		return NO;

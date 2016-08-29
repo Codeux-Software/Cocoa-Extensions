@@ -86,7 +86,7 @@ COCOA_EXTENSIONS_EXTERN NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, c
 
 /* LogToConsoleCurrentStackTrace() */
 #define LogCurrentStackTraceWithSubsystem(_subsystem)	\
-	LogToConsoleErrorWithSubsystem(_subsystem, "Current Stack: %{public}@", [NSThread callStackSymbols]);
+	LogToConsoleErrorWithSubsystem(_subsystem, "Current Stack: %@", [NSThread callStackSymbols]);
 
 #define LogToConsoleCurrentStackTrace		LogCurrentStackTraceWithSubsystem(LogToConsoleDefaultSubsystem);
 

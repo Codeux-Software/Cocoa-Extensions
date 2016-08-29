@@ -322,7 +322,7 @@ NS_ASSUME_NONNULL_BEGIN
 				[newArray addObject:objectCopy];
 			} else {
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-					"Object '%{public}@' does not respond to -copy or returned nil value",
+					"Object '%@' does not respond to -copy or returned nil value",
 					[object description]);
 				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 			}
@@ -547,7 +547,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 			if (*([methodSignature methodReturnType]) != '@') { // Return object
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-					"Selector '%{public}@' does not return object value.",
+					"Selector '%@' does not return object value.",
 					 NSStringFromSelector(performSelector))
 				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
@@ -563,7 +563,7 @@ NS_ASSUME_NONNULL_BEGIN
 				self[index] = newObject;
 			} else {
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-					"Object %{public}@ returned a nil value when performing selector '%{public}@' - it will not be replaced.",
+					"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
 					[object description], NSStringFromSelector(performSelector))
 				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 			}

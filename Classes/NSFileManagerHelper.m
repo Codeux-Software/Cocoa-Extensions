@@ -133,7 +133,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isUbiquitous == nil || [isUbiquitous boolValue] == NO) {
 		if (isUbiquitousError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-				"isUbiquitous lookup failed: '%{public}@': %{public}@",
+				"isUbiquitous lookup failed: '%@': %@",
 				path, [isUbiquitousError localizedDescription]);
 			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
@@ -144,7 +144,7 @@ NS_ASSUME_NONNULL_BEGIN
 			/* YES will indicate the file is downloaded and since the file 
 			 is not ubiquitous, it is in fact downloaded. */
 			LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem,
-				"Returning YES for path that is not ubiquitous: '%{public}@'",
+				"Returning YES for path that is not ubiquitous: '%@'",
 				path);
 
 			return YES;
@@ -165,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		if (isDirectoryError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-				"isDirectory lookup failed: '%{public}@': %{public}@", path,
+				"isDirectory lookup failed: '%@': %@", path,
 				[isDirectoryError localizedDescription])
 			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
@@ -180,7 +180,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (directoryContents == nil) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-				"directoryContents returned nil: '%{public}@': %{public}@",
+				"directoryContents returned nil: '%@': %@",
 				path, [directoryContentsError localizedDescription])
 			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (isDownloadedError) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-			"isDownloaded lookup failed: '%{public}@': %{public}@",
+			"isDownloaded lookup failed: '%@': %@",
 			path, [isDownloadedError localizedDescription])
 		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 	}
@@ -306,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (removeResult == NO) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-				"Failed to remove file at destination: '%{public}@': %{public}@",
+				"Failed to remove file at destination: '%@': %@",
 				[destinationURL path], [removeFileError localizedDescription]);
 			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
@@ -327,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (copyResult == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
-			"Failed to copy file to destination: '%{public}@' -> '%{public}@': %{public}@",
+			"Failed to copy file to destination: '%@' -> '%@': %@",
 			[sourceURL path], [destinationURL path], [copyFileError localizedDescription]);
 		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
