@@ -36,16 +36,55 @@ NS_ASSUME_NONNULL_BEGIN
 
 void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
 {
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+}
+
+void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
+{
 	NSCParameterAssert(formatter != NULL);
 	NSCParameterAssert(filename != NULL);
 	NSCParameterAssert(function != NULL);
 
-	NSString *formatString = [NSString stringWithFormat:@"%s [Line %d]: %s", function, line, formatter];
+	NSString *typeString = nil;
+
+	switch (type) {
+		case LogToConsoleTypeInfo:
+		{
+			typeString = @"Info";
+
+			break;
+		}
+		case LogToConsoleTypeDebug:
+		{
+			typeString = @"Debug";
+
+			break;
+		}
+		case LogToConsoleTypeError:
+		{
+			typeString = @"Error";
+
+			break;
+		}
+		case LogToConsoleTypeFault: {
+			typeString = @"Fault";
+
+			break;
+		}
+		default:
+		{
+			typeString = @"Default";
+
+			break;
+		}
+	}
+
+	NSString *formatString = [NSString stringWithFormat:@"%s [Line %d] [%@]: %s", function, line, typeString, formatter];
 
 	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
 
 	va_list arguments;
-	va_start(arguments, line);
+	va_start(arguments, formatter);
 
 	NSLogv(formatString, arguments);
 
