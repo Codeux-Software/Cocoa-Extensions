@@ -77,6 +77,8 @@ NSString *_LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename,
 	 takes care of for us when formatting. */
 	NSString *formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
 
+	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
+
 	NSString *formattedString = [[NSString alloc] initWithFormat:formatString arguments:arguments];
 
 	return formattedString;
