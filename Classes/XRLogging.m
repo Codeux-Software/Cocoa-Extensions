@@ -79,7 +79,7 @@ void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *
 		}
 	}
 
-	NSString *formatString = [NSString stringWithFormat:@"%s [Line %d] [%@]: %s", function, line, typeString, formatter];
+	NSString *formatString = [NSString stringWithFormat:@"[%@] %s [Line %d]: %s", typeString, function, line, formatter];
 
 	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
 
