@@ -32,17 +32,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-}
-
-void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-}
-
-NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
+NSString *_LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
 {
 	NSCParameterAssert(formatter != NULL);
 	NSCParameterAssert(filename != NULL);
@@ -87,14 +77,73 @@ NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, con
 	 takes care of for us when formatting. */
 	NSString *formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
 
+	NSString *formattedString = [[NSString alloc] initWithFormat:formatString arguments:arguments];
+
+	return formattedString;
+}
+
+NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
+{
+	NSCParameterAssert(formatter != NULL);
+	NSCParameterAssert(filename != NULL);
+	NSCParameterAssert(function != NULL);
+
 	va_list arguments;
 	va_start(arguments, formatter);
 
-	NSString *formattedString = [[NSString alloc] initWithFormat:formatString arguments:arguments];
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(type, filename, function, line, formatter, arguments);
 
 	va_end(arguments);
 
 	return formattedString;
+}
+
+void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
+{
+	NSCParameterAssert(formatter != NULL);
+	NSCParameterAssert(filename != NULL);
+	NSCParameterAssert(function != NULL);
+
+	static BOOL _deprecationWarningPosted = NO;
+
+	if (_deprecationWarningPosted == NO) {
+		_deprecationWarningPosted = YES;
+
+		COCOA_EXTENSIONS_DEPRECATED_WARNING
+	}
+
+	va_list arguments;
+	va_start(arguments, line);
+
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleTypeDefault, filename, function, line, formatter, arguments);
+
+	va_end(arguments);
+
+	NSLog(formattedString);
+}
+
+void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
+{
+	NSCParameterAssert(formatter != NULL);
+	NSCParameterAssert(filename != NULL);
+	NSCParameterAssert(function != NULL);
+
+	static BOOL _deprecationWarningPosted = NO;
+
+	if (_deprecationWarningPosted == NO) {
+		_deprecationWarningPosted = YES;
+
+		COCOA_EXTENSIONS_DEPRECATED_WARNING
+	}
+
+	va_list arguments;
+	va_start(arguments, formatter);
+
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(type, filename, function, line, formatter, arguments);
+
+	va_end(arguments);
+
+	NSLog(formattedString);
 }
 
 NS_ASSUME_NONNULL_END
