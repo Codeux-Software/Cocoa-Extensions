@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSTimeInterval)timeIntervalSince1970;
 
 + (NSTimeInterval)timeIntervalSinceNow:(NSTimeInterval)intervalSince1970;
+
+- (BOOL)isInSameDayAsDate:(NSDate *)otherDate;
 @end
 
 NS_ASSUME_NONNULL_END

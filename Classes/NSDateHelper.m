@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+#import "XRSystemInformation.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSDate (CSDateHelper)
@@ -42,6 +44,26 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSTimeInterval)timeIntervalSince1970
 {
 	return [[NSDate date] timeIntervalSince1970];
+}
+
+- (BOOL)isInSameDayAsDate:(NSDate *)otherDate
+{
+	NSParameterAssert(otherDate != nil);
+
+	NSCalendar *currentCalander = [NSCalendar currentCalendar];
+
+	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		return [currentCalander isDate:self inSameDayAsDate:otherDate];
+	}
+
+	NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitMonth);
+
+	NSDateComponents *selfDateComponents = [currentCalander components:unitFlags fromDate:self];
+	NSDateComponents *otherDateComponents = [currentCalander components:unitFlags fromDate:otherDate];
+
+	return ([selfDateComponents day] == [otherDateComponents day] &&
+			[selfDateComponents month] == [otherDateComponents month] &&
+			[selfDateComponents year] == [otherDateComponents year]);
 }
 
 @end
