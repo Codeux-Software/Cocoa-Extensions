@@ -323,8 +323,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (objectCopy) {
 				[newArray addObject:objectCopy];
 			} else {
-				LogToConsoleError("Object '%{public}@' does not respond to -copy or returned nil value", [object description]);
-				LogToConsoleCurrentStackTrace
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+					"Object '%{public}@' does not respond to -copy or returned nil value",
+					[object description]);
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 			}
 		}];
 
@@ -546,9 +548,10 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
 
 			if (*([methodSignature methodReturnType]) != '@') { // Return object
-				LogToConsoleError("Selector '%{public}@' does not return object value.",
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+					"Selector '%{public}@' does not return object value.",
 					 NSStringFromSelector(performSelector))
-				LogToConsoleCurrentStackTrace
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 				return;
 			}
@@ -561,9 +564,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (newObject) {
 				self[index] = newObject;
 			} else {
-				LogToConsoleError("Object %{public}@ returned a nil value when performing selector '%{public}@' - it will not be replaced.",
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+					"Object %{public}@ returned a nil value when performing selector '%{public}@' - it will not be replaced.",
 					[object description], NSStringFromSelector(performSelector))
-				LogToConsoleCurrentStackTrace
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 			}
 		}];
 	}

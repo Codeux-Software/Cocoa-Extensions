@@ -39,11 +39,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)validateMethodIsValidSenderDestination
 {
 	if (strcmp([self methodReturnType], @encode(void)) != 0) {
-		LogToConsoleError("Method '%{public}@' should not return a value", [self description])
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+			"Method '%{public}@' should not return a value",
+			[self description])
 
 		return NO;
 	} else if ([self numberOfArguments] != 3) {
-		LogToConsoleError("Method '%{public}@' should take only one argument", [self description])
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+			"Method '%{public}@' should take only one argument",
+			[self description])
 
 		return NO;
 	}
@@ -51,7 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 	const char *argumentType = [self getArgumentTypeAtIndex:2];
 
 	if (strcmp(argumentType, @encode(id)) != 0) {
-		LogToConsoleError("First argument of '%{public}@' should be an object", [self description])
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+			"First argument of '%{public}@' should be an object",
+			[self description])
 
 		return NO;
 	}

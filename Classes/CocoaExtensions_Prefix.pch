@@ -11,4 +11,6 @@
 #import <UIKit/UIKit.h>
 #endif
 
+#import "CocoaExtensionsPrivate.h"
+
 #endif

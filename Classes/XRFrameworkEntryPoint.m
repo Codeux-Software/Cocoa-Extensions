@@ -30,73 +30,18 @@
 
  *********************************************************************** */
 
-#import "CocoaExtensions.h"
+@implementation NSObject (XRFrameworkEntryPoint)
 
-NS_ASSUME_NONNULL_BEGIN
-
-void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
++ (void)load
 {
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-}
 
-void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-}
-
-NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
-
-	const char *typeString = NULL;
-
-	switch (type) {
-		case LogToConsoleTypeInfo:
-		{
-			typeString = "Info";
-
-			break;
-		}
-		case LogToConsoleTypeDebug:
-		{
-			typeString = "Debug";
-
-			break;
-		}
-		case LogToConsoleTypeError:
-		{
-			typeString = "Error";
-
-			break;
-		}
-		case LogToConsoleTypeFault: {
-			typeString = "Fault";
-
-			break;
-		}
-		default:
-		{
-			typeString = "Default";
-
-			break;
-		}
+#if _LogToConsoleSupportsUnifiedLogging == 1
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		_CSFrameworkInternalLogSubsystem =
+		os_log_create("com.codeux.frameworks.CocoaExtensions", "General");
 	}
+#endif
 
-	/* It would be faster to use a version of vsprintf() here but the reason
-	 that I don't is because that requires managing buffer size which NSString
-	 takes care of for us when formatting. */
-	NSString *formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
-
-	va_list arguments;
-	va_start(arguments, formatter);
-
-	NSString *formattedString = [[NSString alloc] initWithFormat:formatString arguments:arguments];
-
-	va_end(arguments);
-
-	return formattedString;
 }
 
-NS_ASSUME_NONNULL_END
+@end

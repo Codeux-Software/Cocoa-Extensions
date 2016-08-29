@@ -134,8 +134,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (isUbiquitous == nil || [isUbiquitous boolValue] == NO) {
 		if (isUbiquitousError) {
-			LogToConsoleError("isUbiquitous lookup failed: '%{public}@': %{public}@", path, [isUbiquitousError localizedDescription]);
-			LogToConsoleCurrentStackTrace
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				"isUbiquitous lookup failed: '%{public}@': %{public}@",
+				path, [isUbiquitousError localizedDescription]);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 			return NO;
 		} else {
@@ -143,7 +145,9 @@ NS_ASSUME_NONNULL_BEGIN
 			 the path is not ubiquitous, then we return YES anyways. */
 			/* YES will indicate the file is downloaded and since the file 
 			 is not ubiquitous, it is in fact downloaded. */
-			LogToConsoleDebug("Returning YES for path that is not ubiquitous: '%{public}@'", path);
+			LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				"Returning YES for path that is not ubiquitous: '%{public}@'",
+				path);
 
 			return YES;
 		}
@@ -162,8 +166,10 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isDirectory == nil)
 	{
 		if (isDirectoryError) {
-			LogToConsoleError("isDirectory lookup failed: '%{public}@': %{public}@", path, [isDirectoryError localizedDescription])
-			LogToConsoleCurrentStackTrace
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				"isDirectory lookup failed: '%{public}@': %{public}@", path,
+				[isDirectoryError localizedDescription])
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 			return NO;
 		}
@@ -175,8 +181,10 @@ NS_ASSUME_NONNULL_BEGIN
 		NSArray *directoryContents = [self contentsOfDirectoryAtPath:path error:&directoryContentsError];
 
 		if (directoryContents == nil) {
-			LogToConsoleError("directoryContents returned nil: '%{public}@': %{public}@", path, [directoryContentsError localizedDescription])
-			LogToConsoleCurrentStackTrace
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				"directoryContents returned nil: '%{public}@': %{public}@",
+				path, [directoryContentsError localizedDescription])
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 			return NO;
 		}
@@ -214,8 +222,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (isDownloadedError) {
-		LogToConsoleError("isDownloaded lookup failed: '%{public}@': %{public}@", path, [isDownloadedError localizedDescription])
-		LogToConsoleCurrentStackTrace
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+			"isDownloaded lookup failed: '%{public}@': %{public}@",
+			path, [isDownloadedError localizedDescription])
+		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 	}
 
 	return isDownloaded;
@@ -297,9 +307,10 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 
 		if (removeResult == NO) {
-			LogToConsoleError("Failed to remove file at destination: '%{public}@': %{public}@",
-						 [destinationURL path], [removeFileError localizedDescription]);
-			LogToConsoleCurrentStackTrace
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				"Failed to remove file at destination: '%{public}@': %{public}@",
+				[destinationURL path], [removeFileError localizedDescription]);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 			return NO;
 		}
@@ -317,9 +328,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (copyResult == NO) {
-		LogToConsoleError("Failed to copy file to destination: '%{public}@' -> '%{public}@': %{public}@",
-					 [sourceURL path], [destinationURL path], [copyFileError localizedDescription]);
-		LogToConsoleCurrentStackTrace
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+			"Failed to copy file to destination: '%{public}@' -> '%{public}@': %{public}@",
+			[sourceURL path], [destinationURL path], [copyFileError localizedDescription]);
+		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
 
 		return NO;
 	}

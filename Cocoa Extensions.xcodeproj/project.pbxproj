@@ -93,6 +93,8 @@
 		4CA63AFA1B63F9EB002CF61C /* XRAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */; };
 		4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */; };
+		4CB4F5CB1D74420C00AA4BBC /* XRFrameworkEntryPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CB4F5C91D74420C00AA4BBC /* XRFrameworkEntryPoint.h */; };
+		4CB4F5CC1D74420C00AA4BBC /* XRFrameworkEntryPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB4F5CA1D74420C00AA4BBC /* XRFrameworkEntryPoint.m */; };
 		4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
 		4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */; };
 		4CDF749E1A8FDE1C000B5FF5 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */; };
@@ -197,6 +199,9 @@
 		4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRAddressBook.h; sourceTree = "<group>"; };
 		4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRAddressBook.m; sourceTree = "<group>"; };
 		4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		4CB4F5C91D74420C00AA4BBC /* XRFrameworkEntryPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRFrameworkEntryPoint.h; sourceTree = "<group>"; };
+		4CB4F5CA1D74420C00AA4BBC /* XRFrameworkEntryPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRFrameworkEntryPoint.m; sourceTree = "<group>"; };
+		4CB4F5CD1D7442B400AA4BBC /* CocoaExtensionsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocoaExtensionsPrivate.h; sourceTree = "<group>"; };
 		4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSArrayHelper.m; sourceTree = "<group>"; };
 		4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSByteCountFormatterHelper.m; sourceTree = "<group>"; };
 		4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSColorHelper.m; sourceTree = "<group>"; };
@@ -374,9 +379,10 @@
 		4C1923AF1A9004BB0076F65A /* Private Headers */ = {
 			isa = PBXGroup;
 			children = (
+				4C8B67FE1A9019F500DC5021 /* Project */,
 				4C48CF421BC73FE7003FD716 /* CGContextHelper.h */,
 				4C1923911A8FE7F50076F65A /* DDInvocation.h */,
-				4C8B67FE1A9019F500DC5021 /* Project */,
+				4CB4F5C91D74420C00AA4BBC /* XRFrameworkEntryPoint.h */,
 			);
 			name = "Private Headers";
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				4C8B67FF1A901A0200DC5021 /* CocoaExtensions_Prefix.pch */,
+				4CB4F5CD1D7442B400AA4BBC /* CocoaExtensionsPrivate.h */,
 			);
 			name = Project;
 			sourceTree = "<group>";
@@ -421,8 +428,8 @@
 				4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */,
 				4C1923941A8FE8D00076F65A /* DDExtensions.m */,
 				4C1923951A8FE8D00076F65A /* DDInvocation.m */,
-				4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */,
 				4C4A62D41D3B12D4008F33B8 /* NSArrayControllerHelper.m */,
+				4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */,
 				4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */,
 				4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */,
 				4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */,
@@ -453,6 +460,7 @@
 				4C67852B1B74F30600CCA160 /* XRAccessibility.m */,
 				4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */,
 				4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */,
+				4CB4F5CA1D74420C00AA4BBC /* XRFrameworkEntryPoint.m */,
 				4C1923AC1A9004080076F65A /* XRGlobalModels.m */,
 				4C19239A1A8FE9800076F65A /* XRKeychain.m */,
 				4C9505EC1D1BCF5A002EC748 /* XRLogging.m */,
@@ -549,6 +557,7 @@
 				4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */,
 				4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */,
 				4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */,
+				4CB4F5CB1D74420C00AA4BBC /* XRFrameworkEntryPoint.h in Headers */,
 				4C7A69F81CB0174A00EB85FE /* ApplePrivateMac.h in Headers */,
 				4C5EC7951CB021F0000CACB0 /* NSThreadHelper.h in Headers */,
 				4CF8B9571D1DE47A00352AF6 /* NSMethodSignatureHelper.h in Headers */,
@@ -713,6 +722,7 @@
 				4C1923B71A9007E50076F65A /* XRRegularExpression.m in Sources */,
 				4CDF74A61A8FDE1C000B5FF5 /* NSNumberHelper.m in Sources */,
 				4C1923961A8FE8D00076F65A /* DDExtensions.m in Sources */,
+				4CB4F5CC1D74420C00AA4BBC /* XRFrameworkEntryPoint.m in Sources */,
 				4CDF74A21A8FDE1C000B5FF5 /* NSFileManagerHelper.m in Sources */,
 				4CF8B9581D1DE47A00352AF6 /* NSMethodSignatureHelper.m in Sources */,
 				4CDF74B01A8FDE1C000B5FF5 /* NSValueHelper.m in Sources */,
