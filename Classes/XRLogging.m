@@ -30,8 +30,6 @@
 
  *********************************************************************** */
 
-#import "CocoaExtensions.h"
-
 NS_ASSUME_NONNULL_BEGIN
 
 void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)

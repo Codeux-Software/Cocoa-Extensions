@@ -23,8 +23,6 @@
  * SOFTWARE.
  */
 
-#import "CocoaExtensions.h"
-
 #import "DDInvocation.h"
 
 NS_ASSUME_NONNULL_BEGIN

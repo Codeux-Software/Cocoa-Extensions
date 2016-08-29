@@ -40,8 +40,6 @@ POSSIBILITY OF SUCH DAMAGE.
 Copyright © 2007 Apple Inc. All Rights Reserved.
 */
 
-#import "CocoaExtensions.h"
-
 #import <dns_sd.h>
 #import <sys/types.h>
 #import <sys/socket.h>

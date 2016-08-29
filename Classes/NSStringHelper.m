@@ -60,8 +60,6 @@
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
 */
-
-#import "CocoaExtensions.h"
 #import "CGContextHelper.h"
 
 #import <CommonCrypto/CommonDigest.h>

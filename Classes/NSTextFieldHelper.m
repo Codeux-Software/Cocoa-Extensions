@@ -30,8 +30,6 @@
 
  *********************************************************************** */
 
-#import "CocoaExtensions.h"
-
 @implementation NSTextField (CSTextFieldHelper)
 
 + (void)load

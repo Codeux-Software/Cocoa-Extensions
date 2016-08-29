@@ -30,8 +30,6 @@
 
  *********************************************************************** */
 
-#import "CocoaExtensions.h"
-
 #import <IOKit/IOKitLib.h>
 
 #include <sys/sysctl.h>
