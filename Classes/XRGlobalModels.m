@@ -169,12 +169,12 @@ void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQue
 	XRPerformBlockOnDispatchQueue(workerQueue, block, operationType);
 }
 
-void XRPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block)
+void XRPerformBlockSynchronouslyOnGlobalQueue(DISPATCH_NOESCAPE dispatch_block_t block)
 {
 	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
 }
 
-void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority)
+void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(DISPATCH_NOESCAPE dispatch_block_t block, dispatch_queue_priority_t priority)
 {
 	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, priority);
 }
@@ -198,7 +198,7 @@ void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationTyp
 	}
 }
 
-void XRPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block)
+void XRPerformBlockSynchronouslyOnMainQueue(DISPATCH_NOESCAPE dispatch_block_t block)
 {
 	/* Check thread we are on. */
 	/* If we are already on the main thread and performing a synchronous action,
@@ -215,7 +215,7 @@ void XRPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
 	XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, XRPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
-void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block)
 {
 	XRPerformBlockOnDispatchQueue(queue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
 }

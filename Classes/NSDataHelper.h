@@ -50,8 +50,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length;
 - (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length;
 
-- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock;
-- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSDataSearchOptions)options;
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock;
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSDataSearchOptions)options;
 @end
 
 NS_ASSUME_NONNULL_END

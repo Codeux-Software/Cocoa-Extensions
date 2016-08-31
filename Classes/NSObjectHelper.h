@@ -32,10 +32,29 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSObject (CSbjectHelper)
+@interface NSObject (CSObjectPerformHelper)
 - (void)cancelPerformRequests;
 - (void)cancelPerformRequestsWithSelector:(SEL)aSelector;
 - (void)cancelPerformRequestsWithSelector:(SEL)aSelector object:(nullable id)anArgument;
+
+// ---
+
+- (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block; // Performs a block synchronously (blocks) on the main thread
+- (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
+
+- (void)performBlockOnGlobalQueue:(dispatch_block_t)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
+- (void)performBlockOnGlobalQueue:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
+
+- (void)performSelectorInCommonModes:(SEL)aSelector afterDelay:(NSTimeInterval)delay;
+- (void)performSelectorInCommonModes:(SEL)aSelector withObject:(nullable id)anArgument afterDelay:(NSTimeInterval)delay;
+
+// ---
+
++ (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block;
++ (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
+
++ (void)performBlockOnGlobalQueue:(dispatch_block_t)block;
++ (void)performBlockOnGlobalQueue:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
 @end
 
 NS_ASSUME_NONNULL_END

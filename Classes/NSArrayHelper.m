@@ -386,12 +386,12 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate
+- (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate
 {
 	return [self objectPassingTest:predicate withOptions:0];
 }
 
-- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options
+- (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options
 {
 	NSUInteger objectIndex = [self indexOfObjectWithOptions:options passingTest:predicate];
 

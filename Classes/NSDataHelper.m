@@ -203,12 +203,12 @@ NS_ASSUME_NONNULL_BEGIN
     return output;
 }
 
-- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
 {
 	[self enumerateMatchesOfData:data withBlock:enumerationBlock options:0];
 }
 
-- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSDataSearchOptions)options
+- (void)enumerateMatchesOfData:(NSData *)data withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSDataSearchOptions)options
 {
 	NSParameterAssert(data != nil);
 	NSParameterAssert(enumerationBlock != nil);

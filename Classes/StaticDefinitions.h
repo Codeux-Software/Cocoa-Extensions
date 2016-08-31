@@ -75,3 +75,19 @@
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
 #define COCOA_EXTENSIONS_DEPRECATED_WARNING				NSLog(@"DEPRECATED: Use of the method named %s is deprecated. This method will cease to exist in a future version of this framework.\n\nCurrent Stack: %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
+
+#ifndef DISPATCH_NOESCAPE
+	#if __has_attribute(noescape)
+		#define DISPATCH_NOESCAPE __attribute__((__noescape__))
+	#else
+		#define DISPATCH_NOESCAPE
+	#endif
+#endif
+
+#ifndef NS_NOESCAPE
+	#if __has_attribute(noescape)
+		#define NS_NOESCAPE __attribute__((noescape))
+	#else
+		#define NS_NOESCAPE
+	#endif
+#endif

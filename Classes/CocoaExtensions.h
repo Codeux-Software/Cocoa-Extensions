@@ -44,8 +44,6 @@
 #import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRRegularExpression.h>
 
-#import <CocoaExtensions/DDExtensions.h>
-
 #import <CocoaExtensions/NSArrayHelper.h>
 #import <CocoaExtensions/NSByteCountFormatterHelper.h>
 #import <CocoaExtensions/NSDataHelper.h>

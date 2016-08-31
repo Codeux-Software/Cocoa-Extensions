@@ -70,8 +70,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues trimming:(BOOL)trimValues uniquing:(BOOL)uniqueValues;
 
-- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate;
-- (nullable id)objectPassingTest:(BOOL (^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options;
+- (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate;
+- (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options;
 @end
 
 @interface NSMutableArray (CSMutableArrayHelper)

@@ -449,12 +449,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return searchResult.location;
 }
 
-- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
 {
 	[self enumerateMatchesOfString:string withBlock:enumerationBlock options:0];
 }
 
-- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
+- (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(enumerationBlock != nil);
@@ -492,12 +492,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 }
 
-- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
 {
 	[self enumerateFirstOccurrenceOfCharactersInString:string withBlock:enumerationBlock options:0];
 }
 
-- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
+- (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
 {
 	NSParameterAssert(string != nil);
 	NSParameterAssert(enumerationBlock != nil);

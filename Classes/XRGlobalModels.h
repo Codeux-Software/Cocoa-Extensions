@@ -39,8 +39,6 @@ COCOA_EXTENSIONS_EXTERN BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable o
 
 #pragma mark -
 
-typedef void (^xrEmtpyBlockDataType)(void);
-
 typedef enum XRPerformBlockOnDispatchQueueOperationType	: NSInteger {
 	XRPerformBlockOnDispatchQueueBarrierAsyncOperationType,
 	XRPerformBlockOnDispatchQueueBarrierSyncOperationType,
@@ -55,15 +53,15 @@ COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockO
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority);
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
 
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnMainQueue(dispatch_block_t block);
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnMainQueue(DISPATCH_NOESCAPE dispatch_block_t block);
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block);
 
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueue(dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority);
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueue(DISPATCH_NOESCAPE dispatch_block_t block);
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(DISPATCH_NOESCAPE dispatch_block_t block, dispatch_queue_priority_t priority);
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block);
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority);
 
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block);
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
 
 COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType);
