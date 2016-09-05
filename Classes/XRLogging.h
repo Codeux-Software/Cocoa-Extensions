@@ -86,6 +86,8 @@ COCOA_EXTENSIONS_EXTERN NSString * _Nullable _LogToConsoleFormatMessage_v1(u_int
 #define LogToConsoleSetDebugLoggingEnabled(_enabled)	\
 	_LogToConsoleSetDebugLoggingEnabled(_enabled);
 
+void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled);
+
 /* LogToConsoleCurrentStackTrace() */
 #define LogToConsoleCurrentStackTrace	\
 	LogCurrentStackTraceWithSubsystem(LogToConsoleDefaultSubsystem);
