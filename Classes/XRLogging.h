@@ -98,13 +98,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* LogToConsoleCurrentStackTrace() */
 #define LogToConsoleCurrentStackTrace	\
-	LogCurrentStackTraceWithSubsystem(LogToConsoleDefaultSubsystem);
+	LogCurrentStackTraceWithSubsystem(NULL);
 
 #define LogCurrentStackTraceWithSubsystem(_subsystem)	\
 	_LogCurrentStackTraceWithSubsystemAndType(_subsystem, LogToConsoleTypeError)
 
 #define LogCurrentStackTraceWithType(_type)	\
-	_LogCurrentStackTraceWithSubsystemAndType(LogToConsoleDefaultSubsystem, _type)
+	_LogCurrentStackTraceWithSubsystemAndType(NULL, _type)
 
 #define _LogCurrentStackTraceWithSubsystemAndType(_subsystem, _type)	\
 	_LogToConsoleWithSubsystemAndType(_subsystem, _type, "Current Stack: %@", [NSThread callStackSymbols]);
