@@ -723,10 +723,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (objectCopy) {
 				newDictionary[key] = objectCopy;
 			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object '%@' does not respond to -copy or returned nil value",
 					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
 			}
 		}];
 

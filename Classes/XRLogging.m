@@ -32,6 +32,50 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void)
+{
+	__block LogToConsoleSubsystemType _subsystem = NULL;
+
+#if _LogToConsoleSupportsUnifiedLogging == 1
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		_subsystem =
+		os_log_create("com.codeux.frameworks.CocoaExtensions", "General");
+	});
+#endif
+
+	return _subsystem;
+}
+
+#if _LogToConsoleSupportsUnifiedLogging == 1
+static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
+#endif
+
+LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
+{
+#if _LogToConsoleSupportsUnifiedLogging == 1
+	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		return NULL;
+	}
+
+	if (_LogToConsoleDefaultSubsystemValue == NULL) {
+		return OS_LOG_DEFAULT;
+	}
+
+	return _LogToConsoleDefaultSubsystemValue;
+#else 
+	return NULL
+#endif
+}
+
+void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType subsystem)
+{
+#if _LogToConsoleSupportsUnifiedLogging == 1
+	_LogToConsoleDefaultSubsystemValue = subsystem;
+#endif
+}
+
 static BOOL _LogToConsoleDebugLoggingEnabled = NO;
 
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)

@@ -321,10 +321,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (objectCopy) {
 				[newArray addObject:objectCopy];
 			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object '%@' does not respond to -copy or returned nil value",
 					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
 			}
 		}];
 
@@ -546,10 +546,10 @@ NS_ASSUME_NONNULL_BEGIN
 			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
 
 			if (*([methodSignature methodReturnType]) != '@') { // Return object
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Selector '%@' does not return object value.",
 					 NSStringFromSelector(performSelector))
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
 
 				return;
 			}
@@ -562,10 +562,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if (newObject) {
 				self[index] = newObject;
 			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
 					[object description], NSStringFromSelector(performSelector))
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem)
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
 			}
 		}];
 	}

@@ -121,7 +121,7 @@ static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 {
 	/* Maybe define our own error if there is none set. */
 	if (errorCode) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Port-mapping resulted in error: %d",
 			errorCode);
 	} else {

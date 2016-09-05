@@ -37,13 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)validateMethodIsValidSenderDestination
 {
 	if (strcmp([self methodReturnType], @encode(void)) != 0) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Method '%@' should not return a value",
 			[self description])
 
 		return NO;
 	} else if ([self numberOfArguments] != 3) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Method '%@' should take only one argument",
 			[self description])
 
@@ -53,7 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 	const char *argumentType = [self getArgumentTypeAtIndex:2];
 
 	if (strcmp(argumentType, @encode(id)) != 0) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem,
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"First argument of '%@' should be an object",
 			[self description])
 

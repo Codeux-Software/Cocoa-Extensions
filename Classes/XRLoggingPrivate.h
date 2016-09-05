@@ -30,18 +30,8 @@
 
  *********************************************************************** */
 
-@implementation NSObject (XRFrameworkEntryPoint)
+NS_ASSUME_NONNULL_BEGIN
 
-+ (void)load
-{
+LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void);
 
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
-		_CSFrameworkInternalLogSubsystem =
-		os_log_create("com.codeux.frameworks.CocoaExtensions", "General");
-	}
-#endif
-
-}
-
-@end
+NS_ASSUME_NONNULL_END
