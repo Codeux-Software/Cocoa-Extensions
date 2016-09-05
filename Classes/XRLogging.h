@@ -5,8 +5,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-static BOOL LogToConsoleDebugLoggingEnabled = NO;
-
 #if defined(AVAILABLE_MAC_OS_X_VERSION_10_12_AND_LATER)
 #define _LogToConsoleSupportsUnifiedLogging	1
 #else 
@@ -44,8 +42,10 @@ static void *LogToConsoleDefaultSubsystem = NULL;
 /* _LogToConsoleWithSubsystemAndType() */
 #define _LogToConsoleWithSubsystemAndType(_subsystem, _type, _format, ...)		\
 	do {	\
-		NSString *_formattedMessage = _LogToConsoleFormatMessage(_type, _format, ##__VA_ARGS__)	\
-		_LogToConsoleFormattedMessage(_subsystem, _type, _formattedMessage);	\
+		NSString *_formattedMessage = _LogToConsoleFormatMessage(_type, _format, ##__VA_ARGS__);	\
+		if (_formattedMessage != nil) {		\
+			_LogToConsoleFormattedMessage(_subsystem, _type, _formattedMessage);	\
+		}	\
 	} while (0);
 
 /* LogToConsole() */
@@ -60,9 +60,7 @@ static void *LogToConsoleDefaultSubsystem = NULL;
 	LogToConsoleDebugWithSubsystem(LogToConsoleDefaultSubsystem, _format, ##__VA_ARGS__)
 
 #define LogToConsoleDebugWithSubsystem(_subsystem, _format, ...)	\
-	if (LogToConsoleDebugLoggingEnabled) {		\
-		_LogToConsoleWithSubsystemAndType(_subsystem, LogToConsoleTypeDebug, _format, ##__VA_ARGS__)	\
-	}
+	_LogToConsoleWithSubsystemAndType(_subsystem, LogToConsoleTypeDebug, _format, ##__VA_ARGS__)	\
 
 /* LogToConsoleError() */
 #define LogToConsoleError(_format, ...)	\
@@ -80,14 +78,25 @@ static void *LogToConsoleDefaultSubsystem = NULL;
 
 /* _LogToConsoleFormattedMessage() */
 #define _LogToConsoleFormatMessage(_type, _format, ...)		\
-	_LogToConsoleFormatMessage_v1(_type, __FILE__, __PRETTY_FUNCTION__, __LINE__, _format, ##__VA_ARGS__);
+	_LogToConsoleFormatMessage_v1(_type, __FILE__, __PRETTY_FUNCTION__, __LINE__, _format, ##__VA_ARGS__)
 
-COCOA_EXTENSIONS_EXTERN NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...);
+COCOA_EXTENSIONS_EXTERN NSString * _Nullable _LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...);
+
+/* LogToConsoleSetDebugLoggingEnabled() */
+#define LogToConsoleSetDebugLoggingEnabled(_enabled)	\
+	_LogToConsoleSetDebugLoggingEnabled(_enabled);
 
 /* LogToConsoleCurrentStackTrace() */
-#define LogCurrentStackTraceWithSubsystem(_subsystem)	\
-	LogToConsoleErrorWithSubsystem(_subsystem, "Current Stack: %@", [NSThread callStackSymbols]);
+#define LogToConsoleCurrentStackTrace	\
+	LogCurrentStackTraceWithSubsystem(LogToConsoleDefaultSubsystem);
 
-#define LogToConsoleCurrentStackTrace		LogCurrentStackTraceWithSubsystem(LogToConsoleDefaultSubsystem);
+#define LogCurrentStackTraceWithSubsystem(_subsystem)	\
+	_LogCurrentStackTraceWithSubsystemAndType(_subsystem, LogToConsoleTypeError)
+
+#define LogCurrentStackTraceWithType(_type)	\
+	_LogCurrentStackTraceWithSubsystemAndType(LogToConsoleDefaultSubsystem, _type)
+
+#define _LogCurrentStackTraceWithSubsystemAndType(_subsystem, _type)	\
+	_LogToConsoleWithSubsystemAndType(_subsystem, _type, "Current Stack: %@", [NSThread callStackSymbols]);
 
 NS_ASSUME_NONNULL_END

@@ -32,7 +32,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSString *_LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
+static BOOL _LogToConsoleDebugLoggingEnabled = NO;
+
+void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
+{
+	_LogToConsoleDebugLoggingEnabled = enabled;
+}
+
+NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
 {
 	NSCParameterAssert(formatter != NULL);
 	NSCParameterAssert(filename != NULL);
@@ -49,6 +56,10 @@ NSString *_LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename,
 		}
 		case LogToConsoleTypeDebug:
 		{
+			if (_LogToConsoleDebugLoggingEnabled == NO) {
+				return nil;
+			}
+
 			typeString = "Debug";
 
 			break;
