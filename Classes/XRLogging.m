@@ -65,7 +65,7 @@ LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
 
 	return _LogToConsoleDefaultSubsystemValue;
 #else 
-	return NULL
+	return NULL;
 #endif
 }
 
