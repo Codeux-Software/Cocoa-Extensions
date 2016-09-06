@@ -132,22 +132,18 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont;
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont;
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode;
-#endif 
 
 @property (readonly, copy) NSString *scannerString;
 
 @property (readonly, copy) NSString *trimAndGetFirstToken;
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 @property (readonly, copy, nullable) NSURL *URLUsingWebKitPasteboard;
 
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
-#endif
 
 @property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
 @end
@@ -155,7 +151,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 #pragma mark -
 #pragma mark String Percent Encoding Helper
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 @interface NSString (CSStringPercentEncodingHelper)
 @property (readonly, copy, nullable) NSString *percentEncodedString;
 @property (readonly, copy, nullable) NSString *percentDecodedString;
@@ -167,7 +162,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 @property (readonly, copy, nullable) NSString *percentEncodedURLQuery;
 @property (readonly, copy, nullable) NSString *percentEncodedURLFragment;
 @end
-#endif
 
 #pragma mark
 #pragma mark String Number Formatter Helper
@@ -220,7 +214,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 @property (readonly, copy) NSString *scannerString;
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont;
 
@@ -230,7 +223,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 - (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor NS_AVAILABLE_MAC(10_10);
 - (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
-#endif
 @end
 
 #pragma mark 

@@ -30,59 +30,49 @@
 
  *********************************************************************** */
 
-#ifdef __MAC_OS_X_VERSION_MAX_ALLOWED
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#else
-	#define COCOA_EXTENSIONS_BUILT_AGAINST_iOS_SDK
-#endif
-
 #import <CocoaExtensions/StaticDefinitions.h>
+
+#import <CocoaExtensions/ApplePrivateMac.h>
 
 #import <CocoaExtensions/XRLogging.h>
 
-#import <CocoaExtensions/XRBase64Encoding.h>
-#import <CocoaExtensions/XRGlobalModels.h>
-#import <CocoaExtensions/XRRegularExpression.h>
-
-#import <CocoaExtensions/NSArrayHelper.h>
-#import <CocoaExtensions/NSByteCountFormatterHelper.h>
-#import <CocoaExtensions/NSDataHelper.h>
-#import <CocoaExtensions/NSDateHelper.h>
-#import <CocoaExtensions/NSDictionaryHelper.h>
-#import <CocoaExtensions/NSNumberHelper.h>
-#import <CocoaExtensions/NSRangeHelper.h>
-#import <CocoaExtensions/NSRectHelper.h>
-#import <CocoaExtensions/NSStringHelper.h>
-#import <CocoaExtensions/NSValueHelper.h>
-
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
-#import <CocoaExtensions/ApplePrivateMac.h>
-
 #import <CocoaExtensions/XRAccessibility.h>
 #import <CocoaExtensions/XRAddressBook.h>
+#import <CocoaExtensions/XRBase64Encoding.h>
+#import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRKeychain.h>
 #import <CocoaExtensions/XRPortMapper.h>
+#import <CocoaExtensions/XRRegularExpression.h>
 #import <CocoaExtensions/XRSystemInformation.h>
 
 #import <CocoaExtensions/NSArrayControllerHelper.h>
+#import <CocoaExtensions/NSArrayHelper.h>
 #import <CocoaExtensions/NSBundleHelper.h>
+#import <CocoaExtensions/NSByteCountFormatterHelper.h>
 #import <CocoaExtensions/NSColorHelper.h>
+#import <CocoaExtensions/NSDataHelper.h>
+#import <CocoaExtensions/NSDateHelper.h>
+#import <CocoaExtensions/NSDictionaryHelper.h>
 #import <CocoaExtensions/NSFileManagerHelper.h>
 #import <CocoaExtensions/NSFontHelper.h>
 #import <CocoaExtensions/NSImageHelper.h>
 #import <CocoaExtensions/NSIndexSetHelper.h>
 #import <CocoaExtensions/NSMenuHelper.h>
 #import <CocoaExtensions/NSMethodSignatureHelper.h>
+#import <CocoaExtensions/NSNumberHelper.h>
 #import <CocoaExtensions/NSObjectHelper.h>
 #import <CocoaExtensions/NSOutlineViewHelper.h>
 #import <CocoaExtensions/NSPasteboardHelper.h>
+#import <CocoaExtensions/NSRangeHelper.h>
+#import <CocoaExtensions/NSRectHelper.h>
 #import <CocoaExtensions/NSScreenHelper.h>
 #import <CocoaExtensions/NSSplitViewHelper.h>
+#import <CocoaExtensions/NSStringHelper.h>
 #import <CocoaExtensions/NSTextFieldHelper.h>
 #import <CocoaExtensions/NSThemeFrameHelper.h>
 #import <CocoaExtensions/NSThreadHelper.h>
 #import <CocoaExtensions/NSURLHelper.h>
 #import <CocoaExtensions/NSUserDefaultsHelper.h>
+#import <CocoaExtensions/NSValueHelper.h>
 #import <CocoaExtensions/NSWindowHelper.h>
 #import <CocoaExtensions/NSWorkspaceHelper.h>
-#endif

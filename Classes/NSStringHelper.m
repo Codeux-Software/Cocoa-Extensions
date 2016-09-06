@@ -752,7 +752,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return emptyRange;
 }
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth withFont:textFont];
@@ -771,7 +770,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	return [base pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:textFont];
 }
-#endif
 
 - (NSString *)scannerString
 {
@@ -1056,7 +1054,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return nil;
 }
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (nullable NSURL *)URLUsingWebKitPasteboard
 {
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
@@ -1099,14 +1096,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	return [queryItems copy];
 }
-#endif
 
 @end
 
 #pragma mark -
 #pragma mark String Percent Encoding Helper
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 @implementation NSString (CSStringPercentEncodingHelper)
 
 - (nullable NSString *)percentEncodedStringWithAllowedCharacters:(NSString *)allowedCharacters
@@ -1191,7 +1186,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 }
 
 @end
-#endif
 
 #pragma mark -
 #pragma mark String Number Formatter Helper
@@ -1420,7 +1414,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
     return lines;
 }
 
-#ifdef COCOA_EXTENSIONS_BUILT_AGAINST_OS_X_SDK
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight
 {
 	return [self wrappedLineCount:boundWidth lineMultiplier:lineHeight withFont:nil];
@@ -1601,7 +1594,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	return imageCompletedDraw;
 }
-#endif
 
 @end
 
