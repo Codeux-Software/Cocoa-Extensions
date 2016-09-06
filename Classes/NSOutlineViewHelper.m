@@ -55,6 +55,25 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self rowBeneathMouse];
 }
 
+- (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes maximumNumberOfSelections:(NSUInteger)maximumNumberOfSelections
+{
+	NSParameterAssert(proposedSelectionIndexes != nil);
+	NSParameterAssert(maximumNumberOfSelections > 0);
+
+	if (proposedSelectionIndexes.count <= maximumNumberOfSelections) {
+		return proposedSelectionIndexes;
+	}
+
+	/* If the user has already selected the maximum, then return the current index set.
+	 This prevents the user clicking one item up and having the entire selection shift
+	 because the following logic works from highest to lowest. */
+	if (self.numberOfSelectedRows == maximumNumberOfSelections) {
+		return self.selectedRowIndexes;
+	}
+
+	return [proposedSelectionIndexes subsetWithMaximumIndexes:maximumNumberOfSelections];
+}
+
 @end
 
 #pragma mark -

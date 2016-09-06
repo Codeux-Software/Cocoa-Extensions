@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger rowUnderMouse COCOA_EXTENSIONS_DEPRECATED("Use -rowBeneathMouse instead");
 
 - (void)selectItemAtIndex:(NSUInteger)index;
+
+- (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
+						   maximumNumberOfSelections:(NSUInteger)maximumNumberOfSelections;
 @end
 
 NS_ASSUME_NONNULL_END
