@@ -70,6 +70,7 @@
 #import <CocoaExtensions/NSFileManagerHelper.h>
 #import <CocoaExtensions/NSFontHelper.h>
 #import <CocoaExtensions/NSImageHelper.h>
+#import <CocoaExtensions/NSIndexSetHelper.h>
 #import <CocoaExtensions/NSMenuHelper.h>
 #import <CocoaExtensions/NSMethodSignatureHelper.h>
 #import <CocoaExtensions/NSObjectHelper.h>

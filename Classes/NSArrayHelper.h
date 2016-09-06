@@ -112,8 +112,4 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)shuffle;
 @end
 
-@interface NSIndexSet (CSIndexSetHelper)
-- (NSArray<NSNumber *> *)arrayFromIndexSet;
-@end
-
 NS_ASSUME_NONNULL_END

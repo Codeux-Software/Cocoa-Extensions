@@ -616,19 +616,4 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@implementation NSIndexSet (CSIndexSetHelper)
-
-- (NSArray<NSNumber *> *)arrayFromIndexSet
-{
-	NSMutableArray *array = [NSMutableArray array];
-
-	[self enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
-		[array addObject:@(index)];
-	}];
-	
-	return array;
-}
-
-@end
-
 NS_ASSUME_NONNULL_END
