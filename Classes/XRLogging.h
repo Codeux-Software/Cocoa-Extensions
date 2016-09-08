@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}	\
 		NSString *_formattedMessage = _LogToConsoleFormatMessage(_type, _format, ##__VA_ARGS__);	\
 		if (_formattedMessage != nil) {		\
-			_LogToConsoleFormattedMessage(_subsystem, _type, _formattedMessage);	\
+			_LogToConsoleFormattedMessage(_subsystemPtr, _type, _formattedMessage);	\
 		}	\
 	} while (0);
 
