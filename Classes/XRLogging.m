@@ -40,6 +40,10 @@ LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void)
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
+		if ([XRSystemInformation isUsingOSXSierraOrLater] == NO) {
+			return;
+		}
+
 		_subsystem =
 		os_log_create("com.codeux.frameworks.CocoaExtensions", "General");
 	});
@@ -55,7 +59,15 @@ static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
 LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
 {
 #if _LogToConsoleSupportsUnifiedLogging == 1
-	if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+	__block BOOL isUsingOSXSierraOrLater = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		isUsingOSXSierraOrLater = [XRSystemInformation isUsingOSXSierraOrLater];
+	});
+
+	if (isUsingOSXSierraOrLater == NO) {
 		return NULL;
 	}
 
