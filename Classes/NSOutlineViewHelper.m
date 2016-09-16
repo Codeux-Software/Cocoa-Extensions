@@ -151,6 +151,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return allRows;
 }
 
+- (NSInteger)numberOfItemsInGroup:(nullable id)groupItem
+{
+	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		return [self numberOfChildrenOfItem:groupItem];
+	}
+
+	NSParameterAssert([self.dataSource respondsToSelector:@selector(outlineView:numberOfChildrenOfItem:)]);
+
+	return [self.dataSource outlineView:self numberOfChildrenOfItem:groupItem];
+}
+
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem
 {
 	NSArray *itemsInGroup = [self itemsInGroup:groupItem];
