@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void)
 {
-	__block LogToConsoleSubsystemType _subsystem = NULL;
+	static LogToConsoleSubsystemType _subsystem = NULL;
 
 #if _LogToConsoleSupportsUnifiedLogging == 1
 	static dispatch_once_t onceToken;
@@ -59,7 +59,7 @@ static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
 LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
 {
 #if _LogToConsoleSupportsUnifiedLogging == 1
-	__block BOOL isUsingOSXSierraOrLater = NO;
+	static BOOL isUsingOSXSierraOrLater = NO;
 
 	static dispatch_once_t onceToken;
 
