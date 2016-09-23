@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define _LogToConsoleFormattedMessage(_subsystem, _type, _formattedMessage)		\
 	if (_subsystem != NULL) {	\
-		os_log_with_type(_subsystem, _type, _formattedMessage.UTF8String);	\
+		os_log_with_type(_subsystem, _type, "%{public}@", _formattedMessage);	\
 	} else {	\
 		NSLog(_formattedMessage);		\
 	}
