@@ -54,20 +54,20 @@ LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void)
 
 #if _LogToConsoleSupportsUnifiedLogging == 1
 static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
+
+static BOOL _LogToConsoleIsUsingUnifiedLogging = NO;
 #endif
 
 LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
 {
 #if _LogToConsoleSupportsUnifiedLogging == 1
-	static BOOL isUsingOSXSierraOrLater = NO;
-
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		isUsingOSXSierraOrLater = [XRSystemInformation isUsingOSXSierraOrLater];
+		_LogToConsoleIsUsingUnifiedLogging = [XRSystemInformation isUsingOSXSierraOrLater];
 	});
 
-	if (isUsingOSXSierraOrLater == NO) {
+	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
 		return NULL;
 	}
 
@@ -95,12 +95,29 @@ void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
 	_LogToConsoleDebugLoggingEnabled = enabled;
 }
 
-NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
+NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
 {
 	NSCParameterAssert(formatter != NULL);
 	NSCParameterAssert(filename != NULL);
 	NSCParameterAssert(function != NULL);
 
+	if (type == LogToConsoleTypeDebug) {
+		BOOL logDebug =
+
+#if _LogToConsoleSupportsUnifiedLogging == 1
+		(_LogToConsoleDebugLoggingEnabled || _LogToConsoleIsUsingUnifiedLogging);
+#else
+		_LogToConsoleDebugLoggingEnabled;
+#endif
+
+		if (logDebug == NO) {
+			return nil;
+		}
+	}
+
+	NSString *formatString = nil;
+
+	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
 	const char *typeString = NULL;
 
 	switch (type) {
@@ -112,10 +129,6 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char
 		}
 		case LogToConsoleTypeDebug:
 		{
-			if (_LogToConsoleDebugLoggingEnabled == NO) {
-				return nil;
-			}
-
 			typeString = "Debug";
 
 			break;
@@ -139,10 +152,10 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char
 		}
 	}
 
-	/* It would be faster to use a version of vsprintf() here but the reason
-	 that I don't is because that requires managing buffer size which NSString
-	 takes care of for us when formatting. */
-	NSString *formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
+		formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
+	} else {
+		formatString = [NSString stringWithFormat:@"%s [Line %d]: %s", function, line, formatter];
+	}
 
 	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
 
@@ -150,6 +163,25 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(u_int8_t type, const char
 
 	return formattedString;
 }
+
+NSString *_LogToConsoleFormatMessage_v2(LogToConsoleSubsystemType subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
+{
+	NSCParameterAssert(formatter != NULL);
+	NSCParameterAssert(filename != NULL);
+	NSCParameterAssert(function != NULL);
+
+	va_list arguments;
+	va_start(arguments, formatter);
+
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(subsystem, type, filename, function, line, formatter, arguments);
+
+	va_end(arguments);
+
+	return formattedString;
+}
+
+#pragma mark -
+#pragma mark Deprecated
 
 NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
 {
@@ -160,7 +192,7 @@ NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, con
 	va_list arguments;
 	va_start(arguments, formatter);
 
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(type, filename, function, line, formatter, arguments);
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), type, filename, function, line, formatter, arguments);
 
 	va_end(arguments);
 
@@ -184,7 +216,7 @@ void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const c
 	va_list arguments;
 	va_start(arguments, line);
 
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleTypeDefault, filename, function, line, formatter, arguments);
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), LogToConsoleTypeDefault, filename, function, line, formatter, arguments);
 
 	va_end(arguments);
 
@@ -208,7 +240,7 @@ void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *
 	va_list arguments;
 	va_start(arguments, formatter);
 
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(type, filename, function, line, formatter, arguments);
+	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), type, filename, function, line, formatter, arguments);
 
 	va_end(arguments);
 

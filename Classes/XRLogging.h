@@ -46,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 		if (_subsystemPtr == NULL) {	\
 			_subsystemPtr = LogToConsoleDefaultSubsystem();		\
 		}	\
-		NSString *_formattedMessage = _LogToConsoleFormatMessage(_type, _format, ##__VA_ARGS__);	\
+		NSString *_formattedMessage = _LogToConsoleFormatMessage(_subsystemPtr, _type, _format, ##__VA_ARGS__);	\
 		if (_formattedMessage != nil) {		\
 			_LogToConsoleFormattedMessage(_subsystemPtr, _type, _formattedMessage);	\
 		}	\
@@ -81,8 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
 	_LogToConsoleWithSubsystemAndType(_subsystem, LogToConsoleTypeInfo, _format, ##__VA_ARGS__)
 
 /* _LogToConsoleFormattedMessage() */
-#define _LogToConsoleFormatMessage(_type, _format, ...)		\
-	_LogToConsoleFormatMessage_v1(_type, __FILE__, __PRETTY_FUNCTION__, __LINE__, _format, ##__VA_ARGS__)
+#define _LogToConsoleFormatMessage(_subsystem, _type, _format, ...)		\
+	_LogToConsoleFormatMessage_v2(_subsystem, _type, __FILE__, __PRETTY_FUNCTION__, __LINE__, _format, ##__VA_ARGS__)
 
 /* LogToConsoleSetDebugLoggingEnabled() */
 #define LogToConsoleSetDebugLoggingEnabled(_enabled)	\
@@ -110,7 +110,7 @@ NS_ASSUME_NONNULL_BEGIN
 	_LogToConsoleWithSubsystemAndType(_subsystem, _type, "Current Stack: %@", [NSThread callStackSymbols]);
 
 /* Helper functions (private) */
-COCOA_EXTENSIONS_EXTERN NSString * _Nullable _LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...);
+COCOA_EXTENSIONS_EXTERN NSString * _Nullable _LogToConsoleFormatMessage_v2(LogToConsoleSubsystemType subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...);
 
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled);
 
