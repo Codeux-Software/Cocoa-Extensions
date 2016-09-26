@@ -117,7 +117,11 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType
 
 	NSString *formatString = nil;
 
+#if _LogToConsoleSupportsUnifiedLogging == 1
 	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
+#else
+	if (1) {
+#endif
 	const char *typeString = NULL;
 
 	switch (type) {
