@@ -111,51 +111,60 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType
 #endif
 
 		if (logDebug == NO) {
+			LogToConsoleInfoWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+					"Refusing to log message with debug type")
+
 			return nil;
 		}
 	}
 
 	NSString *formatString = nil;
 
+#if _LogToConsoleSupportsUnifiedLogging == 1
 	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
-	const char *typeString = NULL;
+#endif
 
-	switch (type) {
-		case LogToConsoleTypeInfo:
-		{
-			typeString = "Info";
+		const char *typeString = NULL;
 
-			break;
+		switch (type) {
+			case LogToConsoleTypeInfo:
+			{
+				typeString = "Info";
+
+				break;
+			}
+			case LogToConsoleTypeDebug:
+			{
+				typeString = "Debug";
+
+				break;
+			}
+			case LogToConsoleTypeError:
+			{
+				typeString = "Error";
+
+				break;
+			}
+			case LogToConsoleTypeFault: {
+				typeString = "Fault";
+
+				break;
+			}
+			default:
+			{
+				typeString = "Default";
+
+				break;
+			}
 		}
-		case LogToConsoleTypeDebug:
-		{
-			typeString = "Debug";
-
-			break;
-		}
-		case LogToConsoleTypeError:
-		{
-			typeString = "Error";
-
-			break;
-		}
-		case LogToConsoleTypeFault: {
-			typeString = "Fault";
-
-			break;
-		}
-		default:
-		{
-			typeString = "Default";
-
-			break;
-		}
-	}
 
 		formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
+
+#if _LogToConsoleSupportsUnifiedLogging == 1
 	} else {
 		formatString = [NSString stringWithFormat:@"%s [Line %d]: %s", function, line, formatter];
 	}
+#endif
 
 	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
 
