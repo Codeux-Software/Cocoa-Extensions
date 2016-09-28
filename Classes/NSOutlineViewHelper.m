@@ -127,6 +127,18 @@ NS_ASSUME_NONNULL_BEGIN
 		return;
 	}
 
+	id itemToExpand = nil;
+
+	if (parentItem && reloadChildren) {
+		if ([self isItemExpanded:parentItem]) {
+			itemToExpand = parentItem;
+		}
+	} else {
+		if ([self isItemExpanded:item]) {
+			itemToExpand = item;
+		}
+	}
+
 	NSIndexSet *rowToReloadIndexSet =
 	[NSIndexSet indexSetWithIndex:rowToReload];
 
@@ -139,6 +151,10 @@ NS_ASSUME_NONNULL_BEGIN
 	[self insertItemsAtIndexes:rowToReloadIndexSet
 					  inParent:parentItem
 				 withAnimation:NSTableViewAnimationEffectNone];
+
+	if (itemToExpand) {
+		[self expandItem:itemToExpand];
+	}
 
 	[self endUpdates];
 }
