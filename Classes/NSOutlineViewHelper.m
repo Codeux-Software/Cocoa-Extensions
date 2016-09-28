@@ -97,26 +97,50 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	/* -reloadItem does not reload the view on platforms older than 10.12.
 	 On older platforms, we perform the reload manually. */
+	NSUInteger rowToReload = NSNotFound;
 
-	/* If we are reloading children, we can get away with using original. */
-	if (reloadChildren) {
-		[self ce_priv_reloadItem:item reloadChildren:reloadChildren];
+	id parentItem = [self parentForItem:item];
+
+	if (parentItem == nil) {
+		NSInteger itemRow = [self rowForItem:item];
+
+		if (itemRow >= 0) {
+			rowToReload = itemRow;
+		}
+	} else if (reloadChildren) {
+		NSInteger parentItemRow = [self rowForItem:parentItem];
+
+		if (parentItemRow >= 0) {
+			rowToReload = parentItemRow;
+		}
+	} else {
+		NSArray *childrenItems = [self itemsFromParentGroup:parentItem];
+
+		NSInteger itemRow = [childrenItems indexOfObjectIdenticalTo:item];
+
+		if (itemRow != NSNotFound) {
+			rowToReload = itemRow;
+		}
 	}
 
-	/* Reload individual items */
-	NSInteger itemRow = [self rowForItem:item];
-
-	if (itemRow < 0) {
+	if (rowToReload == NSNotFound) {
 		return;
 	}
 
-	NSIndexSet *rowIndexes = [NSIndexSet indexSetWithIndex:itemRow];
+	NSIndexSet *rowToReloadIndexSet =
+	[NSIndexSet indexSetWithIndex:rowToReload];
 
-	NSRange columnIndexRange = NSMakeRange(0, [self numberOfColumns]);
+	[self beginUpdates];
 
-	NSIndexSet *columnIndexes = [NSIndexSet indexSetWithIndexesInRange:columnIndexRange];
+	[self removeItemsAtIndexes:rowToReloadIndexSet
+					  inParent:parentItem
+				 withAnimation:NSTableViewAnimationEffectNone];
 
-	[self reloadDataForRowIndexes:rowIndexes columnIndexes:columnIndexes];
+	[self insertItemsAtIndexes:rowToReloadIndexSet
+					  inParent:parentItem
+				 withAnimation:NSTableViewAnimationEffectNone];
+
+	[self endUpdates];
 }
 
 - (NSArray *)selectedObjects
