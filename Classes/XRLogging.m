@@ -111,9 +111,6 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType
 #endif
 
 		if (logDebug == NO) {
-			LogToConsoleInfoWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Refusing to log message with debug type")
-
 			return nil;
 		}
 	}
