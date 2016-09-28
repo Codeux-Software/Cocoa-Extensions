@@ -80,6 +80,45 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSOutlineView (CSOutlineViewHelper)
 
++ (void)load
+{
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+			return;
+		}
+
+		XRExchangeInstanceMethod(@"NSOutlineView", @"reloadItem:reloadChildren:", @"ce_priv_reloadItem:reloadChildren:");
+	});
+}
+
+- (void)ce_priv_reloadItem:(id)item reloadChildren:(BOOL)reloadChildren
+{
+	/* -reloadItem does not reload the view on platforms older than 10.12.
+	 On older platforms, we perform the reload manually. */
+
+	/* If we are reloading children, we can get away with using original. */
+	if (reloadChildren) {
+		[self ce_priv_reloadItem:item reloadChildren:reloadChildren];
+	}
+
+	/* Reload individual items */
+	NSInteger itemRow = [self rowForItem:item];
+
+	if (itemRow < 0) {
+		return;
+	}
+
+	NSIndexSet *rowIndexes = [NSIndexSet indexSetWithIndex:itemRow];
+
+	NSRange columnIndexRange = NSMakeRange(0, [self numberOfColumns]);
+
+	NSIndexSet *columnIndexes = [NSIndexSet indexSetWithIndexesInRange:columnIndexRange];
+
+	[self reloadDataForRowIndexes:rowIndexes columnIndexes:columnIndexes];
+}
+
 - (NSArray *)selectedObjects
 {
 	NSIndexSet *selectedRows = [self selectedRowIndexes];
