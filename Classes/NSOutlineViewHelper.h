@@ -32,6 +32,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface NSOutlineView ()
+@property (nonatomic, assign) BOOL enableCustomReloadItemLogic;
+@end
+
 @interface NSOutlineView (CSOutlineViewHelper)
 @property (readonly) NSArray *selectedObjects;
 

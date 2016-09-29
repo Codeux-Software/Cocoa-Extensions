@@ -30,6 +30,8 @@
 
  *********************************************************************** */
 
+#import <objc/runtime.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSTableView (CSTableViewHelper)
@@ -80,26 +82,46 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSOutlineView (CSOutlineViewHelper)
 
+static void *_enableCustomReloadItemLogic = nil;
+
 + (void)load
 {
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		BOOL forceReloadItemWorkaround =
-		[[NSUserDefaults standardUserDefaults] boolForKey:@"CocoaExtensionsForceCustomOutlineViewReloadItemLogic"];
-
-		if ([XRSystemInformation isUsingOSXSierraOrLater] && forceReloadItemWorkaround == NO) {
-			return;
-		}
-
 		XRExchangeInstanceMethod(@"NSOutlineView", @"reloadItem:reloadChildren:", @"ce_priv_reloadItem:reloadChildren:");
 	});
+}
+
+- (BOOL)enableCustomReloadItemLogic
+{
+	NSNumber *enableObject = objc_getAssociatedObject(self, _enableCustomReloadItemLogic);
+
+	if (enableObject) {
+		return [enableObject boolValue];
+	}
+
+	return NO;
+}
+
+- (void)setEnableCustomReloadItemLogic:(BOOL)enableCustomReloadItemLogic
+{
+	objc_setAssociatedObject(self,
+		 _enableCustomReloadItemLogic,
+		@(enableCustomReloadItemLogic),
+		OBJC_ASSOCIATION_COPY);
 }
 
 - (void)ce_priv_reloadItem:(id)item reloadChildren:(BOOL)reloadChildren
 {
 	/* -reloadItem does not reload the view on platforms older than 10.12.
 	 On older platforms, we perform the reload manually. */
+	if (self.enableCustomReloadItemLogic == NO) {
+		[self ce_priv_reloadItem:item reloadChildren:reloadChildren];
+
+		return;
+	}
+
 	NSUInteger rowToReload = NSNotFound;
 
 	id parentItem = [self parentForItem:item];
