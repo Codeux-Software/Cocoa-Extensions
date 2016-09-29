@@ -85,7 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 	static dispatch_once_t onceToken;
 
 	dispatch_once(&onceToken, ^{
-		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		BOOL forceReloadItemWorkaround =
+		[[NSUserDefaults standardUserDefaults] boolForKey:@"CocoaExtensionsForceCustomOutlineViewReloadItemLogic"];
+
+		if ([XRSystemInformation isUsingOSXSierraOrLater] && forceReloadItemWorkaround == NO) {
 			return;
 		}
 
