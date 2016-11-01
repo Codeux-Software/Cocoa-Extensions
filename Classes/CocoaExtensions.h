@@ -50,6 +50,7 @@
 #import <CocoaExtensions/NSArrayHelper.h>
 #import <CocoaExtensions/NSBundleHelper.h>
 #import <CocoaExtensions/NSByteCountFormatterHelper.h>
+#import <CocoaExtensions/NSCoderHelper.h>
 #import <CocoaExtensions/NSColorHelper.h>
 #import <CocoaExtensions/NSDataHelper.h>
 #import <CocoaExtensions/NSDateHelper.h>
