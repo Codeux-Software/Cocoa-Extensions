@@ -288,6 +288,13 @@ static void *_enableCustomReloadItemLogic = nil;
 			NSMakeRange(itemFirstIndex, (itemLastIndex - itemFirstIndex + 1))];
 }
 
+- (nullable id)parentForItemAtRow:(NSUInteger)row
+{
+	id itemAtRow = [self itemAtRow:row];
+
+	return [self parentForItem:itemAtRow];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

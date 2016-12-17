@@ -48,6 +48,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
 - (NSInteger)numberOfItemsInGroup:(nullable id)groupItem;
+
+- (nullable id)parentForItemAtRow:(NSUInteger)row;
 @end
 
 @interface NSTableView (CSTableViewHelper)
