@@ -30,6 +30,10 @@
 
  *********************************************************************** */
 
+#import <AppKit/AppKit.h>
+
+#import <CoreGraphics/CoreGraphics.h>
+
 #import <CocoaExtensions/StaticDefinitions.h>
 
 #import <CocoaExtensions/ApplePrivateMac.h>
