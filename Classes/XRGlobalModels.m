@@ -304,7 +304,7 @@ dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, N
 	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, delay);
 }
 
-dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay)
+dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay, BOOL repeat)
 {
 	NSCParameterAssert(delay >= 0);
 
@@ -316,7 +316,11 @@ dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispa
 
 	dispatch_time_t timer = dispatch_time(DISPATCH_TIME_NOW, (delay * NSEC_PER_SEC));
 
-	dispatch_source_set_timer(timerSource, timer, DISPATCH_TIME_FOREVER, 0);
+	if (repeat) {
+		dispatch_source_set_timer(timerSource, timer, (delay * NSEC_PER_SEC), 0);
+	} else {
+		dispatch_source_set_timer(timerSource, timer, DISPATCH_TIME_FOREVER, 0);
+	}
 
 	dispatch_source_set_event_handler(timerSource, block);
 
