@@ -296,12 +296,12 @@ dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueueWithPriority(dispatch_bl
 {
 	dispatch_queue_t workerQueue = dispatch_get_global_queue(priority, 0);
 
-	return XRScheduleBlockOnQueue(workerQueue, block, delay);
+	return XRScheduleBlockOnQueue(workerQueue, block, delay, NO);
 }
 
 dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, NSTimeInterval delay)
 {
-	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, delay);
+	return XRScheduleBlockOnQueue(dispatch_get_main_queue(), block, delay, NO);
 }
 
 dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay, BOOL repeat)
