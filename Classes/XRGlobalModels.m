@@ -319,10 +319,13 @@ dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispa
 	dispatch_source_set_timer(timerSource, timer, DISPATCH_TIME_FOREVER, 0);
 
 	dispatch_source_set_event_handler(timerSource, block);
-	  
-	dispatch_resume(timerSource);
 
 	return timerSource;
+}
+
+void XRResumeScheduledBlock(dispatch_source_t blockSource)
+{
+	dispatch_resume(blockSource);
 }
 
 void XRCancelScheduledBlock(dispatch_source_t blockSource)

@@ -71,6 +71,7 @@ COCOA_EXTENSIONS_EXTERN dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue
 COCOA_EXTENSIONS_EXTERN dispatch_source_t _Nullable XRScheduleBlockOnMainQueue(dispatch_block_t block, NSTimeInterval delay);
 COCOA_EXTENSIONS_EXTERN dispatch_source_t _Nullable XRScheduleBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay);
 
+COCOA_EXTENSIONS_EXTERN void XRResumeScheduledBlock(dispatch_source_t blockSource);
 COCOA_EXTENSIONS_EXTERN void XRCancelScheduledBlock(dispatch_source_t blockSource);
 
 COCOA_EXTENSIONS_EXTERN void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay);
