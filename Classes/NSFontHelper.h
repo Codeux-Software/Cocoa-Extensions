@@ -40,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)fontMatchesName:(NSString *)fontName;
 
 - (BOOL)fontTraitSet:(NSFontTraitMask)trait;
+
++ (NSFont *)cs_monospacedDigitSystemFontOfSize:(CGFloat)fontSize traits:(NSFontTraitMask)traits;
 @end
 
 NS_ASSUME_NONNULL_END

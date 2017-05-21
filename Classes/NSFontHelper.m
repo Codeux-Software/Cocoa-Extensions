@@ -94,6 +94,23 @@ const CGFloat kRotationForItalicText = -14.0;
 	return ([[self fontName] isEqualIgnoringCase:fontName]);
 }
 
++ (NSFont *)cs_monospacedDigitSystemFontOfSize:(CGFloat)fontSize traits:(NSFontTraitMask)traits
+{
+	BOOL bold = ((traits & NSBoldFontMask) == NSBoldFontMask);
+
+	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		CGFloat weight = ((bold == NO) ? NSFontWeightRegular : NSFontWeightBold);
+
+		return [NSFont monospacedDigitSystemFontOfSize:fontSize weight:weight];
+	} else {
+		if (bold == NO) {
+			return [NSFont systemFontOfSize:fontSize];
+		} else {
+			return [NSFont boldSystemFontOfSize:fontSize];
+		}
+	}
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
