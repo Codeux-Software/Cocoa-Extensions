@@ -1595,6 +1595,32 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return imageCompletedDraw;
 }
 
+- (NSRect)imageBoundsOfFirstRun
+{
+	NSRect result = NSZeroRect;
+
+	CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)self);
+
+	CFArrayRef glyphRuns = CTLineGetGlyphRuns(line);
+
+	if (CFArrayGetCount(glyphRuns) > 0) {
+		CTRunRef firstRun = (CTRunRef)CFArrayGetValueAtIndex(glyphRuns, 0);
+
+		/* "If the length of the range is set to 0, then the operation will 
+		 continue from the range's start index to the end of the run." */
+		CFRange firstRunRange = CFRangeMake(0, 0);
+
+		CGRect firstRunBounds =
+		CTRunGetImageBounds(firstRun, NULL, firstRunRange);
+
+		result = NSRectFromCGRect(firstRunBounds);
+	}
+
+	CFRelease(line);
+
+	return result;
+}
+
 @end
 
 #pragma mark -
