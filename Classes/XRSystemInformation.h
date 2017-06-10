@@ -44,12 +44,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)retrieveSystemInformationKey:(NSString *)key;
 
-+ (BOOL)isUsingOSXLionOrLater;
-+ (BOOL)isUsingOSXMountainLionOrLater;
-+ (BOOL)isUsingOSXMavericksOrLater;
-+ (BOOL)isUsingOSXYosemiteOrLater;
-+ (BOOL)isUsingOSXElCapitanOrLater;
-+ (BOOL)isUsingOSXSierraOrLater;
++ (BOOL)isUsingOSXLionOrLater; // 10.7
++ (BOOL)isUsingOSXMountainLionOrLater; // 10.8
++ (BOOL)isUsingOSXMavericksOrLater; // 10.9
++ (BOOL)isUsingOSXYosemiteOrLater; // 10.10
++ (BOOL)isUsingOSXElCapitanOrLater; // 10.11
++ (BOOL)isUsingOSXSierraOrLater; // 10.12
++ (BOOL)isUsingOSXHighSierraOrLater; // 10.13
 @end
 
 NS_ASSUME_NONNULL_END

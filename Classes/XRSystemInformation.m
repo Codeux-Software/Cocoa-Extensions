@@ -139,7 +139,9 @@ NS_ASSUME_NONNULL_BEGIN
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
-		if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		if ([XRSystemInformation isUsingOSXHighSierraOrLater]) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS High Sierra", @"XRSystemInformation", nil);
+		} else if ([XRSystemInformation isUsingOSXSierraOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Sierra", @"XRSystemInformation", nil);
 		} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X El Capitan", @"XRSystemInformation", nil);
@@ -312,6 +314,29 @@ NS_ASSUME_NONNULL_BEGIN
 
 			compareVersion.majorVersion = 10;
 			compareVersion.minorVersion = 12;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	}
+
+	return cachedValue;
+}
+
++ (BOOL)isUsingOSXHighSierraOrLater
+{
+	static BOOL _valueCached = NO;
+
+	static BOOL cachedValue = NO;
+
+	if (_valueCached == NO) {
+		_valueCached = YES;
+
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 13;
 			compareVersion.patchVersion = 0;
 
 			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
