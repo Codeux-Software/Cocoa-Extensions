@@ -91,3 +91,15 @@
 		#define NS_NOESCAPE
 	#endif
 #endif
+
+/* If we are not compiling on a version of macOS in which @available is
+ available, then fallback to using XRSystemInformation to determine which
+ operating system version we are on. */
+#if defined(AVAILABLE_MAC_OS_X_VERSION_10_13_AND_LATER)
+	#define COCOA_EXTENSIONS_RUNNING_ON(_version_, _name_)		\
+		@available(macos _version_, *)
+#else
+	#define COCOA_EXTENSIONS_RUNNING_ON(_version_, _name_)		\
+		[XRSystemInformation isUsingOSX##_name_##OrLater]
+#endif
+

@@ -204,7 +204,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL isDownloaded = YES;
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		NSString *_isDownloaded = [fileURL resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
 
 		if (_isDownloaded) {

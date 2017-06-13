@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSCalendar *currentCalander = [NSCalendar currentCalendar];
 
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		return [currentCalander isDate:self inSameDayAsDate:otherDate];
 	}
 

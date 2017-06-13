@@ -91,7 +91,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 - (BOOL)usesCustomTitlebarTitlePositioning
 {
 	/* This fix is not necessary prior to OS X Yosemite */
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite) == NO) {
 		return NO;
 	}
 

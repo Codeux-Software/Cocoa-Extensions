@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(object != nil);
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		[object setAccessibilityValueDescription:accessibilityValueDescription];
 	} else {
 		[object accessibilitySetOverrideValue:accessibilityValueDescription
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(object != nil);
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		[object setAccessibilityLabel:accessibilityLabel];
 	} else {
 		[object accessibilitySetOverrideValue:accessibilityLabel
@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(object != nil);
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		[object setAccessibilityTitle:accessibilityTitle];
 	} else {
 		[object accessibilitySetOverrideValue:accessibilityTitle

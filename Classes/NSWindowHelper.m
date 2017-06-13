@@ -38,11 +38,11 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (BOOL)isOccluded
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater] == NO) {
-		return NO;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		return ((self.occlusionState & NSWindowOcclusionStateVisible) == 0);
 	}
 
-	return ((self.occlusionState & NSWindowOcclusionStateVisible) == 0);
+	return NO;
 }
 
 - (BOOL)isInactive

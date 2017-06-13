@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)encodeData:(NSData *)input
 {
-	if ([NSData instancesRespondToSelector:@selector(base64EncodedStringWithOptions:)]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		return [input base64EncodedStringWithOptions:0];
 	} else {
 #pragma clang diagnostic push
@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSData *)decodeData:(NSString *)input
 {
-	if ([NSData instancesRespondToSelector:@selector(initWithBase64EncodedString:options:)]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
 	} else {
 #pragma clang diagnostic push

@@ -179,6 +179,9 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+
 + (BOOL)isUsingOSXLionOrLater
 {
 	static BOOL _valueCached = NO;
@@ -345,6 +348,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	return cachedValue;
 }
+
+#pragma clang diagnostic pop
 
 #pragma mark -
 #pragma mark Private

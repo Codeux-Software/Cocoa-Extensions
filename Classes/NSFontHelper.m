@@ -98,7 +98,7 @@ const CGFloat kRotationForItalicText = -14.0;
 {
 	BOOL bold = ((traits & NSBoldFontMask) == NSBoldFontMask);
 
-	if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.11, ElCapitan)) {
 		CGFloat weight = ((bold == NO) ? NSFontWeightRegular : NSFontWeightBold);
 
 		return [NSFont monospacedDigitSystemFontOfSize:fontSize weight:weight];

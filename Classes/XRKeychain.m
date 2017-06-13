@@ -36,15 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation XRKeychain
 
-+ (BOOL)canWriteToCloud
-{
-	if (&kSecAttrSynchronizable) {
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
 + (NSMutableDictionary *)searchDictionary:(NSString *)itemName
 							 withItemKind:(NSString *)itemKind
 							 forUsearname:(nullable NSString *)username
@@ -99,8 +90,10 @@ NS_ASSUME_NONNULL_BEGIN
 													  forUsearname:username
 													   serviceName:service];
 	
-	if (deleteFromCloud) {
-		dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		if (deleteFromCloud) {
+			dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+		}
 	}
 	
 	OSStatus status = SecItemDelete((__bridge CFDictionaryRef)dictionary);
@@ -138,8 +131,10 @@ NS_ASSUME_NONNULL_BEGIN
 														 forUsearname:username
 														  serviceName:service];
 
-	if (modifyForCloud) {
-		oldDictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		if (modifyForCloud) {
+			oldDictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+		}
 	}
 	
 	NSMutableDictionary *newDictionary = [NSMutableDictionary dictionary];
@@ -150,8 +145,10 @@ NS_ASSUME_NONNULL_BEGIN
 		newDictionary[(id)kSecValueData] = encodedPassword;
 	}
 	
-	if (modifyForCloud) {
-		newDictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		if (modifyForCloud) {
+			newDictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+		}
 	}
 
 	OSStatus status = SecItemUpdate((__bridge CFDictionaryRef)oldDictionary,
@@ -201,8 +198,10 @@ NS_ASSUME_NONNULL_BEGIN
 													  forUsearname:username
 													   serviceName:service];
 
-	if (addToCloud) {
-		dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		if (addToCloud) {
+			dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+		}
 	}
 	
 	NSData *encodedPassword = [password dataUsingEncoding:NSUTF8StringEncoding];
@@ -246,8 +245,10 @@ NS_ASSUME_NONNULL_BEGIN
 	dictionary[(id)kSecMatchLimit] = (id)kSecMatchLimitOne;
 	dictionary[(id)kSecReturnData] = (id)kCFBooleanTrue;
 	
-	if (searchForOnCloud) {
-		dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
+		if (searchForOnCloud) {
+			dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
+		}
 	}
 	
 	CFDataRef result = nil;

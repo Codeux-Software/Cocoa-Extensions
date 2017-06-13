@@ -1106,7 +1106,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)percentEncodedStringWithAllowedCharacters:(NSString *)allowedCharacters
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		NSCharacterSet *characterSet =
 		[NSCharacterSet characterSetWithCharactersInString:allowedCharacters];
 
@@ -1129,7 +1129,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)percentDecodedString
 {
-	if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
 		return [self stringByRemovingPercentEncoding];
 	} else {
 		return [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -1467,7 +1467,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	/* Perform basic validation on the current state of the
 	 string and the values of hte supplied paramaters. */
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater] == NO) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite) == NO) {
 		return nil;
 	}
 
@@ -1518,7 +1518,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSGraphicsContext *bitmapContextAppKitContext = nil;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		bitmapContextAppKitContext =
 		[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
 	} else {

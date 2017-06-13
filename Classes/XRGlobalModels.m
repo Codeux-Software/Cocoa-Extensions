@@ -142,7 +142,7 @@ dispatch_queue_t XRCreateDispatchQueueWithPriority(const char *label, dispatch_q
 {
 	dispatch_queue_attr_t queueAttributes = 0;
 
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		queueAttributes =
 		dispatch_queue_attr_make_with_qos_class(attributes, priority, 0);
 	} else {

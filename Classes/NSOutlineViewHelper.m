@@ -257,7 +257,7 @@ static void *_enableCustomReloadItemLogic = nil;
 
 - (NSInteger)numberOfItemsInGroup:(nullable id)groupItem
 {
-	if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
 		return [self numberOfChildrenOfItem:groupItem];
 	}
 
