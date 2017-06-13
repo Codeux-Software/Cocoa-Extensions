@@ -443,7 +443,7 @@
 				4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */,
 			);
 			name = "Build Configuration";
-			path = "../../../Resources/Build Configurations";
+			path = "Resources/Build Configuration";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -532,7 +532,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					8DC2EF4F0486A6940098B216 = {
 						ProvisioningStyle = Manual;
