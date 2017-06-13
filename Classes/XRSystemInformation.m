@@ -153,26 +153,6 @@ NS_ASSUME_NONNULL_BEGIN
 			cachedValue = NSLocalizedStringFromTable(@"OS X Mountain Lion", @"XRSystemInformation", nil);
 		} else if ([XRSystemInformation isUsingOSXLionOrLater]) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Lion", @"XRSystemInformation", nil);
-		} else {
-			static BOOL _performedManualLookup = NO;
-
-			if (_performedManualLookup == NO) {
-				_performedManualLookup = YES;
-
-				NSString *systemProfilerFilePath = [@"~/Library/Preferences/com.apple.SystemProfiler.plist" stringByExpandingTildeInPath];
-
-				NSDictionary *profilerData = [NSDictionary dictionaryWithContentsOfFile:systemProfilerFilePath];
-
-				id operatingSystemNames = profilerData[@"OS Names"];
-
-				if (operatingSystemNames && [operatingSystemNames isKindOfClass:[NSDictionary class]]) {
-					NSString *manualSearchKey = [NSString stringWithFormat:@"%@-%@", [XRSystemInformation systemBuildVersion], [[NSLocale currentLocale] localeIdentifier]];
-
-					cachedValue = operatingSystemNames[manualSearchKey];
-				}
-
-				profilerData = nil;
-			}
 		}
 	}
 
