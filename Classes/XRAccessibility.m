@@ -36,7 +36,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)isVoiceOverEnabled
 {
-	return (CFPreferencesCopyAppValue(CFSTR("voiceOverOnOffKey"), CFSTR("com.apple.universalaccess")) == kCFBooleanTrue);
+	CFTypeRef valueRef = CFPreferencesCopyAppValue(CFSTR("voiceOverOnOffKey"), CFSTR("com.apple.universalaccess"));
+
+	BOOL value = (valueRef == kCFBooleanTrue);
+
+	CFRelease(valueRef);
+
+	return value;
 }
 
 + (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object
