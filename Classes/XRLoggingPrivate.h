@@ -32,6 +32,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void);
+LogToConsoleSubsystemType _Nullable _CSFrameworkInternalLogSubsystem(void);
 
 NS_ASSUME_NONNULL_END

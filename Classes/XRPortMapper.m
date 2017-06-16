@@ -75,7 +75,7 @@ static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 @property (assign, readwrite) unsigned short publicPort;
 @property (assign) UInt32 rawPublicAddress;
 @property (copy, readwrite, nullable) NSString *publicAddress;
-@property (readonly) void *service;
+@property (readonly, nullable) void *service;
 @end
 
 #pragma mark -
@@ -185,7 +185,7 @@ static void portMapCallback (
 	DNSServiceErrorType status = kDNSServiceErr_NoError;
 
 	status = DNSServiceNATPortMappingCreate(
-				(DNSServiceRef *)&_service,
+				(DNSServiceRef *)&self->_service,
 				0 /* flags */,
 				0 /* interfaceIndex */,
 				protocol,
@@ -197,7 +197,7 @@ static void portMapCallback (
 
 
 	if (status == kDNSServiceErr_NoError) {
-		(void)DNSServiceSetDispatchQueue(_service, dispatch_get_main_queue());
+		(void)DNSServiceSetDispatchQueue(self->_service, dispatch_get_main_queue());
 
 		return YES;
 	} else {
@@ -230,10 +230,10 @@ static void portMapCallback (
 - (void)_disconnect
 {
 	/* Close the service. */
-	if (_service) {
-		DNSServiceRefDeallocate(_service);
+	if (self->_service) {
+		DNSServiceRefDeallocate(self->_service);
 
-		_service = NULL;
+		self->_service = NULL;
 
 		self.rawPublicAddress = 0;
 

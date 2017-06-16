@@ -32,7 +32,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-LogToConsoleSubsystemType _CSFrameworkInternalLogSubsystem(void)
+LogToConsoleSubsystemType _Nullable _CSFrameworkInternalLogSubsystem(void)
 {
 	static LogToConsoleSubsystemType _subsystem = NULL;
 
@@ -56,7 +56,7 @@ static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
 static BOOL _LogToConsoleIsUsingUnifiedLogging = NO;
 #endif
 
-LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
+LogToConsoleSubsystemType _Nullable _LogToConsoleDefaultSubsystem(void)
 {
 #if _LogToConsoleSupportsUnifiedLogging == 1
 	static dispatch_once_t onceToken;
@@ -81,7 +81,7 @@ LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void)
 #endif
 }
 
-void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType subsystem)
+void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType _Nullable subsystem)
 {
 #if _LogToConsoleSupportsUnifiedLogging == 1
 	_LogToConsoleDefaultSubsystemValue = subsystem;

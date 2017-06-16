@@ -114,7 +114,7 @@ COCOA_EXTENSIONS_EXTERN NSString * _Nullable _LogToConsoleFormatMessage_v2(LogTo
 
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled);
 
-LogToConsoleSubsystemType _LogToConsoleDefaultSubsystem(void);
-void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType subsystem);
+LogToConsoleSubsystemType _Nullable _LogToConsoleDefaultSubsystem(void);
+void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType _Nullable subsystem);
 
 NS_ASSUME_NONNULL_END
