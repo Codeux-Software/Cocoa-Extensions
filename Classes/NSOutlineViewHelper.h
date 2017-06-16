@@ -60,6 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes
 						   maximumNumberOfSelections:(NSUInteger)maximumNumberOfSelections;
+
+- (void)selectRowIndexes:(NSIndexSet *)indexes
+	byExtendingSelection:(BOOL)extend
+	   scrollToSelection:(BOOL)scroll;
 @end
 
 NS_ASSUME_NONNULL_END

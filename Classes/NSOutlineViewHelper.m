@@ -76,6 +76,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return [proposedSelectionIndexes subsetWithMaximumIndexes:maximumNumberOfSelections];
 }
 
+- (void)selectRowIndexes:(NSIndexSet *)indexes byExtendingSelection:(BOOL)extend scrollToSelection:(BOOL)scroll
+{
+	NSParameterAssert(indexes != nil);
+
+	[self selectRowIndexes:indexes byExtendingSelection:extend];
+
+	if (scroll && indexes.count > 0) {
+		[self scrollRowToVisible:indexes.firstIndex];
+	}
+}
+
 @end
 
 #pragma mark -
