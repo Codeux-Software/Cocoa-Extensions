@@ -44,13 +44,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)retrieveSystemInformationKey:(NSString *)key;
 
-+ (BOOL)isUsingOSXLionOrLater; // 10.7
-+ (BOOL)isUsingOSXMountainLionOrLater; // 10.8
-+ (BOOL)isUsingOSXMavericksOrLater; // 10.9
-+ (BOOL)isUsingOSXYosemiteOrLater; // 10.10
-+ (BOOL)isUsingOSXElCapitanOrLater; // 10.11
-+ (BOOL)isUsingOSXSierraOrLater; // 10.12
-+ (BOOL)isUsingOSXHighSierraOrLater; // 10.13
++ (BOOL)isUsingOSXLionOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXLionOrLater() instead");
++ (BOOL)isUsingOSXMountainLionOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXMountainLionOrLater() instead");
++ (BOOL)isUsingOSXMavericksOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXMavericksOrLater() instead");
++ (BOOL)isUsingOSXYosemiteOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXYosemiteOrLater() instead");
++ (BOOL)isUsingOSXElCapitanOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXElCapitanOrLater() instead");
++ (BOOL)isUsingOSXSierraOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXSierraOrLater() instead");
++ (BOOL)isUsingOSXHighSierraOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXHighSierraOrLater() instead");
 @end
+
+BOOL XRRunningOnOSXLionOrLater(void); // 10.7
+BOOL XRRunningOnOSXMountainLionOrLater(void); // 10.8
+BOOL XRRunningOnOSXMavericksOrLater(void); // 10.9
+BOOL XRRunningOnOSXYosemiteOrLater(void); // 10.10
+BOOL XRRunningOnOSXElCapitanOrLater(void); // 10.11
+BOOL XRRunningOnOSXSierraOrLater(void); // 10.12
+BOOL XRRunningOnOSXHighSierraOrLater(void); // 10.13
 
 NS_ASSUME_NONNULL_END

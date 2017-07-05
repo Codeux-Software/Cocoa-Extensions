@@ -139,19 +139,19 @@ NS_ASSUME_NONNULL_BEGIN
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
-		if ([XRSystemInformation isUsingOSXHighSierraOrLater]) {
+		if (XRRunningOnOSXHighSierraOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS High Sierra", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXSierraOrLater]) {
+		} else if (XRRunningOnOSXSierraOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Sierra", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXElCapitanOrLater]) {
+		} else if (XRRunningOnOSXElCapitanOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X El Capitan", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXYosemiteOrLater]) {
+		} else if (XRRunningOnOSXYosemiteOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Yosemite", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXMavericksOrLater]) {
+		} else if (XRRunningOnOSXMavericksOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Mavericks", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXMountainLionOrLater]) {
+		} else if (XRRunningOnOSXMountainLionOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Mountain Lion", @"XRSystemInformation", nil);
-		} else if ([XRSystemInformation isUsingOSXLionOrLater]) {
+		} else if (XRRunningOnOSXLionOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"OS X Lion", @"XRSystemInformation", nil);
 		}
 	}
@@ -159,177 +159,40 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunguarded-availability"
-
 + (BOOL)isUsingOSXLionOrLater
 {
-	static BOOL _valueCached = NO;
-	
-	static BOOL cachedValue = NO;
-	
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 7;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		} else {
-			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7);
-		}
-	}
-	
-	return cachedValue;
+	return XRRunningOnOSXLionOrLater();
 }
 
 + (BOOL)isUsingOSXMountainLionOrLater
 {
-	static BOOL _valueCached = NO;
-	
-	static BOOL cachedValue = NO;
-	
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 8;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		} else {
-			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_8);
-		}
-	}
-	
-	return cachedValue;
+	return XRRunningOnOSXMountainLionOrLater();
 }
 
 + (BOOL)isUsingOSXMavericksOrLater
 {
-	static BOOL _valueCached = NO;
-	
-	static BOOL cachedValue = NO;
-	
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 9;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		} else {
-			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_9);
-		}
-	}
-	
-	return cachedValue;
+	return XRRunningOnOSXMavericksOrLater();
 }
 
 + (BOOL)isUsingOSXYosemiteOrLater
 {
-	static BOOL _valueCached = NO;
-	
-	static BOOL cachedValue = NO;
-	
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 10;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		}
-	}
-	
-	return cachedValue;
+	return XRRunningOnOSXYosemiteOrLater();
 }
 
 + (BOOL)isUsingOSXElCapitanOrLater
 {
-	static BOOL _valueCached = NO;
-
-	static BOOL cachedValue = NO;
-
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 11;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		}
-	}
-
-	return cachedValue;
+	return XRRunningOnOSXElCapitanOrLater();
 }
 
 + (BOOL)isUsingOSXSierraOrLater
 {
-	static BOOL _valueCached = NO;
-
-	static BOOL cachedValue = NO;
-
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 12;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		}
-	}
-
-	return cachedValue;
+	return XRRunningOnOSXSierraOrLater();
 }
 
 + (BOOL)isUsingOSXHighSierraOrLater
 {
-	static BOOL _valueCached = NO;
-
-	static BOOL cachedValue = NO;
-
-	if (_valueCached == NO) {
-		_valueCached = YES;
-
-		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
-			NSOperatingSystemVersion compareVersion;
-
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 13;
-			compareVersion.patchVersion = 0;
-
-			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
-		}
-	}
-
-	return cachedValue;
+	return XRRunningOnOSXHighSierraOrLater();
 }
-
-#pragma clang diagnostic pop
 
 #pragma mark -
 #pragma mark Private
@@ -431,5 +294,158 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @end
+
+BOOL XRRunningOnOSXLionOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 7;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_7);
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXMountainLionOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 8;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_8);
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXMavericksOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 9;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		} else {
+			cachedValue = (floor(NSAppKitVersionNumber) >= NSAppKitVersionNumber10_9);
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXYosemiteOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 10;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXElCapitanOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 11;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXSierraOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 12;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXHighSierraOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 13;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
 
 NS_ASSUME_NONNULL_END
