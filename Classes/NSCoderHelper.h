@@ -33,6 +33,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSCoder (CSCoderHelper)
+- (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key;
+- (short)decodeShortForKey:(NSString *)key;
+- (unsigned short)decodeUnsignedShortForKey:(NSString *)key;
+
 - (void)maybeEncodeObject:(nullable id)objv forKey:(NSString *)key;
 @end
 

@@ -45,6 +45,39 @@ NS_ASSUME_NONNULL_BEGIN
 	[self encodeObject:objv forKey:key];
 }
 
+- (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key
+{
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.unsignedIntegerValue;
+}
+
+- (short)decodeShortForKey:(NSString *)key
+{
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.shortValue;
+}
+
+- (unsigned short)decodeUnsignedShortForKey:(NSString *)key
+{
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.unsignedShortValue;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
