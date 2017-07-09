@@ -37,6 +37,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (short)decodeShortForKey:(NSString *)key;
 - (unsigned short)decodeUnsignedShortForKey:(NSString *)key;
 
+- (void)encodeUnsignedInteger:(NSUInteger)value forKey:(NSString *)key;
+- (void)encodeShort:(short)value forKey:(NSString *)key;
+- (void)encodeUnsignedShort:(unsigned short)value forKey:(NSString *)key;
+
 - (void)maybeEncodeObject:(nullable id)objv forKey:(NSString *)key;
 @end
 
