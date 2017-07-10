@@ -20,6 +20,7 @@
 		4C1923BC1A9008E70076F65A /* XRBase64Encoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C1923BD1A9008E70076F65A /* XRBase64Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */; };
 		4C1923CC1A900DBF0076F65A /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1923CB1A900DBF0076F65A /* Security.framework */; };
+		4C1DC23E1F14309100C61416 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1DC23D1F14309100C61416 /* Foundation.framework */; };
 		4C27811A1CBD906400334FD0 /* NSWorkspaceHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2781181CBD906400334FD0 /* NSWorkspaceHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C27811B1CBD906400334FD0 /* NSWorkspaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */; };
 		4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -123,6 +124,7 @@
 		4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRBase64Encoding.h; sourceTree = "<group>"; };
 		4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XRBase64Encoding.m; sourceTree = "<group>"; };
 		4C1923CB1A900DBF0076F65A /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4C1DC23D1F14309100C61416 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C2781181CBD906400334FD0 /* NSWorkspaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSWorkspaceHelper.h; sourceTree = "<group>"; };
 		4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSWorkspaceHelper.m; sourceTree = "<group>"; };
 		4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XRPortMapper.h; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C1DC23E1F14309100C61416 /* Foundation.framework in Frameworks */,
 				4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */,
@@ -256,6 +259,7 @@
 				4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+				4C1DC23D1F14309100C61416 /* Foundation.framework */,
 				4C2A71E81B629EA200CD363B /* IOKit.framework */,
 				4C1923CB1A900DBF0076F65A /* Security.framework */,
 				4CEEC2D41B97C7C1000F517B /* WebKit.framework */,
