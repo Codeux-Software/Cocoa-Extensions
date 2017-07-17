@@ -601,6 +601,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	bob = [bob stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
 	bob = [bob stringByReplacingOccurrencesOfString:@":" withString:@"_"];
 
+    BOOL excludeBars = [[NSUserDefaults standardUserDefaults] boolForKey:@"Cocoa Extensions Framework -> Exclude Bars from Safe Filenames"];
+
+    if (excludeBars) {
+        bob = [bob stringByReplacingOccurrencesOfString:@"|" withString:@"_"];
+    }
+
 	return bob;
 }
 
