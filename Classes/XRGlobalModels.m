@@ -227,8 +227,8 @@ void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_
 
 void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType)
 {
-    NSParameterAssert(queue != NULL);
-    NSParameterAssert(block != NULL);
+    NSCParameterAssert(queue != NULL);
+    NSCParameterAssert(block != NULL);
 
 	block = ^{
 		@autoreleasepool {
