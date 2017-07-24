@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)runningInHighResolutionMode
 {
-    return ((self.backingScaleFactor - 1.0) > 0.01);
+    return (fabs(self.backingScaleFactor - 1.0) > 0.01);
 }
 
 @end
