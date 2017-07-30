@@ -39,6 +39,22 @@ NS_ASSUME_NONNULL_BEGIN
     return (fabs(self.backingScaleFactor - 1.0) > 0.01);
 }
 
+- (NSString *)screenResolutionString
+{
+    NSDictionary *screenDescription = self.deviceDescription;
+
+    CGDirectDisplayID screenId = [screenDescription[@"NSScreenNumber"] unsignedIntValue];
+    
+    CGDisplayModeRef screenMode = CGDisplayCopyDisplayMode(screenId);
+    
+    size_t screenWidth = CGDisplayModeGetPixelWidth(screenMode);
+    size_t screenHeight = CGDisplayModeGetPixelHeight(screenMode);
+    
+    CGDisplayModeRelease(screenMode);
+
+    return [NSString stringWithFormat:@"%zu x %zu", screenWidth, screenHeight];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
