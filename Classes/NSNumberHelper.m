@@ -39,36 +39,18 @@ NS_ASSUME_NONNULL_BEGIN
 	return (fabs(num1 - num2) <= __DBL_EPSILON__);
 }
 
-- (NSString *)integerWithLeadingZero:(NSUInteger)forcedWidth
+- (BOOL)isBooleanValue
 {
-	NSString *stringValue = [self stringValue];
-
-	NSUInteger trlzp = (forcedWidth - [stringValue length]);
-
-	if (trlzp <= 0) {
-		return stringValue;
+	if (strcmp(self.objCType, @encode(BOOL)) == 0) {
+		return YES;
 	} else {
-		NSMutableString *ints = [NSMutableString string];
-
-		for (NSUInteger i = 0; i < trlzp; i++) {
-			[ints appendString:@"0"];
-		}
-
-		[ints appendString:stringValue];
-
-		return ints;
+		return FALSE;
 	}
 }
 
-- (NSString *)integerWithLeadingZero
+- (NSString *)integerStringValueWithLeadingZero
 {
-	NSInteger intv = [self integerValue];
-
-	if (intv >= 0 && intv <= 9) {
-		return [@"0" stringByAppendingString:[self stringValue]];
-	}
-
-	return [self stringValue];
+	return [NSString stringWithFormat:@"%02ld", self.integerValue];
 }
 
 @end

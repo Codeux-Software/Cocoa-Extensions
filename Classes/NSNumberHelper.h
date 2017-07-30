@@ -42,8 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSNumber (CSNumberHelper)
 + (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
 
-@property (readonly, copy) NSString *integerWithLeadingZero;
-- (NSString *)integerWithLeadingZero:(NSUInteger)forcedWidth;
+@property (readonly) BOOL isBooleanValue;
+
+@property (readonly, copy) NSString *integerStringValueWithLeadingZero;
 @end
 
 NS_ASSUME_NONNULL_END
