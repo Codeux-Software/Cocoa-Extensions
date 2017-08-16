@@ -1112,34 +1112,15 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)percentEncodedStringWithAllowedCharacters:(NSString *)allowedCharacters
 {
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		NSCharacterSet *characterSet =
-		[NSCharacterSet characterSetWithCharactersInString:allowedCharacters];
+	NSCharacterSet *characterSet =
+	[NSCharacterSet characterSetWithCharactersInString:allowedCharacters];
 
-		return [self stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
-	} else {
-		CFStringRef encodedRef =
-		CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-												(CFStringRef)self,
-												(CFStringRef)allowedCharacters,
-												(CFStringRef)@"!#$%&'()*+,/:;=?@[]",
-												kCFStringEncodingUTF8);
-
-		if (encodedRef) {
-			return (__bridge_transfer NSString *)encodedRef;
-		} else {
-			return nil;
-		}
-	}
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:characterSet];
 }
 
 - (nullable NSString *)percentDecodedString
 {
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		return [self stringByRemovingPercentEncoding];
-	} else {
-		return [self stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	}
+	return [self stringByRemovingPercentEncoding];
 }
 
 - (nullable NSString *)percentEncodedString

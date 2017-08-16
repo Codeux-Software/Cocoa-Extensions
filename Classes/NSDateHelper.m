@@ -52,18 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSCalendar *currentCalander = [NSCalendar currentCalendar];
 
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		return [currentCalander isDate:self inSameDayAsDate:otherDate];
-	}
-
-	NSCalendarUnit unitFlags = (NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitMonth);
-
-	NSDateComponents *selfDateComponents = [currentCalander components:unitFlags fromDate:self];
-	NSDateComponents *otherDateComponents = [currentCalander components:unitFlags fromDate:otherDate];
-
-	return ([selfDateComponents day] == [otherDateComponents day] &&
-			[selfDateComponents month] == [otherDateComponents month] &&
-			[selfDateComponents year] == [otherDateComponents year]);
+	return [currentCalander isDate:self inSameDayAsDate:otherDate];
 }
 
 @end

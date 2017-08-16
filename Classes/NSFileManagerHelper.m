@@ -204,19 +204,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL isDownloaded = YES;
 
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		NSString *_isDownloaded = [fileURL resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
+	NSString *_isDownloaded = [fileURL resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
 
-		if (_isDownloaded) {
-			 isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusDownloaded) ||
-							 NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusCurrent));
-		}
-	} else {
-		NSNumber *_isDownloaded = [fileURL resourceValueForKey:NSURLUbiquitousItemIsDownloadedKey error:&isDownloadedError];
-
-		if (_isDownloaded) {
-			 isDownloaded = [_isDownloaded boolValue];
-		}
+	if (_isDownloaded) {
+		 isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusDownloaded) ||
+						 NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusCurrent));
 	}
 
 	if (isDownloadedError) {

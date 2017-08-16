@@ -36,26 +36,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)encodeData:(NSData *)input
 {
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		return [input base64EncodedStringWithOptions:0];
-	} else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-		return [input base64Encoding];
-#pragma clang diagnostic pop
-	}
+	return [input base64EncodedStringWithOptions:0];
 }
 
 + (nullable NSData *)decodeData:(NSString *)input
 {
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.9, Mavericks)) {
-		return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
-	} else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-		return [[NSData alloc] initWithBase64Encoding:input];
-#pragma clang diagnostic pop
-	}
+	return [[NSData alloc] initWithBase64EncodedString:input options:NSDataBase64DecodingIgnoreUnknownCharacters];
 }
 
 @end
