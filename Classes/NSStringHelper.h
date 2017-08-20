@@ -214,6 +214,12 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 @property (readonly, copy) NSString *scannerString;
 
+- (BOOL)isAttributeSet:(NSString *)attribute atIndex:(NSUInteger)index;
+- (BOOL)isAttributeSet:(NSString *)attribute atIndex:(NSUInteger)index attributeValue:(id _Nonnull * _Nullable)attributeValue;
+
+- (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range;
+- (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range attributeValue:(id _Nonnull * _Nullable)attributeValue;
+
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont;
 
@@ -246,6 +252,13 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 - (void)appendString:(NSString *)string;
 - (void)appendString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;
+
+- (void)addAttribute:(NSAttributedStringKey)attribute value:(id)value startingAt:(NSUInteger)index;
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes startingAt:(NSUInteger)index;
+
+- (void)removeAttribute:(NSAttributedStringKey)attribute startingAt:(NSUInteger)index;
+
+- (void)resetAttributesStaringAt:(NSUInteger)index;
 @end
 
 NS_ASSUME_NONNULL_END

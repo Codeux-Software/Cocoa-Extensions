@@ -1608,6 +1608,38 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return result;
 }
 
+- (BOOL)isAttributeSet:(NSString *)attribute atIndex:(NSUInteger)index
+{
+	return [self isAttributeSet:attribute atIndex:index attributeValue:NULL];
+}
+
+- (BOOL)isAttributeSet:(NSString *)attribute atIndex:(NSUInteger)index attributeValue:(id _Nonnull * _Nullable)attributeValue
+{
+	NSParameterAssert(attribute != nil);
+
+	id attributeValue_1 = [self attribute:attribute atIndex:index effectiveRange:NULL];
+
+	if (attributeValue_1) {
+		if (attributeValue) {
+			*attributeValue = attributeValue_1;
+		}
+
+		return YES;
+	}
+
+	return NO;
+}
+
+- (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range
+{
+	return [self isAttributeSet:attribute inRange:range attributeValue:NULL];
+}
+
+- (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range attributeValue:(id _Nonnull * _Nullable)attributeValue
+{
+	return [self isAttributeSet:attribute atIndex:range.location attributeValue:attributeValue];
+}
+
 @end
 
 #pragma mark -
@@ -1694,6 +1726,39 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	[self appendAttributedString:
 	 [NSAttributedString attributedStringWithString:string attributes:stringAttributes]];
+}
+
+- (void)addAttribute:(NSAttributedStringKey)attribute value:(id)value startingAt:(NSUInteger)index
+{
+	NSParameterAssert(attribute != nil);
+	NSParameterAssert(value != nil);
+
+	[self addAttributes:@{attribute : value} startingAt:index];
+}
+
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes startingAt:(NSUInteger)index
+{
+	NSParameterAssert(attributes != nil);
+
+	NSRange range = NSMakeRange(index, (self.length - index));
+
+	[self addAttributes:attributes range:range];
+}
+
+- (void)removeAttribute:(NSAttributedStringKey)attribute startingAt:(NSUInteger)index
+{
+	NSParameterAssert(attribute != nil);
+
+	NSRange range = NSMakeRange(index, (self.length - index));
+
+	[self removeAttribute:attribute range:range];
+}
+
+- (void)resetAttributesStaringAt:(NSUInteger)index
+{
+	NSRange range = NSMakeRange(index, (self.length - index));
+
+	[self setAttributes:@{} range:range];
 }
 
 @end
