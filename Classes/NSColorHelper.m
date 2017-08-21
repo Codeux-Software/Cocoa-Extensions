@@ -178,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSInteger b = ((colorTotal & 0x0000ff00) >> 8);
 	NSInteger a =  (colorTotal & 0x000000ff);
 
-	return [NSColor calibratedDeviceColorWithRed:r green:b blue:g alpha:a];
+	return [NSColor calibratedDeviceColorWithRed:r green:g blue:b alpha:a];
 }
 
 - (BOOL)isShadeOfGray
