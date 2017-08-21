@@ -1728,7 +1728,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	 [NSAttributedString attributedStringWithString:string attributes:stringAttributes]];
 }
 
-- (void)addAttribute:(NSAttributedStringKey)attribute value:(id)value startingAt:(NSUInteger)index
+- (void)addAttribute:(NSString *)attribute value:(id)value startingAt:(NSUInteger)index
 {
 	NSParameterAssert(attribute != nil);
 	NSParameterAssert(value != nil);
@@ -1736,7 +1736,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	[self addAttributes:@{attribute : value} startingAt:index];
 }
 
-- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes startingAt:(NSUInteger)index
+- (void)addAttributes:(NSDictionary<NSString *, id> *)attributes startingAt:(NSUInteger)index
 {
 	NSParameterAssert(attributes != nil);
 
@@ -1745,7 +1745,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	[self addAttributes:attributes range:range];
 }
 
-- (void)removeAttribute:(NSAttributedStringKey)attribute startingAt:(NSUInteger)index
+- (void)removeAttribute:(NSString *)attribute startingAt:(NSUInteger)index
 {
 	NSParameterAssert(attribute != nil);
 

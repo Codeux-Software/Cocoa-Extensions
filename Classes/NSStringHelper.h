@@ -253,10 +253,10 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 - (void)appendString:(NSString *)string;
 - (void)appendString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;
 
-- (void)addAttribute:(NSAttributedStringKey)attribute value:(id)value startingAt:(NSUInteger)index;
-- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attributes startingAt:(NSUInteger)index;
+- (void)addAttribute:(NSString *)attribute value:(id)value startingAt:(NSUInteger)index;
+- (void)addAttributes:(NSDictionary<NSString *, id> *)attributes startingAt:(NSUInteger)index;
 
-- (void)removeAttribute:(NSAttributedStringKey)attribute startingAt:(NSUInteger)index;
+- (void)removeAttribute:(NSString *)attribute startingAt:(NSUInteger)index;
 
 - (void)resetAttributesStaringAt:(NSUInteger)index;
 @end
