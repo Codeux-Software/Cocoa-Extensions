@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XRSystemInformation : NSObject
 + (nullable NSString *)formattedEthernetMacAddress;
 
++ (BOOL)systemIsSleeping;
+
 + (nullable NSString *)systemBuildVersion;
 + (nullable NSString *)systemStandardVersion;
 

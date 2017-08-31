@@ -31,8 +31,13 @@
  *********************************************************************** */
 
 #import <IOKit/IOKitLib.h>
+#import <IOKit/pwr_mgt/IOPM.h>
 
 #include <sys/sysctl.h>
+
+/* Private IOKit function */
+typedef uint32_t IOPMCapabilityBits;
+IOPMCapabilityBits IOPMConnectionGetSystemCapabilities(void);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -111,6 +116,13 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	return nil;
+}
+
++ (BOOL)systemIsSleeping
+{
+	IOPMCapabilityBits bits = IOPMConnectionGetSystemCapabilities();
+
+	return ((bits & kIOPMSystemCapabilityCPU) == 0);
 }
 
 + (nullable NSString *)systemBuildVersion
