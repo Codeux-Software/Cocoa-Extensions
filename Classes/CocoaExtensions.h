@@ -76,7 +76,6 @@
 #import <CocoaExtensions/NSStringHelper.h>
 #import <CocoaExtensions/NSTextFieldHelper.h>
 #import <CocoaExtensions/NSThemeFrameHelper.h>
-#import <CocoaExtensions/NSThreadHelper.h>
 #import <CocoaExtensions/NSURLHelper.h>
 #import <CocoaExtensions/NSUserDefaultsHelper.h>
 #import <CocoaExtensions/NSValueHelper.h>
