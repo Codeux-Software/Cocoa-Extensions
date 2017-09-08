@@ -272,6 +272,18 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self componentsSeparatedByString:delimiter];
 }
 
+- (NSArray<NSString *> *)splitWithCharacters:(NSString *)characters
+{
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
+
+	return [self splitWithCharacterSet:characterSet];
+}
+
+- (NSArray<NSString *> *)splitWithCharacterSet:(NSCharacterSet *)characterSet
+{
+	return [self componentsSeparatedByCharactersInSet:characterSet];
+}
+
 - (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength
 {
 	NSParameterAssert(maximumLength > 0);
@@ -1101,6 +1113,34 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 
 	return [queryItems copy];
+}
+
+- (nullable NSString *)callStackSymbolMethodName
+{
+	NSMutableArray *components = [[self splitWithCharacters:@" "] mutableCopy];
+
+	// Remove excessive blank lines between app name and memory address
+	[components removeObject:@""];
+
+	// 6 = symbol index, app name, memory address, method name, offset symbol (+), offset
+	if (components.count < 6) {
+		return nil;
+	}
+
+	/* To reconstruct the method name or function name, we
+	 start after the memory address and work our way up until
+	 the offset which is the last two indexes. */
+	NSMutableString *methodName = [NSMutableString string];
+
+	for (NSUInteger i = 3; i < (components.count - 2); i++) {
+		if (i != 3) {
+			[methodName appendString:@" "];
+		}
+
+		[methodName appendString:components[i]];
+	}
+
+	return [methodName copy];
 }
 
 @end

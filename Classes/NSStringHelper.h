@@ -110,6 +110,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 - (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;
 
 - (NSArray<NSString *> *)split:(NSString *)delimiter;
+- (NSArray<NSString *> *)splitWithCharacters:(NSString *)characters;
+- (NSArray<NSString *> *)splitWithCharacterSet:(NSCharacterSet *)characterSet;
 - (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength;
 
 @property (readonly, copy) NSString *trim;
@@ -146,6 +148,8 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
 
 @property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
+
+@property (readonly, copy, nullable) NSString *callStackSymbolMethodName;
 @end
 
 #pragma mark -
