@@ -68,7 +68,7 @@ static void *_internalUserInfo = nil;
 
 + (instancetype)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector
 {
-	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:NSStringEmptyPlaceholder keyEquivalentMask:0];
+	return [self menuItemWithTitle:aString target:aTarget action:aSelector keyEquivalent:@"" keyEquivalentMask:0];
 }
 
 + (instancetype)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector keyEquivalent:(NSString *)charCode keyEquivalentMask:(NSUInteger)mask

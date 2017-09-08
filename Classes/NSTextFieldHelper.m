@@ -52,7 +52,7 @@
 {
 	NSString *value = [self trimmedStringValue];
 
-	NSInteger spacePosition = [value stringPosition:NSStringWhitespacePlaceholder];
+	NSInteger spacePosition = [value stringPosition:@" "];
 
 	if (spacePosition > 0) {
 		return [value substringToIndex:spacePosition];
@@ -66,7 +66,7 @@
 	if (stringValue) {
 		[self ce_priv_setStringValue:stringValue];
 	} else {
-		[self ce_priv_setStringValue:NSStringEmptyPlaceholder];
+		[self ce_priv_setStringValue:@""];
 	}
 }
 

@@ -334,7 +334,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)removeAllNewlines
 {
-	return [self stringByReplacingOccurrencesOfCharacterSet:[NSCharacterSet newlineCharacterSet] withString:NSStringEmptyPlaceholder];
+	return [self stringByReplacingOccurrencesOfCharacterSet:[NSCharacterSet newlineCharacterSet] withString:@""];
 }
 
 - (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement
@@ -1103,7 +1103,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		NSInteger equalSignPosition = [component stringPosition:@"="];
 
 		if (equalSignPosition < 0) { // not found
-			queryItems[component] = NSStringEmptyPlaceholder;
+			queryItems[component] = @"";
 		} else {
 			NSString *name = [component substringToIndex:equalSignPosition];
 			NSString *value = [component substringAfterIndex:equalSignPosition];
@@ -1325,7 +1325,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSString *token = [NSString getTokenFromFirstWhitespaceGroup:self returnedDeletionRange:&deletionRange];
 
 	if (token == nil) {
-		return NSStringEmptyPlaceholder;
+		return @"";
 	}
 
 	if (deletionRange.location != NSNotFound) {
@@ -1354,7 +1354,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 + (NSAttributedString *)attributedString
 {
-	return [NSAttributedString attributedStringWithString:NSStringEmptyPlaceholder];
+	return [NSAttributedString attributedStringWithString:@""];
 }
 
 + (NSAttributedString *)attributedStringWithString:(NSString *)string
@@ -1689,7 +1689,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 + (NSMutableAttributedString *)mutableAttributedString
 {
-	return [NSMutableAttributedString mutableAttributedStringWithString:NSStringEmptyPlaceholder];
+	return [NSMutableAttributedString mutableAttributedStringWithString:@""];
 }
 
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string
