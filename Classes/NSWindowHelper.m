@@ -54,7 +54,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 	BOOL applicationHasNoModal = ([NSApp modalWindow] == nil);
 
-	BOOL applicationIsActive = [[NSRunningApplication currentApplication] isActive];
+	BOOL applicationIsActive = [NSApp isActive];
 
 	BOOL windowIsMainWindow = self.mainWindow;
 	BOOL windowIsOnActiveSpace = self.onActiveSpace;
