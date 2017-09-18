@@ -39,7 +39,3 @@
 
 @interface NSThemeFrame : NSTitledFrame
 @end
-
-/* NSExtension */
-@interface NSExtension : NSObject
-@end
