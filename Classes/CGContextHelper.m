@@ -36,19 +36,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (*CGContextSetFontSmoothingBackgroundColorFunc) (CGContextRef c, CGColorRef color);
-
 void CGContextSetFontSmoothingBackgroundColorPrivate(CGContextRef c, CGColorRef color)
 {
-	static BOOL _functionLookupPerformed = NO;
+	static void (*_functionAddress) (CGContextRef c, CGColorRef color) = NULL;
 
-	static CGContextSetFontSmoothingBackgroundColorFunc _functionAddress = NULL;
+	static dispatch_once_t onceToken;
 
-	if (_functionLookupPerformed == NO) {
-		_functionLookupPerformed = YES;
+	dispatch_once(&onceToken, ^{
+		NSString *managedName = [@"CG" stringByAppendingString:@"ContextSetFontSmoothingBackgroundColor"];
 
-		_functionAddress = dlsym(RTLD_DEFAULT, "CGContextSetFontSmoothingBackgroundColor");
-	}
+		_functionAddress = dlsym(RTLD_DEFAULT, [managedName cStringUsingEncoding:NSASCIIStringEncoding]);
+	});
 
 	if (_functionAddress) {
 		_functionAddress(c, color);
