@@ -35,9 +35,10 @@
 
 #include <sys/sysctl.h>
 
+#include <dlfcn.h>
+
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
-IOPMCapabilityBits IOPMConnectionGetSystemCapabilities(void);
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -120,7 +121,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)systemIsSleeping
 {
-	IOPMCapabilityBits bits = IOPMConnectionGetSystemCapabilities();
+	IOPMCapabilityBits bits = [self systemPowerCapabilities];
+
+	if (bits == INT_MAX) {
+		return NO;
+	}
 
 	return ((bits & kIOPMSystemCapabilityCPU) == 0);
 }
@@ -209,6 +214,25 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Private
+
++ (IOPMCapabilityBits)systemPowerCapabilities
+{
+	static IOPMCapabilityBits (*_functionAddress) (void) = NULL;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		NSString *managedName = [@"IOPM" stringByAppendingString:@"ConnectionGetSystemCapabilities"];
+
+		_functionAddress = dlsym(RTLD_DEFAULT, [managedName cStringUsingEncoding:NSASCIIStringEncoding]);
+	});
+
+	if (_functionAddress) {
+		return _functionAddress();
+	}
+
+	return INT_MAX;
+}
 
 + (nullable NSString *)systemModelToken
 {
