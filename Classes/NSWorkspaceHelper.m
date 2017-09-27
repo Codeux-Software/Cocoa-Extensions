@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	return [applicationBundle displayName];
+	return applicationBundle.displayName;
 }
 
 @end

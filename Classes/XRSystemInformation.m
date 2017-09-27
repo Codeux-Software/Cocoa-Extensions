@@ -275,11 +275,11 @@ NS_ASSUME_NONNULL_BEGIN
 		
 		NSString *modelToken = [self systemModelToken];
 		
-		if ([modelToken length] <= 0) {
+		if (modelToken.length <= 0) {
 			return nil;
 		}
 		
-		modelToken = [modelToken lowercaseString];
+		modelToken = modelToken.lowercaseString;
 		
 		for (NSString *modelPrefix in modelPrefixes) {
 			if ([modelToken hasPrefix:modelPrefix]) {
@@ -299,7 +299,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSString *infos = sysinfo[key];
 
-	if ([infos length] <= 0) {
+	if (infos.length <= 0) {
 		return nil;
 	}
 
@@ -314,9 +314,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ([fileManger fileExistsAtPath:path]) {
 		return [NSDictionary dictionaryWithContentsOfFile:path];
-	} else {
-		return nil;
 	}
+
+	return nil;
 }
 
 + (nullable NSDictionary *)systemInformationDictionary

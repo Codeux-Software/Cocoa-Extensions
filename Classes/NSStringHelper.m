@@ -96,7 +96,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSRange)range
 {
-	return NSMakeRange(0, [self length]);
+	return NSMakeRange(0, self.length);
 }
 
 + (NSString *)stringWithUUID
@@ -130,7 +130,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
     NSArray *supportedEncodings = [NSString supportedStringEncodings:favorUTF8];
 
     for (NSNumber *encoding in supportedEncodings) {
-        NSString *encodingTitle = [NSString localizedNameOfStringEncoding:[encoding unsignedIntegerValue]];
+        NSString *encodingTitle = [NSString localizedNameOfStringEncoding:encoding.unsignedIntegerValue];
 
 		if (encodingTitle) {
 			encodingList[encodingTitle] = encoding;
@@ -201,9 +201,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSArray<NSString *> *)characterStringBuffer
 {
-	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[self length]];
+	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:self.length];
 
-	for (NSUInteger i = 0; i < [self length]; i++) {
+	for (NSUInteger i = 0; i < self.length; i++) {
 		NSString *character = [self stringCharacterAtIndex:i];
 
 		[buffer addObject:character];
@@ -220,7 +220,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
     uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 	
-    CC_SHA1([data bytes], (CC_LONG)[data length], digest);
+    CC_SHA1(data.bytes, (CC_LONG)data.length, digest);
 	
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA1_DIGEST_LENGTH * 2)];
 	
@@ -239,7 +239,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
 
-    CC_SHA256([data bytes], (CC_LONG)[data length], digest);
+    CC_SHA256(data.bytes, (CC_LONG)data.length, digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA256_DIGEST_LENGTH * 2)];
 
@@ -256,7 +256,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
     uint8_t digest[CC_MD5_DIGEST_LENGTH ];
 
-    CC_MD5([data bytes], (CC_LONG)[data length], digest);
+    CC_MD5(data.bytes, (CC_LONG)data.length, digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_MD5_DIGEST_LENGTH * 2)];
 
@@ -288,7 +288,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSParameterAssert(maximumLength > 0);
 
-	NSUInteger stringLength = [self length];
+	NSUInteger stringLength = self.length;
 
 	if (stringLength <= maximumLength) {
 		return @[self];
@@ -343,11 +343,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSMutableString *newString = [NSMutableString string];
 
-	for (NSUInteger i = 0; i < [self length]; i++) {
+	for (NSUInteger i = 0; i < self.length; i++) {
 		UniChar c = [self characterAtIndex:i];
 
 		if ([target characterIsMember:c]) {
-			if (replacement && [replacement length] > 0) {
+			if (replacement && replacement.length > 0) {
 				[newString appendString:replacement];
 			}
 		} else {
@@ -369,7 +369,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSRange suffixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch | NSBackwardsSearch)];
 
-	return ((suffixRange.length + suffixRange.location) == [self length]);
+	return ((suffixRange.length + suffixRange.location) == self.length);
 }
 
 - (BOOL)hasPrefixWithCharacterSet:(NSCharacterSet *)characterSet
@@ -383,22 +383,22 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSRange suffixRange = [self rangeOfCharacterFromSet:characterSet options:(NSAnchoredSearch | NSBackwardsSearch)];
 
-	return ((suffixRange.length + suffixRange.location) == [self length]);
+	return ((suffixRange.length + suffixRange.location) == self.length);
 }
 
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight
 {
-	if (stringB == nil || [stringB length] == 0) {
+	if (stringB == nil || stringB.length == 0) {
 		return 0.0;
 	}
 
-	if ([stringB length] > [self length]) {
+	if (stringB.length > self.length) {
 		return 0.0;
 	}
 
-	NSString *_stringA = [self lowercaseString];
+	NSString *_stringA = self.lowercaseString;
 
-	NSString *_stringB = [stringB lowercaseString];
+	NSString *_stringB = stringB.lowercaseString;
 
 	NSInteger commonCharacterCount = 0;
 
@@ -406,10 +406,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	CGFloat distancePenalty = 0;
 
-	for (NSInteger i = 0; i < [_stringB length]; i++) {
+	for (NSInteger i = 0; i < _stringB.length; i++) {
 		BOOL matchFound = NO;
 
-		for (NSInteger j = startPosition; j < [_stringA length]; j++) {
+		for (NSInteger j = startPosition; j < _stringA.length; j++) {
 			if ([_stringB characterAtIndex:i] != [_stringA characterAtIndex:j]) {
 				continue;
 			}
@@ -434,7 +434,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		}
 	}
 
-	CGFloat lengthPenalty = (1.0 - (CGFloat)[_stringB length] / [_stringA length]);
+	CGFloat lengthPenalty = (1.0 - (CGFloat)_stringB.length / _stringA.length);
 
 	return (commonCharacterCount - distancePenalty - weight*lengthPenalty);
 }
@@ -520,7 +520,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSUInteger currentPosition = 0;
 
-	NSArray *stringCharacters = [string characterStringBuffer];
+	NSArray *stringCharacters = string.characterStringBuffer;
 
 	for (NSString *stringCharacter in stringCharacters) {
 		NSRange range = [self rangeOfString:stringCharacter
@@ -550,7 +550,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
 	if ([self hasPrefix:prefix]) {
-		return [self substringFromIndex:[prefix length]];
+		return [self substringFromIndex:prefix.length];
 	}
 	
 	return self;
@@ -558,24 +558,24 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)isIPAddress
 {
-	return ([self isIPv4Address] || [self isIPv6Address]);
+	return (self.IPv4Address || self.IPv6Address);
 }
 
 - (BOOL)isIPv4Address
 {
-	return ([self IPv4AddressBytes] != nil);
+	return (self.IPv4AddressBytes != nil);
 }
 
 - (BOOL)isIPv6Address
 {
-	return ([self IPv6AddressBytes] != nil);
+	return (self.IPv6AddressBytes != nil);
 }
 
 - (nullable NSData *)IPv4AddressBytes
 {
 	struct sockaddr_in sa;
 
-	int result = inet_pton(AF_INET, [self UTF8String], &(sa.sin_addr));
+	int result = inet_pton(AF_INET, self.UTF8String, &(sa.sin_addr));
 
 	if (result == 1) {
 		return [NSData dataWithBytes:&(sa.sin_addr.s_addr) length:4];
@@ -588,7 +588,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	struct sockaddr_in6 sa;
 
-	int result = inet_pton(AF_INET6, [self UTF8String], &(sa.sin6_addr));
+	int result = inet_pton(AF_INET6, self.UTF8String, &(sa.sin6_addr));
 
 	if (result == 1) {
 		return [NSData dataWithBytes:&(sa.sin6_addr) length:16];
@@ -599,7 +599,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)trimAndGetFirstToken
 {
-	NSString *bob = [self trim];
+	NSString *bob = self.trim;
 
 	NSString *firstToken = [NSString getTokenFromFirstWhitespaceGroup:bob returnedDeletionRange:NULL];
 
@@ -608,7 +608,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)safeFilename
 {
-	NSString *bob = [self trim];
+	NSString *bob = self.trim;
 
 	bob = [bob stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
 	bob = [bob stringByReplacingOccurrencesOfString:@":" withString:@"_"];
@@ -626,7 +626,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSUInteger characterCount = 0;
 
-	for (NSUInteger i = 0; i < [self length]; ++i) {
+	for (NSUInteger i = 0; i < self.length; ++i) {
 		UniChar c = [self characterAtIndex:i];
 
 		if (c == character) {
@@ -639,11 +639,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)isNumericOnly
 {
-	if ([self length] == 0) {
+	if (self.length == 0) {
 		return NO;
 	}
 
-	for (NSUInteger i = 0; i < [self length]; ++i) {
+	for (NSUInteger i = 0; i < self.length; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (CS_StringIsBase10Numeric(c) == NO) {
@@ -656,11 +656,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)isAlphabeticNumericOnly
 {
-	if ([self length] == 0) {
+	if (self.length == 0) {
 		return NO;
 	}
 
-	for (NSUInteger i = 0; i < [self length]; ++i) {
+	for (NSUInteger i = 0; i < self.length; ++i) {
 		UniChar c = [self characterAtIndex:i];
 		
 		if (CS_StringIsAlphabeticNumeric(c) == NO) {
@@ -698,7 +698,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)onlyContainsCharacters:(NSString *)characters
 {
-	NSCharacterSet *characterSet = [[NSCharacterSet characterSetWithCharactersInString:characters] invertedSet];
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters].invertedSet;
 
 	return [self onlyContainsCharactersFromCharacterSet:characterSet];
 }
@@ -713,18 +713,18 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	
 	NSScanner *scanner = [NSScanner scannerWithString:self];
 	
-	while ([scanner isAtEnd] == NO) {
+	while (scanner.atEnd == NO) {
 		NSString *buffer;
 		
 		if (onlyDeleteThoseNotInSet) {
 			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
 				[result appendString:buffer];
 			} else {
-				[scanner setScanLocation:([scanner scanLocation] + 1)];
+				scanner.scanLocation = (scanner.scanLocation + 1);
 			}
 		} else {
 			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
-				[scanner setScanLocation:([scanner scanLocation] + 1)];
+				scanner.scanLocation = (scanner.scanLocation + 1);
 			} else {
 				[result appendString:buffer];
 			}
@@ -750,7 +750,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSRange emptyRange = NSEmptyRange();
 
-	NSUInteger stringLength = [self length];
+	NSUInteger stringLength = self.length;
 
 	if (stringLength <= start) {
 		return emptyRange;
@@ -812,7 +812,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	/* Scan up to first space. */
 	[scanner scanUpToString:@" " intoString:NULL];
 
-	NSUInteger scanLocation = [scanner scanLocation];
+	NSUInteger scanLocation = scanner.scanLocation;
 
 	/* We now scan from the scan location to the end of whitespaces. */
 	if (whitespaceRange) {
@@ -873,16 +873,16 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	[scanner scanString:@"\"" intoString:NULL];
 
 	/* Now we will scan the rest of the string to the end. */
-	while ([scanner isAtEnd] == NO) {
+	while (scanner.atEnd == NO) {
 		[scanner scanUpToString:@"\"" intoString:NULL];
 
 		/* End here. */
-		if ([scanner scanLocation] == [stringValue length]) {
+		if (scanner.scanLocation == [stringValue length]) {
 			return nil;
 		}
 
 		/* Scan location is now set at this quote. */
-		NSUInteger scanLocation = [scanner scanLocation];
+		NSUInteger scanLocation = scanner.scanLocation;
 
 		/* Check the left side of the quote. */
 		NSInteger slashCount = 0;
@@ -922,10 +922,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 				 so we do not have to do anything except continue on. */
 			} else {
 				/* Scan current quote and move forward. */
-				if ([scanner isAtEnd]) {
+				if (scanner.atEnd) {
 					return nil;
 				} else {
-					[scanner setScanLocation:([scanner scanLocation] + 1)];
+					scanner.scanLocation = (scanner.scanLocation + 1);
 				}
 
 				continue;
@@ -1050,7 +1050,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		if (quoteRange) {
 			NSUInteger stringLength = [stringValue length];
 
-			NSUInteger stringForward = ([scanner scanLocation] + 1);
+			NSUInteger stringForward = (scanner.scanLocation + 1);
 
 			while (stringForward < stringLength) {
 				UniChar c = [[stringValue scannerString] characterAtIndex:stringForward];
@@ -1076,7 +1076,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
 
-	[pasteboard setStringContent:self];
+	pasteboard.stringContent = self;
 
 	NSURL *u = [WebView URLFromPasteboard:pasteboard];
 
@@ -1160,7 +1160,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)percentDecodedString
 {
-	return [self stringByRemovingPercentEncoding];
+	return self.stringByRemovingPercentEncoding;
 }
 
 - (nullable NSString *)percentEncodedString
@@ -1308,7 +1308,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSString *quotedGroup = [NSString getTokenFromFirstQuoteGroup:self returnedDeletionRange:&deletionRange];
 
 	if (quotedGroup == nil) {
-		return [self getToken];
+		return self.token;
 	}
 
 	if (deletionRange.location != NSNotFound) {
@@ -1337,12 +1337,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)lowercaseGetToken
 {
-	return [[self getToken] lowercaseString];
+	return self.token.lowercaseString;
 }
 
 - (NSString *)uppercaseGetToken
 {
-	return [[self getToken] uppercaseString];
+	return self.token.uppercaseString;
 }
 
 @end
@@ -1369,38 +1369,38 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSDictionary<NSString *, id> *)attributes
 {
-	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, [self length])];
+	return [self attributesAtIndex:0 longestEffectiveRange:NULL inRange:NSMakeRange(0, self.length)];
 }
 
 - (NSAttributedString *)attributedSubstringFromIndex:(NSUInteger)from
 {
-	NSRange range = NSMakeRange(from, ([self length] - from));
+	NSRange range = NSMakeRange(from, (self.length - from));
 
 	return [self attributedSubstringFromRange:range];
 }
 
 - (NSAttributedString *)attributedSubstringToIndex:(NSUInteger)to
 {
-	NSRange range = NSMakeRange(0, ([self length] - to));
+	NSRange range = NSMakeRange(0, (self.length - to));
 
 	return [self attributedSubstringFromRange:range];
 }
 
 - (NSRange)range
 {
-	return NSMakeRange(0, [self length]);
+	return NSMakeRange(0, self.length);
 }
 
 - (NSString *)scannerString
 {
-	return [self string];
+	return self.string;
 }
 
 - (NSArray<NSAttributedString *> *)splitIntoLines
 {
     NSMutableArray<NSAttributedString *> *lines = [NSMutableArray array];
     
-    NSUInteger stringLength = [self length];
+    NSUInteger stringLength = self.length;
 
     NSUInteger rangeStartIn = 0;
     
@@ -1409,7 +1409,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
     while (rangeStartIn < stringLength) {
 		NSRange searchRange = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
      
-		NSRange lineRange = [[self string] rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:searchRange];
+		NSRange lineRange = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:searchRange];
         
         if (lineRange.location == NSNotFound) {
             break;
@@ -1430,10 +1430,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
         rangeStartIn = NSMaxRange(lineRange);
     }
     
-	if ([lines count] == 0) {
+	if (lines.count == 0) {
         [lines addObject:self];
     } else {
-        if ([mutableSelf length] > 0) {
+        if (mutableSelf.length > 0) {
 			[lines addObject:mutableSelf];
         }
     }
@@ -1467,11 +1467,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSMutableAttributedString *baseMutable = [self mutableCopy];
 
-	NSRange baseMutableRange = NSMakeRange(0, [baseMutable length]);
+	NSRange baseMutableRange = NSMakeRange(0, baseMutable.length);
 
 	NSMutableParagraphStyle *paragraphStyle = [NSMutableParagraphStyle new];
 	
-	[paragraphStyle setLineBreakMode:lineBreakMode];
+	paragraphStyle.lineBreakMode = lineBreakMode;
 
 	if (textFont) {
 		[baseMutable addAttribute:NSFontAttributeName value:textFont range:baseMutableRange];
@@ -1498,7 +1498,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return nil;
 	}
 
-	if ([self length] <= 0) {
+	if (self.length <= 0) {
 		return nil;
 	}
 
@@ -1561,7 +1561,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	CGContextSetShouldSubpixelPositionFonts(bitmapContext, true);
 	CGContextSetShouldSubpixelQuantizeFonts(bitmapContext, true);
 
-	CGContextSetFontSmoothingBackgroundColorPrivate(bitmapContext, [backgroundColor CGColor]);
+	CGContextSetFontSmoothingBackgroundColorPrivate(bitmapContext, backgroundColor.CGColor);
 
 	/* Set the scale factor for retina displays */
 	CGContextScaleCTM(bitmapContext, scaleFactor, scaleFactor);
@@ -1598,7 +1598,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	CGPathAddRect(graphicsPath, NULL, coreTextFrame);
 
 	/* Perform core text draw */
-	CTFrameRef coreTextFrameRef = CTFramesetterCreateFrame(coreTextFramesetter, CFRangeMake(0, [self length]), graphicsPath, NULL);
+	CTFrameRef coreTextFrameRef = CTFramesetterCreateFrame(coreTextFramesetter, CFRangeMake(0, self.length), graphicsPath, NULL);
 
 	CTFrameDraw(coreTextFrameRef, bitmapContext);
 
@@ -1704,22 +1704,22 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)trimmedString
 {
-	return [[self string] trim];
+	return self.string.trim;
 }
 
 - (NSString *)getTokenAsString
 {
-	return [[self getToken] string];
+	return self.token.string;
 }
 
 - (NSString *)lowercaseGetToken
 {
-	return [[self getTokenAsString] lowercaseString];
+	return self.tokenAsString.lowercaseString;
 }
 
 - (NSString *)uppercaseGetToken
 {
-	return [[self getTokenAsString] uppercaseString];
+	return self.tokenAsString.uppercaseString;
 }
 
 - (NSAttributedString *)getToken
@@ -1746,7 +1746,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSAttributedString *quotedGroup = [NSString getTokenFromFirstQuoteGroup:self returnedDeletionRange:&deletionRange];
 
 	if (quotedGroup == nil) {
-		return [self getToken];
+		return self.token;
 	}
 
 	if (deletionRange.location != NSNotFound) {

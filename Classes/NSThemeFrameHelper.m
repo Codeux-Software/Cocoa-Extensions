@@ -61,7 +61,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	/* Return default value depending on configuration */
 	NSRect defaultTitlebarTitleRect = [self ce_priv_defaultTitlebarTitleRect];
 
-	if ([self usesCustomTitlebarTitlePositioning] == NO) {
+	if (self.usesCustomTitlebarTitlePositioning == NO) {
 		return defaultTitlebarTitleRect;
 	}
 
@@ -70,7 +70,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	}
 
 	/* Use private method to calculate the maximum possible size for rect */
-	NSRect maximumTitleRect = [self _maxTitlebarTitleRect];
+	NSRect maximumTitleRect = self._maxTitlebarTitleRect;
 
 	if (NSIsEmptyRect(maximumTitleRect)) {
 		return defaultTitlebarTitleRect;
@@ -96,13 +96,13 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	}
 
 	/* This fix is not necessary unless we have custom views */
-	NSArray *viewControllers = [self titlebarAccessoryViewControllers];
+	NSArray *viewControllers = self.titlebarAccessoryViewControllers;
 
 	if (viewControllers && [viewControllers isKindOfClass:[NSArray class]]) {
 		BOOL allViewControllersHidden = YES;
 
 		for (NSViewController *viewController in viewControllers) {
-			if ([[viewController view] isHidden] == NO) {
+			if (viewController.view.hidden == NO) {
 				allViewControllersHidden = NO;
 
 				break;
@@ -118,7 +118,7 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	NSNumber *customPositioning = objc_getAssociatedObject(self, _internalUsesCustomTitlebarTitlePositioning);
 
 	if (customPositioning) {
-		return [customPositioning boolValue];
+		return customPositioning.boolValue;
 	} else {
 		return NO;
 	}

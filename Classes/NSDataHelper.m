@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSRange)range
 {
-	return NSMakeRange(0, [self length]);
+	return NSMakeRange(0, self.length);
 }
 
 + (NSData *)lineFeed
@@ -94,27 +94,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length
 {
-	if (prefix == NULL || length <= 0 || [self length] < length) {
+	if (prefix == NULL || length <= 0 || self.length < length) {
 		return NO;
 	}
 
-	return (memcmp([self bytes], prefix, length) == 0);
+	return (memcmp(self.bytes, prefix, length) == 0);
 }
 
 - (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length
 {
-	if (suffix == NULL || length <= 0 || [self length] < length) {
+	if (suffix == NULL || length <= 0 || self.length < length) {
 		return NO;
 	}
 
-	return (memcmp( ((const char *)[self bytes] + ([self length] - length) ), suffix, length) == 0);
+	return (memcmp( ((const char *)self.bytes + (self.length - length) ), suffix, length) == 0);
 }
 
 - (BOOL)isValidUTF8
 {
-	NSUInteger length = [self length];
+	NSUInteger length = self.length;
 	
-	const unsigned char *bytes = [self bytes];
+	const unsigned char *bytes = self.bytes;
 	
 	NSUInteger rest = 0;
 	NSUInteger code = 0;
@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	uint8_t digest[CC_SHA1_DIGEST_LENGTH];
 	
-    CC_SHA1([self bytes], (CC_LONG)[self length], digest);
+    CC_SHA1(self.bytes, (CC_LONG)self.length, digest);
 	
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA1_DIGEST_LENGTH * 2)];
 	
@@ -177,7 +177,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     uint8_t digest[CC_SHA256_DIGEST_LENGTH];
 
-    CC_SHA256([self bytes], (CC_LONG)[self length], digest);
+    CC_SHA256(self.bytes, (CC_LONG)self.length, digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA256_DIGEST_LENGTH * 2)];
 
@@ -192,7 +192,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
     uint8_t digest[CC_MD5_DIGEST_LENGTH ];
 
-    CC_MD5([self bytes], (CC_LONG)[self length], digest);
+    CC_MD5(self.bytes, (CC_LONG)self.length, digest);
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_MD5_DIGEST_LENGTH * 2)];
 

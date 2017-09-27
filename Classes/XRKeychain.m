@@ -52,7 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 	searchDictionary[(id)kSecAttrLabel] = itemName;
 	searchDictionary[(id)kSecAttrDescription] = itemKind;
 
-	if ([username length] > 0) {
+	if (username.length > 0) {
 		searchDictionary[(id)kSecAttrAccount] = username;
 	}
 
@@ -149,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 									(__bridge CFDictionaryRef)newDictionary);
 
 	if (status == errSecItemNotFound) {
-		if (newPassword && [newPassword length] > 0) {
+		if (newPassword && newPassword.length > 0) {
 			return [XRKeychain addKeychainItem:itemName
 								  withItemKind:itemKind
 								   forUsername:username

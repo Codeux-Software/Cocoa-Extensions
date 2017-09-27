@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)moveObjectAtArrangedObjectIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
 {
-	id object = [self.arrangedObjects objectAtIndex:fromIndex];
+	id object = (self.arrangedObjects)[fromIndex];
 
 	[self removeObjectAtArrangedObjectIndex:fromIndex];
 

@@ -43,14 +43,14 @@
 
 - (NSString *)trimmedStringValue
 {
-	NSString *value = [super stringValue];
+	NSString *value = super.stringValue;
 
-	return [value trim];
+	return value.trim;
 }
 
 - (NSString *)trimmedFirstTokenStringValue
 {
-	NSString *value = [self trimmedStringValue];
+	NSString *value = self.trimmedStringValue;
 
 	NSInteger spacePosition = [value stringPosition:@" "];
 
@@ -78,29 +78,29 @@
 
 - (BOOL)isFocused
 {
-	return ([[self window] firstResponder] == self);
+	return (self.window.firstResponder == self);
 }
 
 - (void)focus
 {
-    if ([self isFocused] == NO) {
-		[[self window] makeFirstResponder:self];
+    if (self.focused == NO) {
+		[self.window makeFirstResponder:self];
 	}
 }
 
 - (NSRange)range
 {
-    return NSMakeRange(0, [self stringLength]);
+    return NSMakeRange(0, self.stringLength);
 }
 
 - (NSUInteger)stringLength
 {
-    return [[self string] length];
+    return self.string.length;
 }
 
 - (nullable NSScrollView *)scrollView
 {
-	return [self enclosingScrollView];
+	return self.enclosingScrollView;
 }
 
 @end

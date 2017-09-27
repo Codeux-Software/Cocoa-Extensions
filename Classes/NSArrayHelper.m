@@ -257,7 +257,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSRange)range
 {
-	return NSMakeRange(0, [self count]);
+	return NSMakeRange(0, self.count);
 }
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index
@@ -300,7 +300,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof NSArray *)copyDeepAsMutable:(BOOL)mutableCopy
 {
 	@synchronized(self) {
-		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
+		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
 
 		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			id objectCopy = nil;
@@ -324,7 +324,7 @@ NS_ASSUME_NONNULL_BEGIN
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object '%@' does not respond to -copy or returned nil value",
 					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 			}
 		}];
 
@@ -364,7 +364,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues trimming:(BOOL)trimValues uniquing:(BOOL)uniqueValues
 {
 	@synchronized(self) {
-		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[self count]];
+		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
 
 		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			id objectValue = object;
@@ -545,11 +545,11 @@ NS_ASSUME_NONNULL_BEGIN
 		[oldArray enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
 
-			if (*([methodSignature methodReturnType]) != '@') { // Return object
+			if (*(methodSignature.methodReturnType) != '@') { // Return object
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Selector '%@' does not return object value.",
-					 NSStringFromSelector(performSelector))
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+					NSStringFromSelector(performSelector));
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 				return;
 			}
@@ -564,8 +564,8 @@ NS_ASSUME_NONNULL_BEGIN
 			} else {
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
-					[object description], NSStringFromSelector(performSelector))
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+					[object description], NSStringFromSelector(performSelector));
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 			}
 		}];
 	}
@@ -574,7 +574,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)shuffle
 {
 	@synchronized (self) {
-		NSUInteger selfCount = [self count];
+		NSUInteger selfCount = self.count;
 
 		for (NSUInteger i = (selfCount - 1); i > 0; i--) {
 			NSUInteger n = arc4random_uniform((uint32_t)i + 1);
@@ -591,7 +591,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	@synchronized(self) {
 		NSUInteger index = [self indexOfObject:object
-								 inSortedRange:[self range]
+								 inSortedRange:self.range
 									   options:NSBinarySearchingInsertionIndex
 							   usingComparator:comparator];
 
@@ -603,7 +603,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)moveObjectAtIndex:(NSUInteger)fromIndex toIndex:(NSUInteger)toIndex
 {
-	id object = [self objectAtIndex:fromIndex];
+	id object = self[fromIndex];
 
 	[self removeObjectAtIndex:fromIndex];
 

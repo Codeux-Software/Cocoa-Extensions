@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
 {
-	return [self ubiquityIdentityToken];
+	return self.ubiquityIdentityToken;
 }
 
 - (BOOL)directoryExistsAtPath:(NSString *)path
@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(path != nil);
 
 	NSDictionary *newattrs = @{NSFileImmutable : @(YES)};
-	
+
 	return [self setAttributes:newattrs	ofItemAtPath:path error:error];
 }
 
@@ -64,7 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(path != nil);
 
 	NSDictionary *newattrs = @{NSFileImmutable : @(NO)};
-	
+
 	return [self setAttributes:newattrs	ofItemAtPath:path error:error];
 }
 
@@ -130,18 +130,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSNumber *isUbiquitous = [fileURL resourceValueForKey:NSURLIsUbiquitousItemKey error:&isUbiquitousError];
 
-	if (isUbiquitous == nil || [isUbiquitous boolValue] == NO) {
+	if (isUbiquitous == nil || isUbiquitous.boolValue == NO) {
 		if (isUbiquitousError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"isUbiquitous lookup failed: '%@': %@",
-				path, [isUbiquitousError localizedDescription]);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+				path, isUbiquitousError.localizedDescription);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		} else {
 			/* If an error did not occur looking up status for a path, but
 			 the path is not ubiquitous, then we return YES anyways. */
-			/* YES will indicate the file is downloaded and since the file 
+			/* YES will indicate the file is downloaded and since the file
 			 is not ubiquitous, it is in fact downloaded. */
 			LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Returning YES for path that is not ubiquitous: '%@'",
@@ -151,9 +151,9 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	/* If the path is a directory, then check each file in the directory and 
+	/* If the path is a directory, then check each file in the directory and
 	 stop if there is at least one file that is not downloaded. */
-	/* The reason its done like this is because when the key 
+	/* The reason its done like this is because when the key
 	 NSURLUbiquitousItemDownloadingStatusKey was checked for on directories,
 	 it always returned nil. That means having to scan each file in each
 	 subdirectory was the only option. */
@@ -166,13 +166,13 @@ NS_ASSUME_NONNULL_BEGIN
 		if (isDirectoryError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"isDirectory lookup failed: '%@': %@", path,
-				[isDirectoryError localizedDescription])
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
-
-			return NO;
+			     isDirectoryError.localizedDescription);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 		}
+
+		return NO;
 	}
-	else if ([isDirectory boolValue])
+	else if (isDirectory.boolValue)
 	{
 		NSError *directoryContentsError = nil;
 
@@ -181,8 +181,8 @@ NS_ASSUME_NONNULL_BEGIN
 		if (directoryContents == nil) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"directoryContents returned nil: '%@': %@",
-				path, [directoryContentsError localizedDescription])
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+				 path, directoryContentsError.localizedDescription);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		}
@@ -194,7 +194,6 @@ NS_ASSUME_NONNULL_BEGIN
 				return NO;
 			}
 		}
-
 
 		return YES;
 	}
@@ -214,8 +213,8 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isDownloadedError) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"isDownloaded lookup failed: '%@': %@",
-			path, [isDownloadedError localizedDescription])
-		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+			path, isDownloadedError.localizedDescription);
+		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 	}
 
 	return isDownloaded;
@@ -278,8 +277,8 @@ NS_ASSUME_NONNULL_BEGIN
   moveDestinationToTrash:(BOOL)moveDestinationToTrash
 {
 	/* Check URLs */
-	if ((sourceURL == nil || [sourceURL isFileURL] == NO) ||
-		(destinationURL == nil || [destinationURL isFileURL] == NO))
+	if ((sourceURL == nil || sourceURL.fileURL == NO) ||
+		(destinationURL == nil || destinationURL.fileURL == NO))
 	{
 		return NO;
 	}
@@ -299,8 +298,8 @@ NS_ASSUME_NONNULL_BEGIN
 		if (removeResult == NO) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Failed to remove file at destination: '%@': %@",
-				[destinationURL path], [removeFileError localizedDescription]);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+				[destinationURL path], removeFileError.localizedDescription);
+			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		}
@@ -320,12 +319,12 @@ NS_ASSUME_NONNULL_BEGIN
 	if (copyResult == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Failed to copy file to destination: '%@' -> '%@': %@",
-			[sourceURL path], [destinationURL path], [copyFileError localizedDescription]);
-		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+			sourceURL.path, destinationURL.path, copyFileError.localizedDescription);
+		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
 	}
-	
+
 	return YES;
 }
 

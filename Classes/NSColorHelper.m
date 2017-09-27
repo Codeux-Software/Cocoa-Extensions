@@ -83,15 +83,15 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSColor *obj = [self colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
 
-	return [NSColor colorWithCalibratedRed:(1.0 - [obj redComponent])
-									 green:(1.0 - [obj greenComponent])
-									  blue:(1.0 - [obj blueComponent])
-									 alpha:[obj alphaComponent]];
+	return [NSColor colorWithCalibratedRed:(1.0 - obj.redComponent)
+									 green:(1.0 - obj.greenComponent)
+									  blue:(1.0 - obj.blueComponent)
+									 alpha:obj.alphaComponent];
 }
 
 - (BOOL)isInRGBColorSpace
 {
-	NSString *colorSpaceName = [self colorSpaceName];
+	NSString *colorSpaceName = self.colorSpaceName;
 
 	return ([colorSpaceName isEqual:@"NSDeviceRGBColorSpace"] ||
 			[colorSpaceName isEqual:@"NSCalibratedRGBColorSpace"]);
@@ -99,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isInGrayColorSpace
 {
-	NSString *colorSpaceName = [self colorSpaceName];
+	NSString *colorSpaceName = self.colorSpaceName;
 
 	return ([colorSpaceName isEqual:@"NSDeviceWhiteColorSpace"] ||
 			[colorSpaceName isEqual:@"NSDeviceBlackColorSpace"] ||
@@ -127,17 +127,17 @@ NS_ASSUME_NONNULL_BEGIN
 	CGFloat blueValue = 0.0;
 
 	if ([self isInGrayColorSpace]) {
-		redValue = [self whiteComponent];
-		greenValue = [self whiteComponent];
-		blueValue = [self whiteComponent];
+		redValue = self.whiteComponent;
+		greenValue = self.whiteComponent;
+		blueValue = self.whiteComponent;
 	} else {
-		redValue = [self redComponent];
-		greenValue = [self greenComponent];
-		blueValue = [self blueComponent];
+		redValue = self.redComponent;
+		greenValue = self.greenComponent;
+		blueValue = self.blueComponent;
 	}
 
 	if (withAlpha) {
-		CGFloat alphaValue = [self alphaComponent];
+		CGFloat alphaValue = self.alphaComponent;
 
 		return [NSString stringWithFormat:@"#%02X%02X%02X%02X",
 				(NSInteger)(redValue * 0xff),
@@ -165,7 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	long colorTotal = strtol([string UTF8String], NULL, 16);
+	long colorTotal = strtol(string.UTF8String, NULL, 16);
 
 	if (string.length < 8) {
 		colorTotal <<= 8;
@@ -184,9 +184,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isShadeOfGray
 {
 	if ([self isInRGBColorSpace]) {
-		CGFloat redValue = [self redComponent];
-		CGFloat greenValue = [self greenComponent];
-		CGFloat blueValue = [self blueComponent];
+		CGFloat redValue = self.redComponent;
+		CGFloat greenValue = self.greenComponent;
+		CGFloat blueValue = self.blueComponent;
 
 		if ([NSNumber compareCGFloat:redValue toFloat:greenValue] &&
 			[NSNumber compareCGFloat:greenValue toFloat:blueValue] &&

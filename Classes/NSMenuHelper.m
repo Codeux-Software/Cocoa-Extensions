@@ -54,8 +54,8 @@ static void *_internalUserInfo = nil;
 - (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively
 {
 	if (recursively) {
-		if ([self hasSubmenu]) {
-			NSArray *subItems = [[self submenu] itemArray];
+		if (self.hasSubmenu) {
+			NSArray *subItems = self.submenu.itemArray;
 
 			for (NSMenuItem *subItem in subItems) {
 				[subItem setUserInfo:userInfo recursively:YES];
@@ -63,7 +63,7 @@ static void *_internalUserInfo = nil;
 		}
 	}
 
-	[self setUserInfo:userInfo];
+	self.userInfo = userInfo;
 }
 
 + (instancetype)menuItemWithTitle:(NSString *)aString target:(id)aTarget action:(SEL)aSelector

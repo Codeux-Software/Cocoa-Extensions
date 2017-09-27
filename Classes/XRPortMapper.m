@@ -323,7 +323,7 @@ static const struct {UInt32 mask, value;} kPrivateRanges[] = {
 	[mapper setMapUDP:NO];
 
 	if ([mapper waitUntilOpened]) {
-		address = [mapper publicAddress];
+		address = mapper.publicAddress;
 	}
 	
 	[mapper close];

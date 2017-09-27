@@ -80,7 +80,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	NSArray *windowList = [NSApp orderedWindows];
 
 	for (NSWindow *window in windowList) {
-		if (NSMouseInRect(cursorLocation, [window frame], NO)) {
+		if (NSMouseInRect(cursorLocation, window.frame, NO)) {
 			return window;
 		}
 	}
@@ -90,11 +90,11 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (NSRect)titlebarFrame
 {
-	NSView *contentView = [self contentView];
+	NSView *contentView = self.contentView;
 
-	NSRect contentViewFrame = [contentView frame];
+	NSRect contentViewFrame = contentView.frame;
 
-	NSRect selfFrame = [self frame];
+	NSRect selfFrame = self.frame;
 
 	selfFrame.origin.y += contentViewFrame.size.height;
 
@@ -105,7 +105,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (BOOL)runningInHighResolutionMode
 {
-	return [[self screen] runningInHighResolutionMode];
+	return self.screen.runningInHighResolutionMode;
 }
 
 - (void)exactlyCenterWindow
@@ -113,9 +113,9 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	NSScreen *screen = [NSScreen mainScreen];
 	
 	if (screen) {
-		NSRect remoteFrame = [screen visibleFrame];
+		NSRect remoteFrame = screen.visibleFrame;
 		
-		NSRect localFrame = [self frame];
+		NSRect localFrame = self.frame;
 
 		localFrame = NSRectCenteredInRect(localFrame, remoteFrame);
 
@@ -139,7 +139,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
-	[[NSUserDefaults standardUserDefaults] setObject:[self stringWithSavedFrame] forKey:keyword];
+	[[NSUserDefaults standardUserDefaults] setObject:self.stringWithSavedFrame forKey:keyword];
 }
 
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword
@@ -162,7 +162,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (BOOL)isInFullscreenMode
 {
-	return (([self styleMask] & NSFullScreenWindowMask) == NSFullScreenWindowMask);
+	return ((self.styleMask & NSFullScreenWindowMask) == NSFullScreenWindowMask);
 }
 
 - (NSWindow *)deepestWindow
@@ -174,7 +174,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 {
 	NSParameterAssert(window != nil);
 
-	NSWindow *attachedSheet = [window attachedSheet];
+	NSWindow *attachedSheet = window.attachedSheet;
 
 	if (attachedSheet) {
 		return [NSWindow deepestWindowInWindow:attachedSheet];

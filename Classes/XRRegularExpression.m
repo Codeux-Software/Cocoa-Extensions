@@ -44,7 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(haystack != nil);
 	NSParameterAssert(needle != nil);
 
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
 	NSRegularExpression *regex;
 
@@ -69,7 +69,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(haystack != nil);
 	NSParameterAssert(needle != nil);
 
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
 	NSRegularExpression *regex;
 
@@ -90,7 +90,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(needle != nil);
 	NSParameterAssert(puppy != nil);
 
-	NSRange strRange = NSMakeRange(0, [haystack length]);
+	NSRange strRange = NSMakeRange(0, haystack.length);
 
 	NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
 
@@ -109,7 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(haystack != nil);
 	NSParameterAssert(needle != nil);
 
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 	
 	NSRegularExpression *regex;
 	
@@ -121,7 +121,7 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
 
-	return [matches count];
+	return matches.count;
 }
 
 + (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(haystack != nil);
 	NSParameterAssert(needle != nil);
 
-    NSRange strRange = NSMakeRange(0, [haystack length]);
+    NSRange strRange = NSMakeRange(0, haystack.length);
 
 	NSRegularExpression *regex;
 
@@ -149,7 +149,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
 
 	for (NSTextCheckingResult *result in matches) {
-		NSString *newStr = [haystack substringWithRange:[result range]];
+		NSString *newStr = [haystack substringWithRange:result.range];
 
 		[realMatches addObject:newStr];
 	}

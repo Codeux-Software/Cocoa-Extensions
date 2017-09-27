@@ -54,7 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSInteger)rowUnderMouse
 {
-	return [self rowBeneathMouse];
+	return self.rowBeneathMouse;
 }
 
 - (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes maximumNumberOfSelections:(NSUInteger)maximumNumberOfSelections
@@ -109,7 +109,7 @@ static void *_enableCustomReloadItemLogic = nil;
 	NSNumber *enableObject = objc_getAssociatedObject(self, _enableCustomReloadItemLogic);
 
 	if (enableObject) {
-		return [enableObject boolValue];
+		return enableObject.boolValue;
 	}
 
 	return NO;
@@ -197,7 +197,7 @@ static void *_enableCustomReloadItemLogic = nil;
 
 - (NSArray *)selectedObjects
 {
-	NSIndexSet *selectedRows = [self selectedRowIndexes];
+	NSIndexSet *selectedRows = self.selectedRowIndexes;
 
 	NSMutableArray *objects = [NSMutableArray arrayWithCapacity:selectedRows.count];
 
@@ -221,7 +221,7 @@ static void *_enableCustomReloadItemLogic = nil;
 {
 	NSMutableArray *groups = [NSMutableArray array];
 	
-	for (NSUInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
 		if ([self levelForRow:i] == 0) {
 			id curRow = [self itemAtRow:i];
 
@@ -253,7 +253,7 @@ static void *_enableCustomReloadItemLogic = nil;
 
 	NSMutableArray *allRows = [NSMutableArray array];
 	
-	for (NSUInteger i = 0; i < [self numberOfRows]; i++) {
+	for (NSUInteger i = 0; i < self.numberOfRows; i++) {
 		id itemAtRow = [self itemAtRow:i];
 
 		id parentItem = [self parentForItem:itemAtRow];
@@ -285,8 +285,8 @@ static void *_enableCustomReloadItemLogic = nil;
 		return nil;
 	}
 
-	id itemFirst = [itemsInGroup firstObject];
-	id itemLast = [itemsInGroup lastObject];
+	id itemFirst = itemsInGroup.firstObject;
+	id itemLast = itemsInGroup.lastObject;
 
 	if (itemFirst == nil) {
 		return nil;

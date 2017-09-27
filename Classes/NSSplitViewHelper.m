@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)hasHiddenView
 {
-	for (NSView *subview in [self subviews]) {
+	for (NSView *subview in self.subviews) {
 		if ([self isSubviewCollapsed:subview]) {
 			return YES;
 		}

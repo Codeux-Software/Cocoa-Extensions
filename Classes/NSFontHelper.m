@@ -44,7 +44,7 @@ const CGFloat kRotationForItalicText = -14.0;
 		NSAffineTransform *fontTransform = [NSAffineTransform transform];    
 		NSAffineTransform *italicTransform = [NSAffineTransform transform];  
 		
-		[fontTransform scaleBy:[self pointSize]];
+		[fontTransform scaleBy:self.pointSize];
 		
 		NSAffineTransformStruct italicTransformData;   
 		
@@ -55,11 +55,11 @@ const CGFloat kRotationForItalicText = -14.0;
 		italicTransformData.tX = 0;       
 		italicTransformData.tY = 0;      
 		     
-		[italicTransform setTransformStruct:italicTransformData];
+		italicTransform.transformStruct = italicTransformData;
 		
 		[fontTransform appendTransform:italicTransform]; 
 		
-		theFont = [NSFont fontWithDescriptor:[theFont fontDescriptor] textTransform:fontTransform];  
+		theFont = [NSFont fontWithDescriptor:theFont.fontDescriptor textTransform:fontTransform];  
 		
 		if (theFont) {
 			return theFont;
@@ -84,14 +84,14 @@ const CGFloat kRotationForItalicText = -14.0;
 		return YES;
 	}
 	
-	NSArray *systemFonts = [[NSFontManager sharedFontManager] availableFonts];
+	NSArray *systemFonts = [NSFontManager sharedFontManager].availableFonts;
 	
 	return ([systemFonts containsObjectIgnoringCase:fontName]);
 }
 
 - (BOOL)fontMatchesName:(NSString *)fontName
 {
-	return ([[self fontName] isEqualIgnoringCase:fontName]);
+	return ([self.fontName isEqualIgnoringCase:fontName]);
 }
 
 + (NSFont *)cs_monospacedDigitSystemFontOfSize:(CGFloat)fontSize traits:(NSFontTraitMask)traits

@@ -604,7 +604,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}];
 
-	if ([keys count] == 0) {
+	if (keys.count == 0) {
 		return nil;
 	}
 
@@ -628,7 +628,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}];
 
-	if ([keys count] == 0) {
+	if (keys.count == 0) {
 		return nil;
 	}
 
@@ -647,10 +647,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)sortedDictionaryKeys:(BOOL)reversed
 {
-	NSArray *keys = [[self allKeys] sortedArrayUsingSelector:@selector(compare:)];
+	NSArray *keys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
 	
 	if (reversed) {
-		return [[keys reverseObjectEnumerator] allObjects];
+		return [keys reverseObjectEnumerator].allObjects;
 	}
 
 	return keys;
@@ -702,7 +702,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (__kindof NSDictionary *)copyDeepAsMutable:(BOOL)mutableCopy
 {
 	@synchronized(self) {
-		NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithCapacity:[self count]];
+		NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithCapacity:self.count];
 
 		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 			id objectCopy = nil;
@@ -726,7 +726,7 @@ NS_ASSUME_NONNULL_BEGIN
 				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 					"Object '%@' does not respond to -copy or returned nil value",
 					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem())
+				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 			}
 		}];
 
