@@ -35,6 +35,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSFileManager (CSFileManagerHelper)
 @property (readonly, strong, nullable) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
 
+- (BOOL)fileExistsAtURL:(NSURL *)url;
+
 - (BOOL)directoryExistsAtPath:(NSString *)path;
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;

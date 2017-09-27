@@ -39,6 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
 	return self.ubiquityIdentityToken;
 }
 
+- (BOOL)fileExistsAtURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	return [self fileExistsAtPath:url.path];
+}
+
 - (BOOL)directoryExistsAtPath:(NSString *)path
 {
 	NSParameterAssert(path != nil);
@@ -284,7 +291,7 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	/* Remove destination if it exists */
-	if ([self fileExistsAtPath:[destinationURL path]]) {
+	if ([self fileExistsAtURL:destinationURL]) {
 		NSError *removeFileError = nil;
 
 		BOOL removeResult = NO;
