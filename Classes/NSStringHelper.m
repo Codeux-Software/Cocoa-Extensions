@@ -637,37 +637,109 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return characterCount;
 }
 
+- (BOOL)isPositiveWholeNumber
+{
+	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType)];
+}
+
+- (BOOL)isPositiveDecimalNumber
+{
+	return [self contentsIsOfType:(CSStringDecimalNumberType | CSStringPositiveNumberType)];
+}
+
+- (BOOL)isAnyPositiveNumber
+{
+	return [self contentsIsOfType:(CSStringAnyNumberType | CSStringPositiveNumberType)];
+}
+
 - (BOOL)isNumericOnly
 {
-	if (self.length == 0) {
-		return NO;
-	}
-
-	for (NSUInteger i = 0; i < self.length; ++i) {
-		UniChar c = [self characterAtIndex:i];
-		
-		if (CS_StringIsBase10Numeric(c) == NO) {
-			return NO;
-		}
-	}
-	
-	return YES;
+	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType)];
 }
 
 - (BOOL)isAlphabeticNumericOnly
 {
+	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType | CSStringAlphabeticType)];
+}
+
+- (BOOL)contentsIsOfType:(CSStringType)type
+{
 	if (self.length == 0) {
 		return NO;
 	}
 
+	if (type == CSStringAnyType) {
+		return YES;
+	}
+
+	BOOL matchWholeNumber = ((type & CSStringWholeNumberType) == CSStringWholeNumberType);
+	BOOL matchDecimalNumber = ((type & CSStringDecimalNumberType) == CSStringDecimalNumberType);
+	BOOL matchPositiveNumber = ((type & CSStringPositiveNumberType) == CSStringPositiveNumberType);
+	BOOL matchNegativeNumber = ((type & CSStirngNegativeNumberType) == CSStirngNegativeNumberType);
+	BOOL matchNumber = (matchWholeNumber && matchDecimalNumber);
+
+	/* If we aren't matching either type of number, we force positive. */
+	if (matchPositiveNumber == NO && matchNegativeNumber == NO) {
+		matchPositiveNumber = YES;
+	}
+
+	BOOL matchAlphabit = ((type & CSStringAlphabeticType) == CSStringAlphabeticType);
+
+	BOOL decimalMatched = NO;
+
 	for (NSUInteger i = 0; i < self.length; ++i) {
 		UniChar c = [self characterAtIndex:i];
-		
-		if (CS_StringIsAlphabeticNumeric(c) == NO) {
-			return NO;
+
+		if (matchNumber) {
+			/* Check first character when matching number
+			 so that we can return on negaitve or positive. */
+			if (i == 0) {
+				if (c == '-') {
+					if (matchNegativeNumber == NO) {
+						return NO;
+					}
+				} else {
+					if (matchPositiveNumber == NO) {
+						return NO;
+					}
+				} // c == '-'
+			} // i == 0
+
+			/* Match decimal place */
+			if (c == '.') {
+				/* We only match decimal place for decimal numbers */
+				if (matchDecimalNumber == NO) {
+					return NO;
+				}
+
+				/* Do not allow more than one decimal place to appear */
+				if (decimalMatched == NO) {
+					decimalMatched = YES;
+				} else {
+					return NO;
+				}
+			} // c == '.'
+		} // matchNumber
+
+		/* All other conditions */
+		if ((CS_StringIsAlphabetic(c) && matchAlphabit) ||
+			(CS_StringIsBase10Numeric(c) && matchNumber))
+		{
+			/* Continue to next character */
+
+			continue;
 		}
+
+		/* If we get to this point, then the character
+		 was one that we are not interested in. */
+		return NO;
+	} // for
+
+	/* If we never matched a decimal place, that might be a problem. */
+	if (matchPositiveNumber == NO && matchDecimalNumber && decimalMatched == NO) {
+		return NO;
 	}
-	
+
 	return YES;
 }
 

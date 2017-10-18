@@ -46,6 +46,18 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSStringWhitespacePlaceholder;
 COCOA_EXTENSIONS_EXTERN NSString * const CS_AtoZUnderscoreDashCharacters;
 COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
+typedef NS_OPTIONS(NSUInteger, CSStringType)
+{
+	CSStringAnyType 			= 0 << 0, // Always returns YES when length > 0
+	CSStringWholeNumberType		= 0 << 1, // No decimal place allowed
+	CSStringDecimalNumberType 	= 0 << 2, // One decimal place allowed
+	CSStringAnyNumberType 		= (CSStringWholeNumberType |
+								   CSStringDecimalNumberType),
+	CSStringPositiveNumberType 	= 0 << 3, // Positive number
+	CSStirngNegativeNumberType	= 0 << 4, // Negative number
+	CSStringAlphabeticType		= 0 << 10 // a to z, A to Z
+};
+
 #pragma mark
 #pragma mark String Helpers
 
@@ -120,8 +132,16 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 @property (readonly, copy) NSString *removeAllNewlines;
 
-@property (getter=isAlphabeticNumericOnly, readonly) BOOL alphabeticNumericOnly;
-@property (getter=isNumericOnly, readonly) BOOL numericOnly;
+@property (getter=isAlphabeticNumericOnly, readonly) BOOL alphabeticNumericOnly; // a-z, A-Z, 0-9
+@property (getter=isNumericOnly, readonly) BOOL numericOnly; // 0-9
+
+@property (readonly) BOOL isPositiveWholeNumber;
+@property (readonly) BOOL isPositiveDecimalNumber;
+@property (readonly) BOOL isAnyPositiveNumber;
+
+/* When matching a number, if option to match positive
+ or negative number is not specified, then positive is matched. */
+- (BOOL)contentsIsOfType:(CSStringType)type;
 
 @property (readonly, copy) NSString *safeFilename;
 
