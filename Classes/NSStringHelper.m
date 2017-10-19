@@ -1422,8 +1422,12 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 - (NSArray<NSAttributedString *> *)splitIntoLines
 {
     NSMutableArray<NSAttributedString *> *lines = [NSMutableArray array];
-    
-    NSUInteger stringLength = self.length;
+
+	NSCharacterSet *characterSet = [NSCharacterSet newlineCharacterSet];
+
+	NSString *string = self.string;
+
+    NSUInteger stringLength = string.length;
 
     NSUInteger rangeStartIn = 0;
     
@@ -1432,7 +1436,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
     while (rangeStartIn < stringLength) {
 		NSRange searchRange = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
      
-		NSRange lineRange = [self.string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:searchRange];
+		NSRange lineRange = [string rangeOfCharacterFromSet:characterSet options:0 range:searchRange];
         
         if (lineRange.location == NSNotFound) {
             break;
