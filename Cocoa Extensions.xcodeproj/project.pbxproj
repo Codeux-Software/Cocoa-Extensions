@@ -51,6 +51,8 @@
 		4CA41C081AC1A73600756137 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4CA41C051AC1A73600756137 /* LICENSE.txt */; };
 		4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA45C211A9149F400AF9C4B /* NSBundleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */; };
+		4CA5D32E1F9829DA006714D6 /* NSCharacterSetHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA5D32C1F9829DA006714D6 /* NSCharacterSetHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CA5D32F1F9829DA006714D6 /* NSCharacterSetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D32D1F9829DA006714D6 /* NSCharacterSetHelper.m */; };
 		4CA63AFA1B63F9EB002CF61C /* XRAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */; };
 		4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */; };
@@ -156,6 +158,8 @@
 		4CA41C101AC1A76E00756137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = Classes/NSBundleHelper.h; sourceTree = "<group>"; };
 		4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBundleHelper.m; path = Classes/NSBundleHelper.m; sourceTree = "<group>"; };
+		4CA5D32C1F9829DA006714D6 /* NSCharacterSetHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSCharacterSetHelper.h; path = Classes/NSCharacterSetHelper.h; sourceTree = "<group>"; };
+		4CA5D32D1F9829DA006714D6 /* NSCharacterSetHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSCharacterSetHelper.m; path = Classes/NSCharacterSetHelper.m; sourceTree = "<group>"; };
 		4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRAddressBook.h; path = Classes/XRAddressBook.h; sourceTree = "<group>"; };
 		4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRAddressBook.m; path = Classes/XRAddressBook.m; sourceTree = "<group>"; };
 		4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
@@ -291,6 +295,7 @@
 				4CDF74B41A8FDE5B000B5FF5 /* NSArrayHelper.h */,
 				4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */,
 				4CDF74B61A8FDE5B000B5FF5 /* NSByteCountFormatterHelper.h */,
+				4CA5D32C1F9829DA006714D6 /* NSCharacterSetHelper.h */,
 				4C8EC7B31DC8E89F0057925A /* NSCoderHelper.h */,
 				4CDF74B71A8FDE5B000B5FF5 /* NSColorHelper.h */,
 				4CDF74B81A8FDE5B000B5FF5 /* NSDataHelper.h */,
@@ -386,6 +391,7 @@
 				4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */,
 				4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */,
 				4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */,
+				4CA5D32D1F9829DA006714D6 /* NSCharacterSetHelper.m */,
 				4C8EC7B41DC8E89F0057925A /* NSCoderHelper.m */,
 				4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */,
 				4CDF74881A8FDE1C000B5FF5 /* NSDataHelper.m */,
@@ -466,6 +472,7 @@
 				4C1923AB1A90024E0076F65A /* StaticDefinitions.h in Headers */,
 				4C1923BC1A9008E70076F65A /* XRBase64Encoding.h in Headers */,
 				4CDF74CD1A8FDE5B000B5FF5 /* NSByteCountFormatterHelper.h in Headers */,
+				4CA5D32E1F9829DA006714D6 /* NSCharacterSetHelper.h in Headers */,
 				4CDF74D31A8FDE5B000B5FF5 /* NSFontHelper.h in Headers */,
 				4CDF74E31A8FE039000B5FF5 /* CocoaExtensions.h in Headers */,
 				4CDF74E11A8FDE5B000B5FF5 /* NSWindowHelper.h in Headers */,
@@ -614,6 +621,7 @@
 				4CDF74AC1A8FDE1C000B5FF5 /* NSScreenHelper.m in Sources */,
 				4C67852D1B74F30600CCA160 /* XRAccessibility.m in Sources */,
 				4CDF74A11A8FDE1C000B5FF5 /* NSDictionaryHelper.m in Sources */,
+				4CA5D32F1F9829DA006714D6 /* NSCharacterSetHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

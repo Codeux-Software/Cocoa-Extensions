@@ -54,6 +54,7 @@
 #import <CocoaExtensions/NSArrayHelper.h>
 #import <CocoaExtensions/NSBundleHelper.h>
 #import <CocoaExtensions/NSByteCountFormatterHelper.h>
+#import <CocoaExtensions/NSCharacterSetHelper.h>
 #import <CocoaExtensions/NSCoderHelper.h>
 #import <CocoaExtensions/NSColorHelper.h>
 #import <CocoaExtensions/NSDataHelper.h>

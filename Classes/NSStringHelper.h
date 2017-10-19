@@ -43,7 +43,6 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSStringEmptyPlaceholder;
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringNewlinePlaceholder;
 COCOA_EXTENSIONS_EXTERN NSString * const NSStringWhitespacePlaceholder;
 
-COCOA_EXTENSIONS_EXTERN NSString * const CS_AtoZUnderscoreDashCharacters;
 COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 typedef NS_OPTIONS(NSUInteger, CSStringType)

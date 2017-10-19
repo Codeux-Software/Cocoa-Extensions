@@ -74,7 +74,6 @@ NSString * const NSStringEmptyPlaceholder = @"";
 NSString * const NSStringNewlinePlaceholder = @"\x0a";
 NSString * const NSStringWhitespacePlaceholder = @"\x20";
 
-NSString * const CS_AtoZUnderscoreDashCharacters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-_";
 NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 @interface NSString (CSStringHelperPrivate)
@@ -756,7 +755,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSParameterAssert(characterSet != nil);
 
-	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet];
+	NSRange searchRange = [self rangeOfCharacterFromSet:characterSet.invertedSet];
 
 	return (searchRange.location == NSNotFound);
 }
@@ -770,7 +769,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)onlyContainsCharacters:(NSString *)characters
 {
-	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters].invertedSet;
+	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
 
 	return [self onlyContainsCharactersFromCharacterSet:characterSet];
 }
@@ -1237,51 +1236,44 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)percentEncodedString
 {
-	static NSString *allowedCharacters = @"-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet percentEncodedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLUser
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789;=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLUserAllowedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLPassword
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789;=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLPasswordAllowedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLHost
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-.0123456789:;=ABCDEFGHIJKLMNOPQRSTUVWXYZ[]_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLHostAllowedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLPath
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:=@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLPathAllowedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLQuery
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLQueryAllowedCharacterSet]];
 }
 
 - (nullable NSString *)percentEncodedURLFragment
 {
-	static NSString *allowedCharacters = @"!$&'()*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~";
-
-	return [self percentEncodedStringWithAllowedCharacters:allowedCharacters];
+	return [self stringByAddingPercentEncodingWithAllowedCharacters:
+			[NSCharacterSet URLFragmentAllowedCharacterSet]];
 }
 
 @end
