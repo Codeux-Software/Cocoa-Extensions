@@ -200,13 +200,19 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSArray<NSString *> *)characterStringBuffer
 {
-	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:self.length];
+	NSUInteger selfLength = self.length;
 
-	for (NSUInteger i = 0; i < self.length; i++) {
-		NSString *character = [self stringCharacterAtIndex:i];
-
-		[buffer addObject:character];
+	if (selfLength == 0) {
+		return @[];
 	}
+
+	NSMutableArray<NSString *> *buffer = [NSMutableArray arrayWithCapacity:selfLength];
+
+	[self enumerateSubstringsInRange:self.range
+							 options:NSStringEnumerationByComposedCharacterSequences
+						  usingBlock:^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop) {
+							  [buffer addObject:substring];
+						  }];
 
 	return [buffer copy];
 }

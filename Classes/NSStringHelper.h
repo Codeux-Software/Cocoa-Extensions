@@ -163,6 +163,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
 
+/* Returns array of composed characters */
 @property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
 
 @property (readonly, copy, nullable) NSString *callStackSymbolMethodName;
