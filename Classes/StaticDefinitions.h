@@ -69,6 +69,8 @@
 
 #define COCOA_EXTENSIONS_EXTERN							extern
 
+#define COCOA_EXTENSIONS_INLINE							static __inline__ __attribute__((always_inline))
+
 #define COCOA_EXTENSIONS_DEPRECATED(reason)				__attribute__((deprecated((reason))))
 
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);

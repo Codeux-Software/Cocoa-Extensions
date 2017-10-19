@@ -32,9 +32,22 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-COCOA_EXTENSIONS_EXTERN NSRange NSEmptyRange(void);
+COCOA_EXTENSIONS_INLINE NSRange NSEmptyRange()
+{
+	return NSMakeRange(NSNotFound, 0);
+}
 
-COCOA_EXTENSIONS_EXTERN BOOL NSRangeIsValid(NSRange r);
-COCOA_EXTENSIONS_EXTERN BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength);
+COCOA_EXTENSIONS_INLINE BOOL NSRangeIsValid(NSRange r)
+{
+	return NSDissimilarObjects(r.location, NSNotFound);
+}
+
+COCOA_EXTENSIONS_INLINE BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength)
+{
+	NSAssertReturnR((r.location <= maxLength), NO);
+	NSAssertReturnR((r.length <= maxLength), NO);
+
+	return (NSRangeIsValid(r) && (r.location + r.length) <= maxLength);
+}
 
 NS_ASSUME_NONNULL_END

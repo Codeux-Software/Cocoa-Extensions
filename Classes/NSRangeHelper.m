@@ -32,22 +32,4 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-NSRange NSEmptyRange()
-{
-	return NSMakeRange(NSNotFound, 0);
-}
-
-BOOL NSRangeIsValid(NSRange r)
-{
-	return NSDissimilarObjects(r.location, NSNotFound);
-}
-
-BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength)
-{
-	NSAssertReturnR((r.location <= maxLength), NO);
-	NSAssertReturnR((r.length <= maxLength), NO);
-	
-	return (NSRangeIsValid(r) && (r.location + r.length) <= maxLength);
-}
-
 NS_ASSUME_NONNULL_END
