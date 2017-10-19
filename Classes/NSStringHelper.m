@@ -342,25 +342,48 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self stringByReplacingOccurrencesOfCharacterSet:[NSCharacterSet newlineCharacterSet] withString:@""];
 }
 
-- (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement
+- (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)characterSet withString:(NSString *)replacement
 {
-	NSParameterAssert(target != nil);
+	NSParameterAssert(characterSet != nil);
+	NSParameterAssert(replacement != nil);
 
-	NSMutableString *newString = [NSMutableString string];
+	CFCharacterSetRef cfCharacterSet = (__bridge CFCharacterSetRef)characterSet;
+	
+	CFStringRef cfSelf = (__bridge CFStringRef)self;
 
-	for (NSUInteger i = 0; i < self.length; i++) {
-		UniChar c = [self characterAtIndex:i];
+	CFIndex cfSelfLength = CFStringGetLength(cfSelf);
 
-		if ([target characterIsMember:c]) {
-			if (replacement && replacement.length > 0) {
-				[newString appendString:replacement];
+	CFStringInlineBuffer inlineBuffer;
+	CFStringInitInlineBuffer(cfSelf, &inlineBuffer, CFRangeMake(0, cfSelfLength));
+	
+	NSMutableString *mutableSelf = nil;
+	
+	NSUInteger replacementLength = replacement.length;
+	
+	/* We reverse the buffer because it allows us to perform replacement
+	 in the mutableSelf buffer without accounting for length offset. */
+	for (CFIndex i = (cfSelfLength - 1); i >= 0; i--) {
+		UniChar c = CFStringGetCharacterFromInlineBuffer(&inlineBuffer, i);
+
+		if (CFCharacterSetIsCharacterMember(cfCharacterSet, c)) {
+			if (mutableSelf == nil) {
+				mutableSelf = [self mutableCopy];
 			}
-		} else {
-			[newString appendFormat:@"%C", c];
+			
+			if (replacementLength == 0) {
+				[mutableSelf deleteCharactersInRange:NSMakeRange(i, 1)];
+			} else {
+				[mutableSelf replaceCharactersInRange:NSMakeRange(i, replacementLength) withString:replacement];
+			}
 		}
 	}
-
-	return newString;
+	
+	/* If mutableSelf is nil, we never had to perform a replacement. */
+	if (mutableSelf) {
+		return [mutableSelf copy];
+	}
+	
+	return self;
 }
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString
@@ -401,9 +424,17 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return 0.0;
 	}
 
-	NSString *_stringA = self.lowercaseString;
+	CFStringRef cfStringA = (__bridge CFStringRef)self.lowercaseString;
+	CFStringRef cfStringB = (__bridge CFStringRef)stringB.lowercaseString;
 
-	NSString *_stringB = stringB.lowercaseString;
+	CFIndex cfStringALength = CFStringGetLength(cfStringA);
+	CFIndex cfStringBLength = CFStringGetLength(cfStringB);
+
+	CFStringInlineBuffer cfStringABuffer;
+	CFStringInitInlineBuffer(cfStringA, &cfStringABuffer, CFRangeMake(0, cfStringALength));
+
+	CFStringInlineBuffer cfStringBBuffer;
+	CFStringInitInlineBuffer(cfStringB, &cfStringBBuffer, CFRangeMake(0, cfStringBLength));
 
 	NSInteger commonCharacterCount = 0;
 
@@ -411,11 +442,13 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	CGFloat distancePenalty = 0;
 
-	for (NSInteger i = 0; i < _stringB.length; i++) {
+	for (NSInteger i = 0; i < cfStringBLength; i++) {
 		BOOL matchFound = NO;
 
-		for (NSInteger j = startPosition; j < _stringA.length; j++) {
-			if ([_stringB characterAtIndex:i] != [_stringA characterAtIndex:j]) {
+		for (NSInteger j = startPosition; j < cfStringALength; j++) {
+			if (CFStringGetCharacterFromInlineBuffer(&cfStringBBuffer, i) !=
+				CFStringGetCharacterFromInlineBuffer(&cfStringABuffer, i))
+			{
 				continue;
 			}
 
@@ -439,9 +472,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		}
 	}
 
-	CGFloat lengthPenalty = (1.0 - (CGFloat)_stringB.length / _stringA.length);
+	CGFloat lengthPenalty = (1.0 - (CGFloat)cfStringBLength / cfStringALength);
 
-	return (commonCharacterCount - distancePenalty - weight*lengthPenalty);
+	return (commonCharacterCount - distancePenalty - weight * lengthPenalty);
 }
 
 - (NSInteger)stringPosition:(NSString *)needle
@@ -631,8 +664,15 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSUInteger characterCount = 0;
 
-	for (NSUInteger i = 0; i < self.length; ++i) {
-		UniChar c = [self characterAtIndex:i];
+	CFStringRef cfSelf = (__bridge CFStringRef)self;
+
+	CFIndex cfSelfLength = CFStringGetLength(cfSelf);
+
+	CFStringInlineBuffer inlineBuffer;
+	CFStringInitInlineBuffer(cfSelf, &inlineBuffer, CFRangeMake(0, cfSelfLength));
+
+	for (CFIndex i = 0; i < cfSelfLength; i++) {
+		UniChar c = CFStringGetCharacterFromInlineBuffer(&inlineBuffer, i);
 
 		if (c == character) {
 			characterCount += 1;
@@ -692,8 +732,15 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	BOOL decimalMatched = NO;
 
-	for (NSUInteger i = 0; i < self.length; ++i) {
-		UniChar c = [self characterAtIndex:i];
+	CFStringRef cfSelf = (__bridge CFStringRef)self;
+
+	CFIndex cfSelfLength = CFStringGetLength(cfSelf);
+
+	CFStringInlineBuffer inlineBuffer;
+	CFStringInitInlineBuffer(cfSelf, &inlineBuffer, CFRangeMake(0, cfSelfLength));
+
+	for (CFIndex i = 0; i < cfSelfLength; i++) {
+		UniChar c = CFStringGetCharacterFromInlineBuffer(&inlineBuffer, i);
 
 		if (matchNumber) {
 			/* Check first character when matching number
