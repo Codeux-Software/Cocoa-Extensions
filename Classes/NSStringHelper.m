@@ -774,47 +774,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self onlyContainsCharactersFromCharacterSet:characterSet];
 }
 
-- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters deleteThoseNotInSet:(BOOL)onlyDeleteThoseNotInSet
-{
-	NSParameterAssert(characters != nil);
-	
-	NSMutableString *result = [NSMutableString string];
-
-	NSCharacterSet *characterSet = [NSCharacterSet characterSetWithCharactersInString:characters];
-	
-	NSScanner *scanner = [NSScanner scannerWithString:self];
-	
-	while (scanner.atEnd == NO) {
-		NSString *buffer;
-		
-		if (onlyDeleteThoseNotInSet) {
-			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
-				[result appendString:buffer];
-			} else {
-				scanner.scanLocation = (scanner.scanLocation + 1);
-			}
-		} else {
-			if ([scanner scanCharactersFromSet:characterSet intoString:&buffer]) {
-				scanner.scanLocation = (scanner.scanLocation + 1);
-			} else {
-				[result appendString:buffer];
-			}
-		}
-	}
-	
-	return result;
-}
-
-- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters
-{
-	return [self stringByDeletingAllCharactersInSet:characters deleteThoseNotInSet:NO];
-}
-
-- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)characters
-{
-	return [self stringByDeletingAllCharactersInSet:characters deleteThoseNotInSet:YES];
-}
-
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start
 {
 	NSParameterAssert(regex != nil);

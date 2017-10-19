@@ -85,9 +85,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
 
-- (NSString *)stringByDeletingAllCharactersInSet:(NSString *)characters;
-- (NSString *)stringByDeletingAllCharactersNotInSet:(NSString *)characters;
-
 - (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)target withString:(NSString *)replacement;
 
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
