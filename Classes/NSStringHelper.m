@@ -1567,14 +1567,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	[NSGraphicsContext saveGraphicsState];
 
 	NSGraphicsContext *bitmapContextAppKitContext = nil;
-
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		bitmapContextAppKitContext =
-		[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
-	} else {
-		bitmapContextAppKitContext =
-		[NSGraphicsContext graphicsContextWithGraphicsPort:bitmapContext flipped:NO];
-	}
+	[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
 
 	[NSGraphicsContext setCurrentContext:bitmapContextAppKitContext];
 
