@@ -297,55 +297,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return [newSet copy];
 }
 
-- (__kindof NSArray *)copyDeepAsMutable:(BOOL)mutableCopy
-{
-	@synchronized(self) {
-		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
-
-		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
-			id objectCopy = nil;
-
-			if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSDictionary class]])
-			{
-				objectCopy = [object copyDeepAsMutable:mutableCopy];
-			}
-			else if (mutableCopy == NO && [object conformsToProtocol:@protocol(NSCopying)])
-			{
-				objectCopy = [object copy];
-			}
-			else if (mutableCopy && [object conformsToProtocol:@protocol(NSMutableCopying)])
-			{
-				objectCopy = [object mutableCopy];
-			}
-
-			if (objectCopy) {
-				[newArray addObject:objectCopy];
-			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Object '%@' does not respond to -copy or returned nil value",
-					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-			}
-		}];
-
-		if (mutableCopy) {
-			return newArray;
-		} else {
-			return [newArray copy];
-		}
-	}
-}
-
-- (NSArray *)copyDeep
-{
-	return [self copyDeepAsMutable:NO];
-}
-
-- (NSMutableArray *)copyDeepMutable
-{
-	return [self copyDeepAsMutable:YES];
-}
-
 - (NSArray *)arrayByRemovingEmptyValues
 {
 	return [self arrayByRemovingEmptyValues:YES trimming:NO uniquing:NO];

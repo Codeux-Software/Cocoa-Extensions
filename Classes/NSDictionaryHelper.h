@@ -104,14 +104,6 @@ NS_ASSUME_NONNULL_BEGIN
 /* "defaults" is allowed to be nil in which case only empty objects are removed. */
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults;
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
-
-/* Returns self with each value a copy or mutable copy of its original */
-/* Objects that do not respond to -copy or -mutableCopy are discarded and
- a warning is shown in Console */
-/* Collections that respond to -copyDeep (NSArray) have it called on them 
- as well instead of only calling -copy */
-@property (readonly, copy) NSDictionary *copyDeep;
-@property (readonly, strong) NSMutableDictionary *copyDeepMutable;
 @end
 
 @interface NSMutableDictionary (CSMutableDictionaryHelper)

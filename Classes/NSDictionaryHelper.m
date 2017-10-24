@@ -699,55 +699,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
-- (__kindof NSDictionary *)copyDeepAsMutable:(BOOL)mutableCopy
-{
-	@synchronized(self) {
-		NSMutableDictionary *newDictionary = [NSMutableDictionary dictionaryWithCapacity:self.count];
-
-		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-			id objectCopy = nil;
-
-			if ([object isKindOfClass:[NSArray class]] || [object isKindOfClass:[NSDictionary class]])
-			{
-				objectCopy = [object copyDeepAsMutable:mutableCopy];
-			}
-			else if (mutableCopy == NO && [object conformsToProtocol:@protocol(NSCopying)])
-			{
-				objectCopy = [object copy];
-			}
-			else if (mutableCopy && [object conformsToProtocol:@protocol(NSMutableCopying)])
-			{
-				objectCopy = [object mutableCopy];
-			}
-
-			if (objectCopy) {
-				newDictionary[key] = objectCopy;
-			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Object '%@' does not respond to -copy or returned nil value",
-					[object description]);
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-			}
-		}];
-
-		if (mutableCopy) {
-			return newDictionary;
-		} else {
-			return [newDictionary copy];
-		}
-	}
-}
-
-- (NSDictionary *)copyDeep
-{
-	return [self copyDeepAsMutable:NO];
-}
-
-- (NSMutableDictionary *)copyDeepMutable
-{
-	return [self copyDeepAsMutable:YES];
-}
-
 @end
 
 @implementation NSMutableDictionary (CSMutableDictionaryHelper)

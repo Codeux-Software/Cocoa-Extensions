@@ -61,9 +61,6 @@ NS_ASSUME_NONNULL_BEGIN
  named "string" which contains any NSString values in original array. */
 @property (copy, readonly) NSArray<NSDictionary *> *stringArrayControllerObjects;
 
-@property (copy, readonly) NSArray *copyDeep;
-@property (strong, readonly) NSMutableArray *copyDeepMutable;
-
 - (NSArray *)arrayByRemovingEmptyValues;
 - (NSArray *)arrayByUniquing;
 - (NSArray *)arrayByRemovingEmptyValuesAndUniquing;
