@@ -86,19 +86,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return value;
 }
 
-- (NSInteger)decodeIntegerForKey:(NSString *)key
-{
-	NSParameterAssert(key != nil);
-
-	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
-
-	if (value == nil) {
-		return 0;
-	}
-
-	return value.integerValue;
-}
-
 - (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
@@ -220,13 +207,6 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(key != nil);
 
 	[self encodeObject:value forKey:key];
-}
-
-- (void)encodeInteger:(NSInteger)value forKey:(NSString *)key
-{
-	NSParameterAssert(key != nil);
-
-	[self encodeObject:@(value) forKey:key];
 }
 
 - (void)encodeUnsignedInteger:(NSUInteger)value forKey:(NSString *)key

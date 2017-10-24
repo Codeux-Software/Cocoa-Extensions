@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable NSDictionary *)decodeDictionaryForKey:(NSString *)key;
 - (nullable NSData *)decodeDataForKey:(NSString *)key;
 - (nullable NSString *)decodeStringForKey:(NSString *)key;
-- (NSInteger)decodeIntegerForKey:(NSString *)key;
 - (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key;
 - (short)decodeShortForKey:(NSString *)key;
 - (unsigned short)decodeUnsignedShortForKey:(NSString *)key;
@@ -50,7 +49,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)encodeDictionary:(NSDictionary *)value forKey:(NSString *)key;
 - (void)encodeData:(NSData *)value forKey:(NSString *)key;
 - (void)encodeString:(NSString *)value forKey:(NSString *)key;
-- (void)encodeInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)encodeUnsignedInteger:(NSUInteger)value forKey:(NSString *)key;
 - (void)encodeShort:(short)value forKey:(NSString *)key;
 - (void)encodeUnsignedShort:(unsigned short)value forKey:(NSString *)key;
