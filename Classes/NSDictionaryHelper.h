@@ -124,6 +124,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDouble:(double)value forKey:(id)key;
 - (void)setFloat:(float)value forKey:(id)key;
 - (void)setPointer:(void *)value forKey:(id)key;
+
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector;
 @end
 
 NS_ASSUME_NONNULL_END

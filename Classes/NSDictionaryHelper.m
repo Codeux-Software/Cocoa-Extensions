@@ -811,6 +811,34 @@ NS_ASSUME_NONNULL_BEGIN
 	self[key] = [NSValue valueWithPointer:value];
 }
 
+- (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
+{
+	NSParameterAssert(performSelector != NULL);
+
+	@synchronized(self) {
+		NSDictionary *oldDictionary = [self copy];
+
+		[oldDictionary enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
+
+			NSAssert1((*(methodSignature.methodReturnType) == '@'),
+				@"Selector '%@' does not return an object value.",
+				NSStringFromSelector(performSelector));
+
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
+			id newObject = [object performSelector:performSelector];
+#pragma GCC diagnostic pop
+
+			NSAssert2((newObject != nil),
+				@"Object %@ returned a nil value when performing selector '%@'",
+				[object description], NSStringFromSelector(performSelector));
+
+			self[key] = newObject;
+		}];
+	}
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
