@@ -60,6 +60,7 @@
 #import <CocoaExtensions/NSDataHelper.h>
 #import <CocoaExtensions/NSDateHelper.h>
 #import <CocoaExtensions/NSDictionaryHelper.h>
+#import <CocoaExtensions/NSErrorHelper.h>
 #import <CocoaExtensions/NSFileManagerHelper.h>
 #import <CocoaExtensions/NSFontHelper.h>
 #import <CocoaExtensions/NSImageHelper.h>

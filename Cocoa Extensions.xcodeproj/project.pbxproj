@@ -28,6 +28,8 @@
 		4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A71E81B629EA200CD363B /* IOKit.framework */; };
 		4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2DD0F01BC423E30027937E /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C2DD0F31BC423E30027937E /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD0F11BC423E30027937E /* NSObjectHelper.m */; };
+		4C356A4F1F9F9D2D00E671D9 /* NSErrorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C356A4D1F9F9D2D00E671D9 /* NSErrorHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C356A501F9F9D2D00E671D9 /* NSErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A4E1F9F9D2D00E671D9 /* NSErrorHelper.m */; };
 		4C4696A01D1B3FBB00E3021A /* XRLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46969F1D1B3FBB00E3021A /* XRLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C48CF411BC73D6D003FD716 /* CGContextHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */; };
 		4C48CF431BC73FE7003FD716 /* CGContextHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C48CF421BC73FE7003FD716 /* CGContextHelper.h */; };
@@ -132,6 +134,8 @@
 		4C2A71E81B629EA200CD363B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C2DD0F01BC423E30027937E /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectHelper.h; path = Classes/NSObjectHelper.h; sourceTree = "<group>"; };
 		4C2DD0F11BC423E30027937E /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = Classes/NSObjectHelper.m; sourceTree = "<group>"; };
+		4C356A4D1F9F9D2D00E671D9 /* NSErrorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSErrorHelper.h; path = Classes/NSErrorHelper.h; sourceTree = "<group>"; };
+		4C356A4E1F9F9D2D00E671D9 /* NSErrorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSErrorHelper.m; path = Classes/NSErrorHelper.m; sourceTree = "<group>"; };
 		4C46969F1D1B3FBB00E3021A /* XRLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRLogging.h; path = Classes/XRLogging.h; sourceTree = "<group>"; };
 		4C48CF3F1BC73D6D003FD716 /* CGContextHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CGContextHelper.m; path = Classes/CGContextHelper.m; sourceTree = "<group>"; };
 		4C48CF421BC73FE7003FD716 /* CGContextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CGContextHelper.h; path = Classes/CGContextHelper.h; sourceTree = "<group>"; };
@@ -301,6 +305,7 @@
 				4CDF74B81A8FDE5B000B5FF5 /* NSDataHelper.h */,
 				4CDF74B91A8FDE5B000B5FF5 /* NSDateHelper.h */,
 				4CDF74BA1A8FDE5B000B5FF5 /* NSDictionaryHelper.h */,
+				4C356A4D1F9F9D2D00E671D9 /* NSErrorHelper.h */,
 				4CDF74BB1A8FDE5B000B5FF5 /* NSFileManagerHelper.h */,
 				4CDF74BC1A8FDE5B000B5FF5 /* NSFontHelper.h */,
 				4CDF74BD1A8FDE5B000B5FF5 /* NSImageHelper.h */,
@@ -396,6 +401,7 @@
 				4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */,
 				4CDF74881A8FDE1C000B5FF5 /* NSDataHelper.m */,
 				4CDF74891A8FDE1C000B5FF5 /* NSDateHelper.m */,
+				4C356A4E1F9F9D2D00E671D9 /* NSErrorHelper.m */,
 				4CDF748A1A8FDE1C000B5FF5 /* NSDictionaryHelper.m */,
 				4CDF748B1A8FDE1C000B5FF5 /* NSFileManagerHelper.m */,
 				4CDF748C1A8FDE1C000B5FF5 /* NSFontHelper.m */,
@@ -472,6 +478,7 @@
 				4C1923AB1A90024E0076F65A /* StaticDefinitions.h in Headers */,
 				4C1923BC1A9008E70076F65A /* XRBase64Encoding.h in Headers */,
 				4CDF74CD1A8FDE5B000B5FF5 /* NSByteCountFormatterHelper.h in Headers */,
+				4C356A4F1F9F9D2D00E671D9 /* NSErrorHelper.h in Headers */,
 				4CA5D32E1F9829DA006714D6 /* NSCharacterSetHelper.h in Headers */,
 				4CDF74D31A8FDE5B000B5FF5 /* NSFontHelper.h in Headers */,
 				4CDF74E31A8FE039000B5FF5 /* CocoaExtensions.h in Headers */,
@@ -620,6 +627,7 @@
 				4CDF749F1A8FDE1C000B5FF5 /* NSDataHelper.m in Sources */,
 				4CDF74AC1A8FDE1C000B5FF5 /* NSScreenHelper.m in Sources */,
 				4C67852D1B74F30600CCA160 /* XRAccessibility.m in Sources */,
+				4C356A501F9F9D2D00E671D9 /* NSErrorHelper.m in Sources */,
 				4CDF74A11A8FDE1C000B5FF5 /* NSDictionaryHelper.m in Sources */,
 				4CA5D32F1F9829DA006714D6 /* NSCharacterSetHelper.m in Sources */,
 			);
