@@ -496,28 +496,20 @@ NS_ASSUME_NONNULL_BEGIN
 		[oldArray enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			NSMethodSignature *methodSignature = [object methodSignatureForSelector:performSelector];
 
-			if (*(methodSignature.methodReturnType) != '@') { // Return object
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Selector '%@' does not return object value.",
-					NSStringFromSelector(performSelector));
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-
-				return;
-			}
+			NSAssert1((*(methodSignature.methodReturnType) == '@'),
+				@"Selector '%@' does not return an object value",
+				NSStringFromSelector(performSelector));
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Warc-performSelector-leaks"
 			id newObject = [object performSelector:performSelector];
 #pragma GCC diagnostic pop
 
-			if (newObject) {
-				self[index] = newObject;
-			} else {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Object %@ returned a nil value when performing selector '%@' - it will not be replaced.",
-					[object description], NSStringFromSelector(performSelector));
-				LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-			}
+			NSAssert2((newObject != nil),
+				@"Object %@ returned a nil value when performing selector '%@'",
+				[object description], NSStringFromSelector(performSelector));
+
+			self[index] = newObject;
 		}];
 	}
 }
