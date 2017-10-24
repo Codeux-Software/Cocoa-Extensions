@@ -34,15 +34,69 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSCoder (CSCoderHelper)
 
-- (void)maybeEncodeObject:(nullable id)objv forKey:(NSString *)key
+- (nullable NSArray *)decodeArrayForKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
 
-	if (objv == nil) {
-		return;
+	NSArray *value = [self decodeObjectOfClass:[NSArray class] forKey:key];
+
+	if (value == nil) {
+		return nil;
 	}
 
-	[self encodeObject:objv forKey:key];
+	return value;
+}
+
+- (nullable NSDictionary *)decodeDictionaryForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSDictionary *value = [self decodeObjectOfClass:[NSDictionary class] forKey:key];
+
+	if (value == nil) {
+		return nil;
+	}
+
+	return value;
+}
+
+- (nullable NSData *)decodeDataForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSData *value = [self decodeObjectOfClass:[NSData class] forKey:key];
+
+	if (value == nil) {
+		return nil;
+	}
+
+	return value;
+}
+
+- (nullable NSString *)decodeStringForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSString *value = [self decodeObjectOfClass:[NSString class] forKey:key];
+
+	if (value == nil) {
+		return nil;
+	}
+
+	return value;
+}
+
+- (NSInteger)decodeIntegerForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.integerValue;
 }
 
 - (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key
@@ -84,30 +138,95 @@ NS_ASSUME_NONNULL_BEGIN
 	return value.unsignedShortValue;
 }
 
-- (nullable NSString *)decodeStringForKey:(NSString *)key
+- (long)decodeLongForKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
 
-	NSString *value = [self decodeObjectOfClass:[NSString class] forKey:key];
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
 
 	if (value == nil) {
-		return nil;
+		return 0;
 	}
 
-	return value;
+	return value.longValue;
 }
 
-- (nullable NSData *)decodeDataForKey:(NSString *)key
+- (unsigned long)decodeUnsignedLongForKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
 
-	NSData *value = [self decodeObjectOfClass:[NSData class] forKey:key];
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
 
 	if (value == nil) {
-		return nil;
+		return 0;
 	}
 
-	return value;
+	return value.unsignedLongValue;
+}
+
+- (long long)decodeLongLongForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.longLongValue;
+}
+
+- (unsigned long long)decodeLnsignedLongLongForKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSNumber *value = [self decodeObjectOfClass:[NSNumber class] forKey:key];
+
+	if (value == nil) {
+		return 0;
+	}
+
+	return value.unsignedLongLongValue;
+}
+
+- (void)encodeArray:(NSArray *)value forKey:(NSString *)key
+{
+	NSParameterAssert(value != nil);
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:value forKey:key];
+}
+
+- (void)encodeDictionary:(NSDictionary *)value forKey:(NSString *)key
+{
+	NSParameterAssert(value != nil);
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:value forKey:key];
+}
+
+- (void)encodeData:(NSData *)value forKey:(NSString *)key
+{
+	NSParameterAssert(value != nil);
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:value forKey:key];
+}
+
+- (void)encodeString:(NSString *)value forKey:(NSString *)key
+{
+	NSParameterAssert(value != nil);
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:value forKey:key];
+}
+
+- (void)encodeInteger:(NSInteger)value forKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:@(value) forKey:key];
 }
 
 - (void)encodeUnsignedInteger:(NSUInteger)value forKey:(NSString *)key
@@ -124,25 +243,48 @@ NS_ASSUME_NONNULL_BEGIN
 	[self encodeObject:@(value) forKey:key];
 }
 
-- (void)encodeUnsignedShort:(unsigned short)value forKey:(NSString *)key;
+- (void)encodeUnsignedShort:(unsigned short)value forKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
 
 	[self encodeObject:@(value) forKey:key];
 }
 
-- (void)encodeString:(NSString *)value forKey:(NSString *)key
+- (void)encodeLong:(long)value forKey:(NSString *)key
 {
-	NSParameterAssert(value != nil);
 	NSParameterAssert(key != nil);
 
-	[self encodeObject:value forKey:key];
+	[self encodeObject:@(value) forKey:key];
 }
 
-- (void)encodeData:(NSData *)value forKey:(NSString *)key
+- (void)encodeUnsignedLong:(unsigned long)value forKey:(NSString *)key
 {
-	NSParameterAssert(value != nil);
 	NSParameterAssert(key != nil);
+
+	[self encodeObject:@(value) forKey:key];
+}
+
+- (void)encodeLongLong:(long long)value forKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:@(value) forKey:key];
+}
+
+- (void)encodeUnsignedLongLong:(unsigned long long)value forKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	[self encodeObject:@(value) forKey:key];
+}
+
+- (void)maybeEncodeObject:(nullable id)value forKey:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	if (value == nil) {
+		return;
+	}
 
 	[self encodeObject:value forKey:key];
 }

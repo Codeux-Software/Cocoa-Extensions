@@ -33,19 +33,33 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSCoder (CSCoderHelper)
+- (nullable NSArray *)decodeArrayForKey:(NSString *)key;
+- (nullable NSDictionary *)decodeDictionaryForKey:(NSString *)key;
+- (nullable NSData *)decodeDataForKey:(NSString *)key;
+- (nullable NSString *)decodeStringForKey:(NSString *)key;
+- (NSInteger)decodeIntegerForKey:(NSString *)key;
 - (NSUInteger)decodeUnsignedIntegerForKey:(NSString *)key;
 - (short)decodeShortForKey:(NSString *)key;
 - (unsigned short)decodeUnsignedShortForKey:(NSString *)key;
-- (nullable NSString *)decodeStringForKey:(NSString *)key;
-- (nullable NSData *)decodeDataForKey:(NSString *)key;
+- (long)decodeLongForKey:(NSString *)key;
+- (unsigned long)decodeUnsignedLongForKey:(NSString *)key;
+- (long long)decodeLongLongForKey:(NSString *)key;
+- (unsigned long long)decodeLnsignedLongLongForKey:(NSString *)key;
 
+- (void)encodeArray:(NSArray *)value forKey:(NSString *)key;
+- (void)encodeDictionary:(NSDictionary *)value forKey:(NSString *)key;
+- (void)encodeData:(NSData *)value forKey:(NSString *)key;
+- (void)encodeString:(NSString *)value forKey:(NSString *)key;
+- (void)encodeInteger:(NSInteger)value forKey:(NSString *)key;
 - (void)encodeUnsignedInteger:(NSUInteger)value forKey:(NSString *)key;
 - (void)encodeShort:(short)value forKey:(NSString *)key;
 - (void)encodeUnsignedShort:(unsigned short)value forKey:(NSString *)key;
-- (void)encodeString:(NSString *)value forKey:(NSString *)key;
-- (void)encodeData:(NSData *)value forKey:(NSString *)key;
+- (void)encodeLong:(long)value forKey:(NSString *)key;
+- (void)encodeUnsignedLong:(unsigned long)value forKey:(NSString *)key;
+- (void)encodeLongLong:(long long)value forKey:(NSString *)key;
+- (void)encodeUnsignedLongLong:(unsigned long long)value forKey:(NSString *)key;
 
-- (void)maybeEncodeObject:(nullable id)objv forKey:(NSString *)key;
+- (void)maybeEncodeObject:(nullable id)value forKey:(NSString *)key;
 @end
 
 NS_ASSUME_NONNULL_END
