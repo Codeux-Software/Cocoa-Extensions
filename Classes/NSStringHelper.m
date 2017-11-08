@@ -447,7 +447,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 		for (NSInteger j = startPosition; j < cfStringALength; j++) {
 			if (CFStringGetCharacterFromInlineBuffer(&cfStringBBuffer, i) !=
-				CFStringGetCharacterFromInlineBuffer(&cfStringABuffer, i))
+				CFStringGetCharacterFromInlineBuffer(&cfStringABuffer, j))
 			{
 				continue;
 			}
