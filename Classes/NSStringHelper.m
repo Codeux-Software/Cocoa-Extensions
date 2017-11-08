@@ -424,8 +424,8 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return 0.0;
 	}
 
-	CFStringRef cfStringA = (__bridge CFStringRef)self.lowercaseString;
-	CFStringRef cfStringB = (__bridge CFStringRef)stringB.lowercaseString;
+	CFStringRef cfStringA = (__bridge_retained CFStringRef)self.lowercaseString;
+	CFStringRef cfStringB = (__bridge_retained CFStringRef)stringB.lowercaseString;
 
 	CFIndex cfStringALength = CFStringGetLength(cfStringA);
 	CFIndex cfStringBLength = CFStringGetLength(cfStringB);
@@ -468,9 +468,15 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		}
 
 		if (matchFound == NO) {
+			CFRelease(cfStringA);
+			CFRelease(cfStringB);
+			
 			return 0.0;
 		}
 	}
+	
+	CFRelease(cfStringA);
+	CFRelease(cfStringB);
 
 	CGFloat lengthPenalty = (1.0 - (CGFloat)cfStringBLength / cfStringALength);
 
