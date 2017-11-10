@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSArray<NSString *> *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
 
++ (NSUInteger)matches:(NSArray<NSString *> * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle;
++ (NSUInteger)matches:(NSArray<NSString *> * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
+
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle;
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
 

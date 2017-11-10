@@ -144,9 +144,13 @@ NS_ASSUME_NONNULL_BEGIN
 		regex = [NSRegularExpression regularExpressionWithPattern:needle options:0 error:NULL];
 	}
 
-	NSMutableArray<NSString *> *realMatches = [NSMutableArray array];
-
 	NSArray *matches = [regex matchesInString:haystack options:0 range:strRange];
+
+	if (matches.count == 0) {
+		return @[];
+	}
+	
+	NSMutableArray<NSString *> *realMatches = [NSMutableArray array];
 
 	for (NSTextCheckingResult *result in matches) {
 		NSString *newStr = [haystack substringWithRange:result.range];
@@ -154,7 +158,23 @@ NS_ASSUME_NONNULL_BEGIN
 		[realMatches addObject:newStr];
 	}
 
-	return realMatches;
+	return [realMatches copy];
+}
+
++ (NSUInteger)matches:(NSArray<NSString *> * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle
+{
+	return [XRRegularExpression matches:matches inString:haystack withRegex:needle withoutCase:NO];
+}
+
++ (NSUInteger)matches:(NSArray<NSString *> * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
+{
+	NSArray *matchesOut = [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:caseless];
+	
+	if (matches) {
+		*matches = matchesOut;
+	}
+	
+	return matchesOut.count;
 }
 
 @end
