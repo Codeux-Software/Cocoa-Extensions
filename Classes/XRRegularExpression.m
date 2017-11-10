@@ -178,17 +178,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return [realMatches copy];
 }
 
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle
 {
 	return [XRRegularExpression matches:matches inString:haystack withRegex:needle withoutCase:NO substringGroups:NO];
 }
 
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
 	return [XRRegularExpression matches:matches inString:haystack withRegex:needle withoutCase:caseless substringGroups:NO];
 }
 
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups
 {
 	NSArray *matchesOut = [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:caseless substringGroups:substringGroups];
 	
@@ -196,7 +196,7 @@ NS_ASSUME_NONNULL_BEGIN
 		*matches = matchesOut;
 	}
 	
-	return (matchesOut.count > 0);
+	return matchesOut.count;
 }
 
 @end

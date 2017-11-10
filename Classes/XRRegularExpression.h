@@ -37,9 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless; // substring = NO
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups;
 
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle; // caseless = NO, substring = NO
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless; // substring = NO
-+ (BOOL)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups;
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle; // caseless = NO, substring = NO
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless; // substring = NO
++ (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups;
 
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle; // caseless = NO
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless;
