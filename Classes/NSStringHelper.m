@@ -1232,6 +1232,35 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [methodName copy];
 }
 
+- (NSString *)normalizeSpaces
+{
+	static NSCharacterSet *removeSet = nil;
+	static NSCharacterSet *replaceSet = nil;
+	
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		removeSet = [NSCharacterSet characterSetWithRange:NSMakeRange(0x200b, 1)];
+		
+		NSMutableCharacterSet *spaceSet = [NSMutableCharacterSet new];
+		
+		[spaceSet addCharactersInRange:NSMakeRange(0xa0, 1)];
+		[spaceSet addCharactersInRange:NSMakeRange(0x2002, 9)]; // 0x2002 ... 0x200a
+		[spaceSet addCharactersInRange:NSMakeRange(0x202f, 1)];
+		[spaceSet addCharactersInRange:NSMakeRange(0x205f, 1)];
+		[spaceSet addCharactersInRange:NSMakeRange(0x3000, 1)];
+		[spaceSet addCharactersInRange:NSMakeRange(0xe0020, 1)];
+		
+		replaceSet = [spaceSet copy];
+	});
+	
+	NSString *bob = [self stringByReplacingOccurrencesOfCharacterSet:removeSet withString:@""];
+	
+	bob = [self stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
+	
+	return bob;
+}
+
 @end
 
 #pragma mark -

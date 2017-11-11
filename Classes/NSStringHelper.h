@@ -141,6 +141,8 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy) NSString *safeFilename;
 
+@property (readonly, copy) NSString *normalizeSpaces;
+
 - (NSRange)rangeOfNextSegmentMatchingRegularExpression:(NSString *)regex startingAt:(NSUInteger)start;
 
 @property (readonly, copy, nullable) NSData *IPv4AddressBytes;
