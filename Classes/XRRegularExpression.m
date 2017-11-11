@@ -162,7 +162,7 @@ NS_ASSUME_NONNULL_BEGIN
 			continue;
 		}
 		
-		for (NSUInteger i = 0; i < result.numberOfRanges; i++) {
+		for (NSUInteger i = 1; i < result.numberOfRanges; i++) {
 			NSRange childGroupRange = [result rangeAtIndex:i];
 			
 			if (childGroupRange.location == NSNotFound) {
