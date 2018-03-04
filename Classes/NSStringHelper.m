@@ -1256,7 +1256,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	
 	NSString *bob = [self stringByReplacingOccurrencesOfCharacterSet:removeSet withString:@""];
 	
-	bob = [self stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
+	bob = [bob stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
 	
 	return bob;
 }
