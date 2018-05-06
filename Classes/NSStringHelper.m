@@ -548,6 +548,16 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 }
 
+- (void)enumerateMatchesOfRegularExpression:(NSString *)expression withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
+{
+	[self enumerateMatchesOfRegularExpression:expression withBlock:enumerationBlock options:0];
+}
+
+- (void)enumerateMatchesOfRegularExpression:(NSString *)expression withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options
+{
+	[self enumerateMatchesOfString:expression withBlock:enumerationBlock options:(options | NSRegularExpressionSearch)];
+}
+
 - (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
 {
 	[self enumerateFirstOccurrenceOfCharactersInString:string withBlock:enumerationBlock options:0];
@@ -1256,7 +1266,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	
 	NSString *bob = [self stringByReplacingOccurrencesOfCharacterSet:removeSet withString:@""];
 	
-	bob = [bob stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
+	bob = [self stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
 	
 	return bob;
 }
@@ -1658,7 +1668,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	 core graphic's context and set it as the current context. */
 	[NSGraphicsContext saveGraphicsState];
 
-	NSGraphicsContext *bitmapContextAppKitContext = 
+	NSGraphicsContext *bitmapContextAppKitContext = nil;
 	[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
 
 	[NSGraphicsContext setCurrentContext:bitmapContextAppKitContext];
