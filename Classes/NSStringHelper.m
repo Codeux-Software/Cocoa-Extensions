@@ -183,6 +183,40 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self substringFromIndex:(anIndex - 1)];
 }
 
+- (NSString *)substringAtIndex:(NSInteger)atIndex toLength:(NSInteger)toLength
+{
+	/* Perform normal substring */
+	if (atIndex >= 0 && toLength >= 0) {
+		return [self substringWithRange:NSMakeRange(atIndex, toLength)];
+	}
+
+	/* Perform negative substring */
+	NSUInteger stringLength = self.length;
+	
+	NSInteger substringLocation = 0;
+	NSInteger substringLength = 0;
+
+	if (atIndex < 0 && toLength < 0) {
+		substringLocation = (0 - atIndex);
+		substringLength = ((atIndex + toLength) + stringLength);
+	} else if (atIndex < 0) {
+		substringLength = (stringLength + atIndex);
+	} else if (toLength < 0) {
+		substringLocation = (stringLength + toLength);
+		substringLength = (0 - toLength);
+	}
+	
+	LogToConsole("%ld %ld", substringLocation, substringLength);
+	
+	NSAssert((substringLocation >= 0 &&
+			  substringLocation <= stringLength), @"Location is out of range");
+	
+	NSAssert((substringLength >= 0 &&
+			  substringLength <= stringLength), @"Length is out of range");
+	
+	return [self substringWithRange:NSMakeRange(substringLocation, substringLength)];
+}
+
 - (BOOL)isEqualIgnoringCase:(NSString *)other
 {
 	return ([self caseInsensitiveCompare:other] == NSOrderedSame);

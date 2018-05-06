@@ -81,6 +81,22 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 - (NSString *)substringAfterIndex:(NSUInteger)anIndex;
 - (NSString *)substringBeforeIndex:(NSUInteger)anIndex;
 
+/* -substringAtIndex:toLength: uses individual arguments as signed
+ integers to allow negative values when creating substring. */
+/* A negative atIndex value will create a substring starting at
+ location 0 and ending at string length minus atIndex
+ For example: given "An example" (length 10), atIndex = -2, toLength = 0
+ Result is: "An examp" */
+/* A negative toLength value will create a substring starting at
+ string length minus atLength until string length.
+ For example: given "An example" (length 10), atIndex = 0, toLength = -2
+ Result is: "le" */
+/* If atIndex and toLength are both negative, then atIndex is taken
+ from location 0 and toLenght is taken from string length.
+ For example: given "An example" (length 10), atIndex = -2, toLength = -2
+ Result is: " examp" */
+- (NSString *)substringAtIndex:(NSInteger)atIndex toLength:(NSInteger)toLength;
+
 - (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex;
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix;
