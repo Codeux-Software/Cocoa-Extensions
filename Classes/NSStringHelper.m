@@ -769,7 +769,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	BOOL matchDecimalNumber = ((type & CSStringDecimalNumberType) == CSStringDecimalNumberType);
 	BOOL matchPositiveNumber = ((type & CSStringPositiveNumberType) == CSStringPositiveNumberType);
 	BOOL matchNegativeNumber = ((type & CSStirngNegativeNumberType) == CSStirngNegativeNumberType);
-	BOOL matchNumber = (matchWholeNumber && matchDecimalNumber);
+	BOOL matchNumber = (matchWholeNumber || matchDecimalNumber);
 
 	/* If we aren't matching either type of number, we force positive. */
 	if (matchPositiveNumber == NO && matchNegativeNumber == NO) {
