@@ -205,9 +205,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		substringLocation = (stringLength + toLength);
 		substringLength = (0 - toLength);
 	}
-	
-	LogToConsole("%ld %ld", substringLocation, substringLength);
-	
+
 	NSAssert((substringLocation >= 0 &&
 			  substringLocation <= stringLength), @"Location is out of range");
 	
