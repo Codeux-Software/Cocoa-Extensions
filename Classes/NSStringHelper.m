@@ -1298,7 +1298,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	
 	NSString *bob = [self stringByReplacingOccurrencesOfCharacterSet:removeSet withString:@""];
 	
-	bob = [self stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
+	bob = [bob stringByReplacingOccurrencesOfCharacterSet:replaceSet withString:@" "];
 	
 	return bob;
 }
@@ -1700,7 +1700,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	 core graphic's context and set it as the current context. */
 	[NSGraphicsContext saveGraphicsState];
 
-	NSGraphicsContext *bitmapContextAppKitContext = nil;
+	NSGraphicsContext *bitmapContextAppKitContext = 
 	[NSGraphicsContext graphicsContextWithCGContext:bitmapContext flipped:NO];
 
 	[NSGraphicsContext setCurrentContext:bitmapContextAppKitContext];
