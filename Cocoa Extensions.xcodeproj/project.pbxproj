@@ -38,6 +38,8 @@
 		4C5DDF6B1D7E39B600A9FE3A /* XRLoggingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5DDF6A1D7E39B600A9FE3A /* XRLoggingPrivate.h */; };
 		4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67852A1B74F30600CCA160 /* XRAccessibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C67852D1B74F30600CCA160 /* XRAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67852B1B74F30600CCA160 /* XRAccessibility.m */; };
+		4C7785A520A9E768001B966C /* NSLayoutConstraintHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7785A320A9E768001B966C /* NSLayoutConstraintHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C7785A620A9E768001B966C /* NSLayoutConstraintHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7785A420A9E768001B966C /* NSLayoutConstraintHelper.m */; };
 		4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */; };
 		4C7A69F81CB0174A00EB85FE /* ApplePrivateMac.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A69F71CB0174A00EB85FE /* ApplePrivateMac.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -144,6 +146,8 @@
 		4C5DDF6A1D7E39B600A9FE3A /* XRLoggingPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRLoggingPrivate.h; path = Classes/XRLoggingPrivate.h; sourceTree = "<group>"; };
 		4C67852A1B74F30600CCA160 /* XRAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRAccessibility.h; path = Classes/XRAccessibility.h; sourceTree = "<group>"; };
 		4C67852B1B74F30600CCA160 /* XRAccessibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRAccessibility.m; path = Classes/XRAccessibility.m; sourceTree = "<group>"; };
+		4C7785A320A9E768001B966C /* NSLayoutConstraintHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSLayoutConstraintHelper.h; path = Classes/NSLayoutConstraintHelper.h; sourceTree = "<group>"; };
+		4C7785A420A9E768001B966C /* NSLayoutConstraintHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSLayoutConstraintHelper.m; path = Classes/NSLayoutConstraintHelper.m; sourceTree = "<group>"; };
 		4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRSystemInformation.h; path = Classes/XRSystemInformation.h; sourceTree = "<group>"; };
 		4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRSystemInformation.m; path = Classes/XRSystemInformation.m; sourceTree = "<group>"; };
 		4C7A69F71CB0174A00EB85FE /* ApplePrivateMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplePrivateMac.h; path = Classes/ApplePrivateMac.h; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 				4CDF74BC1A8FDE5B000B5FF5 /* NSFontHelper.h */,
 				4CDF74BD1A8FDE5B000B5FF5 /* NSImageHelper.h */,
 				4CFB3E3B1D7EBE9D004198A3 /* NSIndexSetHelper.h */,
+				4C7785A320A9E768001B966C /* NSLayoutConstraintHelper.h */,
 				4CDF74BE1A8FDE5B000B5FF5 /* NSMenuHelper.h */,
 				4CF8B9551D1DE47A00352AF6 /* NSMethodSignatureHelper.h */,
 				4CDF74BF1A8FDE5B000B5FF5 /* NSNumberHelper.h */,
@@ -413,6 +418,7 @@
 				4C2DD0F11BC423E30027937E /* NSObjectHelper.m */,
 				4CDF74911A8FDE1C000B5FF5 /* NSOutlineViewHelper.m */,
 				4CDF74921A8FDE1C000B5FF5 /* NSPasteboardHelper.m */,
+				4C7785A420A9E768001B966C /* NSLayoutConstraintHelper.m */,
 				4CDF74931A8FDE1C000B5FF5 /* NSRangeHelper.m */,
 				4CDF74951A8FDE1C000B5FF5 /* NSScreenHelper.m */,
 				4CDF74961A8FDE1C000B5FF5 /* NSSplitViewHelper.m */,
@@ -494,6 +500,7 @@
 				4CA45C201A9149F400AF9C4B /* NSBundleHelper.h in Headers */,
 				4CDF74D81A8FDE5B000B5FF5 /* NSOutlineViewHelper.h in Headers */,
 				4CA63AFA1B63F9EB002CF61C /* XRAddressBook.h in Headers */,
+				4C7785A520A9E768001B966C /* NSLayoutConstraintHelper.h in Headers */,
 				4CA0D51A1B8DFF9600D61395 /* NSThemeFrameHelper.h in Headers */,
 				4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */,
 				4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */,
@@ -618,6 +625,7 @@
 				4CA2CC8C1CE64D90007D86B3 /* NSUserDefaultsHelper.m in Sources */,
 				4CDF74AE1A8FDE1C000B5FF5 /* NSStringHelper.m in Sources */,
 				4C27811B1CBD906400334FD0 /* NSWorkspaceHelper.m in Sources */,
+				4C7785A620A9E768001B966C /* NSLayoutConstraintHelper.m in Sources */,
 				4C4A62D61D3B12D4008F33B8 /* NSArrayControllerHelper.m in Sources */,
 				4CDF74A41A8FDE1C000B5FF5 /* NSImageHelper.m in Sources */,
 				4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */,
