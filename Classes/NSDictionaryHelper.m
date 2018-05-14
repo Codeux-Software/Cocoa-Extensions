@@ -669,7 +669,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableDictionary *newDictionary = [NSMutableDictionary dictionary];
 
-	@synchronized(self) {
+	@synchronized (self) {
 		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
 			if (NSObjectIsEmpty(object)) {
 				if (allowEmptyValues == NO) {
@@ -697,6 +697,57 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return [dictionary copy];
 	}
+}
+
+- (NSString *)formDataUsingSeparator:(NSString *)separator
+{
+	return [self formDataUsingSeparator:separator encodingBlock:^NSString *(NSString *value) {
+		return value.percentEncodedString;
+	}];
+}
+
+- (NSString *)formDataUsingSeparator:(NSString *)separator encodingBlock:(NSString *(NS_NOESCAPE ^)(NSString *value))encodingBlock
+{
+	NSMutableArray<NSString *> *queryItems = [NSMutableArray array];
+
+	@synchronized (self) {
+		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+			/* Key */
+			NSString *stringKey = nil;
+
+			if ([key isKindOfClass:[NSString class]]) {
+				stringKey = key;
+			} else if ([key isKindOfClass:[NSNumber class]]) {
+				stringKey = ((NSNumber *)key).stringValue;
+			}
+			
+			if (stringKey == nil) {
+				return;
+			}
+			
+			/* Object */
+			NSString *stringObject = nil;
+
+			if ([object isKindOfClass:[NSString class]]) {
+				stringObject = object;
+			} else if ([object isKindOfClass:[NSNumber class]]) {
+				stringObject = ((NSNumber *)object).stringValue;
+			} else if ([object isKindOfClass:[NSNull class]]) {
+				stringObject = @"";
+			}
+			
+			if (stringObject == nil) {
+				return;
+			}
+			
+			/* Query item */
+			NSString *queryItem = [NSString stringWithFormat:@"%@=%@", stringKey, encodingBlock(stringObject)];
+			
+			[queryItems addObject:queryItem];
+		}];
+	}
+	
+	return [queryItems componentsJoinedByString:separator];
 }
 
 @end

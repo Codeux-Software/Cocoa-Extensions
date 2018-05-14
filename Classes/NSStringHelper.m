@@ -1220,30 +1220,48 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return u;
 }
 
-- (NSDictionary<NSString *, NSString *> *)URLQueryItems
+- (NSDictionary<NSString *, NSString *> *)formDataUsingSeparator:(NSString *)separator
 {
+	return [self formDataUsingSeparator:separator decodingBlock:^NSString *(NSString *value) {
+		return value.percentDecodedString;
+	}];
+}
+
+- (NSDictionary<NSString *, NSString *> *)formDataUsingSeparator:(NSString *)separator decodingBlock:(NSString *(NS_NOESCAPE ^)(NSString *value))decodingBlock
+{
+	NSParameterAssert(separator != nil);
+	NSParameterAssert(decodingBlock != nil);
+	
 	NSMutableDictionary<NSString *, NSString *> *queryItems = [NSMutableDictionary dictionary];
-
-	NSArray *components = [self componentsSeparatedByString:@"&"];
-
+	
+	NSArray *components = [self componentsSeparatedByString:separator];
+	
 	for (NSString *component in components) {
 		if (component.length == 0) {
 			continue;
 		}
-
+		
 		NSInteger equalSignPosition = [component stringPosition:@"="];
-
+		
 		if (equalSignPosition < 0) { // not found
 			queryItems[component] = @"";
 		} else {
 			NSString *name = [component substringToIndex:equalSignPosition];
+		
 			NSString *value = [component substringAfterIndex:equalSignPosition];
-
-			queryItems[name] = value.percentDecodedString;
+			
+			queryItems[name] = decodingBlock(value);
 		}
 	}
-
+	
 	return [queryItems copy];
+}
+
+- (NSDictionary<NSString *, NSString *> *)URLQueryItems
+{
+	return [self formDataUsingSeparator:@"&" decodingBlock:^NSString *(NSString *value) {
+		return value.percentDecodedString;
+	}];
 }
 
 - (nullable NSString *)callStackSymbolMethodName

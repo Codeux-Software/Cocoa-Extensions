@@ -104,6 +104,14 @@ NS_ASSUME_NONNULL_BEGIN
 /* "defaults" is allowed to be nil in which case only empty objects are removed. */
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults;
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues;
+
+/* Abstraction of query items that uses a custom
+ separator and allows for custom encoding logic. */
+/* Regular URL encoding is used by -formDataUsingSeparator: */
+/* Key types that are accepted: NSString, NSNumber */
+/* Object types that are accepted: NSString, NSNumber, NSNull */
+- (NSString *)formDataUsingSeparator:(NSString *)separator;
+- (NSString *)formDataUsingSeparator:(NSString *)separator encodingBlock:(NSString *(NS_NOESCAPE ^)(NSString *value))encodingBlock;
 @end
 
 @interface NSMutableDictionary (CSMutableDictionaryHelper)

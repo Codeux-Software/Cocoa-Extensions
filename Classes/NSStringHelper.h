@@ -184,6 +184,12 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
 
+/* Abstraction of query items that uses a custom
+ separator and allows for custom decoding logic. */
+/* Regular URL decoding is used by -formDataUsingSeparator: */
+- (NSDictionary<NSString *, NSString *> *)formDataUsingSeparator:(NSString *)separator;
+- (NSDictionary<NSString *, NSString *> *)formDataUsingSeparator:(NSString *)separator decodingBlock:(NSString *(NS_NOESCAPE ^)(NSString *value))decodingBlock;
+
 /* Returns array of composed characters */
 @property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
 
