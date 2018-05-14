@@ -593,6 +593,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(anObject != nil);
 
+	if (self.count == 0) {
+		return nil;
+	}
+
 	NSSet *keys =
 	[self keysOfEntriesPassingTest:^BOOL(id key, id object, BOOL *stop) {
 		if (NSObjectsAreEqual(object, anObject)) {
@@ -613,6 +617,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)keyIgnoringCase:(id)key
 {
+	if (self.count == 0) {
+		return nil;
+	}
+
 	NSSet *keys =
 	[self keysOfEntriesPassingTest:^BOOL(id objectKey, id object, BOOL *stop) {
 		if ([objectKey respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
@@ -647,6 +655,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)sortedDictionaryKeys:(BOOL)reversed
 {
+	if (self.count == 0) {
+		return @[];
+	}
+
 	NSArray *keys = [self.allKeys sortedArrayUsingSelector:@selector(compare:)];
 	
 	if (reversed) {
@@ -663,6 +675,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSDictionary *)dictionaryByRemovingDefaults:(nullable NSDictionary *)defaults allowEmptyValues:(BOOL)allowEmptyValues
 {
+	if (self.count == 0) {
+		return self;
+	}
+
 	if (defaults == nil && allowEmptyValues == YES) {
 		return self;
 	}
@@ -690,6 +706,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(entries != nil);
 
+	if (self.count == 0) {
+		return [entries copy];
+	}
+
 	@synchronized (self) {
 		NSMutableDictionary *dictionary = [self mutableCopy];
 
@@ -708,6 +728,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)formDataUsingSeparator:(NSString *)separator encodingBlock:(NSString *(NS_NOESCAPE ^)(NSString *value))encodingBlock
 {
+	if (self.count == 0) {
+		return @"";
+	}
+	
 	NSMutableArray<NSString *> *queryItems = [NSMutableArray array];
 
 	@synchronized (self) {
@@ -865,6 +889,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)performSelectorOnObjectValueAndReplace:(SEL)performSelector
 {
 	NSParameterAssert(performSelector != NULL);
+
+	if (self.count == 0) {
+		return;
+	}
 
 	@synchronized(self) {
 		NSDictionary *oldDictionary = [self copy];

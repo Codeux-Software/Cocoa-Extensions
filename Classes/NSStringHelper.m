@@ -291,7 +291,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
 
-    uint8_t digest[CC_MD5_DIGEST_LENGTH ];
+	NSParameterAssert(data != nil);
+
+    uint8_t digest[CC_MD5_DIGEST_LENGTH];
 
     CC_MD5(data.bytes, (CC_LONG)data.length, digest);
 
@@ -327,7 +329,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSUInteger stringLength = self.length;
 
-	if (stringLength <= maximumLength) {
+	if (stringLength == 0) {
+		return @[];
+	} else if (stringLength <= maximumLength) {
 		return @[self];
 	}
 
@@ -378,13 +382,17 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 {
 	NSParameterAssert(characterSet != nil);
 	NSParameterAssert(replacement != nil);
-
-	CFCharacterSetRef cfCharacterSet = (__bridge CFCharacterSetRef)characterSet;
 	
+	if (self.length == 0) {
+		return self;
+	}
+
 	CFStringRef cfSelf = (__bridge CFStringRef)self;
 
 	CFIndex cfSelfLength = CFStringGetLength(cfSelf);
 
+	CFCharacterSetRef cfCharacterSet = (__bridge CFCharacterSetRef)characterSet;
+	
 	CFStringInlineBuffer inlineBuffer;
 	CFStringInitInlineBuffer(cfSelf, &inlineBuffer, CFRangeMake(0, cfSelfLength));
 	
@@ -517,6 +525,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSInteger)stringPosition:(NSString *)needle
 {
+	if (self.length == 0) {
+		return (-1);
+	}
+
 	NSRange searchResult = [self rangeOfString:needle];
 	
 	if (searchResult.location == NSNotFound) {
@@ -528,6 +540,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle
 {
+	if (self.length == 0) {
+		return (-1);
+	}
+
 	NSRange searchResult = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
 
 	if (searchResult.location == NSNotFound) {
@@ -547,9 +563,13 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSParameterAssert(string != nil);
 	NSParameterAssert(enumerationBlock != nil);
 
-	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
-
 	NSUInteger searchLength = self.length;
+
+	if (searchLength == 0) {
+		return;
+	}
+	
+	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
 
 	NSUInteger currentPosition = 0;
 
@@ -600,9 +620,13 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSParameterAssert(string != nil);
 	NSParameterAssert(enumerationBlock != nil);
 
-	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
-
 	NSUInteger searchLength = self.length;
+
+	if (searchLength == 0) {
+		return;
+	}
+
+	BOOL searchBackwards = ((options & NSBackwardsSearch) == NSBackwardsSearch);
 
 	NSUInteger currentPosition = 0;
 
@@ -635,6 +659,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)stringByDeletingPreifx:(NSString *)prefix
 {
+	if (self.length == 0) {
+		return self;
+	}
+
 	if ([self hasPrefix:prefix]) {
 		return [self substringFromIndex:prefix.length];
 	}
@@ -659,6 +687,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSData *)IPv4AddressBytes
 {
+	if (self.length == 0) {
+		return nil;
+	}
+
 	struct sockaddr_in sa;
 
 	int result = inet_pton(AF_INET, self.UTF8String, &(sa.sin_addr));
@@ -672,6 +704,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSData *)IPv6AddressBytes
 {
+	if (self.length == 0) {
+		return nil;
+	}
+
 	struct sockaddr_in6 sa;
 
 	int result = inet_pton(AF_INET6, self.UTF8String, &(sa.sin6_addr));
@@ -685,6 +721,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)trimAndGetFirstToken
 {
+	if (self.length == 0) {
+		return self;
+	}
+
 	NSString *bob = self.trim;
 
 	NSString *firstToken = [NSString getTokenFromFirstWhitespaceGroup:bob returnedDeletionRange:NULL];
@@ -694,6 +734,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)safeFilename
 {
+	if (self.length == 0) {
+		return self;
+	}
+
 	NSString *bob = self.trim;
 
 	bob = [bob stringByReplacingOccurrencesOfString:@"/" withString:@"_"];
@@ -710,6 +754,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSUInteger)occurrencesOfCharacter:(UniChar)character
 {
+	if (self.length == 0) {
+		return 0;
+	}
+
 	NSUInteger characterCount = 0;
 
 	CFStringRef cfSelf = (__bridge CFStringRef)self;
@@ -883,7 +931,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	NSUInteger stringLength = self.length;
 
-	if (stringLength <= start) {
+	if (stringLength == 0 || stringLength <= start) {
 		return emptyRange;
 	}
 	
@@ -903,6 +951,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont
 {
+	if (self.length == 0) {
+		return 0;
+	}
+
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth withFont:textFont];
 	
 	return (boundHeight / lineHeight);
@@ -915,6 +967,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode
 {
+	if (self.length == 0) {
+		return 0.0;
+	}
+
 	NSAttributedString *base = [NSAttributedString attributedStringWithString:self];
 
 	return [base pixelHeightInWidth:width lineBreakMode:lineBreakMode withFont:textFont];
@@ -1205,6 +1261,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSURL *)URLUsingWebKitPasteboard
 {
+	if (self.length == 0) {
+		return nil;
+	}
+
 	NSPasteboard *pasteboard = [NSPasteboard pasteboardWithUniqueName];
 
 	pasteboard.stringContent = self;
@@ -1232,6 +1292,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	NSParameterAssert(separator != nil);
 	NSParameterAssert(decodingBlock != nil);
 	
+	if (self.length == 0) {
+		return @{};
+	}
+
 	NSMutableDictionary<NSString *, NSString *> *queryItems = [NSMutableDictionary dictionary];
 	
 	NSArray *components = [self componentsSeparatedByString:separator];
@@ -1266,6 +1330,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)callStackSymbolMethodName
 {
+	if (self.length == 0) {
+		return nil;
+	}
+	
 	NSMutableArray *components = [[self splitWithCharacters:@" "] mutableCopy];
 
 	// Remove excessive blank lines between app name and memory address
@@ -1294,6 +1362,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSString *)normalizeSpaces
 {
+	if (self.length == 0) {
+		return self;
+	}
+	
 	static NSCharacterSet *removeSet = nil;
 	static NSCharacterSet *replaceSet = nil;
 	
@@ -1569,26 +1641,36 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSArray<NSAttributedString *> *)splitIntoLines
 {
-    NSMutableArray<NSAttributedString *> *lines = [NSMutableArray array];
-
-	NSCharacterSet *characterSet = [NSCharacterSet newlineCharacterSet];
-
 	NSString *string = self.string;
 
     NSUInteger stringLength = string.length;
 
+	if (stringLength == 0) {
+		return @[];
+	}
+
+	NSMutableAttributedString *mutableSelf = nil;
+	
+	NSMutableArray<NSAttributedString *> *lines = nil;
+	
     NSUInteger rangeStartIn = 0;
-    
-    NSMutableAttributedString *mutableSelf = [self mutableCopy];
     
     while (rangeStartIn < stringLength) {
 		NSRange searchRange = NSMakeRange(rangeStartIn, (stringLength - rangeStartIn));
      
-		NSRange lineRange = [string rangeOfCharacterFromSet:characterSet options:0 range:searchRange];
+		NSRange lineRange = [string rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet] options:0 range:searchRange];
         
         if (lineRange.location == NSNotFound) {
             break;
         }
+		
+		if (mutableSelf == nil) {
+			mutableSelf = [self mutableCopy];
+		}
+		
+		if (lines == nil) {
+			lines = [NSMutableArray array];
+		}
         
         NSRange rangeToDelete = NSMakeRange(0, ((lineRange.location - rangeStartIn) + 1));
 
@@ -1596,24 +1678,22 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
         
         NSAttributedString *line = [self attributedSubstringFromRange:rangeToSubstring];
         
-		if (line) {
-			[lines addObject:line];
-		}
+		[lines addObject:line];
 		
         [mutableSelf deleteCharactersInRange:rangeToDelete];
 
         rangeStartIn = NSMaxRange(lineRange);
     }
-    
-	if (lines.count == 0) {
-        [lines addObject:self];
-    } else {
-        if (mutableSelf.length > 0) {
+
+	if (lines) {
+		if (mutableSelf.length > 0) {
 			[lines addObject:mutableSelf];
-        }
-    }
-    
-    return lines;
+		}
+
+		return [lines copy];
+	}
+	
+	return @[self];
 }
 
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight
@@ -1622,7 +1702,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 }
 
 - (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont
-{	
+{
+	if (self.length == 0) {
+		return 0.0;
+	}
+	
 	CGFloat boundHeight = [self pixelHeightInWidth:boundWidth lineBreakMode:NSLineBreakByWordWrapping withFont:textFont];
 
 	return (boundHeight / lineHeight);
@@ -1640,6 +1724,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(nullable NSFont *)textFont
 {
+	if (self.length == 0) {
+		return 0.0;
+	}
+
 	NSMutableAttributedString *baseMutable = [self mutableCopy];
 
 	NSRange baseMutableRange = NSMakeRange(0, baseMutable.length);
@@ -1673,7 +1761,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return nil;
 	}
 
-	if (self.length <= 0) {
+	if (self.length == 0) {
 		return nil;
 	}
 
@@ -1792,6 +1880,10 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSRect)imageBoundsOfFirstRun
 {
+	if (self.length == 0) {
+		return NSZeroRect;
+	}
+	
 	NSRect result = NSZeroRect;
 
 	CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)self);

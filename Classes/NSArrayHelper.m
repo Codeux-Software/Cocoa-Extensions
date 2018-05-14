@@ -235,6 +235,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(anObject != nil);
 
+	if (self.count == 0) {
+		return NO;
+	}
+
 	@synchronized(self) {
 		NSUInteger objectIndex =
 		[self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
@@ -262,6 +266,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)arrayByRemovingObjectAtIndex:(NSUInteger)index
 {
+	if (self.count == 0) {
+		return self;
+	}
+
 	@synchronized(self) {
 		NSMutableArray *array = [self mutableCopy];
 
@@ -273,6 +281,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSMutableArray *)mutableSubarrayWithRange:(NSRange)range
 {
+	if (self.count == 0) {
+		return [NSMutableArray array];
+	}
+
 	@synchronized(self) {
 		NSArray *subarray = [self subarrayWithRange:range];
 
@@ -282,6 +294,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)stringArrayControllerObjects
 {
+	if (self.count == 0) {
+		return @[];
+	}
+
 	NSMutableArray *newSet = [NSMutableArray array];
 
 	@synchronized(self) {
@@ -314,6 +330,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)arrayByRemovingEmptyValues:(BOOL)removeEmptyValues trimming:(BOOL)trimValues uniquing:(BOOL)uniqueValues
 {
+	if (self.count == 0) {
+		return self;
+	}
+
 	@synchronized(self) {
 		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
 
@@ -344,6 +364,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options
 {
+	if (self.count == 0) {
+		return nil;
+	}
+
 	NSUInteger objectIndex = [self indexOfObjectWithOptions:options passingTest:predicate];
 
 	if (objectIndex == NSNotFound) {
@@ -490,6 +514,10 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(performSelector != NULL);
 
+	if (self.count == 0) {
+		return;
+	}
+
 	@synchronized(self) {
 		NSArray *oldArray = [self copy];
 
@@ -516,6 +544,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)shuffle
 {
+	if (self.count == 0) {
+		return;
+	}
+
 	@synchronized (self) {
 		NSUInteger selfCount = self.count;
 
