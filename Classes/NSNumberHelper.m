@@ -34,9 +34,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSNumber (CSNumberHelper)
 
-+ (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2
++ (BOOL)compareCGFloat:(CGFloat)firstValue toFloat:(CGFloat)secondValue
 {
-	return (fabs(num1 - num2) <= __DBL_EPSILON__);
+	return CGFloatAreEqual(firstValue, secondValue);
 }
 
 - (BOOL)isBooleanValue

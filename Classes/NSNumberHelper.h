@@ -39,8 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
 #define NSNumberWithDouble(d)				[NSNumber numberWithDouble:d]
 #define NSNumberInRange(n,s,e)				(n >= s && n <= e)
 
+COCOA_EXTENSIONS_INLINE BOOL CGFloatAreEqual(CGFloat firstValue, CGFloat secondValue)
+{
+	return (fabs(firstValue - secondValue) <= __DBL_EPSILON__);
+}
+
 @interface NSNumber (CSNumberHelper)
-+ (BOOL)compareCGFloat:(CGFloat)num1 toFloat:(CGFloat)num2;
++ (BOOL)compareCGFloat:(CGFloat)firstValue toFloat:(CGFloat)secondValue COCOA_EXTENSIONS_DEPRECATED("Use CGFloatAreEqual() instead");
 
 @property (readonly) BOOL isBooleanValue;
 

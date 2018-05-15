@@ -188,9 +188,9 @@ NS_ASSUME_NONNULL_BEGIN
 		CGFloat greenValue = self.greenComponent;
 		CGFloat blueValue = self.blueComponent;
 
-		if ([NSNumber compareCGFloat:redValue toFloat:greenValue] &&
-			[NSNumber compareCGFloat:greenValue toFloat:blueValue] &&
-			[NSNumber compareCGFloat:redValue toFloat:blueValue])
+		if (CGFloatAreEqual(redValue, greenValue) &&
+			CGFloatAreEqual(greenValue, blueValue) &&
+			CGFloatAreEqual(redValue, blueValue))
 		{
 			return YES;
 		}
