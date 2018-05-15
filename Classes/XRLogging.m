@@ -155,11 +155,11 @@ NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType
 			}
 		}
 
-		formatString = [NSString stringWithFormat:@"[%s] %s [Line %d]: %s", typeString, function, line, formatter];
+		formatString = [NSString stringWithFormat:@"[%s] %s [Line %lu]: %s", typeString, function, line, formatter];
 
 #if _LogToConsoleSupportsUnifiedLogging == 1
 	} else {
-		formatString = [NSString stringWithFormat:@"%s [Line %d]: %s", function, line, formatter];
+		formatString = [NSString stringWithFormat:@"%s [Line %lu]: %s", function, line, formatter];
 	}
 #endif
 
