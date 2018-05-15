@@ -85,10 +85,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(itemKind != nil);
 	NSParameterAssert(service != nil);
 
-	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
-													  withItemKind:itemKind
-													  forUsearname:username
-													   serviceName:service];
+	NSMutableDictionary *dictionary = [self searchDictionary:itemName
+												withItemKind:itemKind
+												forUsearname:username
+												 serviceName:service];
 	
 	if (deleteFromCloud) {
 		dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
@@ -124,10 +124,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(itemKind != nil);
 	NSParameterAssert(service != nil);
 
-	NSMutableDictionary *oldDictionary = [XRKeychain searchDictionary:itemName
-														 withItemKind:itemKind
-														 forUsearname:username
-														  serviceName:service];
+	NSMutableDictionary *oldDictionary = [self searchDictionary:itemName
+												   withItemKind:itemKind
+												   forUsearname:username
+													serviceName:service];
 
 	if (modifyForCloud) {
 		oldDictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
@@ -150,11 +150,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (status == errSecItemNotFound) {
 		if (newPassword && newPassword.length > 0) {
-			return [XRKeychain addKeychainItem:itemName
-								  withItemKind:itemKind
-								   forUsername:username
-								  withPassword:newPassword
-								   serviceName:service];
+			return [self addKeychainItem:itemName
+							withItemKind:itemKind
+							 forUsername:username
+							withPassword:newPassword
+							 serviceName:service];
 		}
 	}
 
@@ -187,10 +187,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(password != nil);
 	NSParameterAssert(service != nil);
 
-	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
-													  withItemKind:itemKind
-													  forUsearname:username
-													   serviceName:service];
+	NSMutableDictionary *dictionary = [self searchDictionary:itemName
+												withItemKind:itemKind
+												forUsearname:username
+												 serviceName:service];
 
 	if (addToCloud) {
 		dictionary[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
@@ -210,12 +210,11 @@ NS_ASSUME_NONNULL_BEGIN
 									   forUsername:(nullable NSString *)username
 									   serviceName:(NSString *)service
 {
-	return [XRKeychain getPasswordFromKeychainItem:itemName
-									  withItemKind:itemKind
 									   forUsername:username
-									   serviceName:service
-										 fromCloud:NO
-								returnedStatusCode:NULL];
+	return [self getPasswordFromKeychainItem:itemName
+								withItemKind:itemKind
+								   fromCloud:NO
+						  returnedStatusCode:NULL];
 }
 
 + (nullable NSString *)getPasswordFromKeychainItem:(NSString *)itemName
@@ -229,10 +228,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(itemKind != nil);
 	NSParameterAssert(service != nil);
 
-	NSMutableDictionary *dictionary = [XRKeychain searchDictionary:itemName
-													  withItemKind:itemKind
 													  forUsearname:username
 													   serviceName:service];
+	NSMutableDictionary *dictionary = [self searchDictionary:itemName
+												withItemKind:itemKind
 
 	dictionary[(id)kSecMatchLimit] = (id)kSecMatchLimitOne;
 	dictionary[(id)kSecReturnData] = (id)kCFBooleanTrue;

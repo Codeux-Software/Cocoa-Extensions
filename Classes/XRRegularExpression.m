@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle
 {
-	return [XRRegularExpression string:haystack isMatchedByRegex:needle withoutCase:NO];
+	return [self string:haystack isMatchedByRegex:needle withoutCase:NO];
 }
 
 + (BOOL)string:(NSString *)haystack isMatchedByRegex:(NSString *)needle withoutCase:(BOOL)caseless
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle
 {
-	return [XRRegularExpression string:haystack rangeOfRegex:needle withoutCase:NO];
+	return [self string:haystack rangeOfRegex:needle withoutCase:NO];
 }
 
 + (NSRange)string:(NSString *)haystack rangeOfRegex:(NSString *)needle withoutCase:(BOOL)caseless
@@ -101,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
-	return [XRRegularExpression totalNumberOfMatchesInString:haystack withRegex:needle withoutCase:NO];
+	return [self totalNumberOfMatchesInString:haystack withRegex:needle withoutCase:NO];
 }
 
 + (NSUInteger)totalNumberOfMatchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
@@ -126,12 +126,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle
 {
-	return [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:NO substringGroups:NO];
+	return [self matchesInString:haystack withRegex:needle withoutCase:NO substringGroups:NO];
 }
 
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	return [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:caseless substringGroups:NO];
+	return [self matchesInString:haystack withRegex:needle withoutCase:caseless substringGroups:NO];
 }
 
 + (NSArray *)matchesInString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups
@@ -180,17 +180,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle
 {
-	return [XRRegularExpression matches:matches inString:haystack withRegex:needle withoutCase:NO substringGroups:NO];
+	return [self matches:matches inString:haystack withRegex:needle withoutCase:NO substringGroups:NO];
 }
 
 + (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless
 {
-	return [XRRegularExpression matches:matches inString:haystack withRegex:needle withoutCase:caseless substringGroups:NO];
+	return [self matches:matches inString:haystack withRegex:needle withoutCase:caseless substringGroups:NO];
 }
 
 + (NSUInteger)matches:(NSArray * _Nullable * _Nonnull)matches inString:(NSString *)haystack withRegex:(NSString *)needle withoutCase:(BOOL)caseless substringGroups:(BOOL)substringGroups
 {
-	NSArray *matchesOut = [XRRegularExpression matchesInString:haystack withRegex:needle withoutCase:caseless substringGroups:substringGroups];
+	NSArray *matchesOut = [self matchesInString:haystack withRegex:needle withoutCase:caseless substringGroups:substringGroups];
 	
 	if (matches) {
 		*matches = matchesOut;

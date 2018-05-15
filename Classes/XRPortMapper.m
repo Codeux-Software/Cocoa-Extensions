@@ -111,7 +111,7 @@ static NSString * _Nullable StringFromIPv4Addr(UInt32 ipv4Addr)
 - (BOOL)isMapped
 {
 	return ( self.rawPublicAddress != 0 &&
-			 self.rawPublicAddress != [XRPortMapper rawLocalAddress]);
+			 self.rawPublicAddress != [[self class] rawLocalAddress]);
 }
 
 /** Called whenever the port mapping changes (see comment for callback, below.) */
@@ -317,7 +317,7 @@ static const struct {UInt32 mask, value;} kPrivateRanges[] = {
 	// This will cause the DNSService to look up our public address without creating a mapping.
 	NSString *address = nil;
 
-	XRPortMapper *mapper = [[XRPortMapper alloc] initWithPort:0];
+	XRPortMapper *mapper = [[[self class] alloc] initWithPort:0];
 
 	[mapper setMapTCP:NO];
 	[mapper setMapUDP:NO];

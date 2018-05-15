@@ -321,10 +321,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSDictionary *)systemInformationDictionary
 {
-	NSDictionary *systemInfo = [XRSystemInformation createDictionaryFromFileAtPath:@"/System/Library/CoreServices/SystemVersion.plist"];
+	NSDictionary *systemInfo = [self createDictionaryFromFileAtPath:@"/System/Library/CoreServices/SystemVersion.plist"];
 
 	if (systemInfo == nil) {
-		systemInfo = [XRSystemInformation createDictionaryFromFileAtPath:@"/System/Library/CoreServices/ServerVersion.plist"];
+		systemInfo = [self createDictionaryFromFileAtPath:@"/System/Library/CoreServices/ServerVersion.plist"];
 	}
 
 	return systemInfo;
