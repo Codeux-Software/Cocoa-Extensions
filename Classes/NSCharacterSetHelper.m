@@ -139,7 +139,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return characterSet;
 }
 
-+ (NSCharacterSet *)ZeroToNineCharacetSet
++ (NSCharacterSet *)ZeroToNineCharacterSet
 {
 	static NSCharacterSet *characterSet = nil;
 	
@@ -154,7 +154,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return characterSet;
 }
 
-+ (NSCharacterSet *)ZeroToNineDecimalCharacetSet
++ (NSCharacterSet *)ZeroToNineDecimalCharacterSet
 {
 	static NSCharacterSet *characterSet = nil;
 	

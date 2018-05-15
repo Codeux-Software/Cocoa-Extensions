@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (long)decodeLongForKey:(NSString *)key;
 - (unsigned long)decodeUnsignedLongForKey:(NSString *)key;
 - (long long)decodeLongLongForKey:(NSString *)key;
-- (unsigned long long)decodeLnsignedLongLongForKey:(NSString *)key;
+- (unsigned long long)decodeUnsignedLongLongForKey:(NSString *)key;
 
 - (void)encodeArray:(NSArray *)value forKey:(NSString *)key;
 - (void)encodeDictionary:(NSDictionary *)value forKey:(NSString *)key;

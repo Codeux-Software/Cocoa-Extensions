@@ -99,7 +99,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 - (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex;
 
-- (NSString *)stringByDeletingPreifx:(NSString *)prefix;
+- (NSString *)stringByDeletingPrefix:(NSString *)prefix;
 
 - (NSString *)stringByReplacingOccurrencesOfCharacterSet:(NSCharacterSet *)characterSet withString:(NSString *)replacement;
 

@@ -73,12 +73,12 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  0123456789
  */
-@property (readonly, class, copy) NSCharacterSet *ZeroToNineCharacetSet;
+@property (readonly, class, copy) NSCharacterSet *ZeroToNineCharacterSet;
 
 /**
  0123456789.
  */
-@property (readonly, class, copy) NSCharacterSet *ZeroToNineDecimalCharacetSet;
+@property (readonly, class, copy) NSCharacterSet *ZeroToNineDecimalCharacterSet;
 @end
 
 NS_ASSUME_NONNULL_END

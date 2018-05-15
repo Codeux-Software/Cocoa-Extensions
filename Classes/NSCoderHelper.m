@@ -164,7 +164,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return value.longLongValue;
 }
 
-- (unsigned long long)decodeLnsignedLongLongForKey:(NSString *)key
+- (unsigned long long)decodeUnsignedLongLongForKey:(NSString *)key
 {
 	NSParameterAssert(key != nil);
 

@@ -657,7 +657,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	}
 }
 
-- (NSString *)stringByDeletingPreifx:(NSString *)prefix
+- (NSString *)stringByDeletingPrefix:(NSString *)prefix
 {
 	if (self.length == 0) {
 		return self;

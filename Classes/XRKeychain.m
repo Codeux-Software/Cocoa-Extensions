@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSMutableDictionary *)searchDictionary:(NSString *)itemName
 							 withItemKind:(NSString *)itemKind
-							 forUsearname:(nullable NSString *)username
+							  forUsername:(nullable NSString *)username
 							  serviceName:(NSString *)service
 {
 	NSMutableDictionary *searchDictionary = [NSMutableDictionary dictionary];
@@ -87,7 +87,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableDictionary *dictionary = [self searchDictionary:itemName
 												withItemKind:itemKind
-												forUsearname:username
+												 forUsername:username
 												 serviceName:service];
 	
 	if (deleteFromCloud) {
@@ -126,7 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableDictionary *oldDictionary = [self searchDictionary:itemName
 												   withItemKind:itemKind
-												   forUsearname:username
+												    forUsername:username
 													serviceName:service];
 
 	if (modifyForCloud) {
@@ -189,7 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableDictionary *dictionary = [self searchDictionary:itemName
 												withItemKind:itemKind
-												forUsearname:username
+												 forUsername:username
 												 serviceName:service];
 
 	if (addToCloud) {
@@ -210,9 +210,10 @@ NS_ASSUME_NONNULL_BEGIN
 									   forUsername:(nullable NSString *)username
 									   serviceName:(NSString *)service
 {
-									   forUsername:username
 	return [self getPasswordFromKeychainItem:itemName
 								withItemKind:itemKind
+								 forUsername:username
+								 serviceName:service
 								   fromCloud:NO
 						  returnedStatusCode:NULL];
 }
@@ -228,10 +229,10 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(itemKind != nil);
 	NSParameterAssert(service != nil);
 
-													  forUsearname:username
-													   serviceName:service];
 	NSMutableDictionary *dictionary = [self searchDictionary:itemName
 												withItemKind:itemKind
+												 forUsername:username
+												 serviceName:service];
 
 	dictionary[(id)kSecMatchLimit] = (id)kSecMatchLimitOne;
 	dictionary[(id)kSecReturnData] = (id)kCFBooleanTrue;
