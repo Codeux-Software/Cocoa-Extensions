@@ -93,18 +93,18 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSString *colorSpaceName = self.colorSpaceName;
 
-	return ([colorSpaceName isEqual:@"NSDeviceRGBColorSpace"] ||
-			[colorSpaceName isEqual:@"NSCalibratedRGBColorSpace"]);
+	return ([colorSpaceName isEqualToString:@"NSDeviceRGBColorSpace"] ||
+			[colorSpaceName isEqualToString:@"NSCalibratedRGBColorSpace"]);
 }
 
 - (BOOL)isInGrayColorSpace
 {
 	NSString *colorSpaceName = self.colorSpaceName;
 
-	return ([colorSpaceName isEqual:@"NSDeviceWhiteColorSpace"] ||
-			[colorSpaceName isEqual:@"NSDeviceBlackColorSpace"] ||
-			[colorSpaceName isEqual:@"NSCalibratedWhiteColorSpace"] ||
-			[colorSpaceName isEqual:@"NSCalibratedBlackColorSpace"]);
+	return ([colorSpaceName isEqualToString:@"NSDeviceWhiteColorSpace"] ||
+			[colorSpaceName isEqualToString:@"NSDeviceBlackColorSpace"] ||
+			[colorSpaceName isEqualToString:@"NSCalibratedWhiteColorSpace"] ||
+			[colorSpaceName isEqualToString:@"NSCalibratedBlackColorSpace"]);
 }
 
 #pragma mark -
