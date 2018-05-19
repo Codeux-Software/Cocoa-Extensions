@@ -135,7 +135,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (void)saveWindowStateUsingKeyword:(NSString *)keyword
 {
-	NSObjectIsEmptyAssert(keyword)
+	NSParameterAssert(keyword.length > 0);
 
 	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 
@@ -144,7 +144,7 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 
 - (void)restoreWindowStateUsingKeyword:(NSString *)keyword
 {
-	NSObjectIsEmptyAssert(keyword)
+	NSParameterAssert(keyword.length > 0);
 
 	keyword = [NSString stringWithFormat:@"NSWindow Frame -> Internal (v3) -> %@", keyword];
 

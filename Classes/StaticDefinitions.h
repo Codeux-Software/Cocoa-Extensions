@@ -30,13 +30,6 @@
 
  *********************************************************************** */
 
-#define PointerIsEmpty(s)								((s) == NULL || (s) == nil)
-#define PointerIsNotEmpty(s)							((s) != NULL && (s) != nil)
-
-#define NSDissimilarObjects(o,n)						((o) != (n))
-
-#define CFSafeRelease(s)								if ((s) != NULL) { CFRelease((s)); }
-
 #define NSAssertReturn(c)								if ((c) == NO) { return; }
 #define NSAssertReturnR(c, r)							if ((c) == NO) { return (r); }
 #define NSAssertReturnLoopContinue(c)					if ((c) == NO) { continue; }
@@ -51,16 +44,6 @@
 #define NSObjectIsNotEmptyAssertReturn(o, r)			if (NSObjectIsNotEmpty(o)) { return (r); }
 #define NSObjectIsNotEmptyAssertLoopContinue(o)			if (NSObjectIsNotEmpty(o)) { continue; }
 #define NSObjectIsNotEmptyAssertLoopBreak(o)			if (NSObjectIsNotEmpty(o)) { break; }
-
-#define PointerIsEmptyAssert(o)							if (PointerIsEmpty(o)) { return; }
-#define PointerIsEmptyAssertReturn(o, r)				if (PointerIsEmpty(o)) { return (r); }
-#define PointerIsEmptyAssertLoopContinue(o)				if (PointerIsEmpty(o)) { continue; }
-#define PointerIsEmptyAssertLoopBreak(o)				if (PointerIsEmpty(o)) { break; }
-
-#define PointerIsNotEmptyAssert(o)						if (PointerIsNotEmpty(o)) { return; }
-#define PointerIsNotEmptyAssertReturn(o, r)				if (PointerIsNotEmpty(o)) { return (r); }
-#define PointerIsNotEmptyAssertLoopContinue(o)			if (PointerIsNotEmpty(o)) { continue; }
-#define PointerIsNotEmptyAssertLoopBreak(o)				if (PointerIsNotEmpty(o)) { break; }
 
 #define NSObjectIsKindOfClassAssert(o,c)				if ([(o) isKindOfClass:[c class]] == NO) { return; }
 #define NSObjectIsKindOfClassAssertReturn(o, c, r)		if ([(o) isKindOfClass:[c class]] == NO) { return (r); }

@@ -39,7 +39,7 @@ COCOA_EXTENSIONS_INLINE NSRange NSEmptyRange()
 
 COCOA_EXTENSIONS_INLINE BOOL NSRangeIsValid(NSRange r)
 {
-	return NSDissimilarObjects(r.location, NSNotFound);
+	return (r.location != NSNotFound);
 }
 
 COCOA_EXTENSIONS_INLINE BOOL NSRangeIsValidInBounds(NSRange r, NSUInteger maxLength)
