@@ -790,7 +790,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)isAnyPositiveNumber
 {
-	return [self contentsIsOfType:(CSStringAnyNumberType | CSStringPositiveNumberType)];
+	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringDecimalNumberType | CSStringPositiveNumberType)];
 }
 
 - (BOOL)isNumericOnly

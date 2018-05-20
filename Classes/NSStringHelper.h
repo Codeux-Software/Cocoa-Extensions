@@ -50,10 +50,12 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 	CSStringAnyType 			= 1 << 0, // Always returns YES when length > 0
 	CSStringWholeNumberType		= 1 << 1, // No decimal place allowed
 	CSStringDecimalNumberType 	= 1 << 2, // One decimal place allowed
-	CSStringAnyNumberType 		= (CSStringWholeNumberType |
-								   CSStringDecimalNumberType),
 	CSStringPositiveNumberType 	= 1 << 3, // Positive number
 	CSStirngNegativeNumberType	= 1 << 4, // Negative number
+	CSStringAnyNumberType 		= (CSStringWholeNumberType |
+								   CSStringDecimalNumberType |
+								   CSStringPositiveNumberType |
+								   CSStirngNegativeNumberType),
 	CSStringAlphabeticType		= 1 << 10 // a to z, A to Z
 };
 
