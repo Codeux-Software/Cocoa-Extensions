@@ -242,10 +242,6 @@ NS_ASSUME_NONNULL_BEGIN
 	@synchronized(self) {
 		NSUInteger objectIndex =
 		[self indexOfObjectPassingTest:^BOOL(id object, NSUInteger index, BOOL *stop) {
-			if ([object respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
-				return NO;
-			}
-
 			if ([object isEqualIgnoringCase:anObject]) {
 				*stop = YES;
 

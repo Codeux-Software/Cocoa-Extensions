@@ -32,6 +32,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@implementation NSObject (CSObjectHelper)
+
+- (BOOL)isEqualIgnoringCase:(id)other
+{
+	return [self isEqual:other];
+}
+
+@end
+
 @implementation NSObject (CSObjectPerformHelper)
 
 - (void)cancelPerformRequests

@@ -32,6 +32,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface NSObject (CSObjectHelper)
+/* Default implementation uses -isEqual: */
+/* Expected to be replaced in subclass */
+- (BOOL)isEqualIgnoringCase:(id)other;
+@end
+
 @interface NSObject (CSObjectPerformHelper)
 - (void)cancelPerformRequests;
 - (void)cancelPerformRequestsWithSelector:(SEL)aSelector;

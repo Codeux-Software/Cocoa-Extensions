@@ -113,7 +113,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 - (BOOL)hasPrefixWithCharacterSet:(NSCharacterSet *)characterSet;
 - (BOOL)hasSuffixWithCharacterSet:(NSCharacterSet *)characterSet;
 
-- (BOOL)isEqualIgnoringCase:(NSString *)other;
+- (BOOL)isEqualToStringIgnoringCase:(NSString *)other;
 
 - (BOOL)contains:(NSString *)string;
 - (BOOL)containsIgnoringCase:(NSString *)string;

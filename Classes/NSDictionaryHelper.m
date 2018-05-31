@@ -623,10 +623,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSSet *keys =
 	[self keysOfEntriesPassingTest:^BOOL(id objectKey, id object, BOOL *stop) {
-		if ([objectKey respondsToSelector:@selector(isEqualIgnoringCase:)] == NO) {
-			return NO;
-		}
-
 		if ([objectKey isEqualIgnoringCase:key]) {
 			*stop = YES;
 

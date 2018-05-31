@@ -215,8 +215,21 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self substringWithRange:NSMakeRange(substringLocation, substringLength)];
 }
 
-- (BOOL)isEqualIgnoringCase:(NSString *)other
+- (BOOL)isEqualIgnoringCase:(id)other
 {
+	if ([other isKindOfClass:[NSString class]] == NO) {
+		return NO;
+	}
+
+	return [self isEqualToStringIgnoringCase:other];
+}
+
+- (BOOL)isEqualToStringIgnoringCase:(NSString *)other
+{
+	if (self == other) {
+		return YES;
+	}
+
 	return ([self caseInsensitiveCompare:other] == NSOrderedSame);
 }
 
