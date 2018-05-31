@@ -69,6 +69,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate;
 - (nullable id)objectPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options;
+
+- (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate;
+- (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options;
 @end
 
 @interface NSMutableArray (CSMutableArrayHelper)

@@ -377,6 +377,26 @@ NS_ASSUME_NONNULL_BEGIN
 	return self[objectIndex];
 }
 
+- (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate
+{
+	return [self objectsPassingTest:predicate withOptions:0];
+}
+
+- (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options
+{
+	if (self.count == 0) {
+		return @[];
+	}
+
+	NSIndexSet *objectIndexes = [self indexesOfObjectsWithOptions:options passingTest:predicate];
+
+	if (objectIndexes.count == 0) {
+		return @[];
+	}
+
+	return [self objectsAtIndexes:objectIndexes];
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
