@@ -393,6 +393,37 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self objectsAtIndexes:objectIndexes];
 }
 
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block
+{
+	[self enumerateSubarraysOfSize:subarraySzie usingBlock:block withOptions:0];
+}
+
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block withOptions:(NSEnumerationOptions)options
+{
+	NSParameterAssert(subarraySzie > 0);
+	NSParameterAssert(block != nil);
+
+	if (self.count == 0) {
+		return;
+	}
+
+	NSMutableArray *subarray = [NSMutableArray arrayWithCapacity:subarraySzie];
+
+	[self enumerateObjectsWithOptions:options usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+		[subarray addObject:object];
+
+		if (subarray.count == subarraySzie) {
+			block([subarray copy], stop);
+
+			[subarray removeAllObjects];
+		}
+	}];
+
+	if (subarray.count > 0) {
+		block([subarray copy], NULL);
+	}
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
