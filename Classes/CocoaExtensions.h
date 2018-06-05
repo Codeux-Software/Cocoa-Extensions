@@ -77,6 +77,7 @@
 #import <CocoaExtensions/NSScreenHelper.h>
 #import <CocoaExtensions/NSSplitViewHelper.h>
 #import <CocoaExtensions/NSStringHelper.h>
+#import <CocoaExtensions/NSTabViewHelper.h>
 #import <CocoaExtensions/NSTextFieldHelper.h>
 #import <CocoaExtensions/NSThemeFrameHelper.h>
 #import <CocoaExtensions/NSURLHelper.h>
