@@ -30,6 +30,8 @@
  *
  *********************************************************************** */
 
+"macOS High Sierra" = "macOS High Sierra";
+"macOS Sierra" = "macOS Sierra";
 "OS X El Capitan" = "OS X El Capitan";
 "OS X Yosemite" = "OS X Yosemite";
 "OS X Mavericks" = "OS X Mavericks";
