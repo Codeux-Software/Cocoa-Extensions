@@ -56,6 +56,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSInteger rowBeneathMouse;
 @property (readonly) NSInteger rowUnderMouse COCOA_EXTENSIONS_DEPRECATED("Use -rowBeneathMouse instead");
 
+- (void)enumerateSelectedRowViewsUsingBlock:(void (NS_NOESCAPE ^)(__kindof NSTableRowView *rowView, NSInteger row, BOOL * _Nullable stop))handler;
+
+- (void)triggerRowIsSelected;
+
 - (void)selectItemAtIndex:(NSUInteger)index;
 
 - (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes

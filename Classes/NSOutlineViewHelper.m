@@ -43,6 +43,24 @@ NS_ASSUME_NONNULL_BEGIN
 	[self scrollRowToVisible:index];
 }
 
+- (void)enumerateSelectedRowViewsUsingBlock:(void (NS_NOESCAPE ^)(__kindof NSTableRowView *rowView, NSInteger row, BOOL * _Nullable stop))handler
+{
+	NSIndexSet *selectedRows = self.selectedRowIndexes;
+
+	[selectedRows enumerateIndexesUsingBlock:^(NSUInteger index, BOOL *stop) {
+		NSTableRowView *rowView = [self rowViewAtRow:index makeIfNecessary:NO];
+
+		handler(rowView, index, stop);
+	}];
+}
+
+- (void)triggerRowIsSelected
+{
+	[self enumerateSelectedRowViewsUsingBlock:^(__kindof NSTableRowView *rowView, NSInteger row, BOOL *stop) {
+		rowView.selected = rowView.selected;
+	}];
+}
+
 - (NSInteger)rowBeneathMouse
 {
 	NSPoint ml = self.window.mouseLocationOutsideOfEventStream;
