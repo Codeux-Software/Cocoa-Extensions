@@ -58,7 +58,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)enumerateSelectedRowViewsUsingBlock:(void (NS_NOESCAPE ^)(__kindof NSTableRowView *rowView, NSInteger row, BOOL * _Nullable stop))handler;
 
-- (void)triggerRowIsSelected;
+- (void)invalidateBackgroundForSelection; // See -[NSTableRowView invalidateSelectionBackground]
+@property (readonly) BOOL invalidatingBackgroundForSelection;
 
 - (void)selectItemAtIndex:(NSUInteger)index;
 
@@ -68,6 +69,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)selectRowIndexes:(NSIndexSet *)indexes
 	byExtendingSelection:(BOOL)extend
 	   scrollToSelection:(BOOL)scroll;
+@end
+
+@interface NSTableRowView (CSTableRowViewHelper)
+@property (readonly, nullable) __kindof NSTableView *parentTableView;
+
+@property (readonly) BOOL invalidatingBackgroundForSelection;
 @end
 
 NS_ASSUME_NONNULL_END

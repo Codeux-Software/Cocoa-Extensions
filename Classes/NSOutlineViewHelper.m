@@ -36,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSTableView (CSTableViewHelper)
 
+static void *_invalidatingBackgroundOfSelection = nil;
+
 - (void)selectItemAtIndex:(NSUInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
@@ -54,11 +56,41 @@ NS_ASSUME_NONNULL_BEGIN
 	}];
 }
 
-- (void)triggerRowIsSelected
+- (void)invalidateBackgroundForSelection
 {
-	[self enumerateSelectedRowViewsUsingBlock:^(__kindof NSTableRowView *rowView, NSInteger row, BOOL *stop) {
-		rowView.selected = rowView.selected;
-	}];
+	[self setInvalidatingBackgroundForSelection:YES];
+
+	NSIndexSet *selectedRows = self.selectedRowIndexes;
+
+	BOOL allowsEmptySelection = self.allowsEmptySelection;
+
+	self.allowsEmptySelection = YES;
+
+	[self deselectAll:nil];
+
+	[self selectRowIndexes:selectedRows byExtendingSelection:NO];
+
+	self.allowsEmptySelection = allowsEmptySelection;
+
+	[self setInvalidatingBackgroundForSelection:NO];
+}
+
+- (BOOL)invalidatingBackgroundForSelection
+{
+	NSNumber *customPositioning = objc_getAssociatedObject(self, _invalidatingBackgroundOfSelection);
+
+	if (customPositioning) {
+		return customPositioning.boolValue;
+	}
+
+	return NO;
+}
+
+- (void)setInvalidatingBackgroundForSelection:(BOOL)invalidatingBackgroundForSelection
+{
+	NSNumber *valueToAssign = ((invalidatingBackgroundForSelection) ? @(YES) : nil);
+
+	objc_setAssociatedObject(self, _invalidatingBackgroundOfSelection, valueToAssign, OBJC_ASSOCIATION_COPY);
 }
 
 - (NSInteger)rowBeneathMouse
@@ -103,6 +135,28 @@ NS_ASSUME_NONNULL_BEGIN
 	if (scroll && indexes.count > 0) {
 		[self scrollRowToVisible:indexes.firstIndex];
 	}
+}
+
+@end
+
+#pragma mark -
+
+@implementation NSTableRowView (CSTableRowViewHelper)
+
+- (__kindof NSTableView * _Nullable)parentTableView
+{
+	NSView *superview = self.superview;
+
+	if ([superview isKindOfClass:[NSTableView class]] == NO) {
+		return nil;
+	}
+
+	return (NSTableView *)superview;
+}
+
+- (BOOL)invalidatingBackgroundForSelection
+{
+	return self.parentTableView.invalidatingBackgroundForSelection;
 }
 
 @end
