@@ -61,7 +61,7 @@
  SUCH DAMAGE.
 */
 
-#import <CommonCrypto/CommonDigest.h>
+@import CommonCrypto;
 
 NS_ASSUME_NONNULL_BEGIN
 

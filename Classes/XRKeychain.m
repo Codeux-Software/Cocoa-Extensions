@@ -30,7 +30,7 @@
  *
  *********************************************************************** */
 
-#import <Security/Security.h>
+@import Security;
 
 NS_ASSUME_NONNULL_BEGIN
 

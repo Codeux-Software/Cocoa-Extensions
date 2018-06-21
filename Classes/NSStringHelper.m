@@ -60,11 +60,12 @@
  OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  SUCH DAMAGE.
 */
+
 #import "CGContextHelper.h"
 
-#import <CommonCrypto/CommonDigest.h>
+@import CommonCrypto;
 
-#import <WebKit/WebKit.h>
+@import WebKit;
 
 #include <arpa/inet.h>
 

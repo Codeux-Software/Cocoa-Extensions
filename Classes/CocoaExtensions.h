@@ -30,9 +30,10 @@
  *
  *********************************************************************** */
 
-#import <AppKit/AppKit.h>
+#ifdef __OBJC__
+@import AppKit;
 
-#import <CoreGraphics/CoreGraphics.h>
+@import CoreGraphics;
 
 #import <CocoaExtensions/StaticDefinitions.h>
 
@@ -85,3 +86,4 @@
 #import <CocoaExtensions/NSValueHelper.h>
 #import <CocoaExtensions/NSWindowHelper.h>
 #import <CocoaExtensions/NSWorkspaceHelper.h>
+#endif

@@ -1,6 +1,6 @@
 
 #if defined(AVAILABLE_MAC_OS_X_VERSION_10_12_AND_LATER)
-#import <os/log.h>
+@import os.log;
 #endif
 
 NS_ASSUME_NONNULL_BEGIN
