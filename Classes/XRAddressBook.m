@@ -30,7 +30,7 @@
  *
  *********************************************************************** */
 
-#import <AddressBook/AddressBook.h>
+@import AddressBook;
 
 NS_ASSUME_NONNULL_BEGIN
 
