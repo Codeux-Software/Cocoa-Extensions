@@ -33,10 +33,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSLayoutConstraint (CSLayoutConstraintHelper)
-
 - (void)zeroOutConstant;
 
-@property (readonly) CGFloat archivedConstant;
+@property (nonatomic, assign) CGFloat archivedConstant;
 
 - (void)archiveConstant;
 - (void)archiveConstantAndZeroOut;

@@ -43,12 +43,12 @@ static void *_internalUserInfo = nil;
 
 - (nullable NSString *)userInfo
 {
-	return objc_getAssociatedObject(self, _internalUserInfo);
+	return objc_getAssociatedObject(self, @selector(userInfo));
 }
 
 - (void)setUserInfo:(nullable NSString *)userInfo
 {
-	objc_setAssociatedObject(self, _internalUserInfo, userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
+	objc_setAssociatedObject(self, @selector(userInfo), userInfo, OBJC_ASSOCIATION_COPY_NONATOMIC);
 }
 
 - (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively

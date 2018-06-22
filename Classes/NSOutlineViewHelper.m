@@ -36,8 +36,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSTableView (CSTableViewHelper)
 
-static void *_invalidatingBackgroundOfSelection = nil;
-
 - (void)selectItemAtIndex:(NSUInteger)index
 {
 	[self selectRowIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
@@ -77,7 +75,7 @@ static void *_invalidatingBackgroundOfSelection = nil;
 
 - (BOOL)invalidatingBackgroundForSelection
 {
-	NSNumber *customPositioning = objc_getAssociatedObject(self, _invalidatingBackgroundOfSelection);
+	NSNumber *customPositioning = objc_getAssociatedObject(self, @selector(invalidatingBackgroundForSelection));
 
 	if (customPositioning) {
 		return customPositioning.boolValue;
@@ -90,7 +88,7 @@ static void *_invalidatingBackgroundOfSelection = nil;
 {
 	NSNumber *valueToAssign = ((invalidatingBackgroundForSelection) ? @(YES) : nil);
 
-	objc_setAssociatedObject(self, _invalidatingBackgroundOfSelection, valueToAssign, OBJC_ASSOCIATION_COPY);
+	objc_setAssociatedObject(self, @selector(invalidatingBackgroundForSelection), valueToAssign, OBJC_ASSOCIATION_COPY);
 }
 
 - (NSInteger)rowBeneathMouse

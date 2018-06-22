@@ -41,8 +41,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSThemeFrame (CSThemeFrameHelper)
 
-static void *_internalUsesCustomTitlebarTitlePositioning = nil;
-
 + (void)load
 {
 	static dispatch_once_t onceToken;
@@ -114,20 +112,20 @@ static void *_internalUsesCustomTitlebarTitlePositioning = nil;
 	}
 
 	/* Assigned object is an NSNumber which means we have to translate to BOOL */
-	NSNumber *customPositioning = objc_getAssociatedObject(self, _internalUsesCustomTitlebarTitlePositioning);
+	NSNumber *customPositioning = objc_getAssociatedObject(self, @selector(usesCustomTitlebarTitlePositioning));
 
 	if (customPositioning) {
 		return customPositioning.boolValue;
-	} else {
-		return NO;
 	}
+
+	return NO;
 }
 
 - (void)setUsesCustomTitlebarTitlePositioning:(BOOL)usesCustomTitlebarTitlePositioning
 {
 	/* Assigned as an NSNumber that is copied. */
 	objc_setAssociatedObject(self,
-		_internalUsesCustomTitlebarTitlePositioning,
+		@selector(usesCustomTitlebarTitlePositioning),
 		@(usesCustomTitlebarTitlePositioning),
 		OBJC_ASSOCIATION_COPY);
 }

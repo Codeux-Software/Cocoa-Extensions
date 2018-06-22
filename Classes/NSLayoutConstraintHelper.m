@@ -36,32 +36,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSLayoutConstraint (CSLayoutConstraintHelper)
 
-static void *_internalArchivedConstant = nil;
-
 - (CGFloat)archivedConstant
 {
 	NSNumber *active = [self _archivedConstant];
 	
 	if (active) {
 		return active.doubleValue;
-	} else {
-		return 0.0;
 	}
+
+	return 0.0;
+}
+
+- (void)setArchivedConstant:(CGFloat)archivedConstant
+{
+	objc_setAssociatedObject(self, @selector(archivedConstant), @(archivedConstant), OBJC_ASSOCIATION_COPY);
 }
 
 - (nullable NSNumber *)_archivedConstant
 {
-	return objc_getAssociatedObject(self, _internalArchivedConstant);
-}
-
-- (void)_setArchivedConstant:(nullable NSNumber *)constant
-{
-	objc_setAssociatedObject(self, _internalArchivedConstant, constant, OBJC_ASSOCIATION_COPY);
+	return objc_getAssociatedObject(self, @selector(archivedConstant));
 }
 
 - (void)archiveConstant
 {
-	[self _setArchivedConstant:@(self.constant)];
+	self.archivedConstant = self.constant;
 }
 
 - (void)archiveConstantAndZeroOut
