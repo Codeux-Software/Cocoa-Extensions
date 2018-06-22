@@ -39,7 +39,61 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSMenuItem (CSMenuItemHelper)
 
-static void *_internalUserInfo = nil;
+- (nullable NSString *)archivedKeyEquivalent
+{
+	return objc_getAssociatedObject(self, @selector(archivedKeyEquivalent));
+}
+
+- (void)setArchivedKeyEquivalent:(nullable NSString *)archivedKeyEquivalent
+{
+	objc_setAssociatedObject(self, @selector(archivedKeyEquivalent), archivedKeyEquivalent, OBJC_ASSOCIATION_COPY);
+}
+
+- (NSEventModifierFlags)archivedKeyEquivalentModifierMask
+{
+	NSNumber *active = [self _archivedKeyEquivalentModifierMask];
+
+	if (active) {
+		return active.doubleValue;
+	}
+
+	return 0.0;
+}
+
+- (nullable NSNumber *)_archivedKeyEquivalentModifierMask
+{
+	return objc_getAssociatedObject(self, @selector(archivedKeyEquivalentModifierMask));
+}
+
+- (void)setArchivedKeyEquivalentModifierMask:(NSEventModifierFlags)archivedKeyEquivalentModifierMask
+{
+	objc_setAssociatedObject(self, @selector(archivedKeyEquivalentModifierMask), @(archivedKeyEquivalentModifierMask), OBJC_ASSOCIATION_COPY);
+}
+
+- (void)archiveKeyboardShortcut
+{
+	self.archivedKeyEquivalent = self.keyEquivalent;
+	self.archivedKeyEquivalentModifierMask = self.keyEquivalentModifierMask;
+}
+
+- (void)archiveKeyboardShortcutAndUnset
+{
+	[self archiveKeyboardShortcut];
+
+	[self unsetKeyboardShortcut];
+}
+
+- (void)restoreKeyboardShorcut
+{
+	self.keyEquivalent = ((self.archivedKeyEquivalent) ?: @"");
+	self.keyEquivalentModifierMask = self.archivedKeyEquivalentModifierMask;
+}
+
+- (void)unsetKeyboardShortcut
+{
+	self.keyEquivalent = @"";
+	self.keyEquivalentModifierMask = 0;
+}
 
 - (nullable NSString *)userInfo
 {

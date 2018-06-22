@@ -40,6 +40,14 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface NSMenuItem (CSMenuItemHelper)
+@property (nonatomic, copy, nullable) NSString *archivedKeyEquivalent;
+@property (nonatomic, assign) NSEventModifierFlags archivedKeyEquivalentModifierMask;
+
+- (void)archiveKeyboardShortcut;
+- (void)archiveKeyboardShortcutAndUnset;
+- (void)restoreKeyboardShorcut;
+- (void)unsetKeyboardShortcut;
+
 - (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively; // Setting recursively to YES will apply userInfo to this menu item as well as all items within its submenu if it has one
 
 + (instancetype)menuItemWithTitle:(NSString *)aString
