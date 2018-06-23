@@ -58,6 +58,14 @@ COCOA_EXTENSIONS_EXTERN NSString * const NSWindowAutosaveFrameMovesToActiveDispl
 
 - (void)saveWindowStateForClass:(Class)owner;
 - (void)restoreWindowStateForClass:(Class)owner;
+
+/* Save the current size of the window as the default size */
+- (void)saveSizeAsDefault;
+@property (nonatomic, assign) NSSize defaultSize;
+
+/* Returns the current frame, adjusted to the default size */
+/* If no default size is saved, then size is zero'd out. */
+@property (readonly) NSRect defaultFrame;
 @end
 
 NS_ASSUME_NONNULL_END

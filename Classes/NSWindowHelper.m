@@ -30,6 +30,8 @@
  *
  *********************************************************************** */
 
+@import ObjectiveC.runtime;
+
 NS_ASSUME_NONNULL_BEGIN
 
 NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveFrameMovesToActiveDisplay";
@@ -181,6 +183,48 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	}
 
 	return window;
+}
+
+- (void)saveSizeAsDefault
+{
+	self.defaultSize = self.frame.size;
+}
+
+- (void)setDefaultSize:(NSSize)defaultSize
+{
+	objc_setAssociatedObject(self, @selector(defaultSize), NSStringFromSize(defaultSize), OBJC_ASSOCIATION_COPY);
+}
+
+- (NSSize)defaultSize
+{
+	NSString *defaultSize = objc_getAssociatedObject(self, @selector(defaultSize));
+
+	if (defaultSize) {
+		return NSSizeFromString(defaultSize);
+	}
+
+	return NSZeroSize;
+}
+
+- (NSRect)defaultFrame
+{
+	NSSize defaultSize = self.defaultSize;
+
+	NSRect windowFrame = self.frame;
+
+	CGFloat widthDifference = (windowFrame.size.width - defaultSize.width);
+
+	windowFrame.size.width -= widthDifference;
+
+	windowFrame.origin.x += widthDifference;
+
+	CGFloat heightDifference = (windowFrame.size.height - defaultSize.height);
+
+	windowFrame.size.height -= heightDifference;
+
+	windowFrame.origin.y += heightDifference;
+
+	return windowFrame;
 }
 
 @end
