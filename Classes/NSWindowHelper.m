@@ -210,6 +210,10 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 {
 	NSSize defaultSize = self.defaultSize;
 
+	if (NSEqualSizes(defaultSize, NSZeroSize)) {
+		return NSZeroRect;
+	}
+
 	NSRect windowFrame = self.frame;
 
 	CGFloat widthDifference = (windowFrame.size.width - defaultSize.width);
@@ -225,6 +229,22 @@ NSString * const NSWindowAutosaveFrameMovesToActiveDisplay = @"NSWindowAutosaveF
 	windowFrame.origin.y += heightDifference;
 
 	return windowFrame;
+}
+
+- (void)restoreDefaultSize
+{
+	[self restoreDefaultSizeAndDisplay:YES];
+}
+
+- (void)restoreDefaultSizeAndDisplay:(BOOL)display
+{
+	NSRect defaultFrame = self.defaultFrame;
+
+	if (NSIsEmptyRect(defaultFrame)) {
+		return;
+	}
+
+	[self setFrame:defaultFrame display:display];
 }
 
 @end
