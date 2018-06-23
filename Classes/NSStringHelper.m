@@ -216,6 +216,16 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self substringWithRange:NSMakeRange(substringLocation, substringLength)];
 }
 
+- (NSString *)substringFromIndex:(NSUInteger)atIndex toIndex:(NSUInteger)toIndex
+{
+	NSParameterAssert(atIndex <= toIndex);
+
+	NSInteger substringLocation = atIndex;
+	NSInteger substringLength = (toIndex - atIndex);
+
+	return [self substringWithRange:NSMakeRange(substringLocation, substringLength)];
+}
+
 - (BOOL)isEqualIgnoringCase:(id)other
 {
 	if ([other isKindOfClass:[NSString class]] == NO) {

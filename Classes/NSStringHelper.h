@@ -99,6 +99,8 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
  Result is: " examp" */
 - (NSString *)substringAtIndex:(NSInteger)atIndex toLength:(NSInteger)toLength;
 
+- (NSString *)substringFromIndex:(NSUInteger)atIndex toIndex:(NSUInteger)toIndex;
+
 - (NSString *)stringCharacterAtIndex:(NSUInteger)anIndex;
 
 - (NSString *)stringByDeletingPrefix:(NSString *)prefix;
