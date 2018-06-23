@@ -43,10 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy, nullable) NSString *archivedKeyEquivalent;
 @property (nonatomic, assign) NSEventModifierFlags archivedKeyEquivalentModifierMask;
 
-- (void)archiveKeyboardShortcut;
-- (void)archiveKeyboardShortcutAndUnset;
-- (void)restoreKeyboardShorcut;
-- (void)unsetKeyboardShortcut;
+- (void)archiveKeyboardShortcut; // archive keyboard shortcut
+- (void)archiveKeyboardShortcutAndUnset; // archive keyboard shortcut and unset current
+- (void)restoreKeyboardShorcut; // restore archived keyboard shortcut (if it's archived)
+- (void)unsetKeyboardShortcut; // unset current keyboard shortcut
+- (void)unsetArchivedKeyboardShortcut; // unset archived keyboard shortcut
+
+@property (readonly, getter=isKeyboardShortcutArchived) BOOL keyboardShortcutArchived;
 
 - (void)setUserInfo:(nullable NSString *)userInfo recursively:(BOOL)recursively; // Setting recursively to YES will apply userInfo to this menu item as well as all items within its submenu if it has one
 

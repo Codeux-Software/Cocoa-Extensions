@@ -85,7 +85,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)restoreKeyboardShorcut
 {
-	self.keyEquivalent = ((self.archivedKeyEquivalent) ?: @"");
+	NSString *keyEquivalent = self.archivedKeyEquivalent;
+
+	if (keyEquivalent == nil) {
+		return;
+	}
+
+	self.keyEquivalent = keyEquivalent;
 	self.keyEquivalentModifierMask = self.archivedKeyEquivalentModifierMask;
 }
 
@@ -93,6 +99,17 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	self.keyEquivalent = @"";
 	self.keyEquivalentModifierMask = 0;
+}
+
+- (void)unsetArchivedKeyboardShortcut
+{
+	self.archivedKeyEquivalent = nil;
+	self.archivedKeyEquivalentModifierMask = 0;
+}
+
+- (BOOL)isKeyboardShortcutArchived
+{
+	return (self.archivedKeyEquivalent != nil);
 }
 
 - (nullable NSString *)userInfo
