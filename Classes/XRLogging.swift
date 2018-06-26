@@ -63,7 +63,8 @@ public class Logging : NSObject
 	public static var debugLogging = false
 
 	@objc
-	public enum Types : Int {
+	public enum Types : Int
+	{
 		case `default` = 0
 
 		case debug = 1
@@ -88,7 +89,8 @@ public class Logging : NSObject
 			}
 		} // systemType
 
-		public var description: String {
+		public var description: String
+		{
 			switch self {
 				case .debug:
 					return "Debug"
@@ -181,7 +183,8 @@ public class Logging : NSObject
 
 	/* Subsystem used by the Cocoa Extensions framework for logging */
 	@objc
-	internal var frameworkSubsystem: OSLog? = {
+	internal var frameworkSubsystem: OSLog? =
+	{
 		if #available(OSX 10.12, *) {
 			return OSLog(subsystem: "com.codeux.frameworks.CocoaExtensions", category: "General")
 		}
