@@ -32,13 +32,13 @@
 
 public extension Array where Element == AnyObject
 {
-	func bool(at index: Int) -> Bool?
+	func bool(at index: Int) -> Bool
 	{
 		if let boolValue = self[index] as? Bool {
 			return boolValue
 		}
 
-		return nil
+		return false
 	}
 
 	func array<Value>(at index: Int) -> Array<Value>?
@@ -68,21 +68,21 @@ public extension Array where Element == AnyObject
 		return nil
 	}
 
-	func integer(at index: Int) -> Int?
+	func integer(at index: Int) -> Int
 	{
 		if let integerValue = self[index] as? Int {
 			return integerValue
 		}
 
-		return nil
+		return 0
 	}
 
-	func double(at index: Int) -> Double?
+	func double(at index: Int) -> Double
 	{
 		if let doubleValue = self[index] as? Double {
 			return doubleValue
 		}
 
-		return nil
+		return 0.0
 	}
 }

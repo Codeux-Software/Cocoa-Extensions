@@ -32,13 +32,13 @@
 
 public extension Dictionary where Value == AnyObject
 {
-	func bool(for key: Key) -> Bool?
+	func bool(for key: Key) -> Bool
 	{
 		if let boolValue = self[key] as? Bool {
 			return boolValue
 		}
 
-		return nil
+		return false
 	}
 
 	func array<Value>(for key: Key) -> Array<Value>?
@@ -68,21 +68,21 @@ public extension Dictionary where Value == AnyObject
 		return nil
 	}
 
-	func integer(for key: Key) -> Int?
+	func integer(for key: Key) -> Int
 	{
 		if let integerValue = self[key] as? Int {
 			return integerValue
 		}
 
-		return nil
+		return 0
 	}
 
-	func double(for key: Key) -> Double?
+	func double(for key: Key) -> Double
 	{
 		if let doubleValue = self[key] as? Double {
 			return doubleValue
 		}
 
-		return nil
+		return 0.0
 	}
 }
