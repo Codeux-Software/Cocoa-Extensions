@@ -32,6 +32,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-LogToConsoleSubsystemType _Nullable _CSFrameworkInternalLogSubsystem(void);
+@interface XRLogging : NSObject
+@property (nonatomic, class, strong, nullable) os_log_t defaultSubsystem;
+@property (nonatomic, class, assign) BOOL debugLogging;
+
++ (void)logMessage:(NSString *)message asType:(XRLoggingType)type inSubsystem:(nullable os_log_t)subsystem file:(NSString *)file line:(NSInteger)line column:(NSInteger)column function:(NSString *)function;
++ (void)logStackTraceSymbols:(NSArray<NSString *> *)trace asType:(XRLoggingType)type inSubsystem:(nullable os_log_t)subsystem;
+
+@property (nonatomic, class, strong, nullable) os_log_t frameworkSubsystem;
+@end
+
+os_log_t _Nullable _CSFrameworkInternalLogSubsystem(void);
 
 NS_ASSUME_NONNULL_END

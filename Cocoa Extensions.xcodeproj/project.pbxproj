@@ -38,6 +38,7 @@
 		4C5DDF6B1D7E39B600A9FE3A /* XRLoggingPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C5DDF6A1D7E39B600A9FE3A /* XRLoggingPrivate.h */; };
 		4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C67852A1B74F30600CCA160 /* XRAccessibility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C67852D1B74F30600CCA160 /* XRAccessibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C67852B1B74F30600CCA160 /* XRAccessibility.m */; };
+		4C70BC9620E13EE700156821 /* XRLogging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C70BC9520E13EE700156821 /* XRLogging.swift */; };
 		4C7785A520A9E768001B966C /* NSLayoutConstraintHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7785A320A9E768001B966C /* NSLayoutConstraintHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C7785A620A9E768001B966C /* NSLayoutConstraintHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7785A420A9E768001B966C /* NSLayoutConstraintHelper.m */; };
 		4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -148,6 +149,7 @@
 		4C5DDF6A1D7E39B600A9FE3A /* XRLoggingPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRLoggingPrivate.h; path = Classes/XRLoggingPrivate.h; sourceTree = "<group>"; };
 		4C67852A1B74F30600CCA160 /* XRAccessibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRAccessibility.h; path = Classes/XRAccessibility.h; sourceTree = "<group>"; };
 		4C67852B1B74F30600CCA160 /* XRAccessibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRAccessibility.m; path = Classes/XRAccessibility.m; sourceTree = "<group>"; };
+		4C70BC9520E13EE700156821 /* XRLogging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XRLogging.swift; path = Classes/XRLogging.swift; sourceTree = "<group>"; };
 		4C7785A320A9E768001B966C /* NSLayoutConstraintHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSLayoutConstraintHelper.h; path = Classes/NSLayoutConstraintHelper.h; sourceTree = "<group>"; };
 		4C7785A420A9E768001B966C /* NSLayoutConstraintHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSLayoutConstraintHelper.m; path = Classes/NSLayoutConstraintHelper.m; sourceTree = "<group>"; };
 		4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRSystemInformation.h; path = Classes/XRSystemInformation.h; sourceTree = "<group>"; };
@@ -443,6 +445,7 @@
 				4C1923AC1A9004080076F65A /* XRGlobalModels.m */,
 				4C19239A1A8FE9800076F65A /* XRKeychain.m */,
 				4C9505EC1D1BCF5A002EC748 /* XRLogging.m */,
+				4C70BC9520E13EE700156821 /* XRLogging.swift */,
 				4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */,
 				4C1923B61A9007E50076F65A /* XRRegularExpression.m */,
 				4C7A1B2B1A91F10900D0EC72 /* XRSystemInformation.m */,
@@ -561,6 +564,7 @@
 				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					8DC2EF4F0486A6940098B216 = {
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Manual;
 					};
 				};
@@ -638,6 +642,7 @@
 				4C7785A620A9E768001B966C /* NSLayoutConstraintHelper.m in Sources */,
 				4C4A62D61D3B12D4008F33B8 /* NSArrayControllerHelper.m in Sources */,
 				4CDF74A41A8FDE1C000B5FF5 /* NSImageHelper.m in Sources */,
+				4C70BC9620E13EE700156821 /* XRLogging.swift in Sources */,
 				4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */,
 				4CDF74A51A8FDE1C000B5FF5 /* NSMenuHelper.m in Sources */,
 				4CDF74AD1A8FDE1C000B5FF5 /* NSSplitViewHelper.m in Sources */,

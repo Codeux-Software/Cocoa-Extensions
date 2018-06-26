@@ -142,7 +142,7 @@ NS_ASSUME_NONNULL_BEGIN
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"isUbiquitous lookup failed: '%@': %@",
 				path, isUbiquitousError.localizedDescription);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		} else {
@@ -174,7 +174,7 @@ NS_ASSUME_NONNULL_BEGIN
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"isDirectory lookup failed: '%@': %@", path,
 			     isDirectoryError.localizedDescription);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 		}
 
 		return NO;
@@ -189,7 +189,7 @@ NS_ASSUME_NONNULL_BEGIN
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"directoryContents returned nil: '%@': %@",
 				 path, directoryContentsError.localizedDescription);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		}
@@ -221,7 +221,7 @@ NS_ASSUME_NONNULL_BEGIN
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"isDownloaded lookup failed: '%@': %@",
 			path, isDownloadedError.localizedDescription);
-		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 	}
 
 	return isDownloaded;
@@ -306,7 +306,7 @@ NS_ASSUME_NONNULL_BEGIN
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Failed to remove file at destination: '%@': %@",
 				[destinationURL path], removeFileError.localizedDescription);
-			LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		}
@@ -327,7 +327,7 @@ NS_ASSUME_NONNULL_BEGIN
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Failed to copy file to destination: '%@' -> '%@': %@",
 			sourceURL.path, destinationURL.path, copyFileError.localizedDescription);
-		LogCurrentStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
 	}

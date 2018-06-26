@@ -32,162 +32,73 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-LogToConsoleSubsystemType _Nullable _CSFrameworkInternalLogSubsystem(void)
+os_log_t _Nullable _CSFrameworkInternalLogSubsystem(void)
 {
-	static LogToConsoleSubsystemType _subsystem = NULL;
-
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		if (COCOA_EXTENSIONS_RUNNING_ON(10.12, Sierra)) {
-			_subsystem =
-			os_log_create("com.codeux.frameworks.CocoaExtensions", "General");
-		}
-	});
-#endif
-
-	return _subsystem;
+	return [XRLogging frameworkSubsystem];
 }
 
-#if _LogToConsoleSupportsUnifiedLogging == 1
-static LogToConsoleSubsystemType _LogToConsoleDefaultSubsystemValue = NULL;
-
-static BOOL _LogToConsoleIsUsingUnifiedLogging = NO;
-#endif
-
-LogToConsoleSubsystemType _Nullable _LogToConsoleDefaultSubsystem(void)
+os_log_t _Nullable _LogToConsoleDefaultSubsystem(void)
 {
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		if (COCOA_EXTENSIONS_RUNNING_ON(10.12, Sierra)) {
-			_LogToConsoleIsUsingUnifiedLogging = YES;
-		}
-	});
-
-	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
-		return NULL;
-	}
-
-	if (_LogToConsoleDefaultSubsystemValue == NULL) {
-		return OS_LOG_DEFAULT;
-	}
-
-	return _LogToConsoleDefaultSubsystemValue;
-#else 
-	return NULL;
-#endif
+	return [XRLogging defaultSubsystem];
 }
 
-void _LogToConsoleSetDefaultSubsystem(LogToConsoleSubsystemType _Nullable subsystem)
+void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem)
 {
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	_LogToConsoleDefaultSubsystemValue = subsystem;
-#endif
+	[XRLogging setDefaultSubsystem:subsystem];
 }
-
-static BOOL _LogToConsoleDebugLoggingEnabled = NO;
 
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
 {
-	_LogToConsoleDebugLoggingEnabled = enabled;
+	[XRLogging setDebugLogging:enabled];
 }
 
-NSString * _Nullable _LogToConsoleFormatMessage_v1_arg(LogToConsoleSubsystemType subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, va_list arguments)
+void _LogToConsoleBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, const char *file, unsigned long line, unsigned long column, const char *function, const char *message, ...)
+{
+	NSCParameterAssert(file != NULL);
+	NSCParameterAssert(function != NULL);
+	NSCParameterAssert(message != NULL);
+
+	va_list arguments;
+	va_start(arguments, message);
+
+	NSString *formattedMessage = [[NSString alloc] initWithFormat:@(message) arguments:arguments];
+
+	va_end(arguments);
+
+	[XRLogging logMessage:formattedMessage asType:type inSubsystem:subsystem file:@(file) line:line column:column function:@(function)];
+}
+
+void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, NSArray<NSString *> *trace)
+{
+	NSCParameterAssert(trace != nil);
+
+	[XRLogging logStackTraceSymbols:trace asType:type inSubsystem:subsystem];
+}
+
+#pragma mark -
+#pragma mark Deprecated
+
+NSString *_LogToConsoleFormatMessage_v2(os_log_t _Nullable subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
 {
 	NSCParameterAssert(formatter != NULL);
 	NSCParameterAssert(filename != NULL);
 	NSCParameterAssert(function != NULL);
 
-	if (type == LogToConsoleTypeDebug) {
-		BOOL logDebug =
+	static dispatch_once_t onceToken;
 
-#if _LogToConsoleSupportsUnifiedLogging == 1
-		(_LogToConsoleDebugLoggingEnabled || _LogToConsoleIsUsingUnifiedLogging);
-#else
-		_LogToConsoleDebugLoggingEnabled;
-#endif
-
-		if (logDebug == NO) {
-			return nil;
-		}
-	}
-
-	NSString *formatString = nil;
-
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	if (_LogToConsoleIsUsingUnifiedLogging == NO) {
-#endif
-
-		const char *typeString = NULL;
-
-		switch (type) {
-			case LogToConsoleTypeInfo:
-			{
-				typeString = "Info";
-
-				break;
-			}
-			case LogToConsoleTypeDebug:
-			{
-				typeString = "Debug";
-
-				break;
-			}
-			case LogToConsoleTypeError:
-			{
-				typeString = "Error";
-
-				break;
-			}
-			case LogToConsoleTypeFault: {
-				typeString = "Fault";
-
-				break;
-			}
-			default:
-			{
-				typeString = "Default";
-
-				break;
-			}
-		}
-
-		formatString = [NSString stringWithFormat:@"[%s] %s [Line %lu]: %s", typeString, function, line, formatter];
-
-#if _LogToConsoleSupportsUnifiedLogging == 1
-	} else {
-		formatString = [NSString stringWithFormat:@"%s [Line %lu]: %s", function, line, formatter];
-	}
-#endif
-
-	formatString = [formatString stringByReplacingOccurrencesOfString:@"%{public}" withString:@"%"];
-
-	NSString *formattedString = [[NSString alloc] initWithFormat:formatString arguments:arguments];
-
-	return formattedString;
-}
-
-NSString *_LogToConsoleFormatMessage_v2(LogToConsoleSubsystemType subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
+	dispatch_once(&onceToken, ^{
+		COCOA_EXTENSIONS_DEPRECATED_WARNING
+	});
 
 	va_list arguments;
 	va_start(arguments, formatter);
 
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(subsystem, type, filename, function, line, formatter, arguments);
+	NSString *formattedString = [[NSString alloc] initWithFormat:@(formatter) arguments:arguments];
 
 	va_end(arguments);
 
 	return formattedString;
 }
-
-#pragma mark -
-#pragma mark Deprecated
 
 NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
 {
@@ -195,10 +106,16 @@ NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, con
 	NSCParameterAssert(filename != NULL);
 	NSCParameterAssert(function != NULL);
 
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		COCOA_EXTENSIONS_DEPRECATED_WARNING
+	});
+
 	va_list arguments;
 	va_start(arguments, formatter);
 
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), type, filename, function, line, formatter, arguments);
+	NSString *formattedString = [[NSString alloc] initWithFormat:@(formatter) arguments:arguments];
 
 	va_end(arguments);
 
@@ -207,50 +124,20 @@ NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, con
 
 void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
 {
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
+	static dispatch_once_t onceToken;
 
-	static BOOL _deprecationWarningPosted = NO;
-
-	if (_deprecationWarningPosted == NO) {
-		_deprecationWarningPosted = YES;
-
+	dispatch_once(&onceToken, ^{
 		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	}
-
-	va_list arguments;
-	va_start(arguments, line);
-
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), LogToConsoleTypeDefault, filename, function, line, formatter, arguments);
-
-	va_end(arguments);
-
-	NSLog(formattedString);
+	});
 }
 
 void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
 {
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
+	static dispatch_once_t onceToken;
 
-	static BOOL _deprecationWarningPosted = NO;
-
-	if (_deprecationWarningPosted == NO) {
-		_deprecationWarningPosted = YES;
-
+	dispatch_once(&onceToken, ^{
 		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	}
-
-	va_list arguments;
-	va_start(arguments, formatter);
-
-	NSString *formattedString = _LogToConsoleFormatMessage_v1_arg(LogToConsoleDefaultSubsystem(), type, filename, function, line, formatter, arguments);
-
-	va_end(arguments);
-
-	NSLog(formattedString);
+	});
 }
 
 NS_ASSUME_NONNULL_END
