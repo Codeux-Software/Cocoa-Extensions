@@ -63,6 +63,7 @@
 		4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */; };
 		4CA7BE6620C6D4A900C324BF /* NSTabViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA7BE6420C6D4A800C324BF /* NSTabViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA7BE6720C6D4A900C324BF /* NSTabViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BE6520C6D4A900C324BF /* NSTabViewHelper.m */; };
+		4CD09D4220E072BF008BADA5 /* SWStringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */; };
 		4CD4967E1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD4967C1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD4967F1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4967D1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m */; };
 		4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
@@ -107,6 +108,8 @@
 		4CDF74E01A8FDE5B000B5FF5 /* NSValueHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDF74E11A8FDE5B000B5FF5 /* NSWindowHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CDF74E31A8FE039000B5FF5 /* CocoaExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CE04D9C20E10609000C74E6 /* SWDictionaryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */; };
+		4CE04D9E20E10CC4000C74E6 /* SWArrayHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */; };
 		4CEEC2D51B97C7C1000F517B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEEC2D41B97C7C1000F517B /* WebKit.framework */; };
 		4CF8B9571D1DE47A00352AF6 /* NSMethodSignatureHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CF8B9551D1DE47A00352AF6 /* NSMethodSignatureHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CF8B9581D1DE47A00352AF6 /* NSMethodSignatureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF8B9561D1DE47A00352AF6 /* NSMethodSignatureHelper.m */; };
@@ -178,6 +181,7 @@
 		4CA7BE6420C6D4A800C324BF /* NSTabViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSTabViewHelper.h; path = Classes/NSTabViewHelper.h; sourceTree = "<group>"; };
 		4CA7BE6520C6D4A900C324BF /* NSTabViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSTabViewHelper.m; path = Classes/NSTabViewHelper.m; sourceTree = "<group>"; };
 		4CB4F5CD1D7442B400AA4BBC /* CocoaExtensionsPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CocoaExtensionsPrivate.h; path = Classes/CocoaExtensionsPrivate.h; sourceTree = "<group>"; };
+		4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SWStringHelper.swift; path = Classes/SWStringHelper.swift; sourceTree = "<group>"; };
 		4CD4967C1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAnimationContextHelper.h; path = Classes/NSAnimationContextHelper.h; sourceTree = "<group>"; };
 		4CD4967D1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSAnimationContextHelper.m; path = Classes/NSAnimationContextHelper.m; sourceTree = "<group>"; };
 		4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArrayHelper.m; path = Classes/NSArrayHelper.m; sourceTree = "<group>"; };
@@ -222,6 +226,8 @@
 		4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSValueHelper.h; path = Classes/NSValueHelper.h; sourceTree = "<group>"; };
 		4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = Classes/NSWindowHelper.h; sourceTree = "<group>"; };
 		4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocoaExtensions.h; path = Classes/CocoaExtensions.h; sourceTree = "<group>"; };
+		4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SWDictionaryHelper.swift; path = Classes/SWDictionaryHelper.swift; sourceTree = "<group>"; };
+		4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SWArrayHelper.swift; path = Classes/SWArrayHelper.swift; sourceTree = "<group>"; };
 		4CEEC2D41B97C7C1000F517B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Resources/Build Configuration/Foundation Debug.xcconfig"; sourceTree = "<group>"; };
 		4CF8B9551D1DE47A00352AF6 /* NSMethodSignatureHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMethodSignatureHelper.h; path = Classes/NSMethodSignatureHelper.h; sourceTree = "<group>"; };
@@ -439,6 +445,9 @@
 				4CDF74991A8FDE1C000B5FF5 /* NSValueHelper.m */,
 				4CDF749A1A8FDE1C000B5FF5 /* NSWindowHelper.m */,
 				4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */,
+				4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */,
+				4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */,
+				4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */,
 				4C67852B1B74F30600CCA160 /* XRAccessibility.m */,
 				4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */,
 				4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */,
@@ -607,6 +616,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CE04D9C20E10609000C74E6 /* SWDictionaryHelper.swift in Sources */,
 				4C19239B1A8FE9800076F65A /* XRKeychain.m in Sources */,
 				4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */,
 				4CFB3E3E1D7EBE9D004198A3 /* NSIndexSetHelper.m in Sources */,
@@ -629,6 +639,7 @@
 				4CF8B9581D1DE47A00352AF6 /* NSMethodSignatureHelper.m in Sources */,
 				4CDF74B01A8FDE1C000B5FF5 /* NSValueHelper.m in Sources */,
 				4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */,
+				4CD09D4220E072BF008BADA5 /* SWStringHelper.swift in Sources */,
 				4CDF74AA1A8FDE1C000B5FF5 /* NSRangeHelper.m in Sources */,
 				4CA7BE6720C6D4A900C324BF /* NSTabViewHelper.m in Sources */,
 				4C9505ED1D1BCF5A002EC748 /* XRLogging.m in Sources */,
@@ -643,6 +654,7 @@
 				4C4A62D61D3B12D4008F33B8 /* NSArrayControllerHelper.m in Sources */,
 				4CDF74A41A8FDE1C000B5FF5 /* NSImageHelper.m in Sources */,
 				4C70BC9620E13EE700156821 /* XRLogging.swift in Sources */,
+				4CE04D9E20E10CC4000C74E6 /* SWArrayHelper.swift in Sources */,
 				4C7A1B2D1A91F10900D0EC72 /* XRSystemInformation.m in Sources */,
 				4CDF74A51A8FDE1C000B5FF5 /* NSMenuHelper.m in Sources */,
 				4CDF74AD1A8FDE1C000B5FF5 /* NSSplitViewHelper.m in Sources */,
