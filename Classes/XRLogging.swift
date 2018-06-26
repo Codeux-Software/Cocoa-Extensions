@@ -167,7 +167,7 @@ public class Logging : NSObject
 				}
 			}
 
-			NSLog(formattedMessage)
+			NSLog(messageToLog)
 
 			return
 		}
