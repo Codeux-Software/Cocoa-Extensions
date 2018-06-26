@@ -163,7 +163,7 @@
 		4CA2CC8A1CE64D90007D86B3 /* NSUserDefaultsHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSUserDefaultsHelper.m; path = Classes/NSUserDefaultsHelper.m; sourceTree = "<group>"; };
 		4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
 		4CA41C051AC1A73600756137 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Build Configuration.xcconfig"; path = "Resources/Build Configuration/Build Configuration.xcconfig"; sourceTree = SOURCE_ROOT; };
+		4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = "Resources/Build Configuration/Foundation.xcconfig"; sourceTree = SOURCE_ROOT; };
 		4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Resources/Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		4CA41C101AC1A76E00756137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = Classes/NSBundleHelper.h; sourceTree = "<group>"; };
@@ -221,6 +221,7 @@
 		4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWindowHelper.h; path = Classes/NSWindowHelper.h; sourceTree = "<group>"; };
 		4CDF74E21A8FE039000B5FF5 /* CocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CocoaExtensions.h; path = Classes/CocoaExtensions.h; sourceTree = "<group>"; };
 		4CEEC2D41B97C7C1000F517B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "Foundation Debug.xcconfig"; path = "Resources/Build Configuration/Foundation Debug.xcconfig"; sourceTree = "<group>"; };
 		4CF8B9551D1DE47A00352AF6 /* NSMethodSignatureHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSMethodSignatureHelper.h; path = Classes/NSMethodSignatureHelper.h; sourceTree = "<group>"; };
 		4CF8B9561D1DE47A00352AF6 /* NSMethodSignatureHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMethodSignatureHelper.m; path = Classes/NSMethodSignatureHelper.m; sourceTree = "<group>"; };
 		4CFB3E3B1D7EBE9D004198A3 /* NSIndexSetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSIndexSetHelper.h; path = Classes/NSIndexSetHelper.h; sourceTree = "<group>"; };
@@ -461,7 +462,8 @@
 		4CED78DE16E323260012AFDA /* Build Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */,
+				4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */,
+				4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */,
 				4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */,
 			);
 			name = "Build Configuration";
@@ -662,16 +664,8 @@
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4CA41C0A1AC1A74200756137 /* Build Configuration.xcconfig */;
+			baseConfigurationReference = 4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */;
 			buildSettings = {
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				FRAMEWORK_VERSION = A;
 				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
 				INFOPLIST_FILE = Resources/Info.plist;
@@ -680,6 +674,26 @@
 			};
 			name = Release;
 		};
+		4CF3FD0020E28E5D00A93C98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */;
+			buildSettings = {
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
+				PRODUCT_NAME = CocoaExtensions;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		4CF3FD0120E28E5D00A93C98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.CocoaExtensions;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -687,6 +701,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91AF08733DA50010E9CD /* Release */,
+				4CF3FD0120E28E5D00A93C98 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -695,6 +710,7 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB91B308733DA50010E9CD /* Release */,
+				4CF3FD0020E28E5D00A93C98 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
