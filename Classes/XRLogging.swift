@@ -63,7 +63,7 @@ public class Logging : NSObject
 	public static var debugLogging = false
 
 	@objc
-	public enum Types : Int
+	public enum `Type` : Int
 	{
 		case `default` = 0
 
@@ -120,19 +120,19 @@ public class Logging : NSObject
 	fileprivate struct Context
 	{
 		var subsystem: OSLog?
-		var type: Types = .`default`
+		var type: `Type` = .`default`
 		var file: String
 		var line: Int
 		var column: Int
 		var function: String
 	}
 
-	public static func log(_ message: String, _ arguments: CVarArg..., type: Types, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
+	public static func log(_ message: String, _ arguments: CVarArg..., type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
 	{
 		log(message, arguments: getVaList(arguments), type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
 	}
 
-	public static func log(_ message: String, arguments: CVaListPointer, type: Types, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
+	public static func log(_ message: String, arguments: CVaListPointer, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
 	{
 		let context = Context(subsystem: subsystem, type: type, file: file, line: line, column: column, function: function)
 
@@ -142,7 +142,7 @@ public class Logging : NSObject
 	}
 
 	@objc(logMessage:asType:inSubsystem:file:line:column:function:)
-	public static func log(_ formattedMessage: String, type: Types, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
+	public static func log(_ formattedMessage: String, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
 	{
 		let context = Context(subsystem: subsystem, type: type, file: file, line: line, column: column, function: function)
 
@@ -150,7 +150,7 @@ public class Logging : NSObject
 	}
 
 	@objc(logStackTraceSymbols:asType:inSubsystem:)
-	public static func logStackTrace(trace: [String], type: Types, subsystem: OSLog?)
+	public static func logStackTrace(trace: [String], type: `Type`, subsystem: OSLog?)
 	{
 		/* Details such as file, line, column, and function are useless
 		 when logging symbols but so I don't have to spend a day modifying
@@ -198,7 +198,7 @@ public class Logging : NSObject
 /// We can't use macros in Swift which is why all the extra arguments exist.
 /// Unless there is a very, very, very specific to do so, don't set anything
 /// after subsystem as you will just be lying to your own logs.
-public func LogToConsole(_ message: String, _ arguments: CVarArg..., type: Logging.Types = .`default`, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsole(_ message: String, _ arguments: CVarArg..., type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
 	Logging.log(message, arguments: getVaList(arguments), type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
@@ -223,7 +223,7 @@ public func LogToConsoleFault(_ message: String, _ arguments: CVarArg..., subsys
 	Logging.log(message, arguments: getVaList(arguments), type: .fault, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
-public func LogStackTrace(type: Logging.Types = .`default`, subsystem: OSLog? = nil, trace: [String] = Thread.callStackSymbols)
+public func LogStackTrace(type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, trace: [String] = Thread.callStackSymbols)
 {
 	Logging.logStackTrace(trace: trace, type: type, subsystem: subsystem)
 }
