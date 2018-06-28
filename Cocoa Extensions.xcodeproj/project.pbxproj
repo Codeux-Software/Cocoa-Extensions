@@ -117,6 +117,7 @@
 		4CF8B9581D1DE47A00352AF6 /* NSMethodSignatureHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CF8B9561D1DE47A00352AF6 /* NSMethodSignatureHelper.m */; };
 		4CFB3E3D1D7EBE9D004198A3 /* NSIndexSetHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CFB3E3B1D7EBE9D004198A3 /* NSIndexSetHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CFB3E3E1D7EBE9D004198A3 /* NSIndexSetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB3E3C1D7EBE9D004198A3 /* NSIndexSetHelper.m */; };
+		4CFB742520E480A4001B88CE /* SWErrorHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CFB742420E480A4001B88CE /* SWErrorHelper.swift */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -238,6 +239,7 @@
 		4CF8B9561D1DE47A00352AF6 /* NSMethodSignatureHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSMethodSignatureHelper.m; path = Classes/NSMethodSignatureHelper.m; sourceTree = "<group>"; };
 		4CFB3E3B1D7EBE9D004198A3 /* NSIndexSetHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSIndexSetHelper.h; path = Classes/NSIndexSetHelper.h; sourceTree = "<group>"; };
 		4CFB3E3C1D7EBE9D004198A3 /* NSIndexSetHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSIndexSetHelper.m; path = Classes/NSIndexSetHelper.m; sourceTree = "<group>"; };
+		4CFB742420E480A4001B88CE /* SWErrorHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SWErrorHelper.swift; path = Classes/SWErrorHelper.swift; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* CocoaExtensions.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaExtensions.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -451,6 +453,7 @@
 				4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */,
 				4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */,
 				4CAA489A20E46AB500FDE1F5 /* SWDataHelper.swift */,
+				4CFB742420E480A4001B88CE /* SWErrorHelper.swift */,
 				4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */,
 				4C68752520E2CA530055E541 /* SWIntHelper.swift */,
 				4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */,
@@ -652,6 +655,7 @@
 				4C9505ED1D1BCF5A002EC748 /* XRLogging.m in Sources */,
 				4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */,
 				4C1923AD1A9004080076F65A /* XRGlobalModels.m in Sources */,
+				4CFB742520E480A4001B88CE /* SWErrorHelper.swift in Sources */,
 				4C1923BD1A9008E70076F65A /* XRBase64Encoding.m in Sources */,
 				4CDF74AF1A8FDE1C000B5FF5 /* NSTextFieldHelper.m in Sources */,
 				4CA2CC8C1CE64D90007D86B3 /* NSUserDefaultsHelper.m in Sources */,
