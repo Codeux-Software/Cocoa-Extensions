@@ -82,4 +82,38 @@ public extension Data
 
 		return self
 	}
+
+	var IPv4Address: String?
+	{
+		if (isEmpty) {
+			return nil
+		}
+
+		let bufferLength = INET_ADDRSTRLEN
+
+		var buffer = [CChar](repeating: 0, count: Int(bufferLength))
+
+		if (inet_ntop(AF_INET, [UInt8](self), &buffer, socklen_t(bufferLength)) == nil) {
+			return nil
+		}
+
+		return String(cString: buffer)
+	}
+
+	var IPv6Address: String?
+	{
+		if (isEmpty) {
+			return nil
+		}
+
+		let bufferLength = INET6_ADDRSTRLEN
+
+		var buffer = [CChar](repeating: 0, count: Int(bufferLength))
+
+		if (inet_ntop(AF_INET6, [UInt8](self), &buffer, socklen_t(bufferLength)) == nil) {
+			return nil
+		}
+
+		return String(cString: buffer)
+	}
 }
