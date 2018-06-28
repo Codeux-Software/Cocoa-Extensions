@@ -48,7 +48,7 @@ public extension Data
 		var byteIndex = 0
 
 		if (amount > 0) {
-			byteIndex = amount;
+			byteIndex = amount
 		} else if (amount < 0) {
 			byteIndex = (byteCount + amount)
 		}

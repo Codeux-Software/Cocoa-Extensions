@@ -52,7 +52,7 @@ public extension String
 			return nil
 		}
 
-		var sa = sockaddr_in();
+		var sa = sockaddr_in()
 
 		if (inet_pton(AF_INET, self,  &(sa.sin_addr)) == 1) {
 			return Data(bytes: &(sa.sin_addr.s_addr), count: 4)
