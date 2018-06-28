@@ -62,7 +62,7 @@ public extension Data
 
 	/// Removes \r and \n from end of data until
 	/// a byte is found that is neither of those.
-	func newlinesTrimmedFromEnd() -> Data
+	var withoutNewlinesAtEnd: Data
 	{
 		var lastIndex: Int?
 
