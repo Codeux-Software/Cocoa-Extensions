@@ -92,24 +92,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return [NSData dataWithBytes:"" length:1];
 }
 
-- (BOOL)hasPrefixBytes:(const void *)prefix length:(NSUInteger)length
-{
-	if (prefix == NULL || length <= 0 || self.length < length) {
-		return NO;
-	}
-
-	return (memcmp(self.bytes, prefix, length) == 0);
-}
-
-- (BOOL)hasSuffixBytes:(const void *)suffix length:(NSUInteger)length
-{
-	if (suffix == NULL || length <= 0 || self.length < length) {
-		return NO;
-	}
-
-	return (memcmp( ((const char *)self.bytes + (self.length - length) ), suffix, length) == 0);
-}
-
 - (BOOL)isValidUTF8
 {
 	NSUInteger length = self.length;
