@@ -54,7 +54,7 @@ public extension String
 
 		var sa = sockaddr_in();
 
-		if (inet_pton(AF_INET, self, &sa) == 1) {
+		if (inet_pton(AF_INET, self,  &(sa.sin_addr)) == 1) {
 			return Data(bytes: &(sa.sin_addr.s_addr), count: 4)
 		}
 
@@ -74,7 +74,7 @@ public extension String
 
 		var sa = sockaddr_in6()
 
-		if (inet_pton(AF_INET6, self, &sa) == 1) {
+		if (inet_pton(AF_INET6, self, &(sa.sin6_addr)) == 1) {
 			return Data(bytes: &(sa.sin6_addr), count: 16)
 		}
 
