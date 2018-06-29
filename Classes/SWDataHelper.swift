@@ -36,20 +36,20 @@ public extension Data
 	/// a byte is found that is neither of those.
 	var withoutNewlinesAtEnd: Data
 	{
-		var lastIndex: Int?
+		var offsetAmount = 0
 
-		for index in (0 ..< count).reversed() {
+		for index in (startIndex ..< endIndex).reversed() {
 			let byte = self[index]
 
 			if (byte == 0x0d || byte == 0x0a) {
-				lastIndex = index
+				offsetAmount += 1
 			} else {
 				break
 			}
 		}
 
-		if (lastIndex != nil) {
-			return self.subdata(in: 0 ..< lastIndex!)
+		if (offsetAmount > 0) {
+			return Data(dropLast(offsetAmount))
 		}
 
 		return self
