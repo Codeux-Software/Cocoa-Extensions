@@ -127,26 +127,12 @@ public class Logging : NSObject
 		var function: String
 	}
 
-	public static func log(_ message: String, _ arguments: CVarArg..., type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
-	{
-		log(message, arguments: getVaList(arguments), type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
-	}
-
-	public static func log(_ message: String, arguments: CVaListPointer, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
-	{
-		let context = Context(subsystem: subsystem, type: type, file: file, line: line, column: column, function: function)
-
-		let formattedMessage = NSString(format: message, arguments: arguments) as String
-
-		log(formattedMessage, in: context)
-	}
-
 	@objc(logMessage:asType:inSubsystem:file:line:column:function:)
-	public static func log(_ formattedMessage: String, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
+	public static func log(_ message: String, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
 	{
 		let context = Context(subsystem: subsystem, type: type, file: file, line: line, column: column, function: function)
 
-		log(formattedMessage, in: context)
+		log(message, in: context)
 	}
 
 	@objc(logStackTraceSymbols:asType:inSubsystem:)
@@ -155,12 +141,12 @@ public class Logging : NSObject
 		/* Details such as file, line, column, and function are useless
 		 when logging symbols but so I don't have to spend a day modifying
 		 the facility to accept those as optional, just give it defaults. */
-		log("Current Stack: %@", trace, type: type, subsystem: subsystem, file: #file, line: #line, column: #column, function: #function)
+		log("Current Stack: \(trace)", type: type, subsystem: subsystem, file: #file, line: #line, column: #column, function: #function)
 	}
 
-	fileprivate static func log(_ formattedMessage: String, in context: Context)
+	fileprivate static func log(_ message: String, in context: Context)
 	{
-		let messageToLog = "\(context.type.formatterDescription ?? "")\(context.function) [\(context.line):\(context.column)]: \(formattedMessage)"
+		let messageToLog = "\(context.type.formatterDescription ?? "")\(context.function) [\(context.line):\(context.column)]: \(message)"
 
 		guard #available(OSX 10.12, *) else {
 			if (context.type == .debug) {
@@ -198,29 +184,29 @@ public class Logging : NSObject
 /// We can't use macros in Swift which is why all the extra arguments exist.
 /// Unless there is a very, very, very specific to do so, don't set anything
 /// after subsystem as you will just be lying to your own logs.
-public func LogToConsole(_ message: String, _ arguments: CVarArg..., type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsole(_ message: String, type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
-	Logging.log(message, arguments: getVaList(arguments), type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
+	Logging.log(message, type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
-public func LogToConsoleDebug(_ message: String, _ arguments: CVarArg..., subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsoleDebug(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
-	Logging.log(message, arguments: getVaList(arguments), type: .debug, subsystem: subsystem, file: file, line: line, column: column, function: function)
+	Logging.log(message, type: .debug, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
-public func LogToConsoleInfo(_ message: String, _ arguments: CVarArg..., subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsoleInfo(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
-	Logging.log(message, arguments: getVaList(arguments), type: .info, subsystem: subsystem, file: file, line: line, column: column, function: function)
+	Logging.log(message, type: .info, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
-public func LogToConsoleError(_ message: String, _ arguments: CVarArg..., subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsoleError(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
-	Logging.log(message, arguments: getVaList(arguments), type: .error, subsystem: subsystem, file: file, line: line, column: column, function: function)
+	Logging.log(message, type: .error, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
-public func LogToConsoleFault(_ message: String, _ arguments: CVarArg..., subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+public func LogToConsoleFault(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
 {
-	Logging.log(message, arguments: getVaList(arguments), type: .fault, subsystem: subsystem, file: file, line: line, column: column, function: function)
+	Logging.log(message, type: .fault, subsystem: subsystem, file: file, line: line, column: column, function: function)
 }
 
 public func LogStackTrace(type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, trace: [String] = Thread.callStackSymbols)
