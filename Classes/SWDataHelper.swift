@@ -88,4 +88,57 @@ public extension Data
 
 		return String(cString: buffer)
 	}
+
+	///
+	/// Lines are expected to end with \n or \r\n
+	///
+	/// For example, "1\n2\n3\n" will produce ["1", "2", "3"]
+	///
+	/// After splitting newlines, if there is any data left
+	/// over that did not end in a newline, then that data
+	/// is returned in the "remainder" argument of the tuple.
+	///
+	/// For example, "1\n2\n3\n4" will produce ["1", "2", "3"]
+	/// with a remainder of "4"
+	///
+	/// • The function returns nil when the data is empty.
+	/// • The function returns the data as the remainder when
+	///   there are no newlines to split.
+	///
+	/// This function assumes data is presented without error.
+	/// "\r\n\r" will produce a line which contains "\r" because
+	/// the logic of the function assumes that only \r\n or
+	/// \n will be used as a separator. Not \r by itself.
+	///
+	func splitNetworkLines() -> (lines: [Data], remainder: Data?)?
+	{
+		if (isEmpty) {
+			return nil
+		}
+
+		let newlineChar: UInt8 = 0x0a
+
+		var lines = split(separator: newlineChar, maxSplits: .max, omittingEmptySubsequences: true)
+
+		var remainingLine: Data?
+
+		if (last != newlineChar) {
+			remainingLine = lines.last
+
+			lines.removeLast()
+		}
+
+		/* If data is only "\n", then lines will == 0 and
+		remainingLine will == nil which means it's a good
+		idea to keep this if statement planted here. */
+		if (lines.count == 0) {
+			return (lines: [], remainder: remainingLine)
+		}
+
+		let linesTrimmed = lines.map { (line) in
+			line.withoutNewlinesAtEnd
+		}
+
+		return (lines: linesTrimmed, remainder: remainingLine)
+	}
 }
