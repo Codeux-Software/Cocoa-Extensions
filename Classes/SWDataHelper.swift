@@ -32,34 +32,6 @@
 
 public extension Data
 {
-	/// Returns byte offset from a specific amount.
-	/// A positive amount returns byte offset from start.
-	/// A negative amount returns byte offset from end.
-	/// Zero amount returns nil because that doesn't make sense.
-	/// If the byte doesn't exist at the offset, returns nil.
-	func byte(offsetBy amount: Int) -> UInt8?
-	{
-		if (amount == 0) {
-			return nil
-		}
-
-		let byteCount = count
-
-		var byteIndex = 0
-
-		if (amount > 0) {
-			byteIndex = amount
-		} else if (amount < 0) {
-			byteIndex = (byteCount + amount)
-		}
-
-		if (byteIndex < 0 || byteIndex >= byteCount) {
-			return nil
-		}
-
-		return self[byteIndex]
-	}
-
 	/// Removes \r and \n from end of data until
 	/// a byte is found that is neither of those.
 	var withoutNewlinesAtEnd: Data
