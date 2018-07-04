@@ -31,9 +31,7 @@
  *********************************************************************** */
 
 #ifdef __OBJC__
-@import AppKit;
-
-@import CoreGraphics;
+#import <Cocoa/Cocoa.h>
 
 #import <CocoaExtensions/StaticDefinitions.h>
 

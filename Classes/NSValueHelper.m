@@ -30,7 +30,7 @@
  *
  *********************************************************************** */
 
-@import ObjectiveC.runtime;
+#import <objc/runtime.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

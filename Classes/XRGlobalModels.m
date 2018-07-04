@@ -30,7 +30,7 @@
  *
  *********************************************************************** */
 
-@import ObjectiveC.message;
+#import <objc/message.h>
 
 NS_ASSUME_NONNULL_BEGIN
 

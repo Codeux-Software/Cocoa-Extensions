@@ -30,8 +30,8 @@
  *
  *********************************************************************** */
 
-@import IOKit;
-@import IOKit.pwr_mgt;
+#import <IOKit/IOKitLib.h>
+#import <IOKit/pwr_mgt/IOPM.h>
 
 #include <sys/sysctl.h>
 
