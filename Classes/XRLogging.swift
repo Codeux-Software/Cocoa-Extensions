@@ -169,7 +169,7 @@ public class Logging : NSObject
 
 	/* Subsystem used by the Cocoa Extensions framework for logging */
 	@objc
-	internal var frameworkSubsystem: OSLog? =
+	internal static var frameworkSubsystem: OSLog? =
 	{
 		if #available(OSX 10.12, *) {
 			return OSLog(subsystem: "com.codeux.frameworks.CocoaExtensions", category: "General")
