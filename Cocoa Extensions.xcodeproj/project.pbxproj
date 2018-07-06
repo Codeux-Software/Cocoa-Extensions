@@ -686,8 +686,12 @@
 		1DEB91AF08733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.CocoaExtensions;
+				PRODUCT_NAME = CocoaExtensions;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -695,11 +699,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = CocoaExtensions;
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
@@ -707,19 +706,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_VERSION = A;
-				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
-				INFOPLIST_FILE = Resources/Info.plist;
-				PRODUCT_NAME = CocoaExtensions;
-				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
 		4CF3FD0120E28E5D00A93C98 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_VERSION = A;
+				GCC_PREFIX_HEADER = Classes/CocoaExtensions_Prefix.pch;
+				INFOPLIST_FILE = Resources/Info.plist;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codeux.frameworks.CocoaExtensions;
+				PRODUCT_NAME = CocoaExtensions;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
