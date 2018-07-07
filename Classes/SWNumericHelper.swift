@@ -37,3 +37,13 @@ public extension Int
 		return (self > 0 && self <= 65535)
 	}
 }
+
+public extension Numeric
+{
+	var data: Data
+	{
+		var pointer = self
+
+		return Data(bytes: &pointer, count: MemoryLayout<Self>.size)
+	}
+}
