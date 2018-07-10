@@ -173,7 +173,6 @@
 		4CA41C041AC1A73600756137 /* ACKNOWLEDGEMENT.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ACKNOWLEDGEMENT.txt; sourceTree = "<group>"; };
 		4CA41C051AC1A73600756137 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Foundation.xcconfig; path = "Resources/Build Configuration/Foundation.xcconfig"; sourceTree = SOURCE_ROOT; };
-		4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = Entitlements.entitlements; path = "Resources/Build Configuration/Entitlements.entitlements"; sourceTree = SOURCE_ROOT; };
 		4CA41C101AC1A76E00756137 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		4CA45C1E1A9149F400AF9C4B /* NSBundleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSBundleHelper.h; path = Classes/NSBundleHelper.h; sourceTree = "<group>"; };
 		4CA45C1F1A9149F400AF9C4B /* NSBundleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSBundleHelper.m; path = Classes/NSBundleHelper.m; sourceTree = "<group>"; };
@@ -485,7 +484,6 @@
 			children = (
 				4CA41C0A1AC1A74200756137 /* Foundation.xcconfig */,
 				4CF3FCFE20E1F14400A93C98 /* Foundation Debug.xcconfig */,
-				4CA41C0B1AC1A74200756137 /* Entitlements.entitlements */,
 			);
 			name = "Build Configuration";
 			sourceTree = "<group>";
