@@ -80,4 +80,12 @@ public extension String
 
 		return nil
 	}
+
+#if !swift(>=4.2)
+	@inlinable
+	func firstIndex(of element: Character) -> Index?
+	{
+		return index(of: element)
+	}
+#endif
 }
