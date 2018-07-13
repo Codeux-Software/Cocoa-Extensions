@@ -33,7 +33,7 @@
 #if !swift(>=4.2)
 public extension Array where Element == Data
 {
-	@inlinable
+	@_inlineable
 	func firstIndex(of element: Element) -> Index?
 	{
 		return index(of: element)

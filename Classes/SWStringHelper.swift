@@ -82,7 +82,7 @@ public extension String
 	}
 
 #if !swift(>=4.2)
-	@inlinable
+	@_inlineable
 	func firstIndex(of element: Character) -> Index?
 	{
 		return index(of: element)
