@@ -32,6 +32,7 @@
 
 public extension Int
 {
+	@_inlineable
 	var isValidInternetPort: Bool
 	{
 		return (self > 0 && self <= 65535)
@@ -40,6 +41,7 @@ public extension Int
 
 public extension Numeric
 {
+	@_inlineable
 	var data: Data
 	{
 		var pointer = self

@@ -41,6 +41,7 @@ public extension String
 		return self[range]
 	}
 
+	@_inlineable
 	var isIPv4Address: Bool
 	{
 		return IPv4AddressBytes != nil
@@ -61,6 +62,7 @@ public extension String
 		return nil
 	}
 
+	@_inlineable
 	var isIPv6Address: Bool
 	{
 		return IPv6AddressBytes != nil

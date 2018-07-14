@@ -32,11 +32,13 @@
 
 public extension Error
 {
+	@_inlineable
 	var code: Int
 	{
 		return (self as NSError).code
 	}
 
+	@_inlineable
 	var domain: String
 	{
 		return (self as NSError).domain
