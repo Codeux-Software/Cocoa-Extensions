@@ -804,27 +804,27 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)isPositiveWholeNumber
 {
-	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType)];
+	return [self contentsIsOfType:(CSStringTypeWholeNumber | CSStringTypePositiveNumber)];
 }
 
 - (BOOL)isPositiveDecimalNumber
 {
-	return [self contentsIsOfType:(CSStringDecimalNumberType | CSStringPositiveNumberType)];
+	return [self contentsIsOfType:(CSStringTypeDecimalNumber | CSStringTypePositiveNumber)];
 }
 
 - (BOOL)isAnyPositiveNumber
 {
-	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringDecimalNumberType | CSStringPositiveNumberType)];
+	return [self contentsIsOfType:(CSStringTypeWholeNumber | CSStringTypeDecimalNumber | CSStringTypePositiveNumber)];
 }
 
 - (BOOL)isNumericOnly
 {
-	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType)];
+	return [self contentsIsOfType:(CSStringTypeWholeNumber | CSStringTypePositiveNumber)];
 }
 
 - (BOOL)isAlphabeticNumericOnly
 {
-	return [self contentsIsOfType:(CSStringWholeNumberType | CSStringPositiveNumberType | CSStringAlphabeticType)];
+	return [self contentsIsOfType:(CSStringTypeWholeNumber | CSStringTypePositiveNumber | CSStringTypeAlphabetic)];
 }
 
 - (BOOL)contentsIsOfType:(CSStringType)type
@@ -833,14 +833,14 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return NO;
 	}
 
-	if (type == CSStringAnyType) {
+	if (type == CSStringTypeAny) {
 		return YES;
 	}
 
-	BOOL matchWholeNumber = ((type & CSStringWholeNumberType) == CSStringWholeNumberType);
-	BOOL matchDecimalNumber = ((type & CSStringDecimalNumberType) == CSStringDecimalNumberType);
-	BOOL matchPositiveNumber = ((type & CSStringPositiveNumberType) == CSStringPositiveNumberType);
-	BOOL matchNegativeNumber = ((type & CSStirngNegativeNumberType) == CSStirngNegativeNumberType);
+	BOOL matchWholeNumber = ((type & CSStringTypeWholeNumber) == CSStringTypeWholeNumber);
+	BOOL matchDecimalNumber = ((type & CSStringTypeDecimalNumber) == CSStringTypeDecimalNumber);
+	BOOL matchPositiveNumber = ((type & CSStringTypePositiveNumber) == CSStringTypePositiveNumber);
+	BOOL matchNegativeNumber = ((type & CSStirngTypeNegativeNumber) == CSStirngTypeNegativeNumber);
 	BOOL matchNumber = (matchWholeNumber || matchDecimalNumber);
 
 	/* If we aren't matching either type of number, we force positive. */
@@ -848,7 +848,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		matchPositiveNumber = YES;
 	}
 
-	BOOL matchAlphabit = ((type & CSStringAlphabeticType) == CSStringAlphabeticType);
+	BOOL matchAlphabit = ((type & CSStringTypeAlphabetic) == CSStringTypeAlphabetic);
 
 	BOOL decimalMatched = NO;
 

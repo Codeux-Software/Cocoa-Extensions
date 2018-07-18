@@ -47,16 +47,16 @@ COCOA_EXTENSIONS_EXTERN NSString * const CS_UnicodeReplacementCharacter;
 
 typedef NS_OPTIONS(NSUInteger, CSStringType)
 {
-	CSStringAnyType 			= 1 << 0, // Always returns YES when length > 0
-	CSStringWholeNumberType		= 1 << 1, // No decimal place allowed
-	CSStringDecimalNumberType 	= 1 << 2, // One decimal place allowed
-	CSStringPositiveNumberType 	= 1 << 3, // Positive number
-	CSStirngNegativeNumberType	= 1 << 4, // Negative number
-	CSStringAnyNumberType 		= (CSStringWholeNumberType |
-								   CSStringDecimalNumberType |
-								   CSStringPositiveNumberType |
-								   CSStirngNegativeNumberType),
-	CSStringAlphabeticType		= 1 << 10 // a to z, A to Z
+	CSStringTypeAny 			= 1 << 0, // Always returns YES when length > 0
+	CSStringTypeWholeNumber		= 1 << 1, // No decimal place allowed
+	CSStringTypeDecimalNumber 	= 1 << 2, // One decimal place allowed
+	CSStringTypePositiveNumber 	= 1 << 3, // Positive number
+	CSStirngTypeNegativeNumber	= 1 << 4, // Negative number
+	CSStringTypeAnyNumber 		= (CSStringTypeWholeNumber |
+								   CSStringTypeDecimalNumber |
+								   CSStringTypePositiveNumber |
+								   CSStirngTypeNegativeNumber),
+	CSStringTypeAlphabetic		= 1 << 10 // a to z, A to Z
 };
 
 #pragma mark
