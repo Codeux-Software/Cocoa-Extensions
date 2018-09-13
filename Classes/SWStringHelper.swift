@@ -41,7 +41,7 @@ public extension String
 		return self[range]
 	}
 
-	@_inlineable
+	@inlinable
 	var isIPv4Address: Bool
 	{
 		return IPv4AddressBytes != nil
@@ -62,7 +62,7 @@ public extension String
 		return nil
 	}
 
-	@_inlineable
+	@inlinable
 	var isIPv6Address: Bool
 	{
 		return IPv6AddressBytes != nil
@@ -82,12 +82,4 @@ public extension String
 
 		return nil
 	}
-
-#if !swift(>=4.2)
-	@_inlineable
-	func firstIndex(of element: Character) -> Index?
-	{
-		return index(of: element)
-	}
-#endif
 }

@@ -30,17 +30,6 @@
 *
 *********************************************************************** */
 
-#if !swift(>=4.2)
-public extension Array where Element == Data
-{
-	@_inlineable
-	func firstIndex(of element: Element) -> Index?
-	{
-		return index(of: element)
-	}
-}
-#endif
-
 public extension Array where Element == AnyObject
 {
 	func bool(at index: Int) -> Bool

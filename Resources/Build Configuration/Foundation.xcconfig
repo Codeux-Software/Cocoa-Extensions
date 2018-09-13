@@ -75,7 +75,5 @@ STRIP_STYLE = non-global
 SWIFT_COMPILATION_MODE = wholemodule
 SWIFT_INSTALL_OBJC_HEADER = NO // We expose through custom interfaces
 SWIFT_OPTIMIZATION_LEVEL = -O
-// TODO: Use Swift 4.2 only when Xcode 10 reaches GM status
-SWIFT_VERSION = 4.1
-SWIFT_VERSION[sdk=macosx10.14] = 4.2
+SWIFT_VERSION = 4.2
 VERSION_INFO_BUILDER = Codeux Software, LLC
