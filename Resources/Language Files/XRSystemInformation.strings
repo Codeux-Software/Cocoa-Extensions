@@ -30,6 +30,7 @@
  *
  *********************************************************************** */
 
+"macOS" = "macOS";
 "macOS Catalina" = "macOS Catalina";
 "macOS Mojave" = "macOS Mojave";
 "macOS High Sierra" = "macOS High Sierra";

@@ -65,4 +65,6 @@ BOOL XRRunningOnOSXHighSierraOrLater(void); // 10.13
 BOOL XRRunningOnOSXMojaveOrLater(void); // 10.14
 BOOL XRRunningOnOSXCatalinaOrLater(void); // 10.15
 
+BOOL XRRunningOnUnrecognizedOSVersion(void); // 10.??
+
 NS_ASSUME_NONNULL_END

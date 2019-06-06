@@ -40,6 +40,8 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
+static NSUInteger _highestRecognizedMinorOSVersion = 15; // macOS Catalina
+
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation XRSystemInformation
@@ -157,7 +159,9 @@ NS_ASSUME_NONNULL_BEGIN
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
-		if (XRRunningOnOSXCatalinaOrLater()) {
+		if (XRRunningOnUnrecognizedOSVersion()) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+		} else if (XRRunningOnOSXCatalinaOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Catalina", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXMojaveOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Mojave", @"XRSystemInformation", nil);
@@ -522,6 +526,27 @@ BOOL XRRunningOnOSXCatalinaOrLater(void)
 
 			compareVersion.majorVersion = 10;
 			compareVersion.minorVersion = 15;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnUnrecognizedOSVersion(void)
+{
+	static BOOL cachedValue = YES;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = (_highestRecognizedMinorOSVersion + 1);
 			compareVersion.patchVersion = 0;
 
 			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
