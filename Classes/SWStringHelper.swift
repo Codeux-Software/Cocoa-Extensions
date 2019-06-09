@@ -82,4 +82,10 @@ public extension String
 
 		return nil
 	}
+
+	@inlinable
+	var isIPAddress: Bool
+	{
+		return isIPv4Address || isIPv6Address
+	}
 }
