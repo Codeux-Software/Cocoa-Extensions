@@ -55,6 +55,35 @@ NS_ASSUME_NONNULL_BEGIN
     return [NSString stringWithFormat:@"%zu x %zu", screenWidth, screenHeight];
 }
 
+- (CGFloat)screenRefreshRate
+{
+    NSDictionary *screenDescription = self.deviceDescription;
+
+    CGDirectDisplayID screenId = [screenDescription[@"NSScreenNumber"] unsignedIntValue];
+
+    CGDisplayModeRef screenMode = CGDisplayCopyDisplayMode(screenId);
+
+	CGFloat refreshRate = CGDisplayModeGetRefreshRate(screenMode);
+
+    if (refreshRate == 0) {
+		CVDisplayLinkRef link;
+
+		CVDisplayLinkCreateWithCGDisplay(screenId, &link);
+
+		CVTime time = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(link);
+
+		if ((time.flags & kCVTimeIsIndefinite) == NO) {
+			refreshRate = (time.timeScale / time.timeValue);
+		}
+
+		CVDisplayLinkRelease(link);
+    }
+
+    CGDisplayModeRelease(screenMode);
+
+	return refreshRate;
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

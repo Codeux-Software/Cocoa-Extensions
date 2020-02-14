@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) BOOL runningInHighResolutionMode;
 
 @property (readonly, copy) NSString *screenResolutionString;
+@property (readonly) CGFloat screenRefreshRate;
 @end
 
 NS_ASSUME_NONNULL_END
