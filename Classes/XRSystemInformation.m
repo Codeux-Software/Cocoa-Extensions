@@ -40,7 +40,7 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
-static NSUInteger _highestRecognizedMinorOSVersion = 15; // macOS Catalina
+static NSUInteger _highestRecognizedMinorOSVersion = 16; // macOS Big Sur
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -161,6 +161,8 @@ NS_ASSUME_NONNULL_BEGIN
 	if (cachedValue == nil) {
 		if (XRRunningOnUnrecognizedOSVersion()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+		} else if (XRRunningOnOSXBigSurOrLater()) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS Big Sur", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXCatalinaOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Catalina", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXMojaveOrLater()) {
@@ -526,6 +528,28 @@ BOOL XRRunningOnOSXCatalinaOrLater(void)
 
 			compareVersion.majorVersion = 10;
 			compareVersion.minorVersion = 15;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXBigSurOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			// TODO: Will this end up being 11.0? - July 15, 2020
+			compareVersion.majorVersion = 10;
+			compareVersion.minorVersion = 16;
 			compareVersion.patchVersion = 0;
 
 			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
