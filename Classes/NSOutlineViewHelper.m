@@ -236,13 +236,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSInteger)numberOfItemsInGroup:(nullable id)groupItem
 {
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		return [self numberOfChildrenOfItem:groupItem];
-	}
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
 
-	NSParameterAssert([self.dataSource respondsToSelector:@selector(outlineView:numberOfChildrenOfItem:)]);
-
-	return [self.dataSource outlineView:self numberOfChildrenOfItem:groupItem];
+	return [self numberOfChildrenOfItem:groupItem];
 }
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem

@@ -52,10 +52,6 @@ typedef NS_ENUM(NSInteger, XRLoggingType) {
 #define LogToConsoleFaultWithSubsystem(_subsystem, _message, ...)	\
 	_LogToConsole(LogToConsoleTypeFault, _subsystem, _message, ##__VA_ARGS__)	\
 
-/* LogToConsoleSetDebugLoggingEnabled() */
-#define LogToConsoleSetDebugLoggingEnabled(_enabled)	\
-	_LogToConsoleSetDebugLoggingEnabled(_enabled);
-
 /* LogToConsoleDefaultSubsystem() */
 #define LogToConsoleDefaultSubsystem()	\
 	_LogToConsoleDefaultSubsystem()
@@ -89,7 +85,5 @@ void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, 
 
 os_log_t _Nullable _LogToConsoleDefaultSubsystem(void);
 void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem);
-
-void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled);
 
 NS_ASSUME_NONNULL_END

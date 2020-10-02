@@ -43,36 +43,27 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(object != nil);
 
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		[object setAccessibilityValueDescription:accessibilityValueDescription];
-	} else {
-		[object accessibilitySetOverrideValue:accessibilityValueDescription
-								 forAttribute:NSAccessibilityValueDescriptionAttribute];
-	}
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	[object setAccessibilityValueDescription:accessibilityValueDescription];
 }
 
 + (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object
 {
 	NSParameterAssert(object != nil);
 
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		[object setAccessibilityLabel:accessibilityLabel];
-	} else {
-		[object accessibilitySetOverrideValue:accessibilityLabel
-								 forAttribute:NSAccessibilityDescriptionAttribute];
-	}
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	[object setAccessibilityLabel:accessibilityLabel];
 }
 
 + (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object
 {
 	NSParameterAssert(object != nil);
 
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		[object setAccessibilityTitle:accessibilityTitle];
-	} else {
-		[object accessibilitySetOverrideValue:accessibilityTitle
-								 forAttribute:NSAccessibilityTitleAttribute];
-	}
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
+	[object setAccessibilityTitle:accessibilityTitle];
 }
 
 @end

@@ -138,14 +138,7 @@ BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
 
 dispatch_queue_t XRCreateDispatchQueueWithPriority(const char *label, dispatch_queue_attr_t attributes, dispatch_qos_class_t priority)
 {
-	dispatch_queue_attr_t queueAttributes = 0;
-
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite)) {
-		queueAttributes =
-		dispatch_queue_attr_make_with_qos_class(attributes, priority, 0);
-	} else {
-		queueAttributes = attributes;
-	}
+	dispatch_queue_attr_t queueAttributes = dispatch_queue_attr_make_with_qos_class(attributes, priority, 0);
 
 	return dispatch_queue_create(label, queueAttributes);
 }

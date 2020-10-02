@@ -88,11 +88,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)usesCustomTitlebarTitlePositioning
 {
-	/* This fix is not necessary prior to OS X Yosemite */
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite) == NO) {
-		return NO;
-	}
-
 	/* This fix is not necessary unless we have custom views */
 	NSArray *viewControllers = self.titlebarAccessoryViewControllers;
 

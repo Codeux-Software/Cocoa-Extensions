@@ -49,6 +49,8 @@ void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem)
 
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
 {
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
 	[XRLogging setDebugLogging:enabled];
 }
 

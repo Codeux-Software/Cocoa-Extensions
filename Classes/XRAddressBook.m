@@ -30,39 +30,77 @@
  *
  *********************************************************************** */
 
-#import <AddressBook/AddressBook.h>
+#import <Contacts/Contacts.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
 @implementation XRAddressBook
 
-+ (nullable NSString *)myName
++ (nullable CNContact *)myCardWithKeys:(NSArray<id<CNKeyDescriptor>> *)keys
 {
-	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
+	NSParameterAssert(keys != nil);
 
-	NSString *userFirstName = [aPerson valueForProperty:kABFirstNameProperty];
-	NSString *userLastName = [aPerson valueForProperty:kABLastNameProperty];
+	CNContactStore *store = [CNContactStore new];
 
-	if (userFirstName && userLastName) {
-		return [NSString stringWithFormat:@"%@ %@", userFirstName, userLastName];
-	} else if (userFirstName) {
-		return userFirstName;
-	} else {
+	NSError *cardError = nil;
+
+	CNContact *card = [store unifiedMeContactWithKeysToFetch:keys error:&cardError];
+
+	if (cardError) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Failed to fetch 'me' contact card: %@",
+				cardError.localizedDescription);
+
 		return nil;
 	}
+
+	return card;
+}
+
++ (nullable NSString *)myName
+{
+	NSArray *keys = @[CNContactGivenNameKey, CNContactFamilyNameKey];
+
+	CNContact *card = [self myCardWithKeys:keys];
+
+	if (card == nil) {
+		return nil;
+	}
+
+	NSString *givenName = card.givenName;
+
+	if (givenName.length == 0) {
+		return nil;
+	}
+
+	NSString *familyName = card.familyName;
+
+	if (familyName.length == 0) {
+		return givenName;
+	}
+
+	return [NSString stringWithFormat:@"%@ %@", givenName, familyName];
 }
 
 + (nullable NSString *)myEmailAddress
 {
-	ABPerson *aPerson = [[ABAddressBook sharedAddressBook] me];
+	NSArray *keys = @[CNContactEmailAddressesKey];
 
-	ABMultiValue *emailAddresses = [aPerson valueForProperty:kABEmailProperty];
+	CNContact *card = [self myCardWithKeys:keys];
 
-	if ([emailAddresses count] <= 0) {
+	if (card == nil) {
 		return nil;
-	} else {
-		return [emailAddresses valueAtIndex:0];
 	}
+
+	CNLabeledValue *emailRef = card.emailAddresses.firstObject;
+
+	NSString *email = emailRef.value;
+
+	if (email.length == 0) {
+		return nil;
+	}
+
+	return email;
 }
 
 @end

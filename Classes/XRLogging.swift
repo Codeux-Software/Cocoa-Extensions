@@ -54,11 +54,7 @@ public class Logging : NSObject
 	///
 	/// Flag to enable debug log type
 	///
-	/// macOS 10.12 and later control debug logging
-	/// at the system level which negates this flag.
-	///
-	/// See: os_log_debug_enabled()
-	///
+	@available(*, deprecated, message: "Debug logging is controlled at system level")
 	@objc
 	public static var debugLogging = false
 
@@ -72,7 +68,6 @@ public class Logging : NSObject
 		case error = 3
 		case fault = 4
 
-		@available(OSX 10.12, *)
 		fileprivate var systemType:OSLogType
 		{
 			switch self {
@@ -104,17 +99,6 @@ public class Logging : NSObject
 					return "Default"
 			}
 		} // description
-
-		fileprivate var formatterDescription: String?
-		{
-			/* No need to show description when performing
-			 unified logging because system captrues this. */
-			if #available(OSX 10.12, *) {
-				return nil
-			}
-
-			return "[\(description)] "
-		} // formatterDescription
 	}
 
 	fileprivate struct Context
@@ -146,19 +130,7 @@ public class Logging : NSObject
 
 	fileprivate static func log(_ message: String, in context: Context)
 	{
-		let messageToLog = "\(context.type.formatterDescription ?? "")\(context.function) [\(context.line):\(context.column)]: \(message)"
-
-		guard #available(OSX 10.12, *) else {
-			if (context.type == .debug) {
-				if (debugLogging == false) {
-					return
-				}
-			}
-
-			NSLog(messageToLog)
-
-			return
-		}
+		let messageToLog = "\(context.function) [\(context.line):\(context.column)]: \(message)"
 
 		let subsystem = (context.subsystem ?? defaultSubsystem ?? OSLog.default)
 
@@ -171,11 +143,7 @@ public class Logging : NSObject
 	@objc
 	internal static var frameworkSubsystem: OSLog? =
 	{
-		if #available(OSX 10.12, *) {
-			return OSLog(subsystem: "com.codeux.frameworks.CocoaExtensions", category: "General")
-		}
-
-		return nil
+		return OSLog(subsystem: "com.codeux.frameworks.CocoaExtensions", category: "General")
 	}()
 }
 

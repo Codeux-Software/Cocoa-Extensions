@@ -35,9 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface XRAccessibility : NSObject
 + (BOOL)isVoiceOverEnabled;
 
-+ (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object;
-+ (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object;
-+ (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object;
++ (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object COCOA_EXTENSIONS_DEPRECATED("Use [object setAccessibilityLabel:] instead");
++ (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object COCOA_EXTENSIONS_DEPRECATED("Use [object setAccessibilityTitle:] instead");
++ (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object COCOA_EXTENSIONS_DEPRECATED("Use [object setAccessibilityValueDescription:] instead");
 @end
 
 NS_ASSUME_NONNULL_END

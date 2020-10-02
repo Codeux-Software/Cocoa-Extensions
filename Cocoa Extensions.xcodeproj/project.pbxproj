@@ -23,6 +23,7 @@
 		4C1DC23E1F14309100C61416 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C1DC23D1F14309100C61416 /* Foundation.framework */; };
 		4C27811A1CBD906400334FD0 /* NSWorkspaceHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2781181CBD906400334FD0 /* NSWorkspaceHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C27811B1CBD906400334FD0 /* NSWorkspaceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */; };
+		4C2799892526F79100398A40 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2799882526F79100398A40 /* Contacts.framework */; };
 		4C292DA31A91ABD300A41FD6 /* XRPortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */; };
 		4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A71E81B629EA200CD363B /* IOKit.framework */; };
@@ -61,7 +62,6 @@
 		4CA5D32F1F9829DA006714D6 /* NSCharacterSetHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5D32D1F9829DA006714D6 /* NSCharacterSetHelper.m */; };
 		4CA63AFA1B63F9EB002CF61C /* XRAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */; };
-		4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */; };
 		4CA7BE6620C6D4A900C324BF /* NSTabViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CA7BE6420C6D4A800C324BF /* NSTabViewHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CA7BE6720C6D4A900C324BF /* NSTabViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7BE6520C6D4A900C324BF /* NSTabViewHelper.m */; };
 		4CAA489B20E46AB500FDE1F5 /* SWDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA489A20E46AB500FDE1F5 /* SWDataHelper.swift */; };
@@ -140,6 +140,7 @@
 		4C1DC23D1F14309100C61416 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C2781181CBD906400334FD0 /* NSWorkspaceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSWorkspaceHelper.h; path = Classes/NSWorkspaceHelper.h; sourceTree = "<group>"; };
 		4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSWorkspaceHelper.m; path = Classes/NSWorkspaceHelper.m; sourceTree = "<group>"; };
+		4C2799882526F79100398A40 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
 		4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRPortMapper.h; path = Classes/XRPortMapper.h; sourceTree = "<group>"; };
 		4C292DA21A91ABD300A41FD6 /* XRPortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRPortMapper.m; path = Classes/XRPortMapper.m; sourceTree = "<group>"; };
 		4C2A71E81B629EA200CD363B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
@@ -248,11 +249,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C1DC23E1F14309100C61416 /* Foundation.framework in Frameworks */,
-				4CA63AFD1B63FAE5002CF61C /* AddressBook.framework in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */,
 				4C1923CC1A900DBF0076F65A /* Security.framework in Frameworks */,
 				4CEEC2D51B97C7C1000F517B /* WebKit.framework in Frameworks */,
+				4C2799892526F79100398A40 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +283,7 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C2799882526F79100398A40 /* Contacts.framework */,
 				4CA63AFC1B63FAE5002CF61C /* AddressBook.framework */,
 				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
 				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,

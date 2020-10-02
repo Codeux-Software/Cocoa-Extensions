@@ -47,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
-- (NSInteger)numberOfItemsInGroup:(nullable id)groupItem;
+- (NSInteger)numberOfItemsInGroup:(nullable id)groupItem COCOA_EXTENSIONS_DEPRECATED("Use -numberOfChildrenOfItem: instead");
 
 - (nullable id)parentForItemAtRow:(NSUInteger)row;
 @end

@@ -1779,12 +1779,6 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset
 {
-	/* Perform basic validation on the current state of the
-	 string and the values of hte supplied paramaters. */
-	if (COCOA_EXTENSIONS_RUNNING_ON(10.10, Yosemite) == NO) {
-		return nil;
-	}
-
 	if (self.length == 0) {
 		return nil;
 	}
