@@ -54,6 +54,16 @@ NS_ASSUME_NONNULL_BEGIN
 	return resourceValue;
 }
 
+- (BOOL)isEqualByStandardizingPaths:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	NSURL *left = self.URLByStandardizingPath;
+	NSURL *right = url.URLByStandardizingPath;
+
+	return [left isEqual:right];
+}
+
 @end
 
 NS_ASSUME_NONNULL_END
