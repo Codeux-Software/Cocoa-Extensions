@@ -426,6 +426,30 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 }
 
+- (NSArray *)arrayByApplyingBlock:(id (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))block
+{
+	return [self arrayByApplyingBlock:block withOptions:0];
+}
+
+- (NSArray *)arrayByApplyingBlock:(id (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))block withOptions:(NSEnumerationOptions)options
+{
+	NSParameterAssert(block != nil);
+
+	if (self.count == 0) {
+		return @[];
+	}
+
+	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
+
+	@synchronized(self) {
+		[self enumerateObjectsWithOptions:options usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			[newArray addObject:block(object, index, stop)];
+		}];
+	}
+
+	return [newArray copy];
+}
+
 @end
 
 @implementation NSMutableArray (CSMutableArrayHelper)
