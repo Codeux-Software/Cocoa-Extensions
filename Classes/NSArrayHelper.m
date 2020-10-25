@@ -330,9 +330,9 @@ NS_ASSUME_NONNULL_BEGIN
 		return self;
 	}
 
-	@synchronized(self) {
-		NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
+	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:self.count];
 
+	@synchronized(self) {
 		[self enumerateObjectsUsingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			id objectValue = object;
 
@@ -409,15 +409,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSMutableArray *subarray = [NSMutableArray arrayWithCapacity:subarraySzie];
 
-	[self enumerateObjectsWithOptions:options usingBlock:^(id object, NSUInteger index, BOOL *stop) {
-		[subarray addObject:object];
+	@synchronized(self) {
+		[self enumerateObjectsWithOptions:options usingBlock:^(id object, NSUInteger index, BOOL *stop) {
+			[subarray addObject:object];
 
-		if (subarray.count == subarraySzie) {
-			block([subarray copy], stop);
+			if (subarray.count == subarraySzie) {
+				block([subarray copy], stop);
 
-			[subarray removeAllObjects];
-		}
-	}];
+				[subarray removeAllObjects];
+			}
+		}];
+	}
 
 	if (subarray.count > 0) {
 		block([subarray copy], NULL);
