@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)fileExistsAtURL:(NSURL *)url;
 
+- (BOOL)directoryExistsAtURL:(NSURL *)url;
 - (BOOL)directoryExistsAtPath:(NSString *)path;
 
 - (BOOL)lockItemAtPath:(NSString *)path error:(NSError **)error;

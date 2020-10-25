@@ -46,6 +46,13 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self fileExistsAtPath:url.path];
 }
 
+- (BOOL)directoryExistsAtURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	return [self directoryExistsAtPath:url.path];
+}
+
 - (BOOL)directoryExistsAtPath:(NSString *)path
 {
 	NSParameterAssert(path != nil);
