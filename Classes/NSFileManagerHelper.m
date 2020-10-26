@@ -137,18 +137,25 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(path != nil);
 
-	NSURL *fileURL = [NSURL fileURLWithPath:path];
+	NSURL *url = [NSURL fileURLWithPath:path];
+
+	return [self isUbiquitousItemAtURLDownloaded:url];
+}
+
+- (BOOL)isUbiquitousItemAtURLDownloaded:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
 
 	/* Check whether the given path is ubiquitous */
 	NSError *isUbiquitousError = nil;
 
-	NSNumber *isUbiquitous = [fileURL resourceValueForKey:NSURLIsUbiquitousItemKey error:&isUbiquitousError];
+	NSNumber *isUbiquitous = [url resourceValueForKey:NSURLIsUbiquitousItemKey error:&isUbiquitousError];
 
 	if (isUbiquitous == nil || isUbiquitous.boolValue == NO) {
 		if (isUbiquitousError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"isUbiquitous lookup failed: '%@': %@",
-				path, isUbiquitousError.localizedDescription);
+				url, isUbiquitousError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
@@ -158,8 +165,7 @@ NS_ASSUME_NONNULL_BEGIN
 			/* YES will indicate the file is downloaded and since the file
 			 is not ubiquitous, it is in fact downloaded. */
 			LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"Returning YES for path that is not ubiquitous: '%@'",
-				path);
+				"Returning YES for path that is not ubiquitous: '%@'", url);
 
 			return YES;
 		}
@@ -173,13 +179,13 @@ NS_ASSUME_NONNULL_BEGIN
 	 subdirectory was the only option. */
 	NSError *isDirectoryError = nil;
 
-	NSNumber *isDirectory = [fileURL resourceValueForKey:NSURLIsDirectoryKey error:&isDirectoryError];
+	NSNumber *isDirectory = [url resourceValueForKey:NSURLIsDirectoryKey error:&isDirectoryError];
 
 	if (isDirectory == nil)
 	{
 		if (isDirectoryError) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"isDirectory lookup failed: '%@': %@", path,
+				"isDirectory lookup failed: '%@': %@", url,
 			     isDirectoryError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 		}
@@ -190,21 +196,22 @@ NS_ASSUME_NONNULL_BEGIN
 	{
 		NSError *directoryContentsError = nil;
 
-		NSArray *directoryContents = [self contentsOfDirectoryAtPath:path error:&directoryContentsError];
+		NSArray *directoryContents = [self contentsOfDirectoryAtURL:url
+										 includingPropertiesForKeys:@[NSURLNameKey]
+															options:0
+															  error:&directoryContentsError];
 
 		if (directoryContents == nil) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"directoryContents returned nil: '%@': %@",
-				 path, directoryContentsError.localizedDescription);
+				 url, directoryContentsError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
 		}
 
-		for (NSString *file in directoryContents) {
-			NSString *filePath = [path stringByAppendingPathComponent:file];
-
-			if ([self isUbiquitousItemAtPathDownloaded:filePath] == NO) {
+		for (NSURL *suburl in directoryContents) {
+			if ([self isUbiquitousItemAtURLDownloaded:suburl] == NO) {
 				return NO;
 			}
 		}
@@ -217,7 +224,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	BOOL isDownloaded = YES;
 
-	NSString *_isDownloaded = [fileURL resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
+	NSString *_isDownloaded = [url resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
 
 	if (_isDownloaded) {
 		 isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusDownloaded) ||
@@ -227,7 +234,7 @@ NS_ASSUME_NONNULL_BEGIN
 	if (isDownloadedError) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"isDownloaded lookup failed: '%@': %@",
-			path, isDownloadedError.localizedDescription);
+			url, isDownloadedError.localizedDescription);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 	}
 

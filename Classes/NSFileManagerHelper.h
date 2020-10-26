@@ -46,6 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...;
 
 - (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path;
+- (BOOL)isUbiquitousItemAtURLDownloaded:(NSURL *)url;
 
 // The following methods default to moving destination to trash + copying source
 - (BOOL)replaceItemAtPath:(NSString *)destinationPath
