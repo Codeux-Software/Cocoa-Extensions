@@ -40,7 +40,8 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
-static NSUInteger _highestRecognizedMinorOSVersion = 16; // macOS Big Sur
+static NSUInteger _highestRecognizedMajorOSVersion = 11; // macOS Big Sur
+static NSUInteger _highestRecognizedMinorOSVersion = 0; // macOS Big Sur
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -547,9 +548,8 @@ BOOL XRRunningOnOSXBigSurOrLater(void)
 		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
 			NSOperatingSystemVersion compareVersion;
 
-			// TODO: Will this end up being 11.0? - July 15, 2020
-			compareVersion.majorVersion = 10;
-			compareVersion.minorVersion = 16;
+			compareVersion.majorVersion = 11;
+			compareVersion.minorVersion = 0;
 			compareVersion.patchVersion = 0;
 
 			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
@@ -569,7 +569,7 @@ BOOL XRRunningOnUnrecognizedOSVersion(void)
 		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
 			NSOperatingSystemVersion compareVersion;
 
-			compareVersion.majorVersion = 10;
+			compareVersion.majorVersion =  _highestRecognizedMajorOSVersion;
 			compareVersion.minorVersion = (_highestRecognizedMinorOSVersion + 1);
 			compareVersion.patchVersion = 0;
 
