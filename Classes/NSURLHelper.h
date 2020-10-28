@@ -1,6 +1,6 @@
 /* *********************************************************************
  *
- *         Copyright (c) 2016 - 2018 Codeux Software, LLC
+ *         Copyright (c) 2016 - 2020 Codeux Software, LLC
  *     Please see ACKNOWLEDGEMENT for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
