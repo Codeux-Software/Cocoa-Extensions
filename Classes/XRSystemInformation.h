@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)retrieveSystemInformationKey:(NSString *)key;
 
+@property (nonatomic, class, readonly) BOOL systemIsAppleSilicon;
+
 + (BOOL)isUsingOSXLionOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXLionOrLater() instead");
 + (BOOL)isUsingOSXMountainLionOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXMountainLionOrLater() instead");
 + (BOOL)isUsingOSXMavericksOrLater COCOA_EXTENSIONS_DEPRECATED("Use XRRunningOnOSXMavericksOrLater() instead");

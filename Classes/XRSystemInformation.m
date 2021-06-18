@@ -34,6 +34,7 @@
 #import <IOKit/pwr_mgt/IOPM.h>
 
 #include <sys/sysctl.h>
+#include <sys/utsname.h>
 
 #include <dlfcn.h>
 
@@ -48,6 +49,21 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark -
 #pragma mark Public
+
++ (BOOL)systemIsAppleSilicon
+{
+	struct utsname systemInfo;
+
+	uname(&systemInfo);
+
+	NSString *machine = @(systemInfo.machine);
+
+	/* Rather than comparing this value against
+	 'arm64' and introduce a scenario in the
+	 future in which that name may change,
+	 let's just compare against the classic. */
+	return [machine isNotEqualTo:@"x86_64"];
+}
 
 + (nullable NSString *)formattedEthernetMacAddress
 {
