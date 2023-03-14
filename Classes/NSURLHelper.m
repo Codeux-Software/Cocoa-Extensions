@@ -84,12 +84,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (NSArray<NSString *> *)pathsArrayForFileURLs:(NSArray<NSURL *> *)fileURLs
 {
+	return [self pathsArrayForFileURLs:fileURLs standardizingPaths:YES];
+}
+
++ (NSArray<NSString *> *)pathsArrayForFileURLs:(NSArray<NSURL *> *)fileURLs standardizingPaths:(BOOL)standardizingPaths
+{
 	NSParameterAssert(fileURLs != nil);
 
-	return [fileURLs arrayByApplyingBlock:^NSString *(NSURL *url, NSUInteger index, BOOL *stop) {
-		NSAssert(url.isFileURL, @"URL '%@' is not a file.", url);
+	return [fileURLs arrayByApplyingBlock:^NSString *(NSURL *urlIn, NSUInteger index, BOOL *stop) {
+		NSAssert(urlIn.isFileURL, @"URL '%@' is not a file.", urlIn);
 
-		return url.path;
+		NSURL *urlOut = urlIn;
+
+		if (standardizingPaths) {
+			urlOut = urlOut.URLByStandardizingPath;
+		}
+
+		return urlOut.path;
 	}];
 }
 
