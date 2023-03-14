@@ -41,11 +41,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isBooleanValue
 {
-	if (strcmp(self.objCType, @encode(BOOL)) == 0) {
-		return YES;
-	} else {
-		return FALSE;
-	}
+	CFTypeID boolID = CFBooleanGetTypeID();
+
+	CFTypeID numID = CFGetTypeID((__bridge CFTypeRef)self);
+
+	return (boolID == numID);
 }
 
 - (NSString *)integerStringValueWithLeadingZero
