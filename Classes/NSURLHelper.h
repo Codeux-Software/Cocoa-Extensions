@@ -36,7 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)resourceValueForKey:(NSString *)key;
 - (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error;
 
-- (BOOL)isEqualByStandardizingPaths:(NSURL *)url;
+- (BOOL)isEqualByFileRepresentation:(NSURL *)url;
 @end
 
 @interface NSArray (CSURLHelper)

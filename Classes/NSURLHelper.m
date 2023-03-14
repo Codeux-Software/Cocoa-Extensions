@@ -54,14 +54,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return resourceValue;
 }
 
-- (BOOL)isEqualByStandardizingPaths:(NSURL *)url
+- (BOOL)isEqualByFileRepresentation:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
+	NSParameterAssert(url.isFileURL);
 
-	NSURL *left = self.URLByStandardizingPath;
-	NSURL *right = url.URLByStandardizingPath;
+	const char *left = self.fileSystemRepresentation;
+	const char *right = url.fileSystemRepresentation;
 
-	return [left isEqual:right];
+	return (strcmp(left, right) == 0);
 }
 
 @end
