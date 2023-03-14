@@ -41,9 +41,16 @@ NS_ASSUME_NONNULL_BEGIN
 	if (value == nil) {
 		[self setObject:nil forKey:defaultName];
 	} else {
-		NSData *archvedValue = [NSArchiver archivedDataWithRootObject:value];
+		NSError *error;
 
-		[self setObject:archvedValue forKey:defaultName];
+		NSData *archivedValue = [NSKeyedArchiver archivedDataWithRootObject:value
+													  requiringSecureCoding:YES
+																	  error:&error];
+		
+		NSAssert((error != nil), @"Failed to write contents of '%@': %@",
+				 defaultName, error.description);
+		
+		[self setObject:archivedValue forKey:defaultName];
 	}
 }
 
@@ -89,7 +96,21 @@ NS_ASSUME_NONNULL_BEGIN
 	id object = [self objectForKey:defaultName];
 
 	if ([object isKindOfClass:[NSData class]]) {
-		return [NSUnarchiver unarchiveObjectWithData:object];
+		NSError *error;
+
+		NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object
+											 requiringSecureCoding:YES
+															 error:&error];
+		
+		if (error) {
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+				"Failed to read contents of '%@': %@",
+				defaultName, error.description);
+		}
+		
+		if ([data isKindOfClass:[NSColor class]]) {
+			return (NSColor *)data;
+		}
 	}
 
 	return nil;
