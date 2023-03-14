@@ -39,12 +39,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite, strong, nullable) id context;
 @end
 
-typedef NSObject<NSCopying> *XRFileSystemMonitorContextKey;
-
 @interface XRFileSystemMonitor ()
 @property (nonatomic, copy) NSArray<NSURL *> *urls;
 @property (nonatomic, copy) XRFileSystemMonitorCallbackBlock callbackBlock;
-@property (nonatomic, copy, nullable) NSDictionary<XRFileSystemMonitorContextKey, id> *contextObjects; // URLs of context objects mapped to their file resource identifier
+@property (nonatomic, copy, nullable) NSDictionary<NSString *, id> *contextObjects; // URLs of context objects mapped to their file resource identifier
 @property (nonatomic, assign, nullable) FSEventStreamRef eventStreamRef;
 @end
 
@@ -212,20 +210,7 @@ void _monitorCallback(ConstFSEventStreamRef streamRef,
 	[contextObjectsIn enumerateKeysAndObjectsUsingBlock:^(NSURL *urlIn, id object, BOOL *stop) {
 		NSURL *urlOut = urlIn.URLByStandardizingPath;
 
-		NSError *keyError = nil;
-
-		XRFileSystemMonitorContextKey key = [urlOut resourceValueForKey:NSURLFileResourceIdentifierKey error:&keyError];
-
-		if (key == nil) {
-			if (keyError) {
-				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-					"Key resource identifier lookup failed: '%@': %@",
-					urlIn, keyError.localizedDescription);
-				LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-			}
-
-			return;
-		}
+		NSString *key = urlOut.filesystemRepresentationString;
 
 		contextObjectsOut[key] = object;
 	}];
@@ -243,13 +228,9 @@ void _monitorCallback(ConstFSEventStreamRef streamRef,
 		return nil;
 	}
 
-	XRFileSystemMonitorContextKey fileRep = [url resourceValueForKey:NSURLFileResourceIdentifierKey];
+	NSString *key = url.filesystemRepresentationString;
 
-	if (fileRep == nil) {
-		return nil;
-	}
-
-	return contextObjects[fileRep];
+	return contextObjects[key];
 }
 
 @end

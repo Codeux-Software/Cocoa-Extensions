@@ -54,6 +54,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return resourceValue;
 }
 
+- (nullable NSString *)filesystemRepresentationString
+{
+	if (self.isFileURL == NO) {
+		return nil;
+	}
+
+	const char *cstring = self.fileSystemRepresentation;
+
+	return [[NSFileManager defaultManager] stringWithFileSystemRepresentation:cstring length:strlen(cstring)];
+}
+
 - (BOOL)isEqualByFileRepresentation:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
