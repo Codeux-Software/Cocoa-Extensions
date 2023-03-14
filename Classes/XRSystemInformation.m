@@ -40,8 +40,7 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
-static NSUInteger _highestRecognizedMajorOSVersion = 11; // macOS Big Sur
-static NSUInteger _highestRecognizedMinorOSVersion = 0; // macOS Big Sur
+static NSUInteger _highestRecognizedMajorOSVersion = 12; // macOS Monterey
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -162,6 +161,8 @@ NS_ASSUME_NONNULL_BEGIN
 	if (cachedValue == nil) {
 		if (XRRunningOnUnrecognizedOSVersion()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+		} else if (XRRunningOnOSXMontereyOrLater()) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS Monterey", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXBigSurOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Big Sur", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXCatalinaOrLater()) {
@@ -559,6 +560,27 @@ BOOL XRRunningOnOSXBigSurOrLater(void)
 	return cachedValue;
 }
 
+BOOL XRRunningOnOSXMontereyOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 12;
+			compareVersion.minorVersion = 0;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
 BOOL XRRunningOnUnrecognizedOSVersion(void)
 {
 	static BOOL cachedValue = YES;
@@ -569,8 +591,8 @@ BOOL XRRunningOnUnrecognizedOSVersion(void)
 		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
 			NSOperatingSystemVersion compareVersion;
 
-			compareVersion.majorVersion =  _highestRecognizedMajorOSVersion;
-			compareVersion.minorVersion = (_highestRecognizedMinorOSVersion + 1);
+			compareVersion.majorVersion = (_highestRecognizedMajorOSVersion + 1);
+			compareVersion.minorVersion = 0;
 			compareVersion.patchVersion = 0;
 
 			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
