@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSValue (CSValueHelper)
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wvoid-pointer-to-int-cast"
+
 + (id)valueWithPrimitive:(void *)value withType:(const char *)valueType
 {
 	/* See runtime.h header in Objective-C for return types. */
@@ -102,6 +105,8 @@ NS_ASSUME_NONNULL_BEGIN
 	
 	return [NSValue valueWithBytes:value objCType:valueType];
 }
+
+#pragma clang diagnostic pop
 
 @end
 
