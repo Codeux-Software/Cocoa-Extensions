@@ -65,6 +65,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return (strcmp(left, right) == 0);
 }
 
+- (BOOL)isEqualByResourceIdentifier:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+	NSParameterAssert(url.isFileURL);
+
+	id left = [self resourceValueForKey:NSURLFileResourceIdentifierKey];
+	id right = [self resourceValueForKey:NSURLFileResourceIdentifierKey];
+
+	return NSObjectsAreEqual(left, right);
+}
+
 @end
 
 #pragma mark -
