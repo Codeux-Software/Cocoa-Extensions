@@ -40,7 +40,7 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
-static NSUInteger _highestRecognizedMajorOSVersion = 12; // macOS Monterey
+static NSUInteger _highestRecognizedMajorOSVersion = 13; // macOS Monterey
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -166,11 +166,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)systemOperatingSystemName
 {
+	/* I know that this can be optimized but it is only ran once. */
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
 		if (XRRunningOnUnrecognizedOSVersion()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+		} else if (XRRunningOnOSXVenturaOrLater()) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS Ventura", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXMontereyOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Monterey", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXBigSurOrLater()) {
@@ -581,6 +584,27 @@ BOOL XRRunningOnOSXMontereyOrLater(void)
 			NSOperatingSystemVersion compareVersion;
 
 			compareVersion.majorVersion = 12;
+			compareVersion.minorVersion = 0;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXVenturaOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 13;
 			compareVersion.minorVersion = 0;
 			compareVersion.patchVersion = 0;
 

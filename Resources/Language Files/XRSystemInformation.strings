@@ -31,6 +31,7 @@
  *********************************************************************** */
 
 "macOS" = "macOS";
+"macOS Ventura" = "macOS Ventura";
 "macOS Monterey" = "macOS Monterey";
 "macOS Big Sur" = "macOS Big Sur";
 "macOS Catalina" = "macOS Catalina";

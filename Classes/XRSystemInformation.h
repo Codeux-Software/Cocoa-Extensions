@@ -68,6 +68,7 @@ BOOL XRRunningOnOSXMojaveOrLater(void); // 10.14
 BOOL XRRunningOnOSXCatalinaOrLater(void); // 10.15
 BOOL XRRunningOnOSXBigSurOrLater(void); // 11.0
 BOOL XRRunningOnOSXMontereyOrLater(void); // 12.0
+BOOL XRRunningOnOSXVenturaOrLater(void); // 13.0
 
 BOOL XRRunningOnUnrecognizedOSVersion(void); // 10.??
 
