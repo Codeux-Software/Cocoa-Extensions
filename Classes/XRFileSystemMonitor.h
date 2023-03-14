@@ -39,6 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
  The following flags are set for monitoring:
  • kFSEventStreamCreateFlagFileEvents
  • kFSEventStreamCreateFlagNoDefer
+
+ A context object of any type can be assigned to specific URLs.
 */
 @class XRFileSystemEvent;
 
@@ -48,18 +50,24 @@ typedef void (^XRFileSystemMonitorCallbackBlock)(NSArray<XRFileSystemEvent *> *e
 @property (nonatomic, readonly, getter=isMonitoring) BOOL monitoring;
 
 - (instancetype)initWithFileURL:(NSURL *)url callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFileURL:(NSURL *)url context:(nullable id)contextObject callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
+
 - (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls context:(nullable NSDictionary<NSURL *, id> *)contextObjects callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
 
 - (void)startMonitoring; // latency = 0.0
 - (void)startMonitoringWithLatency:(NSTimeInterval)latency; // Will replace monitor if one is active
 
 - (void)stopMonitoring;
+
+- (nullable id)contextObjectForURL:(NSURL *)url;
 @end
 
 @interface XRFileSystemEvent : NSObject
 @property (nonatomic, readonly, copy) NSURL *url;
 @property (nonatomic, readonly) FSEventStreamEventFlags flags;
 @property (nonatomic, readonly) FSEventStreamEventId identifier;
+@property (nonatomic, readonly, strong, nullable) id context;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -36,11 +36,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readwrite, copy) NSURL *url;
 @property (nonatomic, readwrite, assign) FSEventStreamEventFlags flags;
 @property (nonatomic, readwrite, assign) FSEventStreamEventId identifier;
+@property (nonatomic, readwrite, strong, nullable) id context;
 @end
+
+typedef NSObject<NSCopying> *XRFileSystemMonitorContextKey;
 
 @interface XRFileSystemMonitor ()
 @property (nonatomic, copy) NSArray<NSURL *> *urls;
 @property (nonatomic, copy) XRFileSystemMonitorCallbackBlock callbackBlock;
+@property (nonatomic, copy, nullable) NSDictionary<XRFileSystemMonitorContextKey, id> *contextObjects; // URLs of context objects mapped to their file resource identifier
 @property (nonatomic, assign, nullable) FSEventStreamRef eventStreamRef;
 @end
 
@@ -55,14 +59,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithFileURL:(NSURL *)url callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock
 {
-	NSParameterAssert(url != nil);
-	NSParameterAssert(callbackBlock != nil);
+	return [self initWithFileURLs:@[url] context:nil callbackBlock:callbackBlock];
+}
 
-	return [self initWithFileURLs:@[url] callbackBlock:callbackBlock];
+- (instancetype)initWithFileURL:(NSURL *)url context:(nullable id)contextObject callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock
+{
+	NSDictionary<NSURL *, id> *contextObjects = nil;
+
+	if (contextObject) {
+		contextObjects = @{url : contextObject};
+	}
+
+	return [self initWithFileURLs:@[url] context:contextObjects callbackBlock:callbackBlock];
+}
+
+- (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock
+{
+	return [self initWithFileURLs:urls context:nil callbackBlock:callbackBlock];
 }
 #pragma clang diagnostic pop
 
-- (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock
+- (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls context:(nullable NSDictionary<NSURL *, id> *)contextObjects callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock
 {
 	NSParameterAssert(callbackBlock != nil);
 	NSParameterAssert(urls != nil);
@@ -70,7 +87,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if ((self = [super init])) {
 		self.urls = urls;
+
 		self.callbackBlock = callbackBlock;
+
+		if (contextObjects) {
+			self.contextObjects = [self remapContextObjects:contextObjects];
+		}
 
 		return self;
 	}
@@ -94,7 +116,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	NSArray *urlsToWatch = self.urls;
 
-	NSArray *pathsToWatch = [NSArray pathsArrayForFileURLs:urlsToWatch];
+	NSArray *pathsToWatch = [NSArray pathsArrayForFileURLs:urlsToWatch standardizingPaths:YES];
 
 	CFArrayRef pathsToWatchRef = (__bridge CFArrayRef)pathsToWatch;
 
@@ -160,11 +182,14 @@ void _monitorCallback(ConstFSEventStreamRef streamRef,
 
 			NSURL *fileURL = [NSURL fileURLWithPath:filePath];
 
+			id context = [monitor contextObjectForURL:fileURL];
+
 			XRFileSystemEvent *event = [XRFileSystemEvent new];
 
 			event.url = fileURL;
 			event.flags = flags;
 			event.identifier = identifier;
+			event.context = context;
 
 			[events addObject:event];
 		} // for
@@ -178,12 +203,60 @@ void _monitorCallback(ConstFSEventStreamRef streamRef,
 	return (self.eventStreamRef != nil);
 }
 
+- (NSDictionary<NSString *, id> *)remapContextObjects:(NSDictionary<NSURL *, id> *)contextObjectsIn
+{
+	NSParameterAssert(contextObjectsIn != nil);
+
+	NSMutableDictionary<NSString *, id> *contextObjectsOut = [NSMutableDictionary dictionaryWithCapacity:contextObjectsIn.count];
+
+	[contextObjectsIn enumerateKeysAndObjectsUsingBlock:^(NSURL *urlIn, id object, BOOL *stop) {
+		NSURL *urlOut = urlIn.URLByStandardizingPath;
+
+		NSError *keyError = nil;
+
+		XRFileSystemMonitorContextKey key = [urlOut resourceValueForKey:NSURLFileResourceIdentifierKey error:&keyError];
+
+		if (key == nil) {
+			if (keyError) {
+				LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+					"Key resource identifier lookup failed: '%@': %@",
+					urlIn, keyError.localizedDescription);
+				LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+			}
+
+			return;
+		}
+
+		contextObjectsOut[key] = object;
+	}];
+
+	return [contextObjectsOut copy];
+}
+
+- (nullable id)contextObjectForURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	NSDictionary *contextObjects = self.contextObjects;
+
+	if (contextObjects == nil) {
+		return nil;
+	}
+
+	XRFileSystemMonitorContextKey fileRep = [url resourceValueForKey:NSURLFileResourceIdentifierKey];
+
+	if (fileRep == nil) {
+		return nil;
+	}
+
+	return contextObjects[fileRep];
+}
+
 @end
 
 #pragma mark -
 
 @implementation XRFileSystemEvent
-
 @end
 
 NS_ASSUME_NONNULL_END
