@@ -39,4 +39,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isEqualByStandardizingPaths:(NSURL *)url;
 @end
 
+@interface NSArray (CSURLHelper)
++ (NSArray<NSString *> *)pathsArrayForFileURLs:(NSArray<NSURL *> *)fileURLs;
+@end
+
 NS_ASSUME_NONNULL_END

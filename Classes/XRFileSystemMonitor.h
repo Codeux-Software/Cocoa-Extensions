@@ -1,6 +1,6 @@
 /* *********************************************************************
  *
- *         Copyright (c) 2016 - 2020 Codeux Software, LLC
+ *           Copyright (c) 2020 Codeux Software, LLC
  *     Please see ACKNOWLEDGEMENT for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,55 +32,34 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation NSURL (CSURLHelper)
+/*
+ XRFileSystemMonitor can be used to monitor changes to one or more
+ directories or files by abstracting away interactions with FSEvents.
 
-- (nullable id)resourceValueForKey:(NSString *)key
-{
-	NSParameterAssert(key != nil);
+ The following flags are set for monitoring:
+ • kFSEventStreamCreateFlagFileEvents
+ • kFSEventStreamCreateFlagNoDefer
+*/
+@class XRFileSystemEvent;
 
-	return [self resourceValueForKey:key error:nil];
-}
+typedef void (^XRFileSystemMonitorCallbackBlock)(NSArray<XRFileSystemEvent *> *events);
 
-- (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error
-{
-	NSParameterAssert(key != nil);
+@interface XRFileSystemMonitor : NSObject
+@property (nonatomic, readonly, getter=isMonitoring) BOOL monitoring;
 
-	id resourceValue = nil;
+- (instancetype)initWithFileURL:(NSURL *)url callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFileURLs:(NSArray<NSURL *> *)urls callbackBlock:(XRFileSystemMonitorCallbackBlock)callbackBlock NS_DESIGNATED_INITIALIZER;
 
-	if ([self getResourceValue:&resourceValue forKey:key error:error] == NO) {
-		return nil;
-	}
+- (void)startMonitoring; // latency = 0.0
+- (void)startMonitoringWithLatency:(NSTimeInterval)latency; // Will replace monitor if one is active
 
-	return resourceValue;
-}
-
-- (BOOL)isEqualByStandardizingPaths:(NSURL *)url
-{
-	NSParameterAssert(url != nil);
-
-	NSURL *left = self.URLByStandardizingPath;
-	NSURL *right = url.URLByStandardizingPath;
-
-	return [left isEqual:right];
-}
-
+- (void)stopMonitoring;
 @end
 
-#pragma mark -
-
-@implementation NSArray (CSURLHelper)
-
-+ (NSArray<NSString *> *)pathsArrayForFileURLs:(NSArray<NSURL *> *)fileURLs
-{
-	NSParameterAssert(fileURLs != nil);
-
-	return [fileURLs arrayByApplyingBlock:^NSString *(NSURL *url, NSUInteger index, BOOL *stop) {
-		NSAssert(url.isFileURL, @"URL '%@' is not a file.", url);
-
-		return url.path;
-	}];
-}
-
+@interface XRFileSystemEvent : NSObject
+@property (nonatomic, readonly, copy) NSURL *url;
+@property (nonatomic, readonly) FSEventStreamEventFlags flags;
+@property (nonatomic, readonly) FSEventStreamEventId identifier;
 @end
 
 NS_ASSUME_NONNULL_END

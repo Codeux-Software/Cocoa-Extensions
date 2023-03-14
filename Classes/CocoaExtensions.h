@@ -42,6 +42,7 @@
 #import <CocoaExtensions/XRAccessibility.h>
 #import <CocoaExtensions/XRAddressBook.h>
 #import <CocoaExtensions/XRBase64Encoding.h>
+#import <CocoaExtensions/XRFileSystemMonitor.h>
 #import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRKeychain.h>
 #import <CocoaExtensions/XRPortMapper.h>

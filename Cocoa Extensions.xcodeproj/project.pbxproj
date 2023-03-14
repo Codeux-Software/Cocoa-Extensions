@@ -68,6 +68,8 @@
 		4CD09D4220E072BF008BADA5 /* SWStringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */; };
 		4CD4967E1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD4967C1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4CD4967F1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4967D1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m */; };
+		4CD4B7FA2552CD0600B93AD4 /* XRFileSystemMonitor.h in Headers */ = {isa = PBXBuildFile; fileRef = 4CD4B7F92552CD0600B93AD4 /* XRFileSystemMonitor.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4CD4B7FE2552CE8100B93AD4 /* XRFileSystemMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD4B7FD2552CE8100B93AD4 /* XRFileSystemMonitor.m */; };
 		4CDF749B1A8FDE1C000B5FF5 /* NSArrayHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */; };
 		4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */; };
 		4CDF749E1A8FDE1C000B5FF5 /* NSColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */; };
@@ -189,6 +191,8 @@
 		4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SWStringHelper.swift; path = Classes/SWStringHelper.swift; sourceTree = "<group>"; };
 		4CD4967C1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSAnimationContextHelper.h; path = Classes/NSAnimationContextHelper.h; sourceTree = "<group>"; };
 		4CD4967D1D9CAB8B00B0BD6D /* NSAnimationContextHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSAnimationContextHelper.m; path = Classes/NSAnimationContextHelper.m; sourceTree = "<group>"; };
+		4CD4B7F92552CD0600B93AD4 /* XRFileSystemMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRFileSystemMonitor.h; path = Classes/XRFileSystemMonitor.h; sourceTree = "<group>"; };
+		4CD4B7FD2552CE8100B93AD4 /* XRFileSystemMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRFileSystemMonitor.m; path = Classes/XRFileSystemMonitor.m; sourceTree = "<group>"; };
 		4CDF74841A8FDE1C000B5FF5 /* NSArrayHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSArrayHelper.m; path = Classes/NSArrayHelper.m; sourceTree = "<group>"; };
 		4CDF74861A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSByteCountFormatterHelper.m; path = Classes/NSByteCountFormatterHelper.m; sourceTree = "<group>"; };
 		4CDF74871A8FDE1C000B5FF5 /* NSColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSColorHelper.m; path = Classes/NSColorHelper.m; sourceTree = "<group>"; };
@@ -358,6 +362,7 @@
 				4C67852A1B74F30600CCA160 /* XRAccessibility.h */,
 				4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */,
 				4C1923BA1A9008E70076F65A /* XRBase64Encoding.h */,
+				4CD4B7F92552CD0600B93AD4 /* XRFileSystemMonitor.h */,
 				4C1923A81A9002230076F65A /* XRGlobalModels.h */,
 				4C1923981A8FE9610076F65A /* XRKeychain.h */,
 				4C46969F1D1B3FBB00E3021A /* XRLogging.h */,
@@ -454,13 +459,14 @@
 				4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */,
 				4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */,
 				4CAA489A20E46AB500FDE1F5 /* SWDataHelper.swift */,
-				4CFB742420E480A4001B88CE /* SWErrorHelper.swift */,
 				4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */,
+				4CFB742420E480A4001B88CE /* SWErrorHelper.swift */,
 				4C68752520E2CA530055E541 /* SWNumericHelper.swift */,
 				4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */,
 				4C67852B1B74F30600CCA160 /* XRAccessibility.m */,
 				4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */,
 				4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */,
+				4CD4B7FD2552CE8100B93AD4 /* XRFileSystemMonitor.m */,
 				4C1923AC1A9004080076F65A /* XRGlobalModels.m */,
 				4C19239A1A8FE9800076F65A /* XRKeychain.m */,
 				4C9505EC1D1BCF5A002EC748 /* XRLogging.m */,
@@ -544,6 +550,7 @@
 				4C8EC7B51DC8E89F0057925A /* NSCoderHelper.h in Headers */,
 				4CD4967E1D9CAB8B00B0BD6D /* NSAnimationContextHelper.h in Headers */,
 				4CFB3E3D1D7EBE9D004198A3 /* NSIndexSetHelper.h in Headers */,
+				4CD4B7FA2552CD0600B93AD4 /* XRFileSystemMonitor.h in Headers */,
 				4C27811A1CBD906400334FD0 /* NSWorkspaceHelper.h in Headers */,
 				4CDF74D91A8FDE5B000B5FF5 /* NSPasteboardHelper.h in Headers */,
 				4CDF74DC1A8FDE5B000B5FF5 /* NSScreenHelper.h in Headers */,
@@ -627,6 +634,7 @@
 				4C19239B1A8FE9800076F65A /* XRKeychain.m in Sources */,
 				4CA63AFB1B63F9EB002CF61C /* XRAddressBook.m in Sources */,
 				4CFB3E3E1D7EBE9D004198A3 /* NSIndexSetHelper.m in Sources */,
+				4CD4B7FE2552CE8100B93AD4 /* XRFileSystemMonitor.m in Sources */,
 				4CAA489B20E46AB500FDE1F5 /* SWDataHelper.swift in Sources */,
 				4C48CF411BC73D6D003FD716 /* CGContextHelper.m in Sources */,
 				4CDF74A31A8FDE1C000B5FF5 /* NSFontHelper.m in Sources */,
