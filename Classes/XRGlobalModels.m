@@ -128,11 +128,6 @@ BOOL NSObjectIsNotEmpty(id _Nullable obj)
 	return (NSObjectIsEmpty(obj) == NO);
 }
 
-BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
-{
-	return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
-}
-
 #pragma mark -
 #pragma mark Grand Central Dispatch
 

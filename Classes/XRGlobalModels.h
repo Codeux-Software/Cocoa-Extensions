@@ -35,7 +35,11 @@ NS_ASSUME_NONNULL_BEGIN
 COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsEmpty(id _Nullable obj);
 COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsNotEmpty(id _Nullable obj);
 
-COCOA_EXTENSIONS_EXTERN BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2);
+COCOA_EXTENSIONS_INLINE
+BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
+{
+	return ((obj1 == nil && obj2 == nil) || [obj1 isEqual:obj2]);
+}
 
 #pragma mark -
 
