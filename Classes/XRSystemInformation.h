@@ -33,16 +33,16 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface XRSystemInformation : NSObject
-+ (nullable NSString *)formattedEthernetMacAddress;
+@property (nonatomic, class, copy, nullable, readonly) NSString *formattedEthernetMacAddress;
 
-+ (BOOL)systemIsSleeping;
+@property (nonatomic, class, readonly) BOOL systemIsSleeping;
 
-+ (nullable NSString *)systemBuildVersion;
-+ (nullable NSString *)systemStandardVersion;
+@property (nonatomic, class, copy, nullable, readonly) NSString *systemBuildVersion;
+@property (nonatomic, class, copy, nullable, readonly) NSString *systemStandardVersion;
 
-+ (nullable NSString *)systemOperatingSystemName;
+@property (nonatomic, class, copy, nullable, readonly) NSString *systemOperatingSystemName;
 
-+ (nullable NSString *)systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
+@property (nonatomic, class, copy, nullable, readonly) NSString *systemModelName; // "iMac," "MacBook," "MacBook Pro," etc.
 
 + (nullable NSString *)retrieveSystemInformationKey:(NSString *)key;
 
