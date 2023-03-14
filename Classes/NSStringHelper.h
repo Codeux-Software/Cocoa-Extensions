@@ -109,16 +109,16 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 - (CGFloat)compareWithWord:(NSString *)stringB lengthPenaltyWeight:(CGFloat)weight;
 
-- (BOOL)hasPrefixIgnoringCase:(NSString *)aString;
-- (BOOL)hasSuffixIgnoringCase:(NSString *)aString;
+- (BOOL)hasPrefixIgnoringCase:(NSString *)aString; // Performs literal comparison
+- (BOOL)hasSuffixIgnoringCase:(NSString *)aString; // Performs literal comparison
 
 - (BOOL)hasPrefixWithCharacterSet:(NSCharacterSet *)characterSet;
 - (BOOL)hasSuffixWithCharacterSet:(NSCharacterSet *)characterSet;
 
 - (BOOL)isEqualToStringIgnoringCase:(NSString *)other;
 
-- (BOOL)contains:(NSString *)string;
-- (BOOL)containsIgnoringCase:(NSString *)string;
+- (BOOL)contains:(NSString *)string; // Performs literal comparison
+- (BOOL)containsIgnoringCase:(NSString *)string; // Performs literal comparison
 
 - (BOOL)containsCharactersFromCharacterSet:(NSCharacterSet *)characterSet;
 - (BOOL)onlyContainsCharactersFromCharacterSet:(NSCharacterSet *)characterSet;
@@ -128,8 +128,9 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 - (NSUInteger)occurrencesOfCharacter:(UniChar)character;
 
-- (NSInteger)stringPosition:(NSString *)needle;
-- (NSInteger)stringPositionIgnoringCase:(NSString *)needle;
+- (NSInteger)stringPosition:(NSString *)needle; // Performs literal comparison
+- (NSInteger)stringPositionIgnoringCase:(NSString *)needle; // Performs literal comparison
+- (NSInteger)stringPosition:(NSString *)needle options:(NSStringCompareOptions)options;
 
 - (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock;
 - (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;

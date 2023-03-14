@@ -452,14 +452,14 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (BOOL)hasPrefixIgnoringCase:(NSString *)aString
 {
-	NSRange prefixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch)];
+	NSRange prefixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSLiteralSearch | NSCaseInsensitiveSearch)];
 	
 	return (prefixRange.location == 0 && prefixRange.length > 0);
 }
 
 - (BOOL)hasSuffixIgnoringCase:(NSString *)aString
 {
-	NSRange suffixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSCaseInsensitiveSearch | NSBackwardsSearch)];
+	NSRange suffixRange = [self rangeOfString:aString options:(NSAnchoredSearch | NSLiteralSearch | NSCaseInsensitiveSearch | NSBackwardsSearch)];
 
 	return ((suffixRange.length + suffixRange.location) == self.length);
 }
@@ -547,13 +547,13 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return (commonCharacterCount - distancePenalty - weight * lengthPenalty);
 }
 
-- (NSInteger)stringPosition:(NSString *)needle
+- (NSInteger)stringPosition:(NSString *)needle options:(NSStringCompareOptions)options
 {
 	if (self.length == 0) {
 		return (-1);
 	}
 
-	NSRange searchResult = [self rangeOfString:needle];
+	NSRange searchResult = [self rangeOfString:needle options:options];
 	
 	if (searchResult.location == NSNotFound) {
 		return (-1);
@@ -562,19 +562,14 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return searchResult.location;
 }
 
+- (NSInteger)stringPosition:(NSString *)needle
+{
+	return [self stringPosition:needle options:NSLiteralSearch];
+}
+
 - (NSInteger)stringPositionIgnoringCase:(NSString *)needle
 {
-	if (self.length == 0) {
-		return (-1);
-	}
-
-	NSRange searchResult = [self rangeOfString:needle options:NSCaseInsensitiveSearch];
-
-	if (searchResult.location == NSNotFound) {
-		return (-1);
-	}
-
-	return searchResult.location;
+	return [self stringPosition:needle options:(NSLiteralSearch | NSCaseInsensitiveSearch)];
 }
 
 - (void)enumerateMatchesOfString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock
