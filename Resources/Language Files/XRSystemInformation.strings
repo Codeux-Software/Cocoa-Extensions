@@ -43,3 +43,12 @@
 "OS X Mavericks" = "OS X Mavericks";
 "OS X Mountain Lion" = "OS X Mountain Lion";
 "OS X Lion" = "OS X Lion";
+
+"MacBook Pro" = "MacBook Pro";
+"MacBook Air" = "MacBook Air";
+"MacBook" = "MacBook";
+"Mac Pro" = "Mac Pro";
+"Mac Mini" = "Mac Mini";
+"iMac" = "iMac";
+"Xserve" = "Xserve";
+"Unrecognized Mac" = "Unrecognized Mac";

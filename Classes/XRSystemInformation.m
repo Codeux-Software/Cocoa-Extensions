@@ -289,13 +289,13 @@ NS_ASSUME_NONNULL_BEGIN
 		of using a dictionary that will have to be loaded from a file. */
 		
 		NSDictionary *modelPrefixes = @{
-			@"macbookpro"	: @"MacBook Pro",
-			@"macbookair"	: @"MacBook Air",
-			@"macbook"		: @"MacBook",
-			@"macpro"		: @"Mac Pro",
-			@"macmini"		: @"Mac Mini",
-			@"imac"			: @"iMac",
-			@"xserve"		: @"Xserve"
+			@"macbookpro"	: NSLocalizedStringFromTable(@"MacBook Pro", @"XRSystemInformation", nil),
+			@"macbookair"	: NSLocalizedStringFromTable(@"MacBook Air", @"XRSystemInformation", nil),
+			@"macbook"		: NSLocalizedStringFromTable(@"MacBook", @"XRSystemInformation", nil),
+			@"macpro"		: NSLocalizedStringFromTable(@"Mac Pro", @"XRSystemInformation", nil),
+			@"macmini"		: NSLocalizedStringFromTable(@"Mac Mini", @"XRSystemInformation", nil),
+			@"imac"			: NSLocalizedStringFromTable(@"iMac", @"XRSystemInformation", nil),
+			@"xserve"		: NSLocalizedStringFromTable(@"Xserve", @"XRSystemInformation", nil)
 		};
 		
 		NSString *modelToken = [self systemModelToken];
@@ -310,6 +310,10 @@ NS_ASSUME_NONNULL_BEGIN
 			if ([modelToken hasPrefix:modelPrefix]) {
 				cachedValue = modelPrefixes[modelPrefix];
 			}
+		}
+		
+		if (cachedValue == nil) {
+			cachedValue = NSLocalizedStringFromTable(@"Unrecognized Mac", @"XRSystemInformation", nil);
 		}
 	}
 	
