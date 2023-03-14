@@ -34,7 +34,6 @@
 #import <IOKit/pwr_mgt/IOPM.h>
 
 #include <sys/sysctl.h>
-#include <sys/utsname.h>
 
 #include <dlfcn.h>
 
@@ -52,17 +51,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)systemIsAppleSilicon
 {
-	struct utsname systemInfo;
+	/* I haven't tested this. Is it really this easy? */
+#if TARGET_CPU_ARM64
+	return YES;
+#endif
 
-	uname(&systemInfo);
-
-	NSString *machine = @(systemInfo.machine);
-
-	/* Rather than comparing this value against
-	 'arm64' and introduce a scenario in the
-	 future in which that name may change,
-	 let's just compare against the classic. */
-	return [machine isNotEqualTo:@"x86_64"];
+	return NO;
 }
 
 + (nullable NSString *)formattedEthernetMacAddress
