@@ -98,9 +98,10 @@ NS_ASSUME_NONNULL_BEGIN
 	if ([object isKindOfClass:[NSData class]]) {
 		NSError *error;
 
-		NSData *data = [NSKeyedArchiver archivedDataWithRootObject:object
-											 requiringSecureCoding:YES
-															 error:&error];
+		NSColor *color =
+		[NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
+										  fromData:object
+											 error:&error];
 		
 		if (error) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
@@ -108,9 +109,7 @@ NS_ASSUME_NONNULL_BEGIN
 				defaultName, error.description);
 		}
 		
-		if ([data isKindOfClass:[NSColor class]]) {
-			return (NSColor *)data;
-		}
+		return color;
 	}
 
 	return nil;
