@@ -644,6 +644,11 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self sortedDictionaryKeys:NO];
 }
 
+- (NSArray *)sortedDictionaryKeysReversed
+{
+	return [self sortedDictionaryKeys:YES];
+}
+
 - (NSArray *)sortedDictionaryReversedKeys
 {
 	return [self sortedDictionaryKeys:YES];
