@@ -651,6 +651,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray *)sortedDictionaryReversedKeys
 {
+	COCOA_EXTENSIONS_DEPRECATED_WARNING
+
 	return [self sortedDictionaryKeys:YES];
 }
 
