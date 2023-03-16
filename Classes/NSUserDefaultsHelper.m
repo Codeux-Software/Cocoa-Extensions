@@ -96,18 +96,9 @@ NS_ASSUME_NONNULL_BEGIN
 	id object = [self objectForKey:defaultName];
 
 	if ([object isKindOfClass:[NSData class]]) {
-		NSError *error;
-
 		NSColor *color =
-		[NSKeyedUnarchiver unarchivedObjectOfClass:[NSColor class]
-										  fromData:object
-											 error:&error];
-		
-		if (error) {
-			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"Failed to read contents of '%@': %@",
-				defaultName, error.description);
-		}
+		[NSKeyedUnarchiver legacyCompatUnarchivedObjectOfClass:[NSColor class]
+													  fromData:object];
 		
 		return color;
 	}

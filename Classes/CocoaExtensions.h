@@ -65,6 +65,7 @@
 #import <CocoaExtensions/NSFontHelper.h>
 #import <CocoaExtensions/NSImageHelper.h>
 #import <CocoaExtensions/NSIndexSetHelper.h>
+#import <CocoaExtensions/NSKeyedArchiverHelper.h>
 #import <CocoaExtensions/NSLayoutConstraintHelper.h>
 #import <CocoaExtensions/NSMenuHelper.h>
 #import <CocoaExtensions/NSMethodSignatureHelper.h>
