@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy) NSString *sha1;
 @property (readonly, copy) NSString *sha256;
+@property (readonly, copy) NSString *sha512;
 @property (readonly, copy) NSString *md5;
 
 + (NSData *)lineFeed;

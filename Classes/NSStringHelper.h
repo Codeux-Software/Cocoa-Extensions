@@ -68,6 +68,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy, nullable) NSString *sha1;
 @property (readonly, copy, nullable) NSString *sha256;
+@property (readonly, copy, nullable) NSString *sha512;
 @property (readonly, copy, nullable) NSString *md5;
 
 @property (readonly) NSRange range;
