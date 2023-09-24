@@ -311,6 +311,25 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
     return output;
 }
 
+- (nullable NSString *)sha512
+{
+    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
+
+    NSParameterAssert(data != nil);
+
+    uint8_t digest[CC_SHA512_DIGEST_LENGTH];
+
+    CC_SHA512(data.bytes, (CC_LONG)data.length, digest);
+
+    NSMutableString *output = [NSMutableString stringWithCapacity:(CC_SHA512_DIGEST_LENGTH * 2)];
+
+    for (int i = 0; i < CC_SHA512_DIGEST_LENGTH; i++) {
+        [output appendFormat:@"%02x", digest[i]];
+    }
+
+    return output;
+}
+
 - (nullable NSString *)md5
 {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
