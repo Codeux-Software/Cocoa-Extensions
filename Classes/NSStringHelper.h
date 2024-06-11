@@ -51,11 +51,11 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 	CSStringTypeWholeNumber		= 1 << 1, // No decimal place allowed
 	CSStringTypeDecimalNumber 	= 1 << 2, // One decimal place allowed
 	CSStringTypePositiveNumber 	= 1 << 3, // Positive number
-	CSStirngTypeNegativeNumber	= 1 << 4, // Negative number
+	CSStringTypeNegativeNumber	= 1 << 4, // Negative number
 	CSStringTypeAnyNumber 		= (CSStringTypeWholeNumber |
 								   CSStringTypeDecimalNumber |
 								   CSStringTypePositiveNumber |
-								   CSStirngTypeNegativeNumber),
+								   CSStringTypeNegativeNumber),
 	CSStringTypeAlphabetic		= 1 << 10 // a to z, A to Z
 };
 
@@ -95,7 +95,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
  For example: given "An example" (length 10), atIndex = 0, toLength = -2
  Result is: "le" */
 /* If atIndex and toLength are both negative, then atIndex is taken
- from location 0 and toLenght is taken from string length.
+ from location 0 and toLength is taken from string length.
  For example: given "An example" (length 10), atIndex = -2, toLength = -2
  Result is: " examp" */
 - (NSString *)substringAtIndex:(NSInteger)atIndex toLength:(NSInteger)toLength;

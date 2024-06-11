@@ -854,7 +854,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	BOOL matchWholeNumber = ((type & CSStringTypeWholeNumber) == CSStringTypeWholeNumber);
 	BOOL matchDecimalNumber = ((type & CSStringTypeDecimalNumber) == CSStringTypeDecimalNumber);
 	BOOL matchPositiveNumber = ((type & CSStringTypePositiveNumber) == CSStringTypePositiveNumber);
-	BOOL matchNegativeNumber = ((type & CSStirngTypeNegativeNumber) == CSStirngTypeNegativeNumber);
+	BOOL matchNegativeNumber = ((type & CSStringTypeNegativeNumber) == CSStringTypeNegativeNumber);
 	BOOL matchNumber = (matchWholeNumber || matchDecimalNumber);
 
 	/* If we aren't matching either type of number, we force positive. */
@@ -878,7 +878,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 		if (matchNumber) {
 			/* Check first character when matching number
-			 so that we can return on negaitve or positive. */
+			 so that we can return on negative or positive. */
 			if (i == 0) {
 				if (c == '-') {
 					if (matchNegativeNumber == NO) {

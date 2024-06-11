@@ -83,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 	[self unsetKeyboardShortcut];
 }
 
-- (void)restoreKeyboardShorcut
+- (void)restoreKeyboardShortcut
 {
 	NSString *keyEquivalent = self.archivedKeyEquivalent;
 

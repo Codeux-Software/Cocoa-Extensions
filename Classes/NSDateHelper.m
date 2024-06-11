@@ -48,9 +48,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
 	NSParameterAssert(otherDate != nil);
 
-	NSCalendar *currentCalander = [NSCalendar currentCalendar];
+	NSCalendar *currentCalendar = [NSCalendar currentCalendar];
 
-	return [currentCalander isDate:self inSameDayAsDate:otherDate];
+	return [currentCalendar isDate:self inSameDayAsDate:otherDate];
 }
 
 @end
