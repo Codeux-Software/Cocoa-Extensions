@@ -46,6 +46,6 @@ public extension Numeric
 	{
 		var pointer = self
 
-		return Data(bytes: &pointer, count: MemoryLayout<Self>.size)
+		return withUnsafeBytes(of: &pointer) { Data($0) }
 	}
 }
