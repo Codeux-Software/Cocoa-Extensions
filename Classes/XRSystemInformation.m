@@ -284,6 +284,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (nullable NSString *)systemModelName
 {
+	/* June 11, 2024: This method identifies a model based on the prefix 
+	 of its identifier. New Macs no longer have a model specific prefix
+	 and instead simply begin with "Mac" — This method is typically used
+	 as a last resort to identify an unknown model and it is not worth
+	 the effort to redesign it to accommodate this change. */
 	static id cachedValue = nil;
 	
 	if (cachedValue == nil) {
