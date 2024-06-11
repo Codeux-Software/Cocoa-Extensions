@@ -40,7 +40,7 @@
 /* Private IOKit function */
 typedef uint32_t IOPMCapabilityBits;
 
-static NSUInteger _highestRecognizedMajorOSVersion = 14; // macOS Sonoma
+static NSUInteger _highestRecognizedMajorOSVersion = 15; // macOS Sequoia
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -172,6 +172,8 @@ NS_ASSUME_NONNULL_BEGIN
 	if (cachedValue == nil) {
 		if (XRRunningOnUnrecognizedOSVersion()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+		} else if (XRRunningOnOSXSequoiaOrLater()) {
+			cachedValue = NSLocalizedStringFromTable(@"macOS Sequoia", @"XRSystemInformation", nil);
 		} else if (XRRunningOnOSXSonomaOrLater()) {
 			cachedValue = NSLocalizedStringFromTable(@"macOS Sonoma", @"XRSystemInformation", nil);
  		} else if (XRRunningOnOSXVenturaOrLater()) {
@@ -632,6 +634,27 @@ BOOL XRRunningOnOSXSonomaOrLater(void)
 			NSOperatingSystemVersion compareVersion;
 
 			compareVersion.majorVersion = 14;
+			compareVersion.minorVersion = 0;
+			compareVersion.patchVersion = 0;
+
+			cachedValue = [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:compareVersion];
+		}
+	});
+
+	return cachedValue;
+}
+
+BOOL XRRunningOnOSXSequoiaOrLater(void)
+{
+	static BOOL cachedValue = NO;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		if ([[NSProcessInfo processInfo] respondsToSelector:@selector(isOperatingSystemAtLeastVersion:)]) {
+			NSOperatingSystemVersion compareVersion;
+
+			compareVersion.majorVersion = 15;
 			compareVersion.minorVersion = 0;
 			compareVersion.patchVersion = 0;
 
