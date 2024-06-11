@@ -41,9 +41,9 @@ public extension Dictionary where Value == AnyObject
 		return false
 	}
 
-	func array<Value>(for key: Key) -> Array<Value>?
+	func array<T>(for key: Key) -> Array<T>?
 	{
-		if let arrayValue = self[key] as? Array<Value> {
+		if let arrayValue = self[key] as? Array<T> {
 			return arrayValue
 		}
 
