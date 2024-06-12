@@ -45,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)archiveKeyboardShortcut; // archive keyboard shortcut
 - (void)archiveKeyboardShortcutAndUnset; // archive keyboard shortcut and unset current
-- (void)restoreKeyboardShorcut; // restore archived keyboard shortcut (if it's archived)
+- (void)restoreKeyboardShortcut; // restore archived keyboard shortcut (if it's archived)
 - (void)unsetKeyboardShortcut; // unset current keyboard shortcut
 - (void)unsetArchivedKeyboardShortcut; // unset archived keyboard shortcut
 
