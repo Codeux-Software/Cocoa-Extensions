@@ -1791,7 +1791,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return [self imageRepWithSize:originalSize scaleFactor:scaleFactor backgroundColor:backgroundColor coreTextFrameOffset:NULL];
 }
 
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(nullable CGFloat *)coreTextFrameOffset
 {
 	if (self.length == 0) {
 		return nil;

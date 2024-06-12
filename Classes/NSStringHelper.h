@@ -282,7 +282,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 - (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(nullable NSFont *)textFont;
 
 - (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor NS_AVAILABLE_MAC(10_10);
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(CGFloat *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
+- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(nullable CGFloat *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
 
 @property (readonly) NSRect imageBoundsOfFirstRun;
 @end
