@@ -322,7 +322,7 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 		
 		if (cachedValue == nil) {
-			cachedValue = NSLocalizedStringFromTable(@"Unrecognized Mac", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTable(@"Mac", @"XRSystemInformation", nil);
 		}
 	}
 	
