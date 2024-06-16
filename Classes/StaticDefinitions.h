@@ -59,6 +59,11 @@
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT				NSAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
+#define COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN		_Pragma("clang diagnostic push")									\
+														_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+
+#define COCOA_EXTENSIONS_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
+
 #define COCOA_EXTENSIONS_DEPRECATED_WARNING				NSLog(@"DEPRECATED: Use of the method named %s is deprecated. This method will cease to exist in a future version of this framework.\n\nCurrent Stack: %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
 
 #ifndef DISPATCH_NOESCAPE

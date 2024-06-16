@@ -690,7 +690,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 	@synchronized (self) {
 		[self enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 			if (NSObjectIsEmpty(object)) {
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
+
 				if (allowEmptyValues == NO) {
 					return;
 				}

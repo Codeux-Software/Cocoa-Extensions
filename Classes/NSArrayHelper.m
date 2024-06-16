@@ -340,7 +340,10 @@ NS_ASSUME_NONNULL_BEGIN
 				objectValue = [objectValue trim];
 			}
 
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 			if (removeEmptyValues && NSObjectIsEmpty(objectValue)) {
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
+
 				return;
 			} else if (uniqueValues && [newArray containsObject:objectValue]) {
 				return;

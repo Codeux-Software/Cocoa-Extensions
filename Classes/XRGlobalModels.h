@@ -32,8 +32,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsEmpty(id _Nullable obj);
-COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsNotEmpty(id _Nullable obj);
+COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsEmpty(id _Nullable obj) COCOA_EXTENSIONS_DEPRECATED("Use -length or -count");
+COCOA_EXTENSIONS_EXTERN BOOL NSObjectIsNotEmpty(id _Nullable obj) COCOA_EXTENSIONS_DEPRECATED("Use -length or -count");
 
 COCOA_EXTENSIONS_INLINE
 BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
