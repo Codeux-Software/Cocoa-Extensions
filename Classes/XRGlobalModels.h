@@ -42,33 +42,80 @@ BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
 }
 
 #pragma mark -
+#pragma mark Grand Central Dispatch
 
 typedef enum XRPerformBlockOnDispatchQueueOperationType	: NSInteger {
 	XRPerformBlockOnDispatchQueueBarrierAsyncOperationType,
 	XRPerformBlockOnDispatchQueueBarrierSyncOperationType,
 	XRPerformBlockOnDispatchQueueAsyncOperationType,
 	XRPerformBlockOnDispatchQueueSyncOperationType,
-} XRPerformBlockOnDispatchQueueOperationType;
+} XRPerformBlockOnDispatchQueueOperationType COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
+
+COCOA_EXTENSIONS_INLINE 
+void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block)
+{
+	dispatch_sync(queue, ^{
+		@autoreleasepool {
+			block();
+		}
+	});
+}
+
+COCOA_EXTENSIONS_INLINE 
+void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
+{
+	dispatch_async(queue, ^{
+		@autoreleasepool {
+			block();
+		}
+	});
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockSynchronouslyOnMainQueue(DISPATCH_NOESCAPE dispatch_block_t block)
+{
+	/* Check thread we are on. */
+	/* If we are already on the main thread and performing a synchronous action,
+	 then all we have to do is invoke the block supplied to us. */
+	if ([NSThread isMainThread]) {
+		block(); // Perform block.
+	} else {
+		XRPerformBlockSynchronouslyOnQueue(dispatch_get_main_queue(), block);
+	}
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
+{
+	XRPerformBlockAsynchronouslyOnQueue(dispatch_get_main_queue(), block);
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(DISPATCH_NOESCAPE dispatch_block_t block, dispatch_queue_priority_t priority)
+{
+	XRPerformBlockSynchronouslyOnQueue(dispatch_get_global_queue(priority, 0), block);
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockSynchronouslyOnGlobalQueue(DISPATCH_NOESCAPE dispatch_block_t block)
+{
+	XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority)
+{
+	XRPerformBlockAsynchronouslyOnQueue(dispatch_get_global_queue(priority, 0), block);
+}
+
+COCOA_EXTENSIONS_INLINE
+void XRPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
+{
+	XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
+}
 
 COCOA_EXTENSIONS_EXTERN dispatch_queue_t XRCreateDispatchQueue(const char *label, dispatch_queue_attr_t attributes);
 COCOA_EXTENSIONS_EXTERN dispatch_queue_t XRCreateDispatchQueueWithPriority(const char *label, dispatch_queue_attr_t attributes, dispatch_qos_class_t priority);
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block);
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnMainQueue(DISPATCH_NOESCAPE dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block);
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueue(DISPATCH_NOESCAPE dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(DISPATCH_NOESCAPE dispatch_block_t block, dispatch_queue_priority_t priority);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority);
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block);
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block);
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType);
 
 COCOA_EXTENSIONS_EXTERN dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay);
 COCOA_EXTENSIONS_EXTERN dispatch_source_t _Nullable XRScheduleBlockOnGlobalQueueWithPriority(dispatch_block_t block, NSTimeInterval delay, dispatch_queue_priority_t priority);
@@ -85,6 +132,16 @@ COCOA_EXTENSIONS_EXTERN void XRPerformDelayedBlockOnMainQueue(dispatch_block_t b
 COCOA_EXTENSIONS_EXTERN void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay);
 
 #pragma mark -
+
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
+
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
+
+COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
+
+#pragma mark -
+#pragma mark Swizzling
 
 COCOA_EXTENSIONS_EXTERN void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod) COCOA_EXTENSIONS_DEPRECATED("Use XRExchangeInstanceMethod() instead");
 

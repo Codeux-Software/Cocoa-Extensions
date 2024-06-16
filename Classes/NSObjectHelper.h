@@ -45,10 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // ---
 
-- (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block; // Performs a block synchronously (blocks) on the main thread
 - (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
-
-- (void)performBlockOnGlobalQueue:(dispatch_block_t)block; // Performs a block asynchronously on a global queue with a normal priority. Does not block.
 - (void)performBlockOnGlobalQueue:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
 
 - (void)performSelectorInCommonModes:(SEL)aSelector afterDelay:(NSTimeInterval)delay;
@@ -56,11 +53,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 // ---
 
-+ (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block;
 + (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
-
-+ (void)performBlockOnGlobalQueue:(dispatch_block_t)block;
 + (void)performBlockOnGlobalQueue:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
+
+// ---
+
+- (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
+- (void)performBlockOnGlobalQueue:(dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
+
++ (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
++ (void)performBlockOnGlobalQueue:(dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
 @end
 
 NS_ASSUME_NONNULL_END

@@ -155,26 +155,6 @@ void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQue
 	XRPerformBlockOnDispatchQueue(workerQueue, block, operationType);
 }
 
-void XRPerformBlockSynchronouslyOnGlobalQueue(DISPATCH_NOESCAPE dispatch_block_t block)
-{
-	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
-}
-
-void XRPerformBlockSynchronouslyOnGlobalQueueWithPriority(DISPATCH_NOESCAPE dispatch_block_t block, dispatch_queue_priority_t priority)
-{
-	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueSyncOperationType, block, priority);
-}
-
-void XRPerformBlockAsynchronouslyOnGlobalQueue(dispatch_block_t block)
-{
-	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueAsyncOperationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
-}
-
-void XRPerformBlockAsynchronouslyOnGlobalQueueWithPriority(dispatch_block_t block, dispatch_queue_priority_t priority)
-{
-	XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueAsyncOperationType, block, priority);
-}
-
 void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
 {
 	if (operationType == XRPerformBlockOnDispatchQueueSyncOperationType) {
@@ -182,33 +162,6 @@ void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationTyp
 	} else {
 		XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
 	}
-}
-
-void XRPerformBlockSynchronouslyOnMainQueue(DISPATCH_NOESCAPE dispatch_block_t block)
-{
-	/* Check thread we are on. */
-	/* If we are already on the main thread and performing a synchronous action,
-	 then all we have to do is invoke the block supplied to us. */
-	if ([NSThread isMainThread]) {
-		block(); // Perform block.
-	} else {
-		XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, XRPerformBlockOnDispatchQueueSyncOperationType);
-	}
-}
-
-void XRPerformBlockAsynchronouslyOnMainQueue(dispatch_block_t block)
-{
-	XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, XRPerformBlockOnDispatchQueueAsyncOperationType);
-}
-
-void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block)
-{
-	XRPerformBlockOnDispatchQueue(queue, block, XRPerformBlockOnDispatchQueueSyncOperationType);
-}
-
-void XRPerformBlockAsynchronouslyOnQueue(dispatch_queue_t queue, dispatch_block_t block)
-{
-	XRPerformBlockOnDispatchQueue(queue, block, XRPerformBlockOnDispatchQueueAsyncOperationType);
 }
 
 void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType)
