@@ -73,8 +73,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate;
 - (NSArray *)objectsPassingTest:(BOOL (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))predicate withOptions:(NSEnumerationOptions)options;
 
-- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block;
-- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block withOptions:(NSEnumerationOptions)options;
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySize usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block;
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySize usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block withOptions:(NSEnumerationOptions)options;
 
 - (NSArray *)arrayByApplyingBlock:(id (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))block;
 - (NSArray *)arrayByApplyingBlock:(id (NS_NOESCAPE ^)(id object, NSUInteger index, BOOL *stop))block withOptions:(NSEnumerationOptions)options;

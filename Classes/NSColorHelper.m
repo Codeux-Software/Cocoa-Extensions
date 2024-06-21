@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 #pragma mark -
-#pragma mark Hexadeciam Conversion
+#pragma mark Hexadecimal Conversion
 
 - (NSString *)hexadecimalValue
 {

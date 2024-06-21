@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSKeyedUnarchiver (CSKeyedUnarchiverHelper)
-/* First attempt decoding using NSUharchiver before using NSKeyedUnarchiver. */
+/* First attempt decoding using NSUnarchiver before using NSKeyedUnarchiver. */
 + (nullable id)legacyCompatUnarchivedObjectOfClass:(Class)cls fromData:(NSData *)data;
 @end
 

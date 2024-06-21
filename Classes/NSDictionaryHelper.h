@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #define NSDictionaryNilValue(s)							(((s) == nil) ? [NSNull null] : (s))
-#define NSDictionaryNilValueSubstitue(s, r)				(((s) == nil) ? (r) : (s))
+#define NSDictionaryNilValueSubstitute(s, r)			(((s) == nil) ? (r) : (s))
 
 @interface NSDictionary (CSDictionaryHelper)
 - (NSDictionary *)dictionaryByAddingEntries:(NSDictionary *)entries;

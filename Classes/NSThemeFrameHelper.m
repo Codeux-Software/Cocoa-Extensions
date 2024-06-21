@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	finalTitleRect.size = defaultTitlebarTitleRect.size;
 
-	finalTitleRect.origin.x = (NSMidX(maximumTitleRect) - (defaultTitlebarTitleRect.size.width / 2.0)); // Center the piont
+	finalTitleRect.origin.x = (NSMidX(maximumTitleRect) - (defaultTitlebarTitleRect.size.width / 2.0)); // Center the point
 
 	finalTitleRect.origin.y = defaultTitlebarTitleRect.origin.y;
 

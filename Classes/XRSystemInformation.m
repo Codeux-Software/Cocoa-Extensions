@@ -79,7 +79,7 @@ NS_ASSUME_NONNULL_BEGIN
 		return nil;
 	}
 
-	/* Look up registered bjects that match a matching dictionary. */
+	/* Look up registered objects that match a matching dictionary. */
 	io_iterator_t iterator;
 
 	kern_return_t getMatchResult = IOServiceGetMatchingServices(masterPort, matchingDict, &iterator);

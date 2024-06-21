@@ -862,7 +862,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		matchPositiveNumber = YES;
 	}
 
-	BOOL matchAlphabit = ((type & CSStringTypeAlphabetic) == CSStringTypeAlphabetic);
+	BOOL matchAlphabet = ((type & CSStringTypeAlphabetic) == CSStringTypeAlphabetic);
 
 	BOOL decimalMatched = NO;
 
@@ -908,7 +908,7 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		} // matchNumber
 
 		/* All other conditions */
-		if ((CS_StringIsAlphabetic(c) && matchAlphabit) ||
+		if ((CS_StringIsAlphabetic(c) && matchAlphabet) ||
 			(CS_StringIsBase10Numeric(c) && matchNumber))
 		{
 			/* Continue to next character */

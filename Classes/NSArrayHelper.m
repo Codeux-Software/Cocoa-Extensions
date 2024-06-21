@@ -396,27 +396,27 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	return [self objectsAtIndexes:objectIndexes];
 }
 
-- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySize usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block
 {
-	[self enumerateSubarraysOfSize:subarraySzie usingBlock:block withOptions:0];
+	[self enumerateSubarraysOfSize:subarraySize usingBlock:block withOptions:0];
 }
 
-- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySzie usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block withOptions:(NSEnumerationOptions)options
+- (void)enumerateSubarraysOfSize:(NSUInteger)subarraySize usingBlock:(void (NS_NOESCAPE ^)(NSArray *objects, BOOL *stop))block withOptions:(NSEnumerationOptions)options
 {
-	NSParameterAssert(subarraySzie > 0);
+	NSParameterAssert(subarraySize > 0);
 	NSParameterAssert(block != nil);
 
 	if (self.count == 0) {
 		return;
 	}
 
-	NSMutableArray *subarray = [NSMutableArray arrayWithCapacity:subarraySzie];
+	NSMutableArray *subarray = [NSMutableArray arrayWithCapacity:subarraySize];
 
 	@synchronized(self) {
 		[self enumerateObjectsWithOptions:options usingBlock:^(id object, NSUInteger index, BOOL *stop) {
 			[subarray addObject:object];
 
-			if (subarray.count == subarraySzie) {
+			if (subarray.count == subarraySize) {
 				block([subarray copy], stop);
 
 				[subarray removeAllObjects];
