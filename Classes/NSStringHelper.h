@@ -143,6 +143,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 - (void)enumerateFirstOccurrenceOfCharactersInString:(NSString *)string withBlock:(void (NS_NOESCAPE ^)(NSRange range, BOOL *stop))enumerationBlock options:(NSStringCompareOptions)options;
 
 - (NSArray<NSString *> *)split:(NSString *)delimiter;
+- (void)enumerateSplit:(NSString *)delimiter withBlock:(void (NS_NOESCAPE ^)(NSString *sequence, BOOL *stop))enumerationBlock;
 - (NSArray<NSString *> *)splitWithCharacters:(NSString *)characters;
 - (NSArray<NSString *> *)splitWithCharacterSet:(NSCharacterSet *)characterSet;
 - (NSArray<NSString *> *)splitWithMaximumLength:(NSUInteger)maximumLength;
