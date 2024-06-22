@@ -359,12 +359,32 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 - (void)enumerateSplit:(NSString *)delimiter withBlock:(void (NS_NOESCAPE ^)(NSString *sequence, BOOL *stop))enumerationBlock
 {
 	NSParameterAssert(delimiter != nil);
+	NSParameterAssert(enumerationBlock != nil);
 
 	NSArray *sequences = [self componentsSeparatedByString:delimiter];
 
 	[sequences enumerateObjectsUsingBlock:^(NSString *sequence, NSUInteger idx, BOOL *stop) {
 		enumerationBlock(sequence, stop);
 	}];
+}
+
+- (void)enumerateSplitWithCharacterSet:(NSCharacterSet *)characterSet withBlock:(void (NS_NOESCAPE ^)(NSString *sequence, BOOL *stop))enumerationBlock
+{
+	NSParameterAssert(characterSet != nil);
+	NSParameterAssert(enumerationBlock != nil);
+
+	NSArray *sequences = [self componentsSeparatedByCharactersInSet:characterSet];
+
+	[sequences enumerateObjectsUsingBlock:^(NSString *sequence, NSUInteger idx, BOOL *stop) {
+		enumerationBlock(sequence, stop);
+	}];
+}
+
+- (void)enumerateSplitOnNewLinesWithBlock:(void (NS_NOESCAPE ^)(NSString *sequence, BOOL *stop))enumerationBlock
+{
+	NSParameterAssert(enumerationBlock != nil);
+
+	[self enumerateSplitWithCharacterSet:[NSCharacterSet newlineCharacterSet] withBlock:enumerationBlock];
 }
 
 - (NSArray<NSString *> *)splitWithCharacters:(NSString *)characters
