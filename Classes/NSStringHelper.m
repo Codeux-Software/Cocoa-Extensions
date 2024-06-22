@@ -351,7 +351,20 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (NSArray<NSString *> *)split:(NSString *)delimiter
 {
+	NSParameterAssert(delimiter != nil);
+
 	return [self componentsSeparatedByString:delimiter];
+}
+
+- (void)enumerateSplit:(NSString *)delimiter withBlock:(void (NS_NOESCAPE ^)(NSString *sequence, BOOL *stop))enumerationBlock
+{
+	NSParameterAssert(delimiter != nil);
+
+	NSArray *sequences = [self componentsSeparatedByString:delimiter];
+
+	[sequences enumerateObjectsUsingBlock:^(NSString *sequence, NSUInteger idx, BOOL *stop) {
+		enumerationBlock(sequence, stop);
+	}];
 }
 
 - (NSArray<NSString *> *)splitWithCharacters:(NSString *)characters
