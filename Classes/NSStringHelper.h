@@ -188,8 +188,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy) NSString *scannerString;
 
-@property (readonly, copy) NSString *trimAndGetFirstToken;
-
 @property (readonly, copy, nullable) NSURL *URLUsingWebKitPasteboard;
 
 @property (readonly, copy) NSDictionary<NSString *, NSString *> *URLQueryItems;
@@ -243,17 +241,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 @end
 
 #pragma mark 
-#pragma mark Mutable String Helpers
-
-@interface NSMutableString (CSMutableStringHelper)
-@property (getter=getToken, readonly, copy) NSString *token;
-@property (getter=getTokenIncludingQuotes, readonly, copy) NSString *tokenIncludingQuotes;
-
-@property (readonly, copy) NSString *lowercaseGetToken;
-@property (readonly, copy) NSString *uppercaseGetToken;
-@end
-
-#pragma mark 
 #pragma mark Attributed String Helpers
 
 @interface NSAttributedString (CSAttributedStringHelper)
@@ -299,14 +286,7 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string;
 + (NSMutableAttributedString *)mutableAttributedStringWithString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;
 
-@property (getter=getTokenAsString, readonly, copy) NSString *tokenAsString;
-@property (readonly, copy) NSString *lowercaseGetToken;
-@property (readonly, copy) NSString *uppercaseGetToken;
-
 @property (readonly, copy) NSString *trimmedString;
-
-@property (getter=getToken, readonly, copy) NSAttributedString *token;
-@property (getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes;
 
 - (void)appendString:(NSString *)string;
 - (void)appendString:(NSString *)string attributes:(NSDictionary<NSString *, id> *)stringAttributes;

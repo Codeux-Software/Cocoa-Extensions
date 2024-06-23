@@ -60,7 +60,8 @@
 #define COCOA_EXTENSIONS_DEPRECATED_ASSERT_C			NSCAssert1(NO, @"Deprecated Method: %s", __PRETTY_FUNCTION__);
 
 #define COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN		_Pragma("clang diagnostic push")									\
-														_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")
+														_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")	\
+														_Pragma("clang diagnostic ignored \"-Wdeprecated-implementations\"")
 
 #define COCOA_EXTENSIONS_IGNORE_DEPRECATION_END			_Pragma("clang diagnostic pop")
 
