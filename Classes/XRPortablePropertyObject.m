@@ -52,6 +52,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)initOnCopy
 {
 	if ((self = [super init])) {
@@ -61,8 +62,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return nil;
 }
 
+- (instancetype)initOnMutate
+{
+	if ((self = [super init])) {
+		return self;
+	}
 
-DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
+	return nil;
+}
+
 - (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
 	if ((self = [super init])) {

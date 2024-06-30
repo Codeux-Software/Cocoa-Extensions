@@ -80,7 +80,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 /* Initializer called by copy operations. Returns self similar to -init. */
-- (instancetype)initOnCopy NS_DESIGNATED_INITIALIZER;
+- (instancetype)initOnCopy;
+
+/* Not called by any methods expressed by XRPortablePropertyObject.
+ Used as a convenience initializer if a subclass wants to expose -init
+ to a mutable class while leaving -init unavailable in immutable class. */
+- (instancetype)initOnMutate;
 
 /* Class reference for the immutable version of the class. */
 /* Returns self by default */

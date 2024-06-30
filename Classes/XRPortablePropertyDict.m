@@ -48,10 +48,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return [super init];
 }
 
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 - (instancetype)initOnCopy
 {
 	return [super initOnCopy];
 }
+
+- (instancetype)initOnMutate
+{
+	return [super initOnMutate];
+}
+DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic
 {

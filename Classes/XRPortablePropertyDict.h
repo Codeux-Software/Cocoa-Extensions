@@ -47,7 +47,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface XRPortablePropertyDict : XRPortablePropertyObject <XRPortablePropertyDictPrototype>
 - (instancetype)init NS_DESIGNATED_INITIALIZER; // Returns self. See XRPortablePropertyObject.h
-- (instancetype)initOnCopy NS_DESIGNATED_INITIALIZER; // Returns self. See XRPortablePropertyObject.h
 - (instancetype)initWithDictionary:(NSDictionary<NSString *, id> *)dic NS_DESIGNATED_INITIALIZER;
 
 /* Class reference for the immutable version of the class. */
