@@ -52,6 +52,38 @@ NS_ASSUME_NONNULL_BEGIN
 	return bundleDisplayName;
 }
 
++ (NSString *)formattedDisplayNamesForBundles:(NSArray<NSBundle *> *)bundles
+{
+	NSParameterAssert(bundles != nil);
+
+	NSMutableArray<NSString *> *bundleNames = [NSMutableArray arrayWithCapacity:bundles.count];
+
+	for (NSBundle *bundle in bundles) {
+		[bundleNames addObject:bundle.displayName];
+	}
+
+	return [bundleNames componentsJoinedByString:@", "];
+}
+
++ (void)openInstallationLocationsForBundles:(NSArray<NSBundle *> *)bundles
+{
+	NSParameterAssert(bundles != nil);
+
+	NSMutableArray<NSURL *> *bundlePaths = [NSMutableArray arrayWithCapacity:bundles.count];
+
+	for (NSBundle *bundle in bundles) {
+		NSURL *bundleLocation = bundle.bundleURL.URLByDeletingLastPathComponent;
+
+		if ([bundlePaths containsObject:bundleLocation] == NO) {
+			[bundlePaths addObject:bundleLocation];
+		}
+	}
+
+	for (NSURL *bundleLocation in bundlePaths) {
+		[[NSWorkspace sharedWorkspace] openURL:bundleLocation];
+	}
+}
+
 @end
 
 NS_ASSUME_NONNULL_END

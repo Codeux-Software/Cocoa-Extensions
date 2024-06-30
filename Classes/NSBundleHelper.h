@@ -35,6 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface NSBundle (CSBundleHelper)
 @property (readonly, copy, nullable) NSString *displayName;
 
++ (NSString *)formattedDisplayNamesForBundles:(NSArray<NSBundle *> *)bundles;
+
++ (void)openInstallationLocationsForBundles:(NSArray<NSBundle *> *)bundles;
+
 - (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(nullable id)owner topLevelObjects:(NSArray * _Nullable * _Nullable)topLevelObjects COCOA_EXTENSIONS_DEPRECATED("This method exists solely for backwards compatibility. Use -loadNibNamed:owner:topLevelObjects: instead.");
 @end
 
