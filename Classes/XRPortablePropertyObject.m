@@ -76,7 +76,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 	if ((self = [super init])) {
 		[self populateDefaultsPreflight];
 
-		if ([self populateWithCoder:coder] == NO) {
+		if ([self populateWithDecoder:coder] == NO) {
 			return nil;
 		}
 
@@ -116,7 +116,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 }
 
-- (BOOL)populateWithCoder:(NSCoder *)coder
+- (BOOL)populateWithDecoder:(NSCoder *)coder
 {
 	return NO;
 }

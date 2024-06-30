@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 /* Return YES on success, NO on failure. On failure, nil is immediately
  returned by --initWithCoder:. This method is called after defaults preflight
  and before defaults postflight. Default implementation returns NO. */
-- (BOOL)populateWithCoder:(NSCoder *)coder;
+- (BOOL)populateWithDecoder:(NSCoder *)aDecoder;
 @end
 
 /* Depending on the value type of this class, the object returned
