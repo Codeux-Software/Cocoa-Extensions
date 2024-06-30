@@ -73,6 +73,8 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN
 
 - (nullable instancetype)initWithCoder:(NSCoder *)coder
 {
+	NSParameterAssert(coder != nil);
+
 	if ((self = [super init])) {
 		[self populateDefaultsPreflight];
 
