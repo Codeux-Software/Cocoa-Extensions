@@ -439,7 +439,7 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	[self getTokenFromQuoteGroupWithBlock:^(NSString *token, NSRange tokenRange, NSRange deletionRange) {
 		tokenOut = token;
 
-		deletionRange = deletionRange;
+		deletionRangeOut = deletionRange;
 	} options:CSStringQuoteGroupOptionsDefault];
 
 	if (deletionRangeOut.location != NSNotFound) {
@@ -462,7 +462,7 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	[self getTokenFromWhitespaceGroupWithBlock:^(NSString *token, NSRange tokenRange, NSRange deletionRange) {
 		tokenOut = token;
 
-		deletionRange = deletionRange;
+		deletionRangeOut = deletionRange;
 	}];
 
 	if (deletionRangeOut.location != NSNotFound) {
