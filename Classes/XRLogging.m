@@ -47,6 +47,19 @@ void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem)
 	[XRLogging setDefaultSubsystem:subsystem];
 }
 
+void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category)
+{
+	NSCParameterAssert(category != nil);
+
+	NSBundle *mainBundle = [NSBundle mainBundle];
+
+	NSString *identifier = mainBundle.bundleIdentifier;
+
+	os_log_t subsystem = os_log_create(identifier.UTF8String, category.UTF8String);
+
+	[XRLogging setDefaultSubsystem:subsystem];
+}
+
 void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
 {
 	COCOA_EXTENSIONS_DEPRECATED_WARNING

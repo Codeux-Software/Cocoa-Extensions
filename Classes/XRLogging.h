@@ -91,6 +91,10 @@ typedef NS_ENUM(NSInteger, XRLoggingType) {
 #define LogToConsoleSetDefaultSubsystem(_subsystem)		\
 	_LogToConsoleSetDefaultSubsystem(_subsystem)
 
+/* LogToConsoleSetDefaultSubsystem() */
+#define LogToConsoleSetDefaultSubsystemToMainBundle(_category)		\
+_LogToConsoleSetDefaultSubsystemToMainBundle(_category)
+
 /* LogToConsoleCurrentStackTrace() */
 #define LogStackTrace() 	\
 	LogStackTraceWithSubsystem(NULL);
@@ -116,5 +120,6 @@ void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, 
 
 os_log_t _Nullable _LogToConsoleDefaultSubsystem(void);
 void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem);
+void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category);
 
 NS_ASSUME_NONNULL_END
