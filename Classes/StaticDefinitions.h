@@ -67,6 +67,13 @@
 
 #define COCOA_EXTENSIONS_DEPRECATED_WARNING				NSLog(@"DEPRECATED: Use of the method named %s is deprecated. This method will cease to exist in a future version of this framework.\n\nCurrent Stack: %@", __PRETTY_FUNCTION__, [NSThread callStackSymbols]);
 
+#define DESIGNATED_INITIALIZER_EXCEPTION_BODY_BEGIN							\
+	_Pragma("clang diagnostic push")										\
+	_Pragma("clang diagnostic ignored \"-Wobjc-designated-initializers\"")
+
+#define DESIGNATED_INITIALIZER_EXCEPTION_BODY_END	\
+	_Pragma("clang diagnostic pop")
+
 #ifndef DISPATCH_NOESCAPE
 	#if __has_attribute(noescape)
 		#define DISPATCH_NOESCAPE __attribute__((__noescape__))

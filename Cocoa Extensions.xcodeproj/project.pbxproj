@@ -31,6 +31,10 @@
 		4C2A71E91B629EA200CD363B /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C2A71E81B629EA200CD363B /* IOKit.framework */; };
 		4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2DD0F01BC423E30027937E /* NSObjectHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C2DD0F31BC423E30027937E /* NSObjectHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2DD0F11BC423E30027937E /* NSObjectHelper.m */; };
+		4C2E0BF92C30FB49001ABE0D /* XRPortablePropertyDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E0BF72C30FB49001ABE0D /* XRPortablePropertyDict.m */; };
+		4C2E0BFA2C30FB49001ABE0D /* XRPortablePropertyObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2E0BF82C30FB49001ABE0D /* XRPortablePropertyObject.m */; };
+		4C2E0BFD2C30FBA1001ABE0D /* XRPortablePropertyDict.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2E0BFB2C30FBA1001ABE0D /* XRPortablePropertyDict.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C2E0BFE2C30FBA1001ABE0D /* XRPortablePropertyObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C2E0BFC2C30FBA1001ABE0D /* XRPortablePropertyObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C356A4F1F9F9D2D00E671D9 /* NSErrorHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C356A4D1F9F9D2D00E671D9 /* NSErrorHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C356A501F9F9D2D00E671D9 /* NSErrorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C356A4E1F9F9D2D00E671D9 /* NSErrorHelper.m */; };
 		4C4696A01D1B3FBB00E3021A /* XRLogging.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C46969F1D1B3FBB00E3021A /* XRLogging.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -166,6 +170,10 @@
 		4C2A71E81B629EA200CD363B /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		4C2DD0F01BC423E30027937E /* NSObjectHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NSObjectHelper.h; path = Classes/NSObjectHelper.h; sourceTree = "<group>"; };
 		4C2DD0F11BC423E30027937E /* NSObjectHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSObjectHelper.m; path = Classes/NSObjectHelper.m; sourceTree = "<group>"; };
+		4C2E0BF72C30FB49001ABE0D /* XRPortablePropertyDict.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XRPortablePropertyDict.m; path = Classes/XRPortablePropertyDict.m; sourceTree = "<group>"; };
+		4C2E0BF82C30FB49001ABE0D /* XRPortablePropertyObject.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = XRPortablePropertyObject.m; path = Classes/XRPortablePropertyObject.m; sourceTree = "<group>"; };
+		4C2E0BFB2C30FBA1001ABE0D /* XRPortablePropertyDict.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XRPortablePropertyDict.h; path = Classes/XRPortablePropertyDict.h; sourceTree = "<group>"; };
+		4C2E0BFC2C30FBA1001ABE0D /* XRPortablePropertyObject.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XRPortablePropertyObject.h; path = Classes/XRPortablePropertyObject.h; sourceTree = "<group>"; };
 		4C356A4D1F9F9D2D00E671D9 /* NSErrorHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NSErrorHelper.h; path = Classes/NSErrorHelper.h; sourceTree = "<group>"; };
 		4C356A4E1F9F9D2D00E671D9 /* NSErrorHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = NSErrorHelper.m; path = Classes/NSErrorHelper.m; sourceTree = "<group>"; };
 		4C46969F1D1B3FBB00E3021A /* XRLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRLogging.h; path = Classes/XRLogging.h; sourceTree = "<group>"; };
@@ -408,6 +416,8 @@
 				4C1923A81A9002230076F65A /* XRGlobalModels.h */,
 				4C1923981A8FE9610076F65A /* XRKeychain.h */,
 				4C46969F1D1B3FBB00E3021A /* XRLogging.h */,
+				4C2E0BFB2C30FBA1001ABE0D /* XRPortablePropertyDict.h */,
+				4C2E0BFC2C30FBA1001ABE0D /* XRPortablePropertyObject.h */,
 				4C292DA11A91ABD300A41FD6 /* XRPortMapper.h */,
 				4C1923B81A9007FD0076F65A /* XRRegularExpression.h */,
 				4C7A1B2A1A91F10900D0EC72 /* XRSystemInformation.h */,
@@ -507,6 +517,8 @@
 				4CFB742420E480A4001B88CE /* SWErrorHelper.swift */,
 				4C68752520E2CA530055E541 /* SWNumericHelper.swift */,
 				4CD09D4120E072BF008BADA5 /* SWStringHelper.swift */,
+				4C2E0BF72C30FB49001ABE0D /* XRPortablePropertyDict.m */,
+				4C2E0BF82C30FB49001ABE0D /* XRPortablePropertyObject.m */,
 				4C67852B1B74F30600CCA160 /* XRAccessibility.m */,
 				4CA63AF91B63F9EB002CF61C /* XRAddressBook.m */,
 				4C1923BB1A9008E70076F65A /* XRBase64Encoding.m */,
@@ -585,6 +597,8 @@
 				4C7A1B2C1A91F10900D0EC72 /* XRSystemInformation.h in Headers */,
 				4C67852C1B74F30600CCA160 /* XRAccessibility.h in Headers */,
 				4C2DD0F21BC423E30027937E /* NSObjectHelper.h in Headers */,
+				4C2E0BFD2C30FBA1001ABE0D /* XRPortablePropertyDict.h in Headers */,
+				4C2E0BFE2C30FBA1001ABE0D /* XRPortablePropertyObject.h in Headers */,
 				4C7A69F81CB0174A00EB85FE /* ApplePrivateMac.h in Headers */,
 				4CF8B9571D1DE47A00352AF6 /* NSMethodSignatureHelper.h in Headers */,
 				4C0C8A531CBB255000A327D3 /* NSURLHelper.h in Headers */,
@@ -722,6 +736,8 @@
 				4CD4B7FE2552CE8100B93AD4 /* XRFileSystemMonitor.m in Sources */,
 				4CAA489B20E46AB500FDE1F5 /* SWDataHelper.swift in Sources */,
 				4C48CF411BC73D6D003FD716 /* CGContextHelper.m in Sources */,
+				4C2E0BF92C30FB49001ABE0D /* XRPortablePropertyDict.m in Sources */,
+				4C2E0BFA2C30FB49001ABE0D /* XRPortablePropertyObject.m in Sources */,
 				4CDF74A31A8FDE1C000B5FF5 /* NSFontHelper.m in Sources */,
 				4C0C8A541CBB255000A327D3 /* NSURLHelper.m in Sources */,
 				4CDF749D1A8FDE1C000B5FF5 /* NSByteCountFormatterHelper.m in Sources */,

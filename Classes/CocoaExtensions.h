@@ -46,6 +46,8 @@
 #import <CocoaExtensions/XRGlobalModels.h>
 #import <CocoaExtensions/XRKeychain.h>
 #import <CocoaExtensions/XRPortMapper.h>
+#import <CocoaExtensions/XRPortablePropertyObject.h>
+#import <CocoaExtensions/XRPortablePropertyDict.h>
 #import <CocoaExtensions/XRRegularExpression.h>
 #import <CocoaExtensions/XRSystemInformation.h>
 
