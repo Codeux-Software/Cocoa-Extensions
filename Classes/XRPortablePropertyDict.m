@@ -106,16 +106,6 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 #pragma mark -
 #pragma mark Getters
 
-- (__kindof XRPortablePropertyDict *)mutableClass
-{
-	return self;
-}
-
-- (__kindof XRPortablePropertyDict *)immutableClass
-{
-	return self;
-}
-
 - (NSDictionary<NSString *, id> *)dictionaryValue
 {
 	return @{};
