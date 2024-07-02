@@ -137,11 +137,25 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (__kindof XRPortablePropertyObject *)mutableClass
 {
+	if (self.mutable == NO) {
+		NSAssert(NO, @"The default implementation of -mutableClass returns `self`. "
+				 "This behavior does not work correctly if this property is not overridden"
+				 "in a class that is immutable because it will return a immutable class."
+				 "Please override -mutableClass property.");
+	}
+
 	return self;
 }
 
 - (__kindof XRPortablePropertyObject *)immutableClass
 {
+	if (self.mutable) {
+		NSAssert(NO, @"The default implementation of -immutableClass returns `self`. "
+				 "This behavior does not work correctly if this property is not overridden"
+				 "in a class that is mutable because it will return a mutable class."
+				 "Please override -immutableClass property.");
+	}
+
 	return self;
 }
 
