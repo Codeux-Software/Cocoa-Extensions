@@ -87,6 +87,22 @@ NS_ASSUME_NONNULL_BEGIN
 	return NSObjectsAreEqual(left, right);
 }
 
+- (NSTimeInterval)ageOfResource
+{
+	return [self ageOfResourceWithError:nil];
+}
+
+- (NSTimeInterval)ageOfResourceWithError:(NSError * _Nullable * _Nullable)error
+{
+	NSDate *modificationDate = [self resourceValueForKey:NSURLCreationDateKey error:error];
+
+	if (modificationDate == nil) {
+		modificationDate = [NSDate distantFuture];
+	}
+
+	return -([modificationDate timeIntervalSinceNow]);
+}
+
 @end
 
 #pragma mark -
