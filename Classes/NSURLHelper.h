@@ -33,7 +33,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface NSURL (CSURLHelper)
-@property (nonatomic, readonly, copy, nullable) NSString *filesystemRepresentationString;
+@property (readonly, copy, nullable) NSString *filesystemRepresentationString;
 
 - (nullable id)resourceValueForKey:(NSString *)key;
 - (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error;

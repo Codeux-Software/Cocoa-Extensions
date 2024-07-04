@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self resourceValueForKey:key error:nil];
 }
 
-- (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error
+- (nullable id)resourceValueForKey:(NSString *)key error:(NSError * _Nullable * _Nullable)error
 {
 	NSParameterAssert(key != nil);
 
