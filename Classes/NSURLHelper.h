@@ -44,11 +44,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)isEqualByFileRepresentation:(NSURL *)url;
 - (BOOL)isEqualByResourceIdentifier:(NSURL *)url;
 
-// Age of resource based on creation date
+// Age of resource based on creation date or modification date.
+// Interval will be positive as long as the date is in the past.
 // Value is negative when an error occurs... or
-// if for some reason the creation date is in the future.
-@property (readonly) NSTimeInterval ageOfResource;
-- (NSTimeInterval)ageOfResourceWithError:(NSError * _Nullable * _Nullable)error;
+// if for some reason the date is in the future.
+@property (readonly) NSTimeInterval intervalSinceCreated;
+@property (readonly) NSTimeInterval intervalSinceLastModification;
+- (NSTimeInterval)intervalSinceCreatedWithError:(NSError * _Nullable * _Nullable)error;
+- (NSTimeInterval)intervalSinceLastModificationWithError:(NSError * _Nullable * _Nullable)error;
 @end
 
 @interface NSArray (CSURLHelper)
