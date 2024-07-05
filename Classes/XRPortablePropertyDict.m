@@ -121,6 +121,16 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return self.dictionaryValue;
 }
 
+- (__kindof XRPortablePropertyDict *)immutableClass
+{
+	return [super immutableClass];
+}
+
+- (__kindof XRPortablePropertyDict *)mutableClass
+{
+	return [super mutableClass];
+}
+
 #pragma mark -
 #pragma mark Copying
 
