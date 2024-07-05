@@ -32,6 +32,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
+	CSFileManagerRemoveItemResultSuccess = 0,
+	CSFileManagerRemoveItemResultError,
+	CSFileManagerRemoveItemResultExcluded
+};
+
 @implementation NSFileManager (CSFileManagerHelper)
 
 - (BOOL)fileExistsAtURL:(NSURL *)url
@@ -192,8 +198,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 		if (removeResult == NO) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"Failed to remove file at destination: '%@': %@",
-				[destinationURL path], removeFileError.localizedDescription);
+										   "Failed to remove file at destination: '%@': %@",
+										   [destinationURL path], removeFileError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
@@ -240,8 +246,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (copyResult == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Failed to copy file to destination: '%@' -> '%@': %@",
-			sourceURL.path, destinationURL.path, copyFileError.localizedDescription);
+									   "Failed to copy file to destination: '%@' -> '%@': %@",
+									   sourceURL.path, destinationURL.path, copyFileError.localizedDescription);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
@@ -298,7 +304,7 @@ NS_ASSUME_NONNULL_BEGIN
 		sourceIsFile == NO &&
 		sourceIsSymbolicLink == NO &&
 		sourceIsApplication == NO &&
-		sourceIsPackage == NO) 
+		sourceIsPackage == NO)
 	{
 		LogToConsoleFaultWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Source URL is of type not supported by this library and will be ignored: %@", sourceURL);
@@ -306,16 +312,16 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
-#if 0
+#ifdef DEBUG
 #define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
 	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-		   "'%@': dir=%@, file=%@, symblink=%@, app=%@, pkg=%@",
-		   sourceURL,
-		   StringFromBOOL(sourceIsDirectory),
-		   StringFromBOOL(sourceIsFile),
-		   StringFromBOOL(sourceIsSymbolicLink),
-		   StringFromBOOL(sourceIsApplication),
-		   StringFromBOOL(sourceIsPackage));
+								   "'%@': dir=%@, file=%@, symblink=%@, app=%@, pkg=%@",
+								   sourceURL,
+								   StringFromBOOL(sourceIsDirectory),
+								   StringFromBOOL(sourceIsFile),
+								   StringFromBOOL(sourceIsSymbolicLink),
+								   StringFromBOOL(sourceIsApplication),
+								   StringFromBOOL(sourceIsPackage));
 #undef StringFromBOOL
 #endif
 
@@ -377,7 +383,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSError *directoryContentsError = nil;
 
 	NSArray *directoryContents = [self contentsOfDirectoryAtURL:sourceURL
-									 includingPropertiesForKeys:@[NSURLNameKey, 
+									 includingPropertiesForKeys:@[NSURLNameKey,
 																  NSURLIsDirectoryKey,
 																  NSURLIsRegularFileKey,
 																  NSURLIsSymbolicLinkKey,
@@ -424,60 +430,170 @@ NS_ASSUME_NONNULL_BEGIN
 	return YES;
 }
 
-- (BOOL)trashContentsOfDirectoryAtURL:(NSURL *)url
+- (BOOL)removeContentsOfDirectoryAtURL:(NSURL *)url options:(CSFileManagerOptions)options
+{
+	return [self removeContentsOfDirectoryAtURL:url excludingURLs:nil options:options];
+}
+
+- (BOOL)removeContentsOfDirectoryAtURL:(NSURL *)url excludingURLs:(nullable NSArray<NSURL *> *)excludedURLs options:(CSFileManagerOptions)options
+{
+	CSFileManagerRemoveItemResult result =
+	[self _removeContentsOfDirectoryAtURL:url 
+							excludingURLs:excludedURLs
+								  options:options
+						   recursionDepth:0];
+
+	return (result == CSFileManagerRemoveItemResultSuccess ||
+			result == CSFileManagerRemoveItemResultExcluded);
+}
+
+- (CSFileManagerRemoveItemResult)_removeContentsOfDirectoryAtURL:(NSURL *)url excludingURLs:(nullable NSArray<NSURL *> *)excludedURLs options:(CSFileManagerOptions)options recursionDepth:(NSUInteger)recursionDepth
 {
 	NSParameterAssert(url != nil);
 
 	/* Check URLs */
 	if (url.fileURL == NO) {
-		return NO;
+		return CSFileManagerRemoveItemResultError;
+	}
+	
+	/* Check for exclusion. Depth doesn't matter here.
+	 If user wants to exclude the source URL who are we
+	 to really care? */
+	if (excludedURLs && [excludedURLs containsObject:url]) {
+#ifdef DEBUG
+		LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(), "URL is excluded: %@", url);
+#endif
+
+		return CSFileManagerRemoveItemResultExcluded;
 	}
 
-	/* Determine the type of the URL */
-	NSNumber *isDirectoryRef = [url resourceValueForKeyWithLoggedError:NSURLIsDirectoryKey];
+	/* Determine the type of the current source URL.
+	 Regardless of our depth, we must know if the source
+	 is a file or directory. */
+	NSDictionary *resourceKeys = [url resourceValuesForKeyWithLoggedError:@[NSURLIsDirectoryKey,
+																				  NSURLIsRegularFileKey,
+																				  NSURLIsSymbolicLinkKey,
+																				  NSURLIsApplicationKey,
+																				  NSURLIsPackageKey]];
 
-	/* URL must be a directory */
-	if (isDirectoryRef == nil || isDirectoryRef.boolValue == NO) {
+	if (resourceKeys == nil) {
+		return CSFileManagerRemoveItemResultError;
+	}
+
+	BOOL sourceIsDirectory = [resourceKeys boolForKey:NSURLIsDirectoryKey];
+
+	if (recursionDepth == 0 && sourceIsDirectory == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"URL is not directory when expected: '%@'", url);
+			"Source URL is not directory when expected: '%@'", url);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
-		return NO;
+		return CSFileManagerRemoveItemResultError;
 	}
 
-	/* List directory contents and begin recursion. */
-	NSError *directoryContentsError = nil;
+	BOOL sourceIsApplication = [resourceKeys boolForKey:NSURLIsApplicationKey];
+	BOOL sourceIsPackage = [resourceKeys boolForKey:NSURLIsPackageKey];
 
-	NSArray *directoryContents = [self contentsOfDirectoryAtURL:url
-									 includingPropertiesForKeys:nil
-														options:0
-														  error:&directoryContentsError];
+#ifdef DEBUG
+	BOOL sourceIsFile = [resourceKeys boolForKey:NSURLIsRegularFileKey];
+	BOOL sourceIsSymbolicLink = [resourceKeys boolForKey:NSURLIsSymbolicLinkKey];
 
-	if (directoryContents == nil) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"directoryContents returned nil: '%@': %@",
-			url, directoryContentsError.localizedDescription);
-		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+#define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
+	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+								   "'%@': dir=%@, file=%@, symblink=%@, app=%@, pkg=%@",
+								   url,
+								   StringFromBOOL(sourceIsDirectory),
+								   StringFromBOOL(sourceIsFile),
+								   StringFromBOOL(sourceIsSymbolicLink),
+								   StringFromBOOL(sourceIsApplication),
+								   StringFromBOOL(sourceIsPackage));
+#undef StringFromBOOL
+#endif
 
-		return NO;
-	}
+	/* For regular directories, list its contents.
+	 Perform remove on individual files using recursion.
+	 If a child is flagged as excluded, or for some reason it could not
+	 be removed, then we set performRemoved to NO to exclude attempting
+	 to delete the parent directory. */
+	BOOL performRemove = (recursionDepth > 0); // Don't delete root
 
-	/* Trash directory contents */
-	for (NSURL *item in directoryContents) {
-		NSError *trashError = nil;
+	if (sourceIsDirectory && sourceIsApplication == NO && sourceIsPackage == NO) {
+		NSError *directoryContentsError = nil;
 
-		if ([self trashItemAtURL:item resultingItemURL:nil error:&trashError] == NO) {
+		NSArray *directoryContents = [self contentsOfDirectoryAtURL:url
+										 includingPropertiesForKeys:@[NSURLNameKey,
+																	  NSURLIsDirectoryKey,
+																	  NSURLIsRegularFileKey,
+																	  NSURLIsSymbolicLinkKey,
+																	  NSURLIsApplicationKey,
+																	  NSURLIsPackageKey]
+															options:0
+															  error:&directoryContentsError];
+
+		if (directoryContents == nil) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"Failed to move item to trash: '%@': %@",
-				item, trashError.localizedDescription);
+										   "directoryContents returned nil: '%@': %@",
+										   url, directoryContentsError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
-			return NO;
+			return CSFileManagerRemoveItemResultError;
 		}
+
+		/* Trash directory contents */
+		BOOL continueOnError = ((options & CSFileManagerOptionContinueOnError) == CSFileManagerOptionContinueOnError);
+
+		BOOL directoryExcluded = NO;
+
+		for (NSURL *item in directoryContents) {
+			CSFileManagerRemoveItemResult result =
+			[self _removeContentsOfDirectoryAtURL:item
+									excludingURLs:excludedURLs
+										  options:options
+								   recursionDepth:(recursionDepth + 1)];
+
+			if (result == CSFileManagerRemoveItemResultError ||
+				result == CSFileManagerRemoveItemResultExcluded)
+			{
+				performRemove = NO;
+			}
+		}
+	} // sourceIsDirectory
+
+	/* Perform remove */
+	if (performRemove == NO) {
+#ifdef DEBUG
+		LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(), "Skipping remove for URL: %@", url);
+#endif
+
+		return CSFileManagerRemoveItemResultExcluded;
+	}
+
+#ifdef DEBUG
+	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(), "Removing URL: %@", url);
+#endif
+
+	NSError *removeError = nil;
+
+	BOOL removeResult = NO;
+
+	BOOL moveToTrash = ((options & CSFileManagerOptionsMoveToTrash) == CSFileManagerOptionsMoveToTrash);
+
+	if (moveToTrash) {
+		removeResult = [self trashItemAtURL:url resultingItemURL:nil error:&removeError];
+	} else {
+		removeResult = [self removeItemAtURL:url error:&removeError];
+	}
+
+	if (removeError) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Failed to remove item to trash: '%@': %@",
+			url, removeError.localizedDescription);
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+		return CSFileManagerRemoveItemResultError;
 	}
 
 	/* Success */
-	return YES;
+	return CSFileManagerRemoveItemResultSuccess;
 }
 
 @end

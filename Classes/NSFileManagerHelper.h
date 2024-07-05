@@ -81,9 +81,10 @@ typedef NS_OPTIONS(NSUInteger, CSFileManagerOptions) {
 
 - (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...;
 
-/* Trash the individual items inside a directory instead
- of the directory itself. */
-- (BOOL)trashContentsOfDirectoryAtURL:(NSURL *)url;
+/* Trash the individual items inside a directory instead of the directory itself. */
+/* Only options supported: CSFileManagerOptionContinueOnError, CSFileManagerOptionsMoveToTrash */
+- (BOOL)removeContentsOfDirectoryAtURL:(NSURL *)url options:(CSFileManagerOptions)options;
+- (BOOL)removeContentsOfDirectoryAtURL:(NSURL *)url excludingURLs:(nullable NSArray<NSURL *> *)excludedURLs options:(CSFileManagerOptions)options;
 
 /* Recursively merge two directories using options. */
 - (BOOL)mergeDirectoryAtURL:(NSURL *)sourceURL withDirectoryAtURL:(NSURL *)destinationURL options:(CSFileManagerOptions)options;
