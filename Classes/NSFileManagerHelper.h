@@ -32,9 +32,35 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSFileManager (CSFileManagerHelper)
-@property (readonly, strong, nullable) id<NSObject, NSCopying, NSCoding> cloudUbiquityIdentityToken;
+typedef NS_OPTIONS(NSUInteger, CSFileManagerOptions) {
+	/* If file or directory exists at destination, remove it. */
+	/* For a directory, the entire directly is removed. */
+	CSFileManagerOptionsRemoveIfExists		= 1 << 1,
 
+	/* During a merge, if an item is a directory, enumerate its contents
+	 and merge those individually. Instead of the directory as a whole. */
+	/* At all times, even with this flag enabled, applications and packages
+	 will be merged in whole as they are considered self contained. */
+	CSFileManagerOptionsEnumerateDirectories		= 1 << 2,
+
+	/* When enumerating directories, create the directory at the destination
+	 if it does not already exist. */
+	CSFileManagerOptionsCreateDirectory				= 1 << 3,
+
+	/* When migrating the contents of a directory, the migration does not
+	 stop if an error occurs on an individual file. */
+	CSFileManagerOptionContinueOnError				= 1 << 4,
+
+	/* When removing a file or directory, move it to Trash?
+	 If not, just outright delete. */
+	CSFileManagerOptionsMoveToTrash			= 1 << 5,
+
+	/* When merging, move source to destination.
+	 If not specified, copy is perform instead. */
+	CSFileManagerOptionsMoveToDestination	= 1 << 6,
+};
+
+@interface NSFileManager (CSFileManagerHelper)
 - (BOOL)fileExistsAtURL:(NSURL *)url;
 
 - (BOOL)directoryExistsAtURL:(NSURL *)url;
@@ -45,33 +71,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSArray<NSString *> *)buildPathArray:(NSString *)path, ...;
 
-- (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path;
-- (BOOL)isUbiquitousItemAtURLDownloaded:(NSURL *)url;
+/* Trash the individual items inside a directory instead
+ of the directory itself. */
+- (BOOL)trashContentsOfDirectoryAtURL:(NSURL *)url;
+
+/* Recursively merge two directories using options. */
+- (BOOL)mergeDirectoryAtURL:(NSURL *)sourceURL withDirectoryAtURL:(NSURL *)destinationURL options:(CSFileManagerOptions)options;
 
 // The following methods default to moving destination to trash + copying source
 - (BOOL)replaceItemAtPath:(NSString *)destinationPath
 		   withItemAtPath:(NSString *)sourcePath;
 
-- (BOOL)replaceItemAtPath:(NSString *)destinationPath
-		   withItemAtPath:(NSString *)sourcePath
-   moveDestinationToTrash:(BOOL)moveDestinationToTrash;
-
-- (BOOL)replaceItemAtPath:(NSString *)destinationPath
-		   withItemAtPath:(NSString *)sourcePath
-		moveToDestination:(BOOL)moveToDestination
-   moveDestinationToTrash:(BOOL)moveDestinationToTrash;
-
 - (BOOL)replaceItemAtURL:(NSURL *)destinationURL
 		   withItemAtURL:(NSURL *)sourceURL;
 
-- (BOOL)replaceItemAtURL:(NSURL *)destinationURL
-		   withItemAtURL:(NSURL *)sourceURL
-  moveDestinationToTrash:(BOOL)moveDestinationToTrash;
+- (BOOL)replaceItemAtPath:(NSString *)destinationPath
+		   withItemAtPath:(NSString *)sourcePath
+				  options:(CSFileManagerOptions)options;
 
 - (BOOL)replaceItemAtURL:(NSURL *)destinationURL
 		   withItemAtURL:(NSURL *)sourceURL
-	   moveToDestination:(BOOL)moveToDestination
-  moveDestinationToTrash:(BOOL)moveDestinationToTrash;
+				 options:(CSFileManagerOptions)options;
 @end
 
 NS_ASSUME_NONNULL_END

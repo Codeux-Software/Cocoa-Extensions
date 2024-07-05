@@ -34,11 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSFileManager (CSFileManagerHelper)
 
-- (nullable id <NSObject, NSCopying, NSCoding>)cloudUbiquityIdentityToken
-{
-	return self.ubiquityIdentityToken;
-}
-
 - (BOOL)fileExistsAtURL:(NSURL *)url
 {
 	NSParameterAssert(url != nil);
@@ -133,136 +128,17 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self buildPathArrayWithPaths:pathObjects];
 }
 
-- (BOOL)isUbiquitousItemAtPathDownloaded:(NSString *)path
-{
-	NSParameterAssert(path != nil);
-
-	NSURL *url = [NSURL fileURLWithPath:path];
-
-	return [self isUbiquitousItemAtURLDownloaded:url];
-}
-
-- (BOOL)isUbiquitousItemAtURLDownloaded:(NSURL *)url
-{
-	NSParameterAssert(url != nil);
-
-	/* Check whether the given path is ubiquitous */
-	NSError *isUbiquitousError = nil;
-
-	NSNumber *isUbiquitous = [url resourceValueForKey:NSURLIsUbiquitousItemKey error:&isUbiquitousError];
-
-	if (isUbiquitous == nil || isUbiquitous.boolValue == NO) {
-		if (isUbiquitousError) {
-			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"isUbiquitous lookup failed: '%@': %@",
-				url, isUbiquitousError.localizedDescription);
-			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-
-			return NO;
-		} else {
-			/* If an error did not occur looking up status for a path, but
-			 the path is not ubiquitous, then we return YES anyways. */
-			/* YES will indicate the file is downloaded and since the file
-			 is not ubiquitous, it is in fact downloaded. */
-			LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"Returning YES for path that is not ubiquitous: '%@'", url);
-
-			return YES;
-		}
-	}
-
-	/* If the path is a directory, then check each file in the directory and
-	 stop if there is at least one file that is not downloaded. */
-	/* The reason its done like this is because when the key
-	 NSURLUbiquitousItemDownloadingStatusKey was checked for on directories,
-	 it always returned nil. That means having to scan each file in each
-	 subdirectory was the only option. */
-	NSError *isDirectoryError = nil;
-
-	NSNumber *isDirectory = [url resourceValueForKey:NSURLIsDirectoryKey error:&isDirectoryError];
-
-	if (isDirectory == nil)
-	{
-		if (isDirectoryError) {
-			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"isDirectory lookup failed: '%@': %@", url,
-			     isDirectoryError.localizedDescription);
-			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-		}
-
-		return NO;
-	}
-	else if (isDirectory.boolValue)
-	{
-		NSError *directoryContentsError = nil;
-
-		NSArray *directoryContents = [self contentsOfDirectoryAtURL:url
-										 includingPropertiesForKeys:@[NSURLNameKey]
-															options:0
-															  error:&directoryContentsError];
-
-		if (directoryContents == nil) {
-			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-				"directoryContents returned nil: '%@': %@",
-				 url, directoryContentsError.localizedDescription);
-			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-
-			return NO;
-		}
-
-		for (NSURL *suburl in directoryContents) {
-			if ([self isUbiquitousItemAtURLDownloaded:suburl] == NO) {
-				return NO;
-			}
-		}
-
-		return YES;
-	}
-
-	/* Check download status for a file */
-	NSError *isDownloadedError = nil;
-
-	BOOL isDownloaded = YES;
-
-	NSString *_isDownloaded = [url resourceValueForKey:NSURLUbiquitousItemDownloadingStatusKey error:&isDownloadedError];
-
-	if (_isDownloaded) {
-		 isDownloaded = (NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusDownloaded) ||
-						 NSObjectsAreEqual(_isDownloaded, NSURLUbiquitousItemDownloadingStatusCurrent));
-	}
-
-	if (isDownloadedError) {
-		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"isDownloaded lookup failed: '%@': %@",
-			url, isDownloadedError.localizedDescription);
-		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
-	}
-
-	return isDownloaded;
-}
-
 - (BOOL)replaceItemAtPath:(NSString *)destinationPath withItemAtPath:(NSString *)sourcePath
 {
 	return [self replaceItemAtPath:destinationPath
 					withItemAtPath:sourcePath
-				 moveToDestination:NO
-			moveDestinationToTrash:YES];
+						   options:(CSFileManagerOptionsMoveToTrash |
+									CSFileManagerOptionsRemoveIfExists)];
 }
 
 - (BOOL)replaceItemAtPath:(NSString *)destinationPath
 		   withItemAtPath:(NSString *)sourcePath
-   moveDestinationToTrash:(BOOL)moveDestinationToTrash
-{
-	return [self replaceItemAtPath:destinationPath
-					withItemAtPath:sourcePath
-				 moveToDestination:NO
-			moveDestinationToTrash:moveDestinationToTrash];
-}
-
-- (BOOL)replaceItemAtPath:(NSString *)destinationPath
-		   withItemAtPath:(NSString *)sourcePath
-		moveToDestination:(BOOL)moveToDestination
-   moveDestinationToTrash:(BOOL)moveDestinationToTrash
+				  options:(CSFileManagerOptions)options
 {
 	if (sourcePath == nil || destinationPath == nil) {
 		return NO;
@@ -270,42 +146,40 @@ NS_ASSUME_NONNULL_BEGIN
 
 	return [self replaceItemAtURL:[NSURL fileURLWithPath:destinationPath]
 					withItemAtURL:[NSURL fileURLWithPath:sourcePath]
-				moveToDestination:moveToDestination
-		   moveDestinationToTrash:moveDestinationToTrash];
+						  options:options];
 }
 
 - (BOOL)replaceItemAtURL:(NSURL *)destinationURL withItemAtURL:(NSURL *)sourceURL
 {
 	return [self replaceItemAtURL:destinationURL
 					withItemAtURL:sourceURL
-				moveToDestination:NO
-		   moveDestinationToTrash:YES];
+						  options:(CSFileManagerOptionsMoveToTrash |
+								   CSFileManagerOptionsRemoveIfExists)];
 }
 
 - (BOOL)replaceItemAtURL:(NSURL *)destinationURL
 		   withItemAtURL:(NSURL *)sourceURL
-  moveDestinationToTrash:(BOOL)moveDestinationToTrash
-{
-	return [self replaceItemAtURL:destinationURL
-					withItemAtURL:sourceURL
-				moveToDestination:NO
-		   moveDestinationToTrash:moveDestinationToTrash];
-}
-
-- (BOOL)replaceItemAtURL:(NSURL *)destinationURL
-		   withItemAtURL:(NSURL *)sourceURL
-	   moveToDestination:(BOOL)moveToDestination
-  moveDestinationToTrash:(BOOL)moveDestinationToTrash
+				 options:(CSFileManagerOptions)options
 {
 	/* Check URLs */
-	if ((sourceURL == nil || sourceURL.fileURL == NO) ||
-		(destinationURL == nil || destinationURL.fileURL == NO))
+	if (sourceURL == nil || sourceURL.fileURL == NO ||
+		destinationURL == nil || destinationURL.fileURL == NO)
 	{
 		return NO;
 	}
 
+	BOOL moveToDestination = ((options & CSFileManagerOptionsMoveToDestination) == CSFileManagerOptionsMoveToDestination);
+	BOOL moveDestinationToTrash = ((options & CSFileManagerOptionsMoveToTrash) == CSFileManagerOptionsMoveToTrash);
+	BOOL removeIfExists = ((options & CSFileManagerOptionsRemoveIfExists) == CSFileManagerOptionsRemoveIfExists);
+
 	/* Remove destination if it exists */
 	if ([self fileExistsAtURL:destinationURL]) {
+		if (removeIfExists == NO) {
+			/* The method was purposely configured with the thought we wont
+			 override files so it shouldn't be a failure if we follow that rule. */
+			return YES;
+		}
+
 		NSError *removeFileError = nil;
 
 		BOOL removeResult = NO;
@@ -326,12 +200,27 @@ NS_ASSUME_NONNULL_BEGIN
 		}
 	}
 
-	/* Perform copy operation */
+	/* Are we working with a symbolic link? */
+	NSNumber *isSymlinkRef = [sourceURL resourceValueForKeyWithLoggedError:NSURLIsSymbolicLinkKey];
+
+	if (isSymlinkRef == nil) {
+		return NO;
+	}
+
+	/* Perform replace operation */
 	BOOL copyResult = NO;
 
 	NSError *copyFileError = nil;
 
-	if (moveToDestination) {
+	if (isSymlinkRef.boolValue) {
+		NSURL *symlinkDestination = [sourceURL URLByResolvingSymlinksInPath];
+
+		if (symlinkDestination == nil) {
+			return NO;
+		}
+
+		copyResult = [self createSymbolicLinkAtURL:destinationURL withDestinationURL:symlinkDestination error:&copyFileError];
+	} else if (moveToDestination) {
 		copyResult = [self moveItemAtURL:sourceURL toURL:destinationURL error:&copyFileError];
 	} else {
 		copyResult = [self copyItemAtURL:sourceURL toURL:destinationURL error:&copyFileError];
@@ -346,6 +235,216 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
+	/* Success */
+	return YES;
+}
+
+- (BOOL)mergeDirectoryAtURL:(NSURL *)sourceURL withDirectoryAtURL:(NSURL *)destinationURL options:(CSFileManagerOptions)options
+{
+	return [self _mergeDirectoryAtURL:sourceURL withDirectoryAtURL:destinationURL options:options recursionDepth:0];
+}
+
+- (BOOL)_mergeDirectoryAtURL:(NSURL *)sourceURL withDirectoryAtURL:(NSURL *)destinationURL options:(CSFileManagerOptions)options recursionDepth:(NSUInteger)recursionDepth
+{
+	NSParameterAssert(sourceURL != nil);
+	NSParameterAssert(destinationURL != nil);
+
+	/* Check URLs */
+	if (sourceURL.fileURL == NO || destinationURL.fileURL == NO) {
+		return NO;
+	}
+
+	/* Determine the type of the current source URL.
+	 Regardless of our depth, we must know if the source
+	 is a file or directory. */
+	NSDictionary *sourceURLResources = [sourceURL resourceValuesForKeyWithLoggedError:@[NSURLIsDirectoryKey,
+																						NSURLIsRegularFileKey,
+																						NSURLIsSymbolicLinkKey,
+																						NSURLIsApplicationKey,
+																						NSURLIsPackageKey]];
+
+	if (sourceURLResources == nil) {
+		return NO;
+	}
+
+	BOOL sourceIsDirectory = [sourceURLResources boolForKey:NSURLIsDirectoryKey];
+
+	if (recursionDepth == 0 && sourceIsDirectory == NO) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Source URL is not directory when expected: '%@'", sourceURL);
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+		return NO;
+	}
+
+	BOOL sourceIsFile = [sourceURLResources boolForKey:NSURLIsRegularFileKey];
+	BOOL sourceIsSymbolicLink = [sourceURLResources boolForKey:NSURLIsSymbolicLinkKey];
+	BOOL sourceIsApplication = [sourceURLResources boolForKey:NSURLIsApplicationKey];
+	BOOL sourceIsPackage = [sourceURLResources boolForKey:NSURLIsPackageKey];
+
+	if (sourceIsDirectory == NO && 
+		sourceIsFile == NO &&
+		sourceIsSymbolicLink == NO &&
+		sourceIsApplication == NO &&
+		sourceIsPackage == NO) 
+	{
+		LogToConsoleFaultWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Source URL is of type not supported by this library and will be ignored: %@", sourceURL);
+
+		return NO;
+	}
+
+	/* Destination URL must be a directory for top level depth. */
+	if (recursionDepth == 0) {
+		/* We are not concerned at this point if the destination exists,
+		 if there are any errors returned retrieving its resources
+		 (such as when it doesn't exist), or any other conditions.
+		 Just fail if there is probability it's not a directory. */
+		NSNumber *destinationIsDirectoryRef = [destinationURL resourceValueForKey:NSURLIsDirectoryKey];
+
+		if ((destinationIsDirectoryRef != nil &&
+			 destinationIsDirectoryRef.boolValue == NO) ||
+			destinationURL.hasDirectoryPath == NO)
+		{
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+				"Destination URL is not directory when expected: '%@'", destinationURL);
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+			return NO;
+		}
+	}
+
+	/* Perform merge */
+	BOOL enumerateDirectories = ((options & CSFileManagerOptionsEnumerateDirectories) == CSFileManagerOptionsEnumerateDirectories);
+
+	/* If the recursion depth is above zero (the root directory) and
+	 we are not interested in merging individual files, then simply
+	 call out to replace the item. We do not care about the depth
+	 beyond this scope. */
+	if (recursionDepth > 0 && enumerateDirectories == NO) {
+		return [self replaceItemAtURL:destinationURL withItemAtURL:sourceURL options:options];
+	}
+
+	/* If this is not a directory, then perform merge. */
+	/* Applications and packages are not considered directories despite the
+	 fact they are because they are usually considered self contained entities. */
+	if (sourceIsFile || sourceIsSymbolicLink || sourceIsApplication || sourceIsPackage) {
+		return [self replaceItemAtURL:destinationURL withItemAtURL:sourceURL options:options];
+	}
+
+	/* Create parent directory? */
+	BOOL createDirectory = ((options & CSFileManagerOptionsCreateDirectory) == CSFileManagerOptionsCreateDirectory);
+
+	if (createDirectory) {
+		NSError *createError = nil;
+
+		if ([self createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:&createError] == NO) {
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+				"Failed to create destination: '%@': %@",
+				destinationURL.path, createError.localizedDescription);
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+			return NO;
+		}
+	}
+
+	/* List directory contents and begin recursion. */
+	NSError *directoryContentsError = nil;
+
+	NSArray *directoryContents = [self contentsOfDirectoryAtURL:sourceURL
+									 includingPropertiesForKeys:@[NSURLNameKey, 
+																  NSURLIsDirectoryKey,
+																  NSURLIsRegularFileKey,
+																  NSURLIsSymbolicLinkKey,
+																  NSURLIsApplicationKey,
+																  NSURLIsPackageKey]
+														options:0
+														  error:&directoryContentsError];
+
+	if (directoryContents == nil) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"directoryContents returned nil: '%@': %@",
+			sourceURL, directoryContentsError.localizedDescription);
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+		return NO;
+	}
+
+	/* Merge directory contents */
+	BOOL continueOnError = ((options & CSFileManagerOptionContinueOnError) == CSFileManagerOptionContinueOnError);
+
+	for (NSURL *sourceItem in directoryContents) {
+		NSURL *destinationItem = [destinationURL URLByAppendingPathComponent:sourceItem.lastPathComponent];
+
+		if ([self _mergeDirectoryAtURL:sourceItem
+					withDirectoryAtURL:destinationItem
+							   options:options
+						recursionDepth:(recursionDepth + 1)] == NO) {
+			if (continueOnError) {
+				continue;
+			}
+
+			return NO;
+		}
+	}
+
+	/* Success */
+	return YES;
+}
+
+- (BOOL)trashContentsOfDirectoryAtURL:(NSURL *)url
+{
+	NSParameterAssert(url != nil);
+
+	/* Check URLs */
+	if (url.fileURL == NO) {
+		return NO;
+	}
+
+	/* Determine the type of the URL */
+	NSNumber *isDirectoryRef = [url resourceValueForKeyWithLoggedError:NSURLIsDirectoryKey];
+
+	/* URL must be a directory */
+	if (isDirectoryRef == nil || isDirectoryRef.boolValue == NO) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"URL is not directory when expected: '%@'", url);
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+		return NO;
+	}
+
+	/* List directory contents and begin recursion. */
+	NSError *directoryContentsError = nil;
+
+	NSArray *directoryContents = [self contentsOfDirectoryAtURL:url
+									 includingPropertiesForKeys:nil
+														options:0
+														  error:&directoryContentsError];
+
+	if (directoryContents == nil) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"directoryContents returned nil: '%@': %@",
+			url, directoryContentsError.localizedDescription);
+		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+		return NO;
+	}
+
+	/* Trash directory contents */
+	for (NSURL *item in directoryContents) {
+		NSError *trashError = nil;
+
+		if ([self trashItemAtURL:item resultingItemURL:nil error:&trashError] == NO) {
+			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+				"Failed to move item to trash: '%@': %@",
+				item, trashError.localizedDescription);
+			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
+
+			return NO;
+		}
+	}
+
+	/* Success */
 	return YES;
 }
 
