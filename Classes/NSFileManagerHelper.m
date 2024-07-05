@@ -207,12 +207,24 @@ NS_ASSUME_NONNULL_BEGIN
 		return NO;
 	}
 
+	BOOL createSymbolicLink = isSymlinkRef.boolValue;
+
+	/* Do we want to create symbolic link for a package? */
+	if (createSymbolicLink == NO) {
+		if ((options & CSFileManagerCreateSymbolicLinkForPackages) == CSFileManagerCreateSymbolicLinkForPackages) {
+			NSDictionary *resourceValues = [sourceURL resourceValuesForKeyWithLoggedError:@[NSURLIsApplicationKey, NSURLIsPackageKey]];
+
+			createSymbolicLink = ([resourceValues boolForKey:NSURLIsApplicationKey] ||
+								  [resourceValues boolForKey:NSURLIsPackageKey]);
+		}
+	}
+
 	/* Perform replace operation */
 	BOOL copyResult = NO;
 
 	NSError *copyFileError = nil;
 
-	if (isSymlinkRef.boolValue) {
+	if (createSymbolicLink) {
 		NSURL *symlinkDestination = [sourceURL URLByResolvingSymlinksInPath];
 
 		if (symlinkDestination == nil) {
@@ -282,7 +294,7 @@ NS_ASSUME_NONNULL_BEGIN
 	BOOL sourceIsApplication = [sourceURLResources boolForKey:NSURLIsApplicationKey];
 	BOOL sourceIsPackage = [sourceURLResources boolForKey:NSURLIsPackageKey];
 
-	if (sourceIsDirectory == NO && 
+	if (sourceIsDirectory == NO &&
 		sourceIsFile == NO &&
 		sourceIsSymbolicLink == NO &&
 		sourceIsApplication == NO &&
@@ -293,6 +305,19 @@ NS_ASSUME_NONNULL_BEGIN
 
 		return NO;
 	}
+
+#if 0
+#define StringFromBOOL(value) ((value) ? @"YES" : @"NO")
+	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+		   "'%@': dir=%@, file=%@, symblink=%@, app=%@, pkg=%@",
+		   sourceURL,
+		   StringFromBOOL(sourceIsDirectory),
+		   StringFromBOOL(sourceIsFile),
+		   StringFromBOOL(sourceIsSymbolicLink),
+		   StringFromBOOL(sourceIsApplication),
+		   StringFromBOOL(sourceIsPackage));
+#undef StringFromBOOL
+#endif
 
 	/* Destination URL must be a directory for top level depth. */
 	if (recursionDepth == 0) {
@@ -372,9 +397,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 	/* Merge directory contents */
 	BOOL continueOnError = ((options & CSFileManagerOptionContinueOnError) == CSFileManagerOptionContinueOnError);
+	BOOL allowDotFiles = ((options & CSFileManagerOptionsIncludeDotFiles) == CSFileManagerOptionsIncludeDotFiles);
 
 	for (NSURL *sourceItem in directoryContents) {
-		NSURL *destinationItem = [destinationURL URLByAppendingPathComponent:sourceItem.lastPathComponent];
+		NSString *filename = sourceItem.lastPathComponent;
+
+		if (allowDotFiles == NO && [filename hasPrefix:@"."]) {
+			continue;
+		}
+
+		NSURL *destinationItem = [destinationURL URLByAppendingPathComponent:filename];
 
 		if ([self _mergeDirectoryAtURL:sourceItem
 					withDirectoryAtURL:destinationItem

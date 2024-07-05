@@ -58,6 +58,16 @@ typedef NS_OPTIONS(NSUInteger, CSFileManagerOptions) {
 	/* When merging, move source to destination.
 	 If not specified, copy is perform instead. */
 	CSFileManagerOptionsMoveToDestination	= 1 << 6,
+
+	/* Dot files (e.g. .DS_Store) are ignored by default
+	 when migrating. Set flag to include. */
+	CSFileManagerOptionsIncludeDotFiles 	= 1 << 7,
+
+	/* Copying or moving an application, bundle, or other
+	 packaged executable while inside a sandbox will add
+	 the destination to quarantine. Create symbolic link
+	 to the source instead of creating copy. */
+	CSFileManagerCreateSymbolicLinkForPackages	= 1 << 8,
 };
 
 @interface NSFileManager (CSFileManagerHelper)
