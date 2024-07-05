@@ -541,8 +541,6 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 		/* Trash directory contents */
 		BOOL continueOnError = ((options & CSFileManagerOptionContinueOnError) == CSFileManagerOptionContinueOnError);
 
-		BOOL directoryExcluded = NO;
-
 		for (NSURL *item in directoryContents) {
 			CSFileManagerRemoveItemResult result =
 			[self _removeContentsOfDirectoryAtURL:item
@@ -550,9 +548,13 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 										  options:options
 								   recursionDepth:(recursionDepth + 1)];
 
-			if (result == CSFileManagerRemoveItemResultError ||
-				result == CSFileManagerRemoveItemResultExcluded)
-			{
+			if (result == CSFileManagerRemoveItemResultError) {
+				if (continueOnError == NO) {
+					return CSFileManagerRemoveItemResultError;
+				}
+
+				performRemove = NO;
+			} else if (result == CSFileManagerRemoveItemResultExcluded) {
 				performRemove = NO;
 			}
 		}
