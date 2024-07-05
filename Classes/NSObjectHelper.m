@@ -58,6 +58,26 @@ NS_ASSUME_NONNULL_BEGIN
 	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:aSelector object:anArgument];
 }
 
++ (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block
+{
+	XRPerformBlockSynchronouslyOnMainQueue(block);
+}
+
+- (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block
+{
+	XRPerformBlockSynchronouslyOnMainQueue(block);
+}
+
++ (void)performBlockOnGlobalQueue:(dispatch_block_t)block
+{
+	XRPerformBlockAsynchronouslyOnGlobalQueue(block);
+}
+
+- (void)performBlockOnGlobalQueue:(dispatch_block_t)block
+{
+	XRPerformBlockAsynchronouslyOnGlobalQueue(block);
+}
+
 - (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay
 {
 	XRPerformDelayedBlockOnMainQueue(block, delay);

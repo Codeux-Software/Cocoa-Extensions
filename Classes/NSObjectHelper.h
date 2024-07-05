@@ -55,6 +55,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (void)performBlockOnMainThread:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
 + (void)performBlockOnGlobalQueue:(dispatch_block_t)block afterDelay:(NSTimeInterval)delay;
+
+// ---
+
+- (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
+- (void)performBlockOnGlobalQueue:(dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
+
++ (void)performBlockOnMainThread:(DISPATCH_NOESCAPE dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
++ (void)performBlockOnGlobalQueue:(dispatch_block_t)block COCOA_EXTENSIONS_DEPRECATED("Use function that can be inlined. See XRGlobalModels.h");
 @end
 
 NS_ASSUME_NONNULL_END
