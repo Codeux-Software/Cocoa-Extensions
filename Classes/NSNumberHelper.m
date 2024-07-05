@@ -34,11 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSNumber (CSNumberHelper)
 
-+ (BOOL)compareCGFloat:(CGFloat)firstValue toFloat:(CGFloat)secondValue
-{
-	return CGFloatAreEqual(firstValue, secondValue);
-}
-
 - (BOOL)isBooleanValue
 {
 	CFTypeID boolID = CFBooleanGetTypeID();

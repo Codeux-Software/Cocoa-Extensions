@@ -41,6 +41,40 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self resourceValueForKey:key error:nil];
 }
 
+- (nullable id)resourceValueForKeyWithLoggedError:(NSString *)key
+{
+	NSParameterAssert(key != nil);
+
+	NSError *error = nil;
+
+	id resourceValue = [self resourceValueForKey:key error:&error];
+
+	if (error) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Resource value [%@] could not be accessed for URL [%@]: %@",
+			key, self, error.localizedDescription);
+	}
+
+	return resourceValue;
+}
+
+- (nullable NSDictionary<NSURLResourceKey, id> *)resourceValuesForKeyWithLoggedError:(NSArray<NSURLResourceKey> *)keys
+{
+	NSParameterAssert(keys != nil);
+
+	NSError *error = nil;
+
+	id resourceValues = [self resourceValuesForKeys:keys error:&error];
+
+	if (error) {
+		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
+			"Resource values [%@] could not be accessed for URL [%@]: %@",
+				[keys componentsJoinedByString:@", "], self, error.localizedDescription);
+	}
+
+	return resourceValues;
+}
+
 - (nullable id)resourceValueForKey:(NSString *)key error:(NSError * _Nullable * _Nullable)error
 {
 	NSParameterAssert(key != nil);

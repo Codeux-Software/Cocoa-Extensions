@@ -60,13 +60,6 @@ void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category)
 	[XRLogging setDefaultSubsystem:subsystem];
 }
 
-void _LogToConsoleSetDebugLoggingEnabled(BOOL enabled)
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	[XRLogging setDebugLogging:enabled];
-}
-
 void _LogToConsoleBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, const char *file, unsigned long line, unsigned long column, const char *function, const char *message, ...)
 {
 	NSCParameterAssert(file != NULL);
@@ -88,71 +81,6 @@ void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, 
 	NSCParameterAssert(trace != nil);
 
 	[XRLogging logStackTraceSymbols:trace asType:type inSubsystem:subsystem];
-}
-
-#pragma mark -
-#pragma mark Deprecated
-
-NSString *_LogToConsoleFormatMessage_v2(os_log_t _Nullable subsystem, u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	});
-
-	va_list arguments;
-	va_start(arguments, formatter);
-
-	NSString *formattedString = [[NSString alloc] initWithFormat:@(formatter) arguments:arguments];
-
-	va_end(arguments);
-
-	return formattedString;
-}
-
-NSString *_LogToConsoleFormatMessage_v1(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	NSCParameterAssert(formatter != NULL);
-	NSCParameterAssert(filename != NULL);
-	NSCParameterAssert(function != NULL);
-
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	});
-
-	va_list arguments;
-	va_start(arguments, formatter);
-
-	NSString *formattedString = [[NSString alloc] initWithFormat:@(formatter) arguments:arguments];
-
-	va_end(arguments);
-
-	return formattedString;
-}
-
-void _LogToConsoleNSLogShim(const char *formatter, const char *filename, const char *function, unsigned long line, ...)
-{
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	});
-}
-
-void _LogToConsoleNSLogShim_v2(u_int8_t type, const char *filename, const char *function, unsigned long line, const char *formatter, ...)
-{
-	static dispatch_once_t onceToken;
-
-	dispatch_once(&onceToken, ^{
-		COCOA_EXTENSIONS_DEPRECATED_WARNING
-	});
 }
 
 NS_ASSUME_NONNULL_END

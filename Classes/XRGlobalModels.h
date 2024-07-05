@@ -44,13 +44,6 @@ BOOL NSObjectsAreEqual(id _Nullable obj1, id _Nullable obj2)
 #pragma mark -
 #pragma mark Grand Central Dispatch
 
-typedef enum XRPerformBlockOnDispatchQueueOperationType	: NSInteger {
-	XRPerformBlockOnDispatchQueueBarrierAsyncOperationType,
-	XRPerformBlockOnDispatchQueueBarrierSyncOperationType,
-	XRPerformBlockOnDispatchQueueAsyncOperationType,
-	XRPerformBlockOnDispatchQueueSyncOperationType,
-} XRPerformBlockOnDispatchQueueOperationType COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
-
 COCOA_EXTENSIONS_INLINE 
 void XRPerformBlockSynchronouslyOnQueue(dispatch_queue_t queue, DISPATCH_NOESCAPE dispatch_block_t block)
 {
@@ -132,18 +125,7 @@ COCOA_EXTENSIONS_EXTERN void XRPerformDelayedBlockOnMainQueue(dispatch_block_t b
 COCOA_EXTENSIONS_EXTERN void XRPerformDelayedBlockOnQueue(dispatch_queue_t queue, dispatch_block_t block, NSTimeInterval delay);
 
 #pragma mark -
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
-
-COCOA_EXTENSIONS_EXTERN void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block) COCOA_EXTENSIONS_DEPRECATED("Use alternative function that can be inlined.");
-
-#pragma mark -
 #pragma mark Swizzling
-
-COCOA_EXTENSIONS_EXTERN void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod) COCOA_EXTENSIONS_DEPRECATED("Use XRExchangeInstanceMethod() instead");
 
 COCOA_EXTENSIONS_EXTERN void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod);
 COCOA_EXTENSIONS_EXTERN void XRExchangeClassMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod);

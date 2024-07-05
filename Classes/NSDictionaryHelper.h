@@ -97,7 +97,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly, copy) NSArray *sortedDictionaryKeys;
 @property (readonly, copy) NSArray *sortedDictionaryKeysReversed;
-@property (readonly, copy) NSArray *sortedDictionaryReversedKeys COCOA_EXTENSIONS_DEPRECATED("Use -sortedDictionaryKeysReversed instead");
 
 /* Returns a new dictionary without values that are already defined by "defaults" 
  or are empty (zero length, or zero count). This method is not recursive which 

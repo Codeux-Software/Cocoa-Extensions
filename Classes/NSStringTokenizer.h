@@ -179,7 +179,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringQuoteGroupOptions)
 @interface NSMutableString (CSMutableStringTokenizer)
 @property (getter=getToken, readonly, copy) NSString *token;
 @property (getter=getTokenInsideQuotes, readonly, copy) NSString *tokenInsideQuotes; // CSStringQuoteGroupOptionsDefault
-@property (getter=getTokenIncludingQuotes, readonly, copy) NSString *tokenIncludingQuotes COCOA_EXTENSIONS_DEPRECATED("This name is misleading. No quotes are included. Use -tokenInsideQuotes instead"); // CSStringQuoteGroupOptionsDefault
 
 @property (readonly, copy) NSString *lowercaseGetToken;
 @property (readonly, copy) NSString *uppercaseGetToken;
@@ -203,7 +202,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringQuoteGroupOptions)
 
 @property (getter=getToken, readonly, copy) NSAttributedString *token;
 @property (getter=getTokenInsideQuotes, readonly, copy) NSAttributedString *tokenInsideQuotes; // CSStringQuoteGroupOptionsDefault
-@property (getter=getTokenIncludingQuotes, readonly, copy) NSAttributedString *tokenIncludingQuotes COCOA_EXTENSIONS_DEPRECATED("This name is misleading. No quotes are included. Use -tokenInsideQuotes instead"); // CSStringQuoteGroupOptionsDefault
 @end
 
 NS_ASSUME_NONNULL_END

@@ -649,13 +649,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self sortedDictionaryKeys:YES];
 }
 
-- (NSArray *)sortedDictionaryReversedKeys
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self sortedDictionaryKeys:YES];
-}
-
 - (NSArray *)sortedDictionaryKeys:(BOOL)reversed
 {
 	if (self.count == 0) {

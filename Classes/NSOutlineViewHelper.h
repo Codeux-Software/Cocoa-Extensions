@@ -47,14 +47,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem;
 
-- (NSInteger)numberOfItemsInGroup:(nullable id)groupItem COCOA_EXTENSIONS_DEPRECATED("Use -numberOfChildrenOfItem: instead");
-
 - (nullable id)parentForItemAtRow:(NSUInteger)row;
 @end
 
 @interface NSTableView (CSTableViewHelper)
 @property (readonly) NSInteger rowBeneathMouse;
-@property (readonly) NSInteger rowUnderMouse COCOA_EXTENSIONS_DEPRECATED("Use -rowBeneathMouse instead");
 
 - (void)enumerateSelectedRowViewsUsingBlock:(void (NS_NOESCAPE ^)(__kindof NSTableRowView *rowView, NSInteger row, BOOL * _Nullable stop))handler;
 

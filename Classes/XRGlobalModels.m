@@ -38,11 +38,6 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Swizzling
 
 /* Swizzle functions take strings to make it difficult for Apple to find private APIs */
-void XRExchangeImplementation(NSString *className, NSString *originalMethod, NSString *replacementMethod)
-{
-	XRExchangeInstanceMethod(className, originalMethod, replacementMethod);
-}
-
 void XRExchangeInstanceMethod(NSString *className, NSString *originalMethod, NSString *replacementMethod)
 {
 	NSCParameterAssert(className != nil);
@@ -141,66 +136,6 @@ dispatch_queue_t XRCreateDispatchQueueWithPriority(const char *label, dispatch_q
 dispatch_queue_t XRCreateDispatchQueue(const char *label, dispatch_queue_attr_t attributes)
 {
 	return XRCreateDispatchQueueWithPriority(label, attributes, QOS_CLASS_UNSPECIFIED);
-}
-
-void XRPerformBlockOnGlobalDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
-{
-	XRPerformBlockOnGlobalDispatchQueueWithPriority(operationType, block, DISPATCH_QUEUE_PRIORITY_DEFAULT);
-}
-
-void XRPerformBlockOnGlobalDispatchQueueWithPriority(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block, dispatch_queue_priority_t priority)
-{
-	dispatch_queue_t workerQueue = dispatch_get_global_queue(priority, 0);
-
-	XRPerformBlockOnDispatchQueue(workerQueue, block, operationType);
-}
-
-void XRPerformBlockOnMainDispatchQueue(XRPerformBlockOnDispatchQueueOperationType operationType, dispatch_block_t block)
-{
-	if (operationType == XRPerformBlockOnDispatchQueueSyncOperationType) {
-		XRPerformBlockSynchronouslyOnMainQueue(block);
-	} else {
-		XRPerformBlockOnDispatchQueue(dispatch_get_main_queue(), block, operationType);
-	}
-}
-
-void XRPerformBlockOnDispatchQueue(dispatch_queue_t queue, dispatch_block_t block, XRPerformBlockOnDispatchQueueOperationType operationType)
-{
-    NSCParameterAssert(queue != NULL);
-    NSCParameterAssert(block != NULL);
-
-	block = ^{
-		@autoreleasepool {
-			block();
-		}
-	};
-
-	switch (operationType) {
-		case XRPerformBlockOnDispatchQueueAsyncOperationType:
-		{
-			dispatch_async(queue, block);
-			
-			break;
-		}
-		case XRPerformBlockOnDispatchQueueSyncOperationType:
-		{
-			dispatch_sync(queue, block);
-			
-			break;
-		}
-		case XRPerformBlockOnDispatchQueueBarrierAsyncOperationType:
-		{
-			dispatch_barrier_async(queue, block);
-			
-			break;
-		}
-		case XRPerformBlockOnDispatchQueueBarrierSyncOperationType:
-		{
-			dispatch_barrier_sync(queue, block);
-			
-			break;
-		}
-	}
 }
 
 void XRPerformDelayedBlockOnGlobalQueue(dispatch_block_t block, NSTimeInterval delay)

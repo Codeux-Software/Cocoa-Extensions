@@ -45,8 +45,6 @@ COCOA_EXTENSIONS_INLINE BOOL CGFloatAreEqual(CGFloat firstValue, CGFloat secondV
 }
 
 @interface NSNumber (CSNumberHelper)
-+ (BOOL)compareCGFloat:(CGFloat)firstValue toFloat:(CGFloat)secondValue COCOA_EXTENSIONS_DEPRECATED("Use CGFloatAreEqual() instead");
-
 @property (readonly) BOOL isBooleanValue;
 
 @property (readonly, copy) NSString *integerStringValueWithLeadingZero;

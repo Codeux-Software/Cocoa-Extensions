@@ -39,33 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return (CFPreferencesGetAppBooleanValue(CFSTR("voiceOverOnOffKey"), CFSTR("com.apple.universalaccess"), NULL) == true);
 }
 
-+ (void)setAccessibilityValueDescription:(nullable NSString *)accessibilityValueDescription forObject:(id)object
-{
-	NSParameterAssert(object != nil);
-
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	[object setAccessibilityValueDescription:accessibilityValueDescription];
-}
-
-+ (void)setAccessibilityLabel:(nullable NSString *)accessibilityLabel forObject:(id)object
-{
-	NSParameterAssert(object != nil);
-
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	[object setAccessibilityLabel:accessibilityLabel];
-}
-
-+ (void)setAccessibilityTitle:(nullable NSString *)accessibilityTitle forObject:(id)object
-{
-	NSParameterAssert(object != nil);
-
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	[object setAccessibilityTitle:accessibilityTitle];
-}
-
 @end
 
 NS_ASSUME_NONNULL_END

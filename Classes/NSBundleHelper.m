@@ -34,13 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSBundle (CSBundleHelper)
 
-- (BOOL)loadCustomNibNamed:(NSString *)nibName owner:(nullable id)owner topLevelObjects:(NSArray * _Nullable *)topLevelObjects
-{
-	NSParameterAssert(nibName != nil);
-
-	return [self loadNibNamed:nibName owner:owner topLevelObjects:topLevelObjects];
-}
-
 - (nullable NSString *)displayName
 {
 	NSString *bundleDisplayName = [self objectForInfoDictionaryKey:@"CFBundleDisplayName"];

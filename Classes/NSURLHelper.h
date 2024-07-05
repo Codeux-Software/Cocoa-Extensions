@@ -38,6 +38,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable id)resourceValueForKey:(NSString *)key;
 - (nullable id)resourceValueForKey:(NSString *)key error:(NSError **)error;
 
+- (nullable id)resourceValueForKeyWithLoggedError:(NSString *)key;
+- (nullable NSDictionary<NSURLResourceKey, id> *)resourceValuesForKeyWithLoggedError:(NSArray<NSURLResourceKey> *)keys;
+
 - (BOOL)isEqualByFileRepresentation:(NSURL *)url;
 - (BOOL)isEqualByResourceIdentifier:(NSURL *)url;
 

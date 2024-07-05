@@ -421,15 +421,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @implementation NSMutableString (NSMutableStringTokenizer)
 
-COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
-- (NSString *)getTokenIncludingQuotes
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING;
-
-	return self.tokenInsideQuotes;
-}
-COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
-
 - (NSString *)getTokenInsideQuotes
 {
 	__block NSString *tokenOut = nil;
@@ -526,15 +517,6 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 {
 	return self.tokenAsString.uppercaseString;
 }
-
-COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
-- (NSAttributedString *)getTokenIncludingQuotes
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING;
-
-	return self.tokenInsideQuotes;
-}
-COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 - (NSAttributedString *)getTokenInsideQuotes
 {

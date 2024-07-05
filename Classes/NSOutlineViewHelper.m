@@ -100,11 +100,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return [self rowAtPoint:pt];
 }
 
-- (NSInteger)rowUnderMouse
-{
-	return self.rowBeneathMouse;
-}
-
 - (NSIndexSet *)selectionIndexesForProposedSelection:(NSIndexSet *)proposedSelectionIndexes maximumNumberOfSelections:(NSUInteger)maximumNumberOfSelections
 {
 	NSParameterAssert(proposedSelectionIndexes != nil);
@@ -232,13 +227,6 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 	
 	return allRows;
-}
-
-- (NSInteger)numberOfItemsInGroup:(nullable id)groupItem
-{
-	COCOA_EXTENSIONS_DEPRECATED_WARNING
-
-	return [self numberOfChildrenOfItem:groupItem];
 }
 
 - (nullable NSIndexSet *)indexesOfItemsInGroup:(id)groupItem

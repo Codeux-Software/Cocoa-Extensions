@@ -206,41 +206,6 @@ NS_ASSUME_NONNULL_BEGIN
 	return cachedValue;
 }
 
-+ (BOOL)isUsingOSXLionOrLater
-{
-	return XRRunningOnOSXLionOrLater();
-}
-
-+ (BOOL)isUsingOSXMountainLionOrLater
-{
-	return XRRunningOnOSXMountainLionOrLater();
-}
-
-+ (BOOL)isUsingOSXMavericksOrLater
-{
-	return XRRunningOnOSXMavericksOrLater();
-}
-
-+ (BOOL)isUsingOSXYosemiteOrLater
-{
-	return XRRunningOnOSXYosemiteOrLater();
-}
-
-+ (BOOL)isUsingOSXElCapitanOrLater
-{
-	return XRRunningOnOSXElCapitanOrLater();
-}
-
-+ (BOOL)isUsingOSXSierraOrLater
-{
-	return XRRunningOnOSXSierraOrLater();
-}
-
-+ (BOOL)isUsingOSXHighSierraOrLater
-{
-	return XRRunningOnOSXHighSierraOrLater();
-}
-
 #pragma mark -
 #pragma mark Private
 
