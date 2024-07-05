@@ -181,11 +181,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 @property (getter=isIPv6Address, readonly) BOOL IPv6Address;
 @property (getter=isIPAddress, readonly) BOOL IPAddress;
 
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(NSFont *)textFont;
-
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont;
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width withFont:(nullable NSFont *)textFont lineBreakMode:(NSLineBreakMode)lineBreakMode;
-
 @property (readonly, copy) NSString *scannerString;
 
 @property (readonly, copy, nullable) NSURL *URLUsingWebKitPasteboard;
@@ -264,18 +259,6 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 - (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range;
 - (BOOL)isAttributeSet:(NSString *)attribute inRange:(NSRange)range attributeValue:(id _Nonnull * _Nullable)attributeValue;
-
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight;
-- (NSUInteger)wrappedLineCount:(NSUInteger)boundWidth lineMultiplier:(NSUInteger)lineHeight withFont:(nullable NSFont *)textFont;
-
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width;
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode;
-- (CGFloat)pixelHeightInWidth:(NSUInteger)width lineBreakMode:(NSLineBreakMode)lineBreakMode withFont:(nullable NSFont *)textFont;
-
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor NS_AVAILABLE_MAC(10_10);
-- (nullable NSImage *)imageRepWithSize:(NSSize)originalSize scaleFactor:(CGFloat)scaleFactor backgroundColor:(NSColor *)backgroundColor coreTextFrameOffset:(nullable CGFloat *)coreTextFrameOffset NS_AVAILABLE_MAC(10_10);
-
-@property (readonly) NSRect imageBoundsOfFirstRun;
 @end
 
 #pragma mark 
