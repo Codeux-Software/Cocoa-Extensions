@@ -1,6 +1,6 @@
 /* *********************************************************************
 *
-*        Copyright (c) 2018 - 2020 Codeux Software, LLC
+*           Copyright (c) 2024 Codeux Software, LLC
 *     Please see ACKNOWLEDGEMENT for additional information.
 *
 * Redistribution and use in source and binary forms, with or without
@@ -32,152 +32,67 @@
 
 import os.log
 
-///
-/// Logging acts as a facility for logging messages, regardless of macOS version.
-/// Because it's designed to be backwards compatible, it isn't as technical savvy
-/// as something such as os_log which allows much more powerful formatters.
-/// At worst, assume NSLog() is used; so design the log message around that.
-///
-@objc(XRLogging)
-public class Logging : NSObject
+import CocoaExtensions_Private
+
+public class Logging
 {
 	///
-	/// Subsystems are favored in this order:
+	/// Logger used for logging
 	///
-	/// 1. "subsystem" argument of function
-	/// 2. defaultSubsystem value (default = nil)
-	/// 3. OSLog.default (on macOS 10.12 and later)
+	/// Generally speaking, app or service will have set this
+	/// very early on during initialization so while it is possible
+	/// for it to be nil, it is very unlikely. Assume it's not.
 	///
-	@objc
-	public static var defaultSubsystem: OSLog?
+	public static var defaultSubsystem: Logger?
 
 	///
-	/// Flag to enable debug log type
+	/// Set default subsystem to identifier of main bundle
+	/// with category.
 	///
-	@available(*, deprecated, message: "Debug logging is controlled at system level")
-	@objc
-	public static var debugLogging = false
-
-	@objc
-	public enum `Type` : Int
+	@inlinable
+	public static func setDefaultSubsystem(toMainBundleCategory category: String)
 	{
-		case `default` = 0
-
-		case debug = 1
-		case info = 2
-		case error = 3
-		case fault = 4
-
-		fileprivate var systemType:OSLogType
-		{
-			switch self {
-				case .debug:
-					return OSLogType.debug
-				case .info:
-					return OSLogType.info
-				case .error:
-					return OSLogType.error
-				case .fault:
-					return OSLogType.fault
-				default:
-					return OSLogType.default
-			}
-		} // systemType
-
-		public var description: String
-		{
-			switch self {
-				case .debug:
-					return "Debug"
-				case .info:
-					return "Info"
-				case .error:
-					return "Error"
-				case .fault:
-					return "Fault"
-				default:
-					return "Default"
-			}
-		} // description
+		_LogToConsoleSetDefaultSubsystemToMainBundle(category)
 	}
 
-	fileprivate struct Context
+	///
+	/// Log stack trace of type in optional subsystem
+	///
+	@inlinable
+	public static func logStackTrace(ofType type: OSLogType = .default, inSubsystem subsystem: OSLog? = nil)
 	{
-		var subsystem: OSLog?
-		var type: `Type` = .`default`
-		var file: String
-		var line: Int
-		var column: Int
-		var function: String
+		_LogStackTraceOfTypeSwiftShim(type, subsystem);
 	}
 
-	@objc(logMessage:asType:inSubsystem:file:line:column:function:)
-	public static func log(_ message: String, type: `Type`, subsystem: OSLog?, file: String, line: Int, column: Int, function: String)
+	///
+	/// Subsystem used by Cocoa Extensions
+	///
+	internal static var frameworkSubsystem: Logger? =
 	{
-		let context = Context(subsystem: subsystem, type: type, file: file, line: line, column: column, function: function)
+		let subsystem = _CSFrameworkInternalLogSubsystem()
 
-		log(message, in: context)
-	}
-
-	@objc(logStackTraceSymbols:asType:inSubsystem:)
-	public static func logStackTrace(trace: [String], type: `Type`, subsystem: OSLog?)
-	{
-		/* Details such as file, line, column, and function are useless
-		 when logging symbols but so I don't have to spend a day modifying
-		 the facility to accept those as optional, just give it defaults. */
-		log("Current Stack: \(trace)", type: type, subsystem: subsystem, file: #file, line: #line, column: #column, function: #function)
-	}
-
-	fileprivate static func log(_ message: String, in context: Context)
-	{
-		let messageToLog = "\(context.function) [\(context.line):\(context.column)]: \(message)"
-
-		let subsystem = (context.subsystem ?? defaultSubsystem ?? OSLog.default)
-
-		/* os_log wants a StaticString (compile-time string) which we cannot offer.
-		 We therefore have to use a formatter to format the already formatted string. */
-		os_log("%{public}@", dso: #dsohandle, log: subsystem, type: context.type.systemType, messageToLog)
-	}
-
-	/* Subsystem used by the Cocoa Extensions framework for logging */
-	@objc
-	internal static var frameworkSubsystem: OSLog? =
-	{
-		return OSLog(subsystem: "com.codeux.frameworks.CocoaExtensions", category: "General")
+		return Logger(subsystem!)
 	}()
 }
 
-// MARK - Convenience Functions
-
-/// We can't use macros in Swift which is why all the extra arguments exist.
-/// Unless there is a very, very, very specific to do so, don't set anything
-/// after subsystem as you will just be lying to your own logs.
-public func LogToConsole(_ message: String, type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
+///
+/// Proxy class for C API for setting logging subsystem
+///
+@objc(XRLoggingProxy)
+internal class LoggingProxy : NSObject
 {
-	Logging.log(message, type: type, subsystem: subsystem, file: file, line: line, column: column, function: function)
-}
-
-public func LogToConsoleDebug(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
-{
-	Logging.log(message, type: .debug, subsystem: subsystem, file: file, line: line, column: column, function: function)
-}
-
-public func LogToConsoleInfo(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
-{
-	Logging.log(message, type: .info, subsystem: subsystem, file: file, line: line, column: column, function: function)
-}
-
-public func LogToConsoleError(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
-{
-	Logging.log(message, type: .error, subsystem: subsystem, file: file, line: line, column: column, function: function)
-}
-
-public func LogToConsoleFault(_ message: String, subsystem: OSLog? = nil, file: String = #file, line: Int = #line, column: Int = #column, function: String = #function)
-{
-	Logging.log(message, type: .fault, subsystem: subsystem, file: file, line: line, column: column, function: function)
-}
-
-public func LogStackTrace(type: Logging.`Type` = .`default`, subsystem: OSLog? = nil, trace: [String] = Thread.callStackSymbols)
-{
-	Logging.logStackTrace(trace: trace, type: type, subsystem: subsystem)
+	@objc
+	static var defaultSubsystem: OSLog?
+	{
+		get {
+			fatalError("Access default logging subsystem through C API")
+		}
+		set {
+			if let newValue {
+				Logging.defaultSubsystem = Logger(newValue)
+			} else {
+				Logging.defaultSubsystem = Logger() // Default
+			}
+		}
+	}
 }

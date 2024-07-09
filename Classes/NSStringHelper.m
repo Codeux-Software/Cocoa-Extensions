@@ -1134,6 +1134,11 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 	return bob;
 }
 
+- (nullable NSString *)anonymizedFilePath
+{
+	return [self stringByAbbreviatingWithTildeInPath];
+}
+
 @end
 
 #pragma mark -

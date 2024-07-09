@@ -1,6 +1,6 @@
 /* *********************************************************************
  *
- *         Copyright (c) 2016 - 2018 Codeux Software, LLC
+ *            Copyright (c) 2024 Codeux Software, LLC
  *     Please see ACKNOWLEDGEMENT for additional information.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,16 +32,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface XRLogging : NSObject
-@property (nonatomic, class, strong, nullable) os_log_t defaultSubsystem;
-@property (nonatomic, class, assign) BOOL debugLogging;
-
-+ (void)logMessage:(NSString *)message asType:(XRLoggingType)type inSubsystem:(nullable os_log_t)subsystem file:(NSString *)file line:(NSInteger)line column:(NSInteger)column function:(NSString *)function;
-+ (void)logStackTraceSymbols:(NSArray<NSString *> *)trace asType:(XRLoggingType)type inSubsystem:(nullable os_log_t)subsystem;
-
-@property (nonatomic, class, strong, nullable) os_log_t frameworkSubsystem;
+@interface XRLoggingProxy : NSObject
+@property (class) os_log_t defaultSubsystem;
 @end
 
 os_log_t _Nullable _CSFrameworkInternalLogSubsystem(void);
+
+COCOA_EXTENSIONS_INLINE
+void _LogStackTraceOfTypeSwiftShim(os_log_type_t type, _Nullable os_log_t subsystem)
+{
+	_LogStackTrace(type, subsystem);
+}
 
 NS_ASSUME_NONNULL_END

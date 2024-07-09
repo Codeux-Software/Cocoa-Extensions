@@ -34,19 +34,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, XRLoggingType) {
-	XRLoggingTypeDefault = 0,
-	XRLoggingTypeDebug = 1,
-	XRLoggingTypeInfo = 2,
-	XRLoggingTypeError = 3,
-	XRLoggingTypeFault = 4,
-};
-
-#define LogToConsoleTypeDefault 	XRLoggingTypeDefault
-#define LogToConsoleTypeInfo 		XRLoggingTypeDebug
-#define LogToConsoleTypeDebug 		XRLoggingTypeInfo
-#define LogToConsoleTypeError 		XRLoggingTypeError
-#define LogToConsoleTypeFault 		XRLoggingTypeFault
+#define LogToConsoleTypeDefault 	OS_LOG_TYPE_DEFAULT
+#define LogToConsoleTypeInfo 		OS_LOG_TYPE_DEBUG
+#define LogToConsoleTypeDebug 		OS_LOG_TYPE_INFO
+#define LogToConsoleTypeError 		OS_LOG_TYPE_ERROR
+#define LogToConsoleTypeFault 		OS_LOG_TYPE_FAULT
 
 /* LogToConsole() */
 #define LogToConsole(_message, ...)	\
@@ -93,7 +85,7 @@ typedef NS_ENUM(NSInteger, XRLoggingType) {
 
 /* LogToConsoleSetDefaultSubsystem() */
 #define LogToConsoleSetDefaultSubsystemToMainBundle(_category)		\
-_LogToConsoleSetDefaultSubsystemToMainBundle(_category)
+	_LogToConsoleSetDefaultSubsystemToMainBundle(_category)
 
 /* LogToConsoleCurrentStackTrace() */
 #define LogStackTrace() 	\
@@ -110,16 +102,17 @@ _LogToConsoleSetDefaultSubsystemToMainBundle(_category)
 
 /* Helper functions (private) */
 #define _LogToConsole(_type, _subsystem, _message, ...)		\
-	_LogToConsoleBridged_v1(_type, _subsystem, __FILE__, __LINE__, 0, __PRETTY_FUNCTION__, _message, ##__VA_ARGS__)
+	{	\
+		os_log_t _defaultSubsystem = ((_subsystem) ?: _LogToConsoleDefaultSubsystem());	\
+		os_log_with_type(_defaultSubsystem, _type, _message, ##__VA_ARGS__);	\
+	}
 
 #define _LogStackTrace(_type, _subsystem) 	\
-	_LogStackTraceBridged_v1(_type, _subsystem, [NSThread callStackSymbols])
+	_LogToConsole(_type, _subsystem, "Stack trace:\n%{private}@", _LogToConsoleFormattedStackTrace([NSThread callStackSymbols]))
 
-void _LogToConsoleBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, const char *file, unsigned long line, unsigned long column, const char *function, const char *message, ...);
-void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, NSArray<NSString *> *trace);
-
-os_log_t _Nullable _LogToConsoleDefaultSubsystem(void);
+os_log_t _LogToConsoleDefaultSubsystem(void);
 void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem);
 void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category);
+NSString * _LogToConsoleFormattedStackTrace(NSArray<NSString *> *trace);
 
 NS_ASSUME_NONNULL_END

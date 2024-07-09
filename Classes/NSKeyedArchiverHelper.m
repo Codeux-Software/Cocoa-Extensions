@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (error) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Failed to read contents archived data: %@",
+			"Failed to read contents archived data: %{public}@",
 			error.description);
 	}
 

@@ -30,21 +30,35 @@
  *
  *********************************************************************** */
 
+#import "XRLoggingDeprecatedPrivate.h"
+
 NS_ASSUME_NONNULL_BEGIN
+
+static os_log_t XRLogToConsoleDefaultSubsystem = nil;
 
 os_log_t _Nullable _CSFrameworkInternalLogSubsystem(void)
 {
-	return [XRLogging frameworkSubsystem];
+	__block os_log_t subsystem = nil;
+
+	static dispatch_once_t onceToken;
+
+	dispatch_once(&onceToken, ^{
+		subsystem = os_log_create("com.codeux.frameworks.CocoaExtensions", "Framework");
+	});
+
+	return subsystem;
 }
 
-os_log_t _Nullable _LogToConsoleDefaultSubsystem(void)
+os_log_t _LogToConsoleDefaultSubsystem(void)
 {
-	return [XRLogging defaultSubsystem];
+	return ((XRLogToConsoleDefaultSubsystem) ?: OS_LOG_DEFAULT);
 }
 
 void _LogToConsoleSetDefaultSubsystem(os_log_t _Nullable subsystem)
 {
-	[XRLogging setDefaultSubsystem:subsystem];
+	XRLogToConsoleDefaultSubsystem = subsystem;
+
+	XRLoggingProxy.defaultSubsystem = subsystem;
 }
 
 void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category)
@@ -57,14 +71,24 @@ void _LogToConsoleSetDefaultSubsystemToMainBundle(NSString *category)
 
 	os_log_t subsystem = os_log_create(identifier.UTF8String, category.UTF8String);
 
-	[XRLogging setDefaultSubsystem:subsystem];
+	_LogToConsoleSetDefaultSubsystem(subsystem);
 }
 
+NSString * _LogToConsoleFormattedStackTrace(NSArray<NSString *> *trace)
+{
+	NSCParameterAssert(trace != nil);
+
+	return [trace componentsJoinedByString:@"\n"];
+}
+
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 void _LogToConsoleBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, const char *file, unsigned long line, unsigned long column, const char *function, const char *message, ...)
 {
 	NSCParameterAssert(file != NULL);
 	NSCParameterAssert(function != NULL);
 	NSCParameterAssert(message != NULL);
+
+	COCOA_EXTENSIONS_DEPRECATED_WARNING;
 
 	va_list arguments;
 	va_start(arguments, message);
@@ -73,14 +97,17 @@ void _LogToConsoleBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, c
 
 	va_end(arguments);
 
-	[XRLogging logMessage:formattedMessage asType:type inSubsystem:subsystem file:@(file) line:line column:column function:@(function)];
+	[XRLoggingDeprecated logMessage:formattedMessage asType:type inSubsystem:subsystem file:@(file) line:line column:column function:@(function)];
 }
 
 void _LogStackTraceBridged_v1(XRLoggingType type, os_log_t _Nullable subsystem, NSArray<NSString *> *trace)
 {
 	NSCParameterAssert(trace != nil);
 
-	[XRLogging logStackTraceSymbols:trace asType:type inSubsystem:subsystem];
+	COCOA_EXTENSIONS_DEPRECATED_WARNING;
+
+	[XRLoggingDeprecated logStackTraceSymbols:trace asType:type inSubsystem:subsystem];
 }
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 NS_ASSUME_NONNULL_END

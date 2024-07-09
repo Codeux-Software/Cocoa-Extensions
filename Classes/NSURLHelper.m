@@ -51,8 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (error) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Resource value [%@] could not be accessed for URL [%@]: %@",
-			key, self, error.localizedDescription);
+			"Resource value [%{public}@] could not be accessed for URL [%{public}@]: %{public}@",
+				 key, self.anonymizedFilePath, error.localizedDescription);
 	}
 
 	return resourceValue;
@@ -68,8 +68,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (error) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Resource values [%@] could not be accessed for URL [%@]: %@",
-				[keys componentsJoinedByString:@", "], self, error.localizedDescription);
+			"Resource values [%{public}@] could not be accessed for URL [%{public}@]: %{public}@",
+				[keys componentsJoinedByString:@", "], self.anonymizedFilePath, error.localizedDescription);
 	}
 
 	return resourceValues;
@@ -153,6 +153,15 @@ NS_ASSUME_NONNULL_BEGIN
 	return -([modificationDate timeIntervalSinceNow]);
 }
 
+- (nullable NSString *)anonymizedFilePath
+{
+	if (self.fileURL == NO) {
+		return nil;
+	}
+
+	return self.path.anonymizedFilePath;
+}
+
 @end
 
 #pragma mark -
@@ -169,7 +178,7 @@ NS_ASSUME_NONNULL_BEGIN
 	NSParameterAssert(fileURLs != nil);
 
 	return [fileURLs arrayByApplyingBlock:^NSString *(NSURL *urlIn, NSUInteger index, BOOL *stop) {
-		NSAssert(urlIn.isFileURL, @"URL '%@' is not a file.", urlIn);
+		NSAssert(urlIn.isFileURL, @"URL '%@' is not a file", urlIn.anonymizedFilePath);
 
 		NSURL *urlOut = urlIn;
 

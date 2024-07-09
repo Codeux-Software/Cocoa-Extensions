@@ -197,6 +197,9 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 @property (readonly, copy) NSArray<NSString *> *characterStringBuffer;
 
 @property (readonly, copy, nullable) NSString *callStackSymbolMethodName;
+
+/* Current replaces user home folder path with tilde. Behavior may expand in future. */
+@property (readonly, copy, nullable) NSString *anonymizedFilePath;
 @end
 
 #pragma mark -

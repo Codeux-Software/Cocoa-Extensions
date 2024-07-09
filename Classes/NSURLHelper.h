@@ -52,6 +52,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSTimeInterval intervalSinceLastModification;
 - (NSTimeInterval)intervalSinceCreatedWithError:(NSError * _Nullable * _Nullable)error;
 - (NSTimeInterval)intervalSinceLastModificationWithError:(NSError * _Nullable * _Nullable)error;
+
+/* Current replaces user home folder path with tilde. Behavior may expand in future. */
+/* Returns nil if URL is not a file URL. */
+@property (readonly, copy, nullable) NSString *anonymizedFilePath;
 @end
 
 @interface NSArray (CSURLHelper)

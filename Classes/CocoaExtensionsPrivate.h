@@ -1,4 +1,4 @@
 
-#import "CocoaExtensions.h"
+#import <CocoaExtensions/CocoaExtensions.h>
 
-#import "XRLoggingPrivate.h"
+#import <CocoaExtensions/XRLoggingPrivate.h>

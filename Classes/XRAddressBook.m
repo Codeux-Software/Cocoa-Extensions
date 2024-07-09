@@ -48,7 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 	if (cardError) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Failed to fetch 'me' contact card: %@",
+			"Failed to fetch 'me' contact card: %{private}@",
 				cardError.localizedDescription);
 
 		return nil;
