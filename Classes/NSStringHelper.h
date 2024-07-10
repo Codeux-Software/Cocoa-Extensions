@@ -198,8 +198,11 @@ typedef NS_OPTIONS(NSUInteger, CSStringType)
 
 @property (readonly, copy, nullable) NSString *callStackSymbolMethodName;
 
-/* Current replaces user home folder path with tilde. Behavior may expand in future. */
-@property (readonly, copy, nullable) NSString *anonymizedFilePath;
+/* First standardize path. See documentation for -stringByStandardizingPath
+ for information on behavior. Then replaces home folder with tilde.
+ Unlike -stringByAbbreviatingWithTildeInPath, for sandboxed apps, this will
+ replace the user's actual home directory. Not the sandbox container home. */
+@property (readonly, copy, nullable) NSString *standardizedTildePath;
 @end
 
 #pragma mark -

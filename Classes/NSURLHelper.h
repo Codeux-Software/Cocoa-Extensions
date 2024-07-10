@@ -55,7 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Current replaces user home folder path with tilde. Behavior may expand in future. */
 /* Returns nil if URL is not a file URL. */
-@property (readonly, copy, nullable) NSString *anonymizedFilePath;
+@property (readonly, copy, nullable) NSString *standardizedTildePath;
 @end
 
 @interface NSArray (CSURLHelper)
