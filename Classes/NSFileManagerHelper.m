@@ -30,6 +30,10 @@
  *
  *********************************************************************** */
 
+#include <pwd.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
@@ -39,6 +43,20 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 };
 
 @implementation NSFileManager (CSFileManagerHelper)
+
++ (NSString *)pathOfHomeDirectoryOutsideSandbox
+{
+	uid_t userId = getuid();
+
+	struct passwd *pw = getpwuid(userId);
+
+	return @(pw->pw_dir);
+}
+
++ (NSURL *)URLOfHomeDirectoryOutsideSandbox
+{
+	return [NSURL fileURLWithPath:self.pathOfHomeDirectoryOutsideSandbox isDirectory:YES];
+}
 
 - (BOOL)fileExistsAtURL:(NSURL *)url
 {
@@ -199,7 +217,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 		if (removeResult == NO) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Failed to remove file at destination: '%{public}@': %{public}@",
-				[destinationURL anonymizedFilePath], removeFileError.localizedDescription);
+				[destinationURL standardizedTildePath], removeFileError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
@@ -247,7 +265,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (copyResult == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Failed to copy file to destination: '%{public}@' -> '%{public}@': %{public}@",
-			sourceURL.anonymizedFilePath, destinationURL.anonymizedFilePath, copyFileError.localizedDescription);
+			sourceURL.standardizedTildePath, destinationURL.standardizedTildePath, copyFileError.localizedDescription);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
@@ -290,7 +308,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (recursionDepth == 0 && sourceIsDirectory == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Source URL is not directory when expected: '%{public}@'",
-			sourceURL.anonymizedFilePath);
+			sourceURL.standardizedTildePath);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
@@ -309,7 +327,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	{
 		LogToConsoleFaultWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Source URL is of type not supported by this library and will be ignored: %{public}@",
-			sourceURL.anonymizedFilePath);
+			sourceURL.standardizedTildePath);
 
 		return NO;
 	}
@@ -317,7 +335,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 #ifdef DEBUG
 	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 		"'%{public}@': dir=%{BOOL}d, file=%{BOOL}d, symblink=%{BOOL}d, app=%{BOOL}d, pkg=%{BOOL}d",
-		sourceURL.anonymizedFilePath, sourceIsDirectory, sourceIsFile,
+		sourceURL.standardizedTildePath, sourceIsDirectory, sourceIsFile,
 		sourceIsSymbolicLink, sourceIsApplication, sourceIsPackage);
 #endif
 
@@ -335,7 +353,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 		{
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Destination URL is not directory when expected: '%{public}@'",
-				destinationURL.anonymizedFilePath);
+				destinationURL.standardizedTildePath);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
@@ -369,7 +387,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 		if ([self createDirectoryAtURL:destinationURL withIntermediateDirectories:YES attributes:nil error:&createError] == NO) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"Failed to create destination: '%{public}@': %{public}@",
-				destinationURL.anonymizedFilePath, createError.localizedDescription);
+				destinationURL.standardizedTildePath, createError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return NO;
@@ -392,7 +410,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (directoryContents == nil) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"directoryContents returned nil: '%{public}@': %{public}@",
-			sourceURL.anonymizedFilePath, directoryContentsError.localizedDescription);
+			sourceURL.standardizedTildePath, directoryContentsError.localizedDescription);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return NO;
@@ -459,7 +477,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (excludedURLs && [excludedURLs containsObject:url]) {
 #ifdef DEBUG
 		LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"URL is excluded: %{public}@", url.anonymizedFilePath);
+			"URL is excluded: %{public}@", url.standardizedTildePath);
 #endif
 
 		return CSFileManagerRemoveItemResultExcluded;
@@ -483,7 +501,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (recursionDepth == 0 && sourceIsDirectory == NO) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Source URL is not directory when expected: '%{public}@'",
-			url.anonymizedFilePath);
+			url.standardizedTildePath);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return CSFileManagerRemoveItemResultError;
@@ -498,7 +516,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 
 	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 		"'%{public}@': dir=%{BOOL}d, file=%{BOOL}d, symblink=%{BOOL}d, app=%{BOOL}d, pkg=%{BOOL}d",
-		url.anonymizedFilePath, sourceIsDirectory, sourceIsFile,
+		url.standardizedTildePath, sourceIsDirectory, sourceIsFile,
 		sourceIsSymbolicLink, sourceIsApplication, sourceIsPackage);
 #endif
 
@@ -525,7 +543,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 		if (directoryContents == nil) {
 			LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 				"directoryContents returned nil: '%{public}@': %{public}@",
-				url.anonymizedFilePath, directoryContentsError.localizedDescription);
+				url.standardizedTildePath, directoryContentsError.localizedDescription);
 			LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 			return CSFileManagerRemoveItemResultError;
@@ -557,7 +575,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (performRemove == NO) {
 #ifdef DEBUG
 		LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-			"Skipping remove for URL: %{public}@", url.anonymizedFilePath);
+			"Skipping remove for URL: %{public}@", url.standardizedTildePath);
 #endif
 
 		return CSFileManagerRemoveItemResultExcluded;
@@ -565,7 +583,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 
 #ifdef DEBUG
 	LogToConsoleDebugWithSubsystem(_CSFrameworkInternalLogSubsystem(),
-		"Removing URL: %{public}@", url.anonymizedFilePath);
+		"Removing URL: %{public}@", url.standardizedTildePath);
 #endif
 
 	NSError *removeError = nil;
@@ -583,7 +601,7 @@ typedef NS_ENUM(NSUInteger, CSFileManagerRemoveItemResult) {
 	if (removeError) {
 		LogToConsoleErrorWithSubsystem(_CSFrameworkInternalLogSubsystem(),
 			"Failed to remove item to trash: '%{public}@': %{public}@",
-			url.anonymizedFilePath, removeError.localizedDescription);
+			url.standardizedTildePath, removeError.localizedDescription);
 		LogStackTraceWithSubsystem(_CSFrameworkInternalLogSubsystem());
 
 		return CSFileManagerRemoveItemResultError;

@@ -71,6 +71,9 @@ typedef NS_OPTIONS(NSUInteger, CSFileManagerOptions) {
 };
 
 @interface NSFileManager (CSFileManagerHelper)
+@property (class, nonatomic, copy, readonly) NSString *pathOfHomeDirectoryOutsideSandbox;
+@property (class, nonatomic, copy, readonly) NSURL *URLOfHomeDirectoryOutsideSandbox;
+
 - (BOOL)fileExistsAtURL:(NSURL *)url;
 
 - (BOOL)directoryExistsAtURL:(NSURL *)url;
