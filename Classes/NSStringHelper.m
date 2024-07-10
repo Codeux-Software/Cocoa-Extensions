@@ -1136,7 +1136,24 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 - (nullable NSString *)standardizedTildePath
 {
-	return [self stringByAbbreviatingWithTildeInPath];
+	/* Have to implement -stringByAbbreviatingWithTildeInPath ourselves
+	 here because in a sandbox it wont anonymize the user's actual home
+	 directory because in a sandbox, the app's container is the home
+	 directory to that function. */
+	/* TODO: Investigate whether paths will ever have /Volumes/ prefix.
+	 If they do, we might want to check into that behavior.
+	 This method is currently only used for logging. */
+	NSString *homeDirectory = [NSFileManager pathOfHomeDirectoryOutsideSandbox];
+
+	NSString *bob = [self stringByStandardizingPath];
+
+	if ([bob hasPrefix:homeDirectory] == NO) {
+		return self;
+	}
+
+	bob = [bob substringFromIndex:homeDirectory.length];
+
+	return [@"~" stringByAppendingString:bob];
 }
 
 @end
