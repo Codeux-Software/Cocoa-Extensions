@@ -67,17 +67,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (nullable NSString *)stringContent
 {
-	return [self stringForType:NSStringPboardType];
+	return [self stringForType:NSPasteboardTypeString];
 }
 
 - (void)setStringContent:(nullable NSString *)s
 {
-	[self declareTypes:@[NSStringPboardType] owner:nil];
+	[self declareTypes:@[NSPasteboardTypeString] owner:nil];
 
 	if (s) {
-		[self setString:s forType:NSStringPboardType];
+		[self setString:s forType:NSPasteboardTypeString];
 	} else {
-		[self setData:nil forType:NSStringPboardType];
+		[self setData:nil forType:NSPasteboardTypeString];
 	}
 }
 

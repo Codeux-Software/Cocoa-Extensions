@@ -189,7 +189,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
     uint8_t digest[CC_MD5_DIGEST_LENGTH ];
 
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
     CC_MD5(self.bytes, (CC_LONG)self.length, digest);
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_MD5_DIGEST_LENGTH * 2)];
 

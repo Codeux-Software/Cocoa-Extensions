@@ -331,7 +331,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
     uint8_t digest[CC_MD5_DIGEST_LENGTH];
 
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
     CC_MD5(data.bytes, (CC_LONG)data.length, digest);
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
     NSMutableString *output = [NSMutableString stringWithCapacity:(CC_MD5_DIGEST_LENGTH * 2)];
 
@@ -1010,7 +1012,9 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 
 	pasteboard.stringContent = self;
 
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 	NSURL *u = [WebView URLFromPasteboard:pasteboard];
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 	if (u == nil) {
 		u = [NSURL URLWithString:self];

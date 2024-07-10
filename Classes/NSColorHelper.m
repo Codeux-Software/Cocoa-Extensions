@@ -91,7 +91,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isInRGBColorSpace
 {
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 	NSString *colorSpaceName = self.colorSpaceName;
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 	return ([colorSpaceName isEqualToString:@"NSDeviceRGBColorSpace"] ||
 			[colorSpaceName isEqualToString:@"NSCalibratedRGBColorSpace"]);
@@ -99,7 +101,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (BOOL)isInGrayColorSpace
 {
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 	NSString *colorSpaceName = self.colorSpaceName;
+COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 	return ([colorSpaceName isEqualToString:@"NSDeviceWhiteColorSpace"] ||
 			[colorSpaceName isEqualToString:@"NSDeviceBlackColorSpace"] ||
