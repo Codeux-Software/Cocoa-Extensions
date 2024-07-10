@@ -1151,7 +1151,17 @@ NSString * const CS_UnicodeReplacementCharacter = @"�";
 		return self;
 	}
 
-	bob = [bob substringFromIndex:homeDirectory.length];
+	NSUInteger substringIndex = homeDirectory.length;
+
+	if (substringIndex == bob.length) {
+		return @"~";
+	}
+
+	if ([bob characterAtIndex:substringIndex] != '/') {
+		return bob;
+	}
+
+	bob = [bob substringFromIndex:substringIndex];
 
 	return [@"~" stringByAppendingString:bob];
 }
