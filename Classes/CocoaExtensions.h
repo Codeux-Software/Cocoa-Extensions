@@ -51,6 +51,9 @@
 #import <CocoaExtensions/XRRegularExpression.h>
 #import <CocoaExtensions/XRSystemInformation.h>
 
+#import <CocoaExtensions/RCMSecureTransport.h>
+#import <CocoaExtensions/RCMTrustPanel.h>
+
 #import <CocoaExtensions/NSAnimationContextHelper.h>
 #import <CocoaExtensions/NSArrayControllerHelper.h>
 #import <CocoaExtensions/NSArrayHelper.h>

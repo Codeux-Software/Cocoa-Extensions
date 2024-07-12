@@ -11,6 +11,11 @@
 		4C0C8A541CBB255000A327D3 /* NSURLHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0C8A521CBB255000A327D3 /* NSURLHelper.m */; };
 		4C1144792C289575008CD785 /* NSStringTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1144782C289575008CD785 /* NSStringTokenizer.m */; };
 		4C11447A2C289575008CD785 /* CocoaExtensions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CocoaExtensions.framework */; };
+		4C1232832C40AFFB00FF9F5B /* RCMSecureTransport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C12327F2C40AFFB00FF9F5B /* RCMSecureTransport.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1232842C40AFFB00FF9F5B /* RCMTrustPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1232812C40AFFB00FF9F5B /* RCMTrustPanel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4C1232852C40AFFB00FF9F5B /* RCMSecureTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1232802C40AFFB00FF9F5B /* RCMSecureTransport.m */; };
+		4C1232862C40AFFB00FF9F5B /* RCMTrustPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1232822C40AFFB00FF9F5B /* RCMTrustPanel.m */; };
+		4C12328A2C40B27800FF9F5B /* SecureTransportErrorCodes.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C1232892C40B27800FF9F5B /* SecureTransportErrorCodes.strings */; };
 		4C1338F91B8E4A860085F6A4 /* XRSystemInformation.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */; };
 		4C1923991A8FE9610076F65A /* XRKeychain.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1923981A8FE9610076F65A /* XRKeychain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4C19239B1A8FE9800076F65A /* XRKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C19239A1A8FE9800076F65A /* XRKeychain.m */; };
@@ -152,6 +157,11 @@
 		4C0C8A521CBB255000A327D3 /* NSURLHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NSURLHelper.m; path = Classes/NSURLHelper.m; sourceTree = "<group>"; };
 		4C1144762C289575008CD785 /* CocoaExtensionsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CocoaExtensionsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C1144782C289575008CD785 /* NSStringTokenizer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSStringTokenizer.m; sourceTree = "<group>"; };
+		4C12327F2C40AFFB00FF9F5B /* RCMSecureTransport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMSecureTransport.h; path = Classes/RCMSecureTransport.h; sourceTree = "<group>"; };
+		4C1232802C40AFFB00FF9F5B /* RCMSecureTransport.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCMSecureTransport.m; path = Classes/RCMSecureTransport.m; sourceTree = "<group>"; };
+		4C1232812C40AFFB00FF9F5B /* RCMTrustPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RCMTrustPanel.h; path = Classes/RCMTrustPanel.h; sourceTree = "<group>"; };
+		4C1232822C40AFFB00FF9F5B /* RCMTrustPanel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RCMTrustPanel.m; path = Classes/RCMTrustPanel.m; sourceTree = "<group>"; };
+		4C1232892C40B27800FF9F5B /* SecureTransportErrorCodes.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = SecureTransportErrorCodes.strings; path = "Resources/Language Files/SecureTransportErrorCodes.strings"; sourceTree = "<group>"; };
 		4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = XRSystemInformation.strings; path = "Resources/Language Files/XRSystemInformation.strings"; sourceTree = "<group>"; };
 		4C1923981A8FE9610076F65A /* XRKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XRKeychain.h; path = Classes/XRKeychain.h; sourceTree = "<group>"; };
 		4C19239A1A8FE9800076F65A /* XRKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XRKeychain.m; path = Classes/XRKeychain.m; sourceTree = "<group>"; };
@@ -365,6 +375,7 @@
 		4C1338FA1B8E4A8B0085F6A4 /* Language Files */ = {
 			isa = PBXGroup;
 			children = (
+				4C1232892C40B27800FF9F5B /* SecureTransportErrorCodes.strings */,
 				4C1338F81B8E4A860085F6A4 /* XRSystemInformation.strings */,
 			);
 			name = "Language Files";
@@ -413,6 +424,8 @@
 				4CDF74C91A8FDE5B000B5FF5 /* NSValueHelper.h */,
 				4CDF74CA1A8FDE5B000B5FF5 /* NSWindowHelper.h */,
 				4C2781181CBD906400334FD0 /* NSWorkspaceHelper.h */,
+				4C12327F2C40AFFB00FF9F5B /* RCMSecureTransport.h */,
+				4C1232812C40AFFB00FF9F5B /* RCMTrustPanel.h */,
 				4C1923AA1A90024E0076F65A /* StaticDefinitions.h */,
 				4C67852A1B74F30600CCA160 /* XRAccessibility.h */,
 				4CA63AF81B63F9EB002CF61C /* XRAddressBook.h */,
@@ -516,6 +529,8 @@
 				4CDF74991A8FDE1C000B5FF5 /* NSValueHelper.m */,
 				4CDF749A1A8FDE1C000B5FF5 /* NSWindowHelper.m */,
 				4C2781191CBD906400334FD0 /* NSWorkspaceHelper.m */,
+				4C1232802C40AFFB00FF9F5B /* RCMSecureTransport.m */,
+				4C1232822C40AFFB00FF9F5B /* RCMTrustPanel.m */,
 				4CE04D9D20E10CC4000C74E6 /* SWArrayHelper.swift */,
 				4CAA489A20E46AB500FDE1F5 /* SWDataHelper.swift */,
 				4CE04D9B20E10609000C74E6 /* SWDictionaryHelper.swift */,
@@ -620,6 +635,8 @@
 				4C27811A1CBD906400334FD0 /* NSWorkspaceHelper.h in Headers */,
 				4CEB67242C3D19800031A5C9 /* CocoaExtensionsPrivate.h in Headers */,
 				4CCC38752C27F4D100484AC1 /* NSStringTokenizer.h in Headers */,
+				4C1232832C40AFFB00FF9F5B /* RCMSecureTransport.h in Headers */,
+				4C1232842C40AFFB00FF9F5B /* RCMTrustPanel.h in Headers */,
 				4CDF74D91A8FDE5B000B5FF5 /* NSPasteboardHelper.h in Headers */,
 				4CDF74DC1A8FDE5B000B5FF5 /* NSScreenHelper.h in Headers */,
 			);
@@ -717,6 +734,7 @@
 				4CA41C081AC1A73600756137 /* LICENSE.txt in Resources */,
 				4C1338F91B8E4A860085F6A4 /* XRSystemInformation.strings in Resources */,
 				4CA41C061AC1A73600756137 /* ACKNOWLEDGEMENT.txt in Resources */,
+				4C12328A2C40B27800FF9F5B /* SecureTransportErrorCodes.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +781,8 @@
 				4CF8B9581D1DE47A00352AF6 /* NSMethodSignatureHelper.m in Sources */,
 				4CDF74B01A8FDE1C000B5FF5 /* NSValueHelper.m in Sources */,
 				4C292DA41A91ABD300A41FD6 /* XRPortMapper.m in Sources */,
+				4C1232852C40AFFB00FF9F5B /* RCMSecureTransport.m in Sources */,
+				4C1232862C40AFFB00FF9F5B /* RCMTrustPanel.m in Sources */,
 				4CD09D4220E072BF008BADA5 /* SWStringHelper.swift in Sources */,
 				4CDF74AA1A8FDE1C000B5FF5 /* NSRangeHelper.m in Sources */,
 				4CA7BE6720C6D4A900C324BF /* NSTabViewHelper.m in Sources */,
