@@ -576,12 +576,12 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	/* Request the heading for the formatted error message. */
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 
-	NSString *headingFormat = NSLocalizedStringFromTable(@"heading", @"SecureTransportErrorCodes", nil);
+	NSString *headingFormat = NSLocalizedStringFromTableInBundle(@"heading", @"SecureTransportErrorCodes", bundle, nil);
 
 	/* Request the reason for the formatting error message. */
 	NSString *lookupKey = [NSString stringWithInteger:errorCode];
 
-	NSString *localizedError = NSLocalizedStringFromTable(lookupKey, @"SecureTransportErrorCodes", nil);
+	NSString *localizedError = NSLocalizedStringFromTableInBundle(lookupKey, @"SecureTransportErrorCodes", bundle, nil);
 
 	/* Format error message */
 	return [NSString stringWithFormat:headingFormat, localizedError, errorCode];

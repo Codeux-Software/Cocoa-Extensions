@@ -170,36 +170,38 @@ NS_ASSUME_NONNULL_BEGIN
 	static id cachedValue = nil;
 
 	if (cachedValue == nil) {
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
 		if (XRRunningOnUnrecognizedOSVersion()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXSequoiaOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Sequoia", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Sequoia", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXSonomaOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Sonoma", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Sonoma", @"XRSystemInformation", bundle, nil);
  		} else if (XRRunningOnOSXVenturaOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Ventura", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Ventura", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXMontereyOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Monterey", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Monterey", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXBigSurOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Big Sur", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Big Sur", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXCatalinaOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Catalina", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Catalina", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXMojaveOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Mojave", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Mojave", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXHighSierraOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS High Sierra", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS High Sierra", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXSierraOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"macOS Sierra", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"macOS Sierra", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXElCapitanOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"OS X El Capitan", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"OS X El Capitan", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXYosemiteOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"OS X Yosemite", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"OS X Yosemite", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXMavericksOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"OS X Mavericks", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"OS X Mavericks", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXMountainLionOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"OS X Mountain Lion", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"OS X Mountain Lion", @"XRSystemInformation", bundle, nil);
 		} else if (XRRunningOnOSXLionOrLater()) {
-			cachedValue = NSLocalizedStringFromTable(@"OS X Lion", @"XRSystemInformation", nil);
+			cachedValue = NSLocalizedStringFromTableInBundle(@"OS X Lion", @"XRSystemInformation", bundle, nil);
 		}
 	}
 
@@ -261,15 +263,16 @@ NS_ASSUME_NONNULL_BEGIN
 		the model being ran on. Therefore, not much love will be put into
 		it. As can be seen below, we are defining our models inline instead
 		of using a dictionary that will have to be loaded from a file. */
-		
+		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
 		NSDictionary *modelPrefixes = @{
-			@"macbookpro"	: NSLocalizedStringFromTable(@"MacBook Pro", @"XRSystemInformation", nil),
-			@"macbookair"	: NSLocalizedStringFromTable(@"MacBook Air", @"XRSystemInformation", nil),
-			@"macbook"		: NSLocalizedStringFromTable(@"MacBook", @"XRSystemInformation", nil),
-			@"macpro"		: NSLocalizedStringFromTable(@"Mac Pro", @"XRSystemInformation", nil),
-			@"macmini"		: NSLocalizedStringFromTable(@"Mac Mini", @"XRSystemInformation", nil),
-			@"imac"			: NSLocalizedStringFromTable(@"iMac", @"XRSystemInformation", nil),
-			@"xserve"		: NSLocalizedStringFromTable(@"Xserve", @"XRSystemInformation", nil)
+			@"macbookpro"	: NSLocalizedStringFromTableInBundle(@"MacBook Pro", @"XRSystemInformation", bundle, nil),
+			@"macbookair"	: NSLocalizedStringFromTableInBundle(@"MacBook Air", @"XRSystemInformation", bundle, nil),
+			@"macbook"		: NSLocalizedStringFromTableInBundle(@"MacBook", @"XRSystemInformation", bundle, nil),
+			@"macpro"		: NSLocalizedStringFromTableInBundle(@"Mac Pro", @"XRSystemInformation", bundle, nil),
+			@"macmini"		: NSLocalizedStringFromTableInBundle(@"Mac Mini", @"XRSystemInformation", bundle, nil),
+			@"imac"			: NSLocalizedStringFromTableInBundle(@"iMac", @"XRSystemInformation", bundle, nil),
+			@"xserve"		: NSLocalizedStringFromTableInBundle(@"Xserve", @"XRSystemInformation", bundle, nil)
 		};
 		
 		NSString *modelToken = [self systemModelToken];
