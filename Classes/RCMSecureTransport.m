@@ -311,6 +311,7 @@ static const char * _Nonnull kMacNames[] = {
 };
 
 const tls_protocol_version_t tls_protocol_version_unknown = 0;
+const tls_ciphersuite_t tls_ciphersuite_unknown = 0;
 
 @implementation RCMSecureTransport
 

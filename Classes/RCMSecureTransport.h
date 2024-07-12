@@ -44,6 +44,7 @@ typedef NS_ENUM(NSUInteger, RCMCipherSuiteCollection) {
 };
 
 COCOA_EXTENSIONS_EXTERN const tls_protocol_version_t tls_protocol_version_unknown;
+COCOA_EXTENSIONS_EXTERN const tls_ciphersuite_t tls_ciphersuite_unknown;
 
 @interface RCMSecureTransport : NSObject
 COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
