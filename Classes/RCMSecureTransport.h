@@ -49,6 +49,7 @@ COCOA_EXTENSIONS_EXTERN const tls_protocol_version_t tls_protocol_version_unknow
 COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 /* Mapping is performed as follows:
 
+	kSSLProtocolUnknown = tls_protocol_version_unknown
 	kTLSProtocol1 = tls_protocol_version_TLSv10
 	kTLSProtocol11 = tls_protocol_version_TLSv11
 	kTLSProtocol12 = tls_protocol_version_TLSv12
@@ -62,7 +63,6 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
  Please note tls_protocol_version_unknown is a custom value and will not
  be accepted by any Security.framework functions.
 
-	kSSLProtocolUnknown
 	kSSLProtocol2
 	kSSLProtocol3
 	kSSLProtocol3Only
@@ -78,15 +78,17 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 + (nullable NSString *)descriptionForProtocolType:(tls_protocol_version_t)protocolType;
 
-+ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite;
-+ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite withProtocol:(BOOL)appendProtocol;
+/* Technically speaking, tls_ciphersuite_t and SSLCipherSuite
+ are interchangeable since they refer to the same code points. */
++ (nullable NSString *)descriptionForCipherSuite:(tls_ciphersuite_t)cipherSuite;
++ (nullable NSString *)descriptionForCipherSuite:(tls_ciphersuite_t)cipherSuite withProtocol:(BOOL)appendProtocol;
 
-+ (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite;
++ (BOOL)isCipherSuiteDeprecated:(tls_ciphersuite_t)cipherSuite;
 
 + (NSArray<NSString *> *)descriptionsForCipherListCollection:(RCMCipherSuiteCollection)collection;
 + (NSArray<NSString *> *)descriptionsForCipherListCollection:(RCMCipherSuiteCollection)collection withProtocol:(BOOL)appendProtocol;
 
-+ (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites;
++ (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites; // unsigned shorts
 + (NSArray<NSString *> *)descriptionsForCipherSuites:(NSArray<NSNumber *> *)cipherSuites withProtocol:(BOOL)appendProtocol;
 
 + (NSArray<NSNumber *> *)cipherSuitesInCollection:(RCMCipherSuiteCollection)collection;

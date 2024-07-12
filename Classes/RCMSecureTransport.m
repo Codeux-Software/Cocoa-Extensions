@@ -310,7 +310,7 @@ static const char * _Nonnull kMacNames[] = {
 	// 7 is reserved to indicate an AEAD cipher suite.
 };
 
-const tls_protocol_version_t tls_protocol_version_unknown = UINT16_MAX;
+const tls_protocol_version_t tls_protocol_version_unknown = 0;
 
 @implementation RCMSecureTransport
 
@@ -328,6 +328,7 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_BEGIN
 + (tls_protocol_version_t)protocolTypeFromDeprecated:(SSLProtocol)deprecatedProtocol
 {
 	switch (deprecatedProtocol) {
+		case kSSLProtocolUnknown: { return tls_protocol_version_unknown; }
 		case kTLSProtocol1: { return tls_protocol_version_TLSv10; }
 		case kTLSProtocol11: { return tls_protocol_version_TLSv11; }
 		case kTLSProtocol12: { return tls_protocol_version_TLSv12; }
@@ -393,18 +394,18 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 
 	for (NSNumber *cipherSuite in cipherSuites) {
 		[descriptions addObject:
-		 [self descriptionForCipherSuite:cipherSuite.intValue withProtocol:appendProtocol]];
+		 [self descriptionForCipherSuite:cipherSuite.unsignedShortValue withProtocol:appendProtocol]];
 	}
 
 	return [descriptions copy];
 }
 
-+ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite
++ (nullable NSString *)descriptionForCipherSuite:(tls_ciphersuite_t)cipherSuite
 {
 	return [self descriptionForCipherSuite:cipherSuite withProtocol:NO];
 }
 
-+ (nullable NSString *)descriptionForCipherSuite:(SSLCipherSuite)cipherSuite withProtocol:(BOOL)appendProtocol
++ (nullable NSString *)descriptionForCipherSuite:(tls_ciphersuite_t)cipherSuite withProtocol:(BOOL)appendProtocol
 {
 	for (unsigned long pos = 0; pos < sizeof(kCipherSuites) / sizeof(CipherSuite); pos++) {
 		CipherSuite cs = kCipherSuites[pos];
@@ -441,7 +442,7 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	return @"Unknown";
 }
 
-+ (BOOL)isCipherSuiteDeprecated:(SSLCipherSuite)cipherSuite
++ (BOOL)isCipherSuiteDeprecated:(tls_ciphersuite_t)cipherSuite
 {
 	return [[self cipherListDeprecated] containsObject:@(cipherSuite)];
 }
