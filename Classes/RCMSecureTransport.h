@@ -96,6 +96,10 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 + (NSArray<NSNumber *> *)cipherSuitesInCollection:(RCMCipherSuiteCollection)collection
 								includeDeprecated:(BOOL)includeDeprecated;
 
++ (void)appendCipherSuitesInCollection:(RCMCipherSuiteCollection)collection
+					 includeDeprecated:(BOOL)includeDeprecated
+							 toOptions:(sec_protocol_options_t)protocolOptions;
+
 + (BOOL)isTLSError:(NSError *)error;
 + (nullable NSString *)descriptionForError:(NSError *)error;
 /* -descriptionForErrorCode: returns "Unknown" for out of range error codes */

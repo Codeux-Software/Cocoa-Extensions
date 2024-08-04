@@ -546,6 +546,35 @@ COCOA_EXTENSIONS_IGNORE_DEPRECATION_END
 	];
 }
 
++ (void)appendCipherSuitesInCollection:(RCMCipherSuiteCollection)collection
+					 includeDeprecated:(BOOL)includeDeprecated
+							 toOptions:(sec_protocol_options_t)protocolOptions
+{
+/*
+	 In the C API of the security framework, tls_ciphersuite_t is nothing
+	 more than a uint64 value. It represents the code point for the cipher suite.
+
+	 In the Swift API of the security framework, tls_ciphersuite_t is a proper
+	 enum structure. In the Swift API, we cannot assign cipher suites to the enum
+	 that are not already declared by Apple. Even with a raw value. If the cipher
+	 suite is not a case in the enum, then it is not valid.
+
+	 This method is a simple workaround so that we can support tls_ciphersuite_t
+	 and also allow us to pass any value to the security framework.
+
+	 In the latest version of the security framework, Apple appends the code point
+	 to an array and does not perform any further validation:
+	 <https://github.com/apple-oss-distributions/Security/blob/0600e7bab30fbac3adcafcb6c57d3981dc682304/protocol/SecProtocol.c#L376>
+*/
+	NSArray *cipherSuites = [self cipherSuitesInCollection:collection includeDeprecated:includeDeprecated];
+
+	for (NSNumber *cipherSuite in cipherSuites) {
+		tls_ciphersuite_t suite = [cipherSuite unsignedShortValue];
+
+		sec_protocol_options_append_tls_ciphersuite(protocolOptions, suite);
+	}
+}
+
 + (BOOL)isTLSError:(NSError *)error
 {
 	NSParameterAssert(error != nil);
