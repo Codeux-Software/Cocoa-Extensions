@@ -164,6 +164,11 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	return YES;
 }
 
++ (BOOL)isMutable
+{
+	return NO;
+}
+
 - (BOOL)isMutable
 {
 	return NO;

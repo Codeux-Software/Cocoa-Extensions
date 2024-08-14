@@ -97,6 +97,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /* Defines whether the class we are in is mutable. */
 /* This property defaults to NO. */
+@property (readonly, getter=isMutable, class) BOOL mutable;
 @property (readonly, getter=isMutable) BOOL mutable;
 
 /* When -copy or -copyWithZone: is called on an immutable class,
