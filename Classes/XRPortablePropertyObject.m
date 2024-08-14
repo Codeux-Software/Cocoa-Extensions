@@ -171,7 +171,7 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (BOOL)isMutable
 {
-	return NO;
+	return ((__kindof XRPortablePropertyObject *)self.class).mutable;
 }
 
 + (BOOL)supportsSecureCoding
