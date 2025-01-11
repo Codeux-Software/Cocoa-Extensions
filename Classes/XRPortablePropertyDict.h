@@ -40,9 +40,27 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class XRPortablePropertyObject;
 
+typedef NS_ENUM(NSUInteger, XRPortablePropertyDictTarget) {
+	/* Dictionary value of configuration object for all uses. */
+	XRPortablePropertyDictTargetDefault		= 0,
+
+	/* Dictionary value of configuration object for use during copy. */
+	XRPortablePropertyDictTargetCopy		= 1,
+
+	/* Dictionary value of configuration object for use during mutable copy. */
+	XRPortablePropertyDictTargetMutableCopy	= 2,
+
+	/* Dictionary value of configuration object for use with iCloud. */
+	XRPortablePropertyDictTargetCloud		= 3
+};
+
 @protocol XRPortablePropertyDictPrototype <NSObject>
 /* Called during init after defaults preflight and before defaults postflight. */
 - (void)populateDictionaryValues:(nonnull NSDictionary<NSString *,id> *)dic;
+
+/* Dictionary value of configuration object for use based on target operation. */
+/* All internal operations of XRPortablePropertyDict relies on this method. It is required. */
+- (NSDictionary<NSString *, id> *)dictionaryValueForTarget:(XRPortablePropertyDictTarget)target;
 @end
 
 @interface XRPortablePropertyDict : XRPortablePropertyObject <XRPortablePropertyDictPrototype>
@@ -56,14 +74,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) __kindof XRPortablePropertyDict *mutableClass;
 
 /* Dictionary value of configuration object for all uses. */
+/* This property proxies -dictionaryValueForTarget with target: XRPortablePropertyDictTargetDefault */
 @property (readonly, copy) NSDictionary<NSString *, id> *dictionaryValue;
 
 /* Dictionary value of configuration object for use with iCloud. */
-/* Returns -dictionaryValue by default. */
+/* This property proxies -dictionaryValueForTarget with target: XRPortablePropertyDictTargetCloud */
 @property (readonly, copy) NSDictionary<NSString *, id> *dictionaryValueForCloud;
 
 /* Dictionary value of configuration object for use during copy. */
-/* Returns -dictionaryValue by default. */
+/* This property proxies -dictionaryValueForTarget with target: XRPortablePropertyDictTargetCopy */
 @property (readonly, copy) NSDictionary<NSString *, id> *dictionaryValueForCopy;
 @end
 

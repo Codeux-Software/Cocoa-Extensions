@@ -108,17 +108,22 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 
 - (NSDictionary<NSString *, id> *)dictionaryValue
 {
-	return @{};
+	return [self dictionaryValueForTarget:XRPortablePropertyDictTargetDefault];
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValueForCloud
 {
-	return self.dictionaryValue;
+	return [self dictionaryValueForTarget:XRPortablePropertyDictTargetCloud];
 }
 
 - (NSDictionary<NSString *, id> *)dictionaryValueForCopy
 {
-	return self.dictionaryValue;
+	return [self dictionaryValueForTarget:XRPortablePropertyDictTargetCopy];
+}
+
+- (NSDictionary<NSString *, id> *)dictionaryValueForTarget:(XRPortablePropertyDictTarget)target
+{
+	return @{};
 }
 
 - (__kindof XRPortablePropertyDict *)immutableClass
@@ -148,7 +153,15 @@ DESIGNATED_INITIALIZER_EXCEPTION_BODY_END
 	 to skip certain work in defaults pre/post flight when copying. */
 	object.initializedAsCopy = YES;
 
-	return [object initWithDictionary:self.dictionaryValueForCopy];
+	NSDictionary *dictionaryValue = nil;
+
+	if (mutableCopy) {
+		dictionaryValue = [self dictionaryValueForTarget:XRPortablePropertyDictTargetMutableCopy];
+	} else {
+		dictionaryValue = [self dictionaryValueForTarget:XRPortablePropertyDictTargetCopy];
+	}
+
+	return [object initWithDictionary:dictionaryValue];
 }
 
 @end
