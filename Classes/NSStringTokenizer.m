@@ -572,6 +572,10 @@ NS_ASSUME_NONNULL_BEGIN
 	}
 
 	if (tokenOut == nil) {
+		if (asString) {
+			return @"";
+		}
+
 		return [[NSAttributedString alloc] initWithString:@""];
 	}
 
