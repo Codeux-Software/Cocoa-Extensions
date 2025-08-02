@@ -31,20 +31,12 @@
  *********************************************************************** */
 
 "macOS" = "macOS";
+"macOS Tahoe" = "macOS Tahoe";
 "macOS Sequoia" = "macOS Sequoia";
 "macOS Sonoma" = "macOS Sonoma";
 "macOS Ventura" = "macOS Ventura";
 "macOS Monterey" = "macOS Monterey";
 "macOS Big Sur" = "macOS Big Sur";
-"macOS Catalina" = "macOS Catalina";
-"macOS Mojave" = "macOS Mojave";
-"macOS High Sierra" = "macOS High Sierra";
-"macOS Sierra" = "macOS Sierra";
-"OS X El Capitan" = "OS X El Capitan";
-"OS X Yosemite" = "OS X Yosemite";
-"OS X Mavericks" = "OS X Mavericks";
-"OS X Mountain Lion" = "OS X Mountain Lion";
-"OS X Lion" = "OS X Lion";
 
 "MacBook Pro" = "MacBook Pro";
 "MacBook Air" = "MacBook Air";
